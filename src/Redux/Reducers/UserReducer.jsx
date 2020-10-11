@@ -16,7 +16,7 @@ const userReducer = (state = initialState, action) => {
       return {
         ...state,
         fetching: false,
-        user: action.user,
+        user: action.user.user,
         error: false,
       };
     case "LOGIN_USER_FAILURE":
@@ -59,6 +59,14 @@ const userReducer = (state = initialState, action) => {
         user: [],
         fetching: false,
         error: action.error,
+      };
+    // AUTHORIZATION
+    case "FETCH_AUTHORIZE_USER_SUCCESS":
+      return {
+        ...state,
+        user: action.user.user,
+        fetching: false,
+        error: false,
       };
     default:
       return state;

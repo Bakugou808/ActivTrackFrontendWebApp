@@ -27,7 +27,7 @@ import ListItemText from "@material-ui/core/ListItemText";
 
 function NavBar(props) {
   const classes = useStyles();
-  const { history, auth, onLogOut } = props;
+  const { history, auth, onLogOut, isLoggedIn } = props;
 
   const onLogout = () => {
     const { onSignOutUser, user } = props;
@@ -98,14 +98,14 @@ function NavBar(props) {
             aria-label="menu"
             onClick={toggleDrawer("left", true)}
           >
-            {auth && <MenuIcon />}
+            {isLoggedIn && <MenuIcon />}
           </IconButton>
           <Typography variant="h6" className={classes.title}>
             <Link href="/" color="inherit">
               ActivTrack
             </Link>
           </Typography>
-          {auth ? (
+          {isLoggedIn ? (
             <Typography variant="subtitle1" className={classes.login}>
               <Link className={classes.link} onClick={onLogOut} color="inherit">
                 Sign Out
@@ -134,7 +134,7 @@ function NavBar(props) {
 const mapStateToProps = (store) => {
   return {
     user: store.user.data,
-    auth: store.authorized.data,
+    isLoggedIn: store.authorized.isLoggedIn,
   };
 };
 
