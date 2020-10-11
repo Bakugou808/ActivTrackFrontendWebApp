@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import { logOut } from "../../Redux/Actions/AuthActions";
 
 // component imports
+import { AuthHOC } from "../AuthHOC";
 
 export const Home = (props) => {
   const { user, onLogOut } = props;
@@ -13,7 +14,6 @@ export const Home = (props) => {
   return (
     <div>
       <h4>Welcome {user.username}.</h4>
-      <button onClick={() => onLogOut()}> Sign Out </button>
     </div>
   );
 };
@@ -26,4 +26,4 @@ const mapDispatchToProps = (dispatch) => ({
   onLogOut: () => dispatch(logOut()),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Home);
+export default AuthHOC(connect(mapStateToProps, mapDispatchToProps)(Home));
