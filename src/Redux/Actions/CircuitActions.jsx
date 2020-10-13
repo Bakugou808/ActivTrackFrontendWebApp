@@ -31,7 +31,7 @@ export const fetchCircuitsSuccess = (Circuits) => ({
 export const fetchCircuits = (circuitId) => {
   return (dispatch) => {
     dispatch(fetchCircuitsRequest());
-    fetch(`${API}/workouts_circuits/${circuitId}`)
+    fetch(`${API}/workouts_circuits/${circuitId}`) //!make sure to check this route
       .then((res) => res.json())
       .then((data) => {
         if (data.error) {
