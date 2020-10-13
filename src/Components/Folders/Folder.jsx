@@ -1,65 +1,57 @@
 import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
 import { AuthHOC } from "../AuthHOC";
-// Component Imports
-import FolderForm from "./FolderForm";
+import WorkoutForm from "../Workouts/WorkoutForm";
+//* Action Imports
+import { fetchFolder } from "../../Redux/Actions/FolderActions";
+import { postWorkout } from "../../Redux/Actions/WorkoutActions";
 // Material UI Imports
-import Modal from "@material-ui/core/Modal";
 import { makeStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
+import Modal from "@material-ui/core/Modal";
 
-// Action Imports
-import { fetchFolders, postFolder } from "../../Redux/Actions/FolderActions";
-
-export const Folders = (props) => {
-  const {
-    onPostFolder,
-    userId,
-    folders,
-    onFetchFolders,
-    history,
-    match,
-  } = props;
+export const Folder = (props) => {
+  const { match, history, onFetchFolder, workouts, onPostWorkout } = props;
+  const folderId = parseInt(match.params.folderId);
+  const folderName = match.params.folderName;
   const [showForm, setShowForm] = useState(false);
-  const classes = useStyles();
-  // getModalStyle is not a pure function, we roll the style only on the first render
   const [modalStyle] = React.useState(getModalStyle);
 
-  const handleOnPostFolder = (folderData) => {
-    onPostFolder(folderData, setShowForm);
-  };
+  const classes = useStyles();
 
   useEffect(() => {
-    userId && onFetchFolders(userId);
-  }, [userId]);
+    folderId && onFetchFolder(folderId);
+  }, [folderId]);
 
-  const handleFolderClick = (folder) => {
-    history.push(`${match.url}/${folder.folder_name}/${folder.id}`);
+  const redirectNewWorkout = (path) => {
+    setShowForm(false);
+    history.push(`/new_workout/${folderName}/${folderId}/${path}`);
   };
 
-  const renderFolders = () => {
-    return folders.map((folder) => {
+  const renderWorkout = () => {
+    return workouts.map((workout) => {
       return (
-        <Paper
-          key={folder.id}
-          className={classes.folder}
-          onClick={() => handleFolderClick(folder)}
-        >
-          {folder.folder_name}
+        <Paper key={workout.id} className={classes.workout}>
+          {workout.title}
         </Paper>
       );
     });
+  };
+
+  const handleOnPostWorkout = (workoutData) => {
+    // onPostWorkout(workoutData, setShowForm, history);
+    onPostWorkout(workoutData, redirectNewWorkout);
   };
 
   return (
     <div>
       <div>
         <span className={"addNewString"} onClick={() => setShowForm(true)}>
-          + Add New Folder
+          + Add New Workout
         </span>
       </div>
 
-      <div className={"container grid "}>{folders && renderFolders()}</div>
+      <div className={"container grid "}>{workouts && renderWorkout()}</div>
 
       <Modal
         open={showForm}
@@ -68,7 +60,10 @@ export const Folders = (props) => {
         aria-describedby="simple-modal-description"
       >
         <div style={modalStyle} className={classes.paperModal}>
-          <FolderForm handleOnPostFolder={handleOnPostFolder} userId={userId} />
+          <WorkoutForm
+            handleOnPostWorkout={handleOnPostWorkout}
+            folderId={folderId}
+          />
         </div>
       </Modal>
     </div>
@@ -76,17 +71,16 @@ export const Folders = (props) => {
 };
 
 const mapStateToProps = (store) => ({
-  userId: store.user.user.id,
-  folders: store.folders.folders,
+  workouts: store.workouts.workouts,
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  onFetchFolders: (userId) => dispatch(fetchFolders(userId)),
-  onPostFolder: (folderData, setShowForm) =>
-    dispatch(postFolder(folderData, setShowForm)),
+  onFetchFolder: (folderId) => dispatch(fetchFolder(folderId)),
+  onPostWorkout: (workoutData, redirectNewWorkout) =>
+    dispatch(postWorkout(workoutData, redirectNewWorkout)),
 });
 
-export default AuthHOC(connect(mapStateToProps, mapDispatchToProps)(Folders));
+export default AuthHOC(connect(mapStateToProps, mapDispatchToProps)(Folder));
 
 function getModalStyle() {
   const top = 50;
@@ -109,7 +103,7 @@ const useStyles = makeStyles((theme) => ({
     boxShadow: theme.shadows[5],
     padding: theme.spacing(2, 4, 3),
   },
-  folder: {
+  workout: {
     padding: theme.spacing(2),
     textAlign: "center",
     color: theme.palette.text.secondary,

@@ -10,6 +10,12 @@ export const headers = () => {
 
 // *rxaction -> action template
 
+// ------- SET SELECTED FOLDER ACTIONS--------
+export const setSelectedFolder = (folder) => ({
+  type: "SET_SELECTED_FOLDER",
+  folder: folder,
+});
+
 // ------- FETCH USER FOLDERS ACTIONS--------
 
 export const fetchFoldersRequest = () => ({
@@ -38,6 +44,42 @@ export const fetchFolders = (userId) => {
           dispatch(fetchFoldersFailed(data.error));
         } else {
           dispatch(fetchFoldersSuccess(data));
+        }
+      });
+  };
+};
+
+// ------- FETCH SHOW FOLDER ACTIONS--------
+
+export const fetchFolderRequest = () => ({
+  type: "FETCH_FOLDER_REQUEST",
+});
+
+export const fetchFolderFailed = (error) => ({
+  type: "FETCH_FOLDER_FAILED",
+  error: error,
+});
+
+export const fetchFolderSuccess = (folder) => ({
+  type: "FETCH_FOLDER_SUCCESSFUL",
+  folder: folder,
+});
+
+// ------- FETCH SHOW FOLDER FUNCTION--------
+
+export const fetchFolder = (folderId) => {
+  return (dispatch) => {
+    dispatch(fetchFolderRequest());
+    fetch(`${API}/folders/${folderId}`, {
+      method: "GET",
+      headers: headers(),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.error) {
+          dispatch(fetchFolderFailed(data.error));
+        } else {
+          dispatch(fetchFolderSuccess(data));
         }
       });
   };

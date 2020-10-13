@@ -4,10 +4,15 @@ const initialState = {
   folders: [],
   fetching: false,
   error: false,
+  selectedFolder: null,
 };
 
 const folderReducer = (state = initialState, action) => {
   switch (action.type) {
+    //* Set Selected Folder
+    case "SET_SELECTED_FOLDER":
+      return { ...state, selectedFolder: action.folder };
+
     //* Fetch Folders Belonging To User
 
     case "FETCH_FOLDERS_REQUEST":
@@ -16,6 +21,15 @@ const folderReducer = (state = initialState, action) => {
       return { ...state, fetching: false, error: action.error };
     case "FETCH_FOLDERS_SUCCESSFUL":
       return { ...state, fetching: false, folders: action.folders };
+
+    //* Fetch SHOW Folder
+
+    case "FETCH_FOLDER_REQUEST":
+      return { ...state, fetching: true };
+    case "FETCH_FOLDER_FAILED":
+      return { ...state, fetching: false, error: action.error };
+    case "FETCH_FOLDER_SUCCESSFUL":
+      return { ...state, fetching: false, selectedFolder: action.folder };
 
     //* POST New Folder
 
