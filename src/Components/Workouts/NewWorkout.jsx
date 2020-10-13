@@ -3,13 +3,14 @@ import { connect } from "react-redux";
 import { AuthHOC } from "../AuthHOC";
 // * Component Imports
 import MyModal from "../Modal";
-import FolderForm from "../Folders/FolderForm";
+import TabBar from "../Circuits/TabBar";
 // * Material UI Imports
 import { makeStyles } from "@material-ui/core/styles";
 import QueueIcon from "@material-ui/icons/Queue";
 import { Tooltip, Fab, IconButton } from "@material-ui/core";
 
 // * Action Imports
+import { fetchFolder } from "../../Redux/Actions/FolderActions";
 import {
   postWorkout,
   patchWorkout,
@@ -22,15 +23,19 @@ export const NewWorkout = (props) => {
     onPostWorkout,
     onPatchWorkout,
     selectedWorkout,
+    selectedFolder,
     match,
     onFetchWorkout,
+    onFetchFolder,
   } = props;
-
+  const folderId = parseInt(match.params.folderId);
   const workoutId = parseInt(match.params.workoutId);
   const [title, setTitle] = useState("Add Title");
   const [showTitleForm, setShowTitleForm] = useState(false);
   const [showDescForm, setShowDescForm] = useState(false);
   const [desc, setDesc] = useState("Add Description");
+  const [phase, setPhase] = useState("");
+  const [circuitPosition, setCircuitPosition] = useState(0);
 
   const [showForm, setShowForm] = useState(false);
 
@@ -38,6 +43,7 @@ export const NewWorkout = (props) => {
 
   useEffect(() => {
     !selectedWorkout && onFetchWorkout(workoutId);
+    !selectedFolder && onFetchFolder(folderId);
     selectedWorkout && setTitle(selectedWorkout.title);
     selectedWorkout && setDesc(selectedWorkout.description);
   }, [selectedWorkout]);
@@ -63,7 +69,7 @@ export const NewWorkout = (props) => {
   };
 
   const handleAdd = (phase) => {
-    console.log(phase);
+    setPhase(phase);
     setShowForm(true);
   };
 
@@ -123,7 +129,11 @@ export const NewWorkout = (props) => {
           //*Warm up
           <div>
             <Tooltip title="Add" aria-label="add">
-              <Fab color="primary" onClick={() => handleAdd("warm up")}>
+              <Fab
+                className={classes.fab}
+                size="medium"
+                onClick={() => handleAdd("Warm Up")}
+              >
                 <QueueIcon />
               </Fab>
             </Tooltip>
@@ -136,7 +146,11 @@ export const NewWorkout = (props) => {
           //*Body
           <div>
             <Tooltip title="Add" aria-label="add">
-              <Fab color="primary" onClick={() => handleAdd("body")}>
+              <Fab
+                color="secondary"
+                size="medium"
+                onClick={() => handleAdd("Body")}
+              >
                 <QueueIcon />
               </Fab>
             </Tooltip>
@@ -148,7 +162,11 @@ export const NewWorkout = (props) => {
           //*Cool Down
           <div>
             <Tooltip title="Add" aria-label="add">
-              <Fab color="primary" onClick={() => handleAdd("cool down")}>
+              <Fab
+                color="primary"
+                size="medium"
+                onClick={() => handleAdd("Cool Down")}
+              >
                 <QueueIcon />
               </Fab>
             </Tooltip>
@@ -158,7 +176,7 @@ export const NewWorkout = (props) => {
       <MyModal
         showModal={showForm}
         setShowModal={setShowForm}
-        component={<FolderForm />}
+        component={<TabBar phase={phase} />}
       />
     </div>
   );
@@ -175,6 +193,7 @@ const mapDispatchToProps = (dispatch) => ({
   onPatchWorkout: (workoutData, setShowForm) =>
     dispatch(patchWorkout(workoutData, setShowForm)),
   onFetchWorkout: (workoutId) => dispatch(fetchWorkout(workoutId)),
+  onFetchFolder: (folderId) => dispatch(fetchFolder(folderId)),
 });
 export default AuthHOC(
   connect(mapStateToProps, mapDispatchToProps)(NewWorkout)
@@ -182,7 +201,8 @@ export default AuthHOC(
 
 const useStyles = makeStyles((theme) => ({
   fab: {
-    margin: theme.spacing(20),
+    // margin: theme.spacing(20),
+    background: "linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)",
   },
   absolute: {
     position: "absolute",

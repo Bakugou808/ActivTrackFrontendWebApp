@@ -1,10 +1,10 @@
 // *rxreducer
 
 const initialState = {
+  selectedFolder: null,
   folders: [],
   fetching: false,
   error: false,
-  selectedFolder: null,
 };
 
 const folderReducer = (state = initialState, action) => {

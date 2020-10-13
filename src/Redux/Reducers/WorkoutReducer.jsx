@@ -1,10 +1,10 @@
 // *rxreducer
 
 const initialState = {
+  selectedWorkout: null,
   workouts: [],
   fetching: false,
   error: false,
-  selectedWorkout: null,
 };
 
 const workCircuitReducer = (state = initialState, action) => {
