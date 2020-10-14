@@ -2,6 +2,7 @@ import React, { useState } from "react";
 // * Component Imports
 import CircuitFormPt1 from "./CircuitFormPt1";
 import CircuitFormPt2 from "./CircuitFormPt2";
+import CircFlowCont from "./CircFlowCont";
 // * Material UI Imports
 import PropTypes from "prop-types";
 import SwipeableViews from "react-swipeable-views";
@@ -25,7 +26,7 @@ function TabPanel(props) {
     >
       {value === index && (
         <Box p={3}>
-          <Typography>{children}</Typography>
+          <Typography component={"span"}>{children}</Typography>
         </Box>
       )}
     </div>
@@ -82,7 +83,8 @@ export default function TabBar(props) {
         onChangeIndex={handleChangeIndex}
       >
         <TabPanel value={value} index={0} dir={theme.direction}>
-          {!nextPage ? (
+          <CircFlowCont setShowModal={setShowModal} circuit_type="stack" />
+          {/* {!nextPage ? (
             <CircuitFormPt1
               circuit_type={"stack"}
               goToNextPage={goToNextPage}
@@ -92,10 +94,11 @@ export default function TabBar(props) {
               circuit_type={"stack"}
               setShowModal={setShowModal}
             />
-          )}
+          )} */}
         </TabPanel>
         <TabPanel value={value} index={1} dir={theme.direction}>
-          {!nextPage ? (
+          <CircFlowCont setShowModal={setShowModal} circuit_type="circuit" />
+          {/* {!nextPage ? (
             <CircuitFormPt1
               circuit_type={"circuit"}
               goToNextPage={goToNextPage}
@@ -105,7 +108,7 @@ export default function TabBar(props) {
               circuit_type={"circuit"}
               setShowModal={setShowModal}
             />
-          )}
+          )} */}
         </TabPanel>
       </SwipeableViews>
     </div>

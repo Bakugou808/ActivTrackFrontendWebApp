@@ -13,8 +13,8 @@ const rootReducer = combineReducers({
   authorized: authReducer,
   folders: folderReducer,
   workouts: workoutReducer,
-  circuits: circuitReducer,
   exercises: exerciseReducer,
+  circuits: circuitReducer,
   circExs: circExReducer,
   workCircuits: workCircuitReducer,
 });

@@ -10,6 +10,12 @@ export const headers = () => {
 
 // *rxaction -> action template
 
+// ------- Clear selectedExercise ACTION--------
+
+export const clearSelectedExercise = () => ({
+  type: "CLEAR_SELECTED_EXERCISE",
+});
+
 // ------- FETCH USERS EXERCISES ACTIONS--------
 export const fetchExercisesRequest = () => ({
   type: "FETCH_EXERCISES_REQUEST",

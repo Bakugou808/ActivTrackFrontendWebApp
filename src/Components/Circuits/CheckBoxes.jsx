@@ -66,7 +66,7 @@ export default function CheckBoxes(props) {
           <GreenCheckbox
             checked={checked.restPeriod}
             onChange={handleCheckBoxChange}
-            name="Rest Period"
+            name="restPeriod"
           />
         }
         label="Rest Period"

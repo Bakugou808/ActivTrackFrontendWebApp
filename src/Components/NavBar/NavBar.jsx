@@ -100,19 +100,27 @@ function NavBar(props) {
           >
             {isLoggedIn && <MenuIcon />}
           </IconButton>
-          <Typography variant="h6" className={classes.title}>
+          <Typography component={"span"} variant="h6" className={classes.title}>
             <Link href="/" color="inherit">
               ActivTrack
             </Link>
           </Typography>
           {isLoggedIn ? (
-            <Typography variant="subtitle1" className={classes.login}>
+            <Typography
+              component={"span"}
+              variant="subtitle1"
+              className={classes.login}
+            >
               <Link className={classes.link} onClick={onLogOut} color="inherit">
                 Sign Out
               </Link>
             </Typography>
           ) : (
-            <Typography variant="subtitle1" className={classes.login}>
+            <Typography
+              component={"span"}
+              variant="subtitle1"
+              className={classes.login}
+            >
               <Link href="/signin" color="inherit">
                 Sign In
               </Link>
