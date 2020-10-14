@@ -11,6 +11,7 @@ import { Tooltip, Fab, IconButton } from "@material-ui/core";
 
 // * Action Imports
 import { fetchFolder } from "../../Redux/Actions/FolderActions";
+import { setPhase } from "../../Redux/Actions/CircuitActions";
 import {
   postWorkout,
   patchWorkout,
@@ -27,14 +28,15 @@ export const NewWorkout = (props) => {
     match,
     onFetchWorkout,
     onFetchFolder,
+    onSetPhase,
   } = props;
+
   const folderId = parseInt(match.params.folderId);
   const workoutId = parseInt(match.params.workoutId);
   const [title, setTitle] = useState("Add Title");
   const [showTitleForm, setShowTitleForm] = useState(false);
   const [showDescForm, setShowDescForm] = useState(false);
   const [desc, setDesc] = useState("Add Description");
-  const [phase, setPhase] = useState("");
   const [circuitPosition, setCircuitPosition] = useState(0);
 
   const [showForm, setShowForm] = useState(false);
@@ -69,7 +71,7 @@ export const NewWorkout = (props) => {
   };
 
   const handleAdd = (phase) => {
-    setPhase(phase);
+    onSetPhase(phase);
     setShowForm(true);
   };
 
@@ -139,6 +141,7 @@ export const NewWorkout = (props) => {
             </Tooltip>
           </div>
           <div className="addNewString"></div>
+          {/* {warmUpEx && renderWarmUp()} */}
         </div>
 
         <div>
@@ -176,7 +179,7 @@ export const NewWorkout = (props) => {
       <MyModal
         showModal={showForm}
         setShowModal={setShowForm}
-        component={<TabBar phase={phase} />}
+        component={<TabBar setShowModal={setShowForm} />}
       />
     </div>
   );
@@ -194,6 +197,7 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch(patchWorkout(workoutData, setShowForm)),
   onFetchWorkout: (workoutId) => dispatch(fetchWorkout(workoutId)),
   onFetchFolder: (folderId) => dispatch(fetchFolder(folderId)),
+  onSetPhase: (phase) => dispatch(setPhase(phase)),
 });
 export default AuthHOC(
   connect(mapStateToProps, mapDispatchToProps)(NewWorkout)

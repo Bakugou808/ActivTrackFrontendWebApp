@@ -7,20 +7,16 @@ import TextField from "@material-ui/core/TextField";
 export const CustAttForm = (props) => {
   const {
     customAtts,
-    setCustomAtts,
+    handleCustomAttAdd,
     setShowCustomAttFields,
-    setOpenSnackBar,
+    // setOpenSnackBar,
   } = props;
   const [customAtt, setCustomAtt] = useState("");
 
   const handleAddAtt = (e) => {
     e.preventDefault();
-    // customAtts.includes(customAtt)
-    //   ? setCustomAtts((prev) => prev.filter((att) => att != customAtt))
-    //   : setCustomAtts((prev) => [...prev, customAtt]);
-    !customAtts.includes(customAtt) &&
-      setCustomAtts((prev) => [...prev, customAtt]);
-    setOpenSnackBar(true);
+    handleCustomAttAdd(customAtt);
+    // setOpenSnackBar(true);
     setShowCustomAttFields(false);
     setCustomAtt("");
   };

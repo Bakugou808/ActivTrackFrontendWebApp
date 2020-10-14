@@ -20,15 +20,13 @@ const GreenCheckbox = withStyles({
 })((props) => <Checkbox color="default" {...props} />);
 
 export default function CheckBoxes(props) {
-  const { checked, setChecked, setCustomAtts, customAtts } = props;
+  const { checked, setChecked, handleCustomAttAdd, customAtts } = props;
 
   const handleCheckBoxChange = (e) => {
     const name = e.target.name;
     const obj = { [e.target.name]: !checked[e.target.name] };
     setChecked((prev) => ({ ...prev, ...obj }));
-    customAtts.includes(e.target.name)
-      ? setCustomAtts((prev) => prev.filter((att) => att != name))
-      : setCustomAtts((prev) => [...prev, name]);
+    handleCustomAttAdd(name);
   };
 
   return (
@@ -68,7 +66,7 @@ export default function CheckBoxes(props) {
           <GreenCheckbox
             checked={checked.restPeriod}
             onChange={handleCheckBoxChange}
-            name="restPeriod"
+            name="Rest Period"
           />
         }
         label="Rest Period"

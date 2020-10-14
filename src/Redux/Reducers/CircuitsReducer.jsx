@@ -2,6 +2,10 @@
 
 const initialState = {
   selectedCircuit: null,
+  phase: "",
+  posWarmUp: 1,
+  posBody: 1,
+  posCoolDown: 1,
   circuits: [],
   fetching: false,
   error: false,
@@ -14,6 +18,47 @@ const circuitReducer = (state = initialState, action) => {
     //     return { ...state, selectedFolder: action.folder };
     //   case "FETCH_FOLDER_SUCCESSFUL":
     //     return { ...state, circuits: action.folder.circuits };
+
+    //* Set Circuit Phase
+
+    case "SETTING_PHASE":
+      return { ...state, phase: action.phase };
+
+    // * Modify Position
+
+    case "INCREASE_POS_CIRCUIT":
+      switch (state.phase) {
+        case "Warm Up":
+          return { ...state, posWarmUp: state.posWarmUp + 1 };
+        case "Body":
+          return { ...state, posBody: state.posBody + 1 };
+        case "Cool Down":
+          return { ...state, posCoolDown: state.posCoolDown + 1 };
+        default:
+          return { ...state };
+      }
+    case "DECREASE_POS_CIRCUIT":
+      switch (state.phase) {
+        case "Warm Up":
+          return { ...state, posWarmUp: state.posWarmUp - 1 };
+        case "Body":
+          return { ...state, posBody: state.posBody - 1 };
+        case "Cool Down":
+          return { ...state, posCoolDown: state.posCoolDown - 1 };
+        default:
+          return { ...state };
+      }
+    case "CLEAR_POS_CIRCUIT_VAL":
+      switch (state.phase) {
+        case "Warm Up":
+          return { ...state, posWarmUp: 0 };
+        case "Body":
+          return { ...state, posBody: 0 };
+        case "Cool Down":
+          return { ...state, posCoolDown: 0 };
+        default:
+          return { ...state };
+      }
 
     //* Fetch Circuits Belonging To User
 
@@ -42,7 +87,14 @@ const circuitReducer = (state = initialState, action) => {
     case "POST_CIRCUIT_SUCCESSFUL":
       //   const newCircuitsPOST = [...state.circuits, action.circuit];
       //   return { ...state, fetching: false, circuits: newCircuitsPOST };
-      return { ...state, fetching: false, selectedCircuit: action.circuit };
+      const newPos = state.position + 1;
+      return {
+        ...state,
+        fetching: false,
+        circuits: [...state.circuits, action.circuit],
+        selectedCircuit: action.circuit,
+        position: newPos,
+      };
 
     //* PATCH circuit
 

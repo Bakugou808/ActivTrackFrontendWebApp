@@ -47,7 +47,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function TabBar(props) {
-  const { phase } = props;
+  const { showModal, setShowModal } = props;
   const classes = useStyles();
   const theme = useTheme();
   const [value, setValue] = useState(0);
@@ -85,15 +85,27 @@ export default function TabBar(props) {
           {!nextPage ? (
             <CircuitFormPt1
               circuit_type={"stack"}
-              phase={phase}
               goToNextPage={goToNextPage}
             />
           ) : (
-            <CircuitFormPt2 circuit_type={"stack"} phase={phase} />
+            <CircuitFormPt2
+              circuit_type={"stack"}
+              setShowModal={setShowModal}
+            />
           )}
         </TabPanel>
         <TabPanel value={value} index={1} dir={theme.direction}>
-          <CircuitFormPt1 circuit_type={"circuit"} phase={phase} />
+          {!nextPage ? (
+            <CircuitFormPt1
+              circuit_type={"circuit"}
+              goToNextPage={goToNextPage}
+            />
+          ) : (
+            <CircuitFormPt2
+              circuit_type={"circuit"}
+              setShowModal={setShowModal}
+            />
+          )}
         </TabPanel>
       </SwipeableViews>
     </div>

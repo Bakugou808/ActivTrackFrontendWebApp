@@ -42,7 +42,12 @@ const workCircuitReducer = (state = initialState, action) => {
     case "POST_WORKOUT_SUCCESSFUL":
       //   const newWorkoutsPOST = [...state.workouts, action.workout];
       //   return { ...state, fetching: false, workouts: newWorkoutsPOST };
-      return { ...state, fetching: false, selectedWorkout: action.workout };
+      return {
+        ...state,
+        fetching: false,
+        workouts: [...state.workouts, action.workout],
+        selectedWorkout: action.workout,
+      };
 
     //* PATCH workout
 
