@@ -15,6 +15,11 @@ const exerciseReducer = (state = initialState, action) => {
     //   case "FETCH_FOLDER_SUCCESSFUL":
     //     return { ...state, exercises: action.folder.exercises };
 
+    // * Clear selectedExercise State once workout_circuit has been posted
+
+    case "POST_WORK_CIRCUIT_SUCCESSFUL":
+      return { ...state, selectedExercise: null };
+
     //* Fetch Exercises Belonging To User
 
     case "FETCH_EXERCISES_REQUEST":
@@ -42,7 +47,12 @@ const exerciseReducer = (state = initialState, action) => {
     case "POST_EXERCISE_SUCCESSFUL":
       //   const newExercisesPOST = [...state.exercises, action.exercise];
       //   return { ...state, fetching: false, exercises: newExercisesPOST };
-      return { ...state, fetching: false, selectedExercise: action.exercise };
+      return {
+        ...state,
+        fetching: false,
+        exercises: [...state.exercises, action.exercise],
+        selectedExercise: action.exercise,
+      };
 
     //* PATCH exercise
 

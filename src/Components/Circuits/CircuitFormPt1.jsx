@@ -6,6 +6,8 @@ import {
   postExercise,
   patchExercise,
 } from "../../Redux/Actions/ExerciseActions";
+import { postCircEx } from "../../Redux/Actions/CircExActions";
+import { postCircuit } from "../../Redux/Actions/CircuitActions";
 
 // * Component Imports
 import CheckBoxes from "./CheckBoxes";
@@ -28,9 +30,14 @@ export const CircuitFormPt1 = (props) => {
     phase,
     circuit_type,
     selectedExercise,
+    selectedCircuit,
     onPostExercise,
     onPatchExercise,
     goToNextPage,
+    onPostCircEx,
+    positionCircEx,
+    positionCircuit,
+    onPostCircuit,
   } = props;
 
   const classes = useStyles();
@@ -43,8 +50,9 @@ export const CircuitFormPt1 = (props) => {
   const [showExFormDesc, setShowExFormDesc] = useState(false);
   // * Circuit_Exercise/Attributes Field State
   const [showCustomAttFields, setShowCustomAttFields] = useState(false);
-  const [customAtts, setCustomAtts] = useState([]);
+  const [customAtts, setCustomAtts] = useState({});
   const [openSnackBar, setOpenSnackBar] = useState(false);
+  const [newCustAtt, setNewCustAtt] = useState("");
 
   const [error, setError] = useState(false);
 
@@ -80,25 +88,72 @@ export const CircuitFormPt1 = (props) => {
 
   const handleExSubmit = (e) => {
     e.preventDefault();
-    selectedExercise
-      ? onPatchExercise({ exercise: { ...exFields, id: selectedExercise.id } })
-      : onPostExercise({ exercise: { ...exFields } });
-    closeExForms(false);
+
+    if (selectedExercise) {
+      onPatchExercise({ exercise: { ...exFields, id: selectedExercise.id } });
+    } else {
+      onPostExercise({ exercise: { ...exFields } });
+      handleCircuitSubmit();
+    }
+    closeExForms();
+  };
+
+  const handleCircuitSubmit = () => {
+    let pos = positionCircuit();
+    onPostCircuit({
+      circuit: {
+        phase: phase,
+        position: pos,
+        sets: 1,
+        circuit_type: circuit_type,
+      },
+    });
   };
 
   const closeExForms = () => {
     showExFormName && setShowExFormName(false);
     showExFormDesc && setShowExFormDesc(false);
   };
-
+  // ** Need to put onPostCircEx in NewWorkout and figure out the position, circuit id and exercise id
   const handleNext = (e) => {
-    selectedExercise ? goToNextPage(true) : setError(true);
+    if (selectedExercise) {
+      const circExData = {
+        circuit_exercise: {
+          circuit_id: selectedCircuit.id,
+          exercise_id: selectedExercise.id,
+          position: positionCircEx,
+          ex_attributes: customAtts,
+        },
+      };
+      onPostCircEx(circExData, goToNextPage);
+    } else {
+      setError(true);
+    }
+  };
+
+  const handleCustomAttAdd = (custAtt) => {
+    if (custAtt in customAtts) {
+      delete customAtts[custAtt];
+    } else {
+      const newAtts = customAtts;
+      newAtts[custAtt] = 0;
+      setCustomAtts(newAtts);
+      setNewCustAtt(custAtt);
+      setOpenSnackBar(true);
+    }
   };
 
   return (
     <>
       <div className={classes.root}>
         <Grid container spacing={1}>
+          {circuit_type === "circuit" && (
+            <Grid item xs={12}>
+              <Paper className={classes.paper}>
+                Exercise #{positionCircEx}
+              </Paper>
+            </Grid>
+          )}
           <Grid item xs={12}>
             <Paper className={classes.paper}>
               {showExFormName ? (
@@ -147,7 +202,7 @@ export const CircuitFormPt1 = (props) => {
                 checked={checked}
                 setChecked={setChecked}
                 customAtts={customAtts}
-                setCustomAtts={setCustomAtts}
+                handleCustomAttAdd={handleCustomAttAdd}
               />
             </Paper>
           </Grid>
@@ -156,7 +211,7 @@ export const CircuitFormPt1 = (props) => {
               <div>
                 {showCustomAttFields ? (
                   <CustAttForm
-                    setCustomAtts={setCustomAtts}
+                    handleCustomAttAdd={handleCustomAttAdd}
                     customAtts={customAtts}
                     setShowCustomAttFields={setShowCustomAttFields}
                     setOpenSnackBar={setOpenSnackBar}
@@ -187,7 +242,7 @@ export const CircuitFormPt1 = (props) => {
           onClose={handleCloseSnackBar}
         >
           <Alert onClose={handleCloseSnackBar} severity="success">
-            Added {customAtts[customAtts.length - 1]} To Attributes
+            Added {newCustAtt} To Attributes
           </Alert>
         </Snackbar>
       </div>
@@ -208,11 +263,29 @@ export const CircuitFormPt1 = (props) => {
 
 const mapStateToProps = (store) => ({
   selectedExercise: store.exercises.selectedExercise,
+  selectedCircuit: store.circuits.selectedCircuit,
+  positionCircEx: store.circExs.position,
+  positionCircuit: () => {
+    switch (store.circuits.phase) {
+      case "Warm Up":
+        return store.circuits.posWarmUp;
+      case "Body":
+        return store.circuits.posBody;
+      case "Cool Down":
+        return store.circuits.posCoolDown;
+      default:
+        return null;
+    }
+  },
+  phase: store.circuits.phase,
 });
 
 const mapDispatchToProps = (dispatch) => ({
   onPostExercise: (exData) => dispatch(postExercise(exData)),
   onPatchExercise: (exData) => dispatch(patchExercise(exData)),
+  onPostCircEx: (circExData, goToNextPage) =>
+    dispatch(postCircEx(circExData, goToNextPage)),
+  onPostCircuit: (circuitData) => dispatch(postCircuit(circuitData)),
 });
 export default connect(mapStateToProps, mapDispatchToProps)(CircuitFormPt1);
 

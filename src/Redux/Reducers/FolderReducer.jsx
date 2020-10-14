@@ -39,7 +39,12 @@ const folderReducer = (state = initialState, action) => {
       return { ...state, fetching: false, error: action.error };
     case "POST_FOLDER_SUCCESSFUL":
       const newFoldersPOST = [...state.folders, action.folder];
-      return { ...state, fetching: false, folders: newFoldersPOST };
+      return {
+        ...state,
+        fetching: false,
+        folders: newFoldersPOST,
+        selectedFolder: action.folder,
+      };
 
     //* PATCH folder
 
@@ -56,7 +61,12 @@ const folderReducer = (state = initialState, action) => {
         (a, b) => new Date(b.created_at) - new Date(a.created_at)
       );
 
-      return { ...state, fetching: false, folders: sortedPATCH };
+      return {
+        ...state,
+        fetching: false,
+        folders: sortedPATCH,
+        selectedFolder: action.folder,
+      };
     //* DESTROY folder
 
     case "DELETE_FOLDER_REQUEST":

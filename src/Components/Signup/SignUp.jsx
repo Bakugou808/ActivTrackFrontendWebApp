@@ -41,8 +41,8 @@ export const SignUp = (props) => {
   function handleSubmit(e) {
     e.preventDefault();
     if (
-      fields.password.length > 3 &&
-      fields.username.length > 3 &&
+      fields.password.length >= 3 &&
+      fields.username.length >= 3 &&
       fields.email.includes(".com") &&
       fields.email.includes("@")
     ) {
@@ -105,11 +105,11 @@ export const SignUp = (props) => {
                 value={fields.email}
               />
             </Grid>
-            {error && (
+            {/* {error && (
               <Grid item xs={12}>
                 "Passwords Must Match"
               </Grid>
-            )}
+            )} */}
           </Grid>
           <Button
             type="submit"

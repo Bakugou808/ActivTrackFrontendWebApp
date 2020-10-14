@@ -9,6 +9,24 @@ export const headers = () => {
 };
 
 // *rxaction -> action template
+// ------- SET CIRCUIT PHASE --------
+export const setPhase = (phase) => ({
+  type: "SETTING_PHASE",
+  phase: phase,
+});
+
+// ------- MODIFY CIRCUIT POSITION ACTIONS--------
+export const increasePositionCircuit = () => ({
+  type: "INCREASE_POS_CIRCUIT",
+});
+
+export const decreasePositionCircuit = () => ({
+  type: "DECREASE_POS_CIRCUIT",
+});
+
+export const clearPosValCircuit = () => ({
+  type: "CLEAR_POS_CIRCUIT_VAL",
+});
 
 // ------- FETCH WORKOUTS CIRCUITs ACTIONS--------
 
@@ -111,6 +129,7 @@ export const postCircuit = (circuitData) => {
           dispatch(postCircuitFailed(data.error));
         } else {
           dispatch(postCircuitSuccess(data));
+          dispatch(increasePositionCircuit());
         }
       });
   };
