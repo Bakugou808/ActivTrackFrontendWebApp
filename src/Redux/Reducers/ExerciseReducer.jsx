@@ -15,6 +15,11 @@ const exerciseReducer = (state = initialState, action) => {
     //   case "FETCH_FOLDER_SUCCESSFUL":
     //     return { ...state, exercises: action.folder.exercises };
 
+    // * Clear selectedCircEx from State in multi-exercise circuit on addExercise
+
+    case "CLEAR_SELECTED_EXERCISE":
+      return { ...state, selectedExercise: null };
+
     // * Clear selectedExercise State once workout_circuit has been posted
 
     case "POST_WORK_CIRCUIT_SUCCESSFUL":

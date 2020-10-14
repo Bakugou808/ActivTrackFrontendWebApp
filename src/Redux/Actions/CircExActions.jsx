@@ -43,6 +43,12 @@ export const headers = () => {
 //   };
 // };
 
+// ------- Clear selectedCircEx ACTION--------
+
+export const clearSelectedCircEx = () => ({
+  type: "CLEAR_SELECTED_CIRC_EX",
+});
+
 // ------- MODIFY CIRC_EX POSITION ACTIONS--------
 export const increasePositionCircEx = () => ({
   type: "INCREASE_POS_CIRC_EX",
@@ -148,7 +154,7 @@ export const patchCircExSuccess = (circEx) => ({
 
 // ------- PATCH NEW CIRC_EX FUNCTION--------
 
-export const patchCircEx = (circExData, handleWorkCirc) => {
+export const patchCircEx = (circExData, handleWorkCirc = false) => {
   return (dispatch) => {
     dispatch(patchCircExRequest());
     fetch(`${API}/circuit_exercises/${circExData.circuit_exercise.id}`, {
@@ -162,7 +168,7 @@ export const patchCircEx = (circExData, handleWorkCirc) => {
           dispatch(patchCircExFailed(data.error));
         } else {
           dispatch(patchCircExSuccess(data));
-          handleWorkCirc();
+          handleWorkCirc && handleWorkCirc();
         }
       });
   };

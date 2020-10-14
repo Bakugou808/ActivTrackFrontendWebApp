@@ -238,11 +238,13 @@ export const CircuitFormPt1 = (props) => {
       <div>
         <Snackbar
           open={openSnackBar}
-          autoHideDuration={6000}
+          autoHideDuration={4000}
           onClose={handleCloseSnackBar}
         >
           <Alert onClose={handleCloseSnackBar} severity="success">
-            Added {newCustAtt} To Attributes
+            {newCustAtt != "restPeriod"
+              ? `Added ${newCustAtt} To Attributes`
+              : `Added Rest Period To Attributes`}
           </Alert>
         </Snackbar>
       </div>

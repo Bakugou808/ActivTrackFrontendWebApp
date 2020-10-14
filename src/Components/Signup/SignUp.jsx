@@ -168,7 +168,12 @@ const useStyles = makeStyles((theme) => ({
 
 function Copyright() {
   return (
-    <Typography variant="body2" color="textSecondary" align="center">
+    <Typography
+      component={"span"}
+      variant="body2"
+      color="textSecondary"
+      align="center"
+    >
       {"Copyright © "}
       <Link color="inherit" href="https://material-ui.com/">
         Your Website

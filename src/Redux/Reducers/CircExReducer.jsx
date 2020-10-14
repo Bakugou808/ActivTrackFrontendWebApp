@@ -16,14 +16,17 @@ const circExReducer = (state = initialState, action) => {
     //   case "FETCH_FOLDER_SUCCESSFUL":
     //     return { ...state, circExs: action.folder.circExs };
 
+    // * Clear selectedCircEx from State
+
+    case "CLEAR_SELECTED_CIRC_EX":
+      return { ...state, selectedCircEx: null };
+
     // * Modify Position
 
     case "INCREASE_POS_CIRC_EX":
-      const newPosInc = state.position + 1;
-      return { ...state, position: newPosInc };
+      return { ...state, position: state.position + 1 };
     case "DECREASE_POS_CIRC_EX":
-      const newPosDec = state.position - 1;
-      return { ...state, position: newPosDec };
+      return { ...state, position: state.position - 1 };
     case "CLEAR_POS_CIRC_EX_VAL":
       return { ...state, position: 1 };
     case "POST_WORK_CIRCUIT_SUCCESSFUL":
@@ -61,7 +64,6 @@ const circExReducer = (state = initialState, action) => {
         fetching: false,
         circExs: [...state.circExs, action.circEx],
         selectedCircEx: action.circEx,
-        position: state.position + 1,
       };
 
     //* PATCH circEx

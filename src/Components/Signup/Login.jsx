@@ -42,7 +42,7 @@ export const Login = (props) => {
         <Avatar className={classes.avatar}>
           <LockOutlinedIcon />
         </Avatar>
-        <Typography component="h1" variant="h5">
+        <Typography component={"span"} component="h1" variant="h5">
           Sign in
         </Typography>
         <form className={classes.form}>
@@ -140,7 +140,12 @@ const useStyles = makeStyles((theme) => ({
 
 function Copyright() {
   return (
-    <Typography variant="body2" color="textSecondary" align="center">
+    <Typography
+      component={"span"}
+      variant="body2"
+      color="textSecondary"
+      align="center"
+    >
       {"Copyright © "}
       <Link color="inherit" href="https://material-ui.com/">
         Your Website
