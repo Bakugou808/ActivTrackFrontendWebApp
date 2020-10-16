@@ -34,33 +34,57 @@ export const Workout = (props) => {
     !selectedFolder && onFetchFolder(folderId);
   }, [workoutId]);
 
-  const renderCircuits = (phase) => {
+  const renderExercises = (phase) => {
     return phase.map((circuit) => {
-      return <Paper elevation={6}>{circuit.ex_name}</Paper>;
+      let keyName = Object.keys(circuit)[0];
+      let arr = circuit[keyName];
+      if (arr[0].circuit_type === "circuit") {
+        return renderCirc(arr);
+      } else {
+        return arr.map((record) => {
+          return (
+            <div className="container grid stack">
+              <Paper elevation={6}> {record.ex_name} </Paper>{" "}
+            </div>
+          );
+        });
+      }
     });
+  };
+
+  const renderCirc = (arr) => {
+    return (
+      <div className="container grid circuit">
+        {arr.map((ex) => {
+          return <Paper elevation={6}> {ex.ex_name} </Paper>;
+        })}
+      </div>
+    );
   };
 
   return (
     <div>
       <div className="container grid">
-        <div className="container">
+        <Paper elevation={3} className="container">
           //*Warm up
           <div>
-            {formattedWorkout && renderCircuits(formattedWorkout.warmup)}
+            {formattedWorkout && renderExercises(formattedWorkout.warmup)}
           </div>
-        </div>
+        </Paper>
 
-        <div className="container">
+        <Paper elevation={6} className="container">
           //*Body
-          <div>{formattedWorkout && renderCircuits(formattedWorkout.body)}</div>
-        </div>
+          <div>
+            {formattedWorkout && renderExercises(formattedWorkout.body)}
+          </div>
+        </Paper>
 
-        <div className="container">
+        <Paper elevation={6} className="container">
           //*Cool Down
           <div>
-            {formattedWorkout && renderCircuits(formattedWorkout.cool_down)}
+            {formattedWorkout && renderExercises(formattedWorkout.cool_down)}
           </div>
-        </div>
+        </Paper>
       </div>
     </div>
   );

@@ -1,0 +1,25 @@
+.circuit {
+  //   display: flex;
+  //   align-items: center;
+  //   justify-content: center;
+  margin-top: 15px;
+  margin-bottom: 15px;
+  cursor: pointer;
+  border: 5px;
+  border-style: dotted;
+  border-color: orangered;
+  border-radius: 3px;
+}
+
+.stack {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 15px;
+  margin-bottom: 15px;
+  cursor: pointer;
+  border: 5px;
+  border-style: solid;
+  border-color: rgb(181, 197, 184);
+  border-radius: 3px;
+}
