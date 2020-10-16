@@ -97,7 +97,7 @@ export const postWorkCircuitSuccess = (workCircuit) => ({
 
 // ------- POST NEW WORK_CIRCUIT FUNCTION--------
 
-export const postWorkCircuit = (workCircuitData, setShowModal) => {
+export const postWorkCircuit = (workCircuitData, sideEffects) => {
   return (dispatch) => {
     dispatch(postWorkCircuitRequest());
     fetch(`${API}/workout_circuits`, {
@@ -111,7 +111,7 @@ export const postWorkCircuit = (workCircuitData, setShowModal) => {
           dispatch(postWorkCircuitFailed(data.error));
         } else {
           dispatch(postWorkCircuitSuccess(data));
-          setShowModal(false);
+          sideEffects();
         }
       });
   };

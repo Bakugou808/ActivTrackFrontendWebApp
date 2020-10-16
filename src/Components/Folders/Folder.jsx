@@ -4,14 +4,21 @@ import { AuthHOC } from "../AuthHOC";
 import WorkoutForm from "../Workouts/WorkoutForm";
 //* Action Imports
 import { fetchFolder } from "../../Redux/Actions/FolderActions";
-import { postWorkout } from "../../Redux/Actions/WorkoutActions";
+import { postWorkout, fetchWorkout } from "../../Redux/Actions/WorkoutActions";
 // Material UI Imports
 import { makeStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
 import Modal from "@material-ui/core/Modal";
 
 export const Folder = (props) => {
-  const { match, history, onFetchFolder, workouts, onPostWorkout } = props;
+  const {
+    match,
+    history,
+    onFetchFolder,
+    workouts,
+    onPostWorkout,
+    onFetchWorkout,
+  } = props;
   const folderId = parseInt(match.params.folderId);
   const folderName = match.params.folderName;
   const [showForm, setShowForm] = useState(false);
@@ -28,10 +35,22 @@ export const Folder = (props) => {
     history.push(`/new_workout/${folderName}/${folderId}/${path}`);
   };
 
+  const redirectToWorkout = (workout) => {
+    console.log(workout);
+    onFetchWorkout(workout.id);
+    history.push(
+      `/workouts/${folderName}/${folderId}/${workout.title}/${workout.id}`
+    );
+  };
+
   const renderWorkout = () => {
     return workouts.map((workout) => {
       return (
-        <Paper key={workout.id} className={classes.workout}>
+        <Paper
+          key={workout.id}
+          onClick={() => redirectToWorkout(workout)}
+          className={classes.workout}
+        >
           {workout.title}
         </Paper>
       );
@@ -78,6 +97,7 @@ const mapDispatchToProps = (dispatch) => ({
   onFetchFolder: (folderId) => dispatch(fetchFolder(folderId)),
   onPostWorkout: (workoutData, redirectNewWorkout) =>
     dispatch(postWorkout(workoutData, redirectNewWorkout)),
+  onFetchWorkout: (workoutId) => dispatch(fetchWorkout(workoutId)),
 });
 
 export default AuthHOC(connect(mapStateToProps, mapDispatchToProps)(Folder));

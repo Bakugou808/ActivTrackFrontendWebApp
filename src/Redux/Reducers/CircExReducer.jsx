@@ -21,6 +21,11 @@ const circExReducer = (state = initialState, action) => {
     case "CLEAR_SELECTED_CIRC_EX":
       return { ...state, selectedCircEx: null };
 
+    // * Clear selectedExercise State once workout_circuit has been posted
+
+    case "POST_WORK_CIRCUIT_SUCCESSFUL":
+      return { ...state, selectedCircEx: null };
+
     // * Modify Position
 
     case "INCREASE_POS_CIRC_EX":

@@ -24,6 +24,11 @@ const circuitReducer = (state = initialState, action) => {
     case "SETTING_PHASE":
       return { ...state, phase: action.phase };
 
+    // * Clear selectedCircuit State once workout_circuit has been posted
+
+    case "POST_WORK_CIRCUIT_SUCCESSFUL":
+      return { ...state, selectedCircuit: null };
+
     // * Modify Position
 
     case "INCREASE_POS_CIRCUIT":
