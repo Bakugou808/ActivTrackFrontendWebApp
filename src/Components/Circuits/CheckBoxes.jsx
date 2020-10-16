@@ -32,6 +32,7 @@ export default function CheckBoxes(props) {
   return (
     <FormGroup row>
       <FormControlLabel
+        disabled
         control={
           <GreenCheckbox
             checked={checked.reps}
@@ -56,10 +57,10 @@ export default function CheckBoxes(props) {
           <GreenCheckbox
             checked={checked.height}
             onChange={handleCheckBoxChange}
-            name="height"
+            name="holdTime"
           />
         }
-        label="Height"
+        label="Hold Time"
       />
       <FormControlLabel
         control={

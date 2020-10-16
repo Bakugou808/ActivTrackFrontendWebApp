@@ -7,6 +7,7 @@ import {
   patchCircEx,
   increasePositionCircEx,
   clearSelectedCircEx,
+  clearPosValCircEx,
 } from "../../Redux/Actions/CircExActions";
 import { postWorkCircuit } from "../../Redux/Actions/WorkCircuitsActions";
 import { clearSelectedExercise } from "../../Redux/Actions/ExerciseActions";
@@ -21,6 +22,7 @@ export const CircuitFormPt2 = (props) => {
   const {
     positionCircEx,
     circuit_type,
+    selectedExercise,
     selectedCircEx,
     selectedWorkout,
     selectedCircuit,
@@ -29,6 +31,7 @@ export const CircuitFormPt2 = (props) => {
     onPostWorkCircuit,
     onClearSelectedCircEx,
     onClearSelectedExercise,
+    onClearPosValCircEx,
     setShowModal,
   } = props;
   const classes = useStyles();
@@ -41,6 +44,10 @@ export const CircuitFormPt2 = (props) => {
 
   const handleChange = (e) => {
     const obj = { [e.target.name]: e.target.value };
+    console.log(obj);
+    // if (!([e.target.name] === "reps" && e.target.value === 0)) {
+    //   setAtts((prev) => ({ ...prev, ...obj }));
+    // }
     setAtts((prev) => ({ ...prev, ...obj }));
   };
 
@@ -59,7 +66,11 @@ export const CircuitFormPt2 = (props) => {
         circuit_id: selectedCircuit.id,
       },
     };
-    onPostWorkCircuit(data, setShowModal);
+    const sideEffects = () => {
+      onClearPosValCircEx();
+      setShowModal(false);
+    };
+    onPostWorkCircuit(data, sideEffects);
   };
 
   const handleAddEx = () => {
@@ -78,31 +89,62 @@ export const CircuitFormPt2 = (props) => {
 
     // setAddEx(true);
   };
+  function toTitleCase(str) {
+    return str.replace(/\w\S*/g, function (txt) {
+      return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+    });
+  }
 
   const renderAttFields = () => {
     return Object.keys(atts).map((att) => {
-      if (att == "restPeriod") {
-        return (
-          <TextField
-            id="outlined-basic"
-            label={att}
-            name={"Rest Period"}
-            value={atts[att]}
-            onChange={handleChange}
-            variant="outlined"
-          />
-        );
-      } else {
-        return (
-          <TextField
-            id="outlined-basic"
-            label={att}
-            name={att}
-            value={atts[att]}
-            onChange={handleChange}
-            variant="outlined"
-          />
-        );
+      switch (att) {
+        case "restPeriod":
+          return (
+            <TextField
+              id="outlined-basic"
+              label={"Rest Period"}
+              name={att}
+              value={atts[att]}
+              onChange={handleChange}
+              variant="outlined"
+            />
+          );
+        case "holdTime":
+          return (
+            <TextField
+              id="outlined-basic"
+              label={"Hold Time"}
+              name={att}
+              value={atts[att]}
+              onChange={handleChange}
+              variant="outlined"
+            />
+          );
+        case "reps":
+          return (
+            <TextField
+              id="outlined-basic"
+              type="number"
+              //! min={"1"} doesn't apply to MatUi
+              defaultValue={1}
+              label={"Reps"}
+              name={att}
+              value={atts[att]}
+              onChange={handleChange}
+              variant="outlined"
+            />
+          );
+        default:
+          return (
+            <TextField
+              id="outlined-basic"
+              label={toTitleCase(att)}
+              name={att}
+              value={atts[att]}
+              onChange={handleChange}
+              variant="outlined"
+            />
+          );
       }
     });
   };
@@ -114,7 +156,9 @@ export const CircuitFormPt2 = (props) => {
           {circuit_type === "circuit" && (
             <Grid item xs={12}>
               <Paper className={classes.paper}>
-                Exercise #{positionCircEx}
+                {selectedExercise
+                  ? `Exercise #${positionCircEx}: ${selectedExercise.exercise_name}`
+                  : `Exercise #${positionCircEx} `}
               </Paper>
             </Grid>
           )}
@@ -153,6 +197,7 @@ export const CircuitFormPt2 = (props) => {
 };
 
 const mapStateToProps = (store) => ({
+  selectedExercise: store.exercises.selectedExercise,
   selectedCircEx: store.circExs.selectedCircEx,
   selectedWorkout: store.workouts.selectedWorkout,
   selectedCircuit: store.circuits.selectedCircuit,
@@ -168,6 +213,8 @@ const mapDispatchToProps = (dispatch) => ({
   onIncreasePositionCircEx: () => dispatch(increasePositionCircEx()),
   onClearSelectedCircEx: () => dispatch(clearSelectedCircEx()),
   onClearSelectedExercise: () => dispatch(clearSelectedExercise()),
+  onClearPosValCircEx: (data, sideEffects) =>
+    dispatch(clearPosValCircEx(data, sideEffects)),
 });
 export default connect(mapStateToProps, mapDispatchToProps)(CircuitFormPt2);
 

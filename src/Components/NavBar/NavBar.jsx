@@ -101,7 +101,7 @@ function NavBar(props) {
             {isLoggedIn && <MenuIcon />}
           </IconButton>
           <Typography component={"span"} variant="h6" className={classes.title}>
-            <Link href="/" color="inherit">
+            <Link href="/about" color="inherit">
               ActivTrack
             </Link>
           </Typography>

@@ -2,6 +2,7 @@
 
 const initialState = {
   selectedWorkout: null,
+  formattedWorkout: null,
   workouts: [],
   fetching: false,
   error: false,
@@ -32,6 +33,15 @@ const workCircuitReducer = (state = initialState, action) => {
       return { ...state, fetching: false, error: action.error };
     case "FETCH_WORKOUT_SUCCESSFUL":
       return { ...state, fetching: false, selectedWorkout: action.workout };
+
+    //* Fetch FORMATTED Workout
+
+    case "FETCH_FORMATTED_WORKOUT_REQUEST":
+      return { ...state, fetching: true };
+    case "FETCH_FORMATTED_WORKOUT_FAILED":
+      return { ...state, fetching: false, error: action.error };
+    case "FETCH_FORMATTED_WORKOUT_SUCCESSFUL":
+      return { ...state, fetching: false, formattedWorkout: action.workout };
 
     //* POST New Workout
 

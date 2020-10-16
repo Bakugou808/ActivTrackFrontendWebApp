@@ -16,6 +16,7 @@ import {
   postWorkout,
   patchWorkout,
   fetchWorkout,
+  fetchFormattedWorkout,
 } from "../../Redux/Actions/WorkoutActions";
 
 export const NewWorkout = (props) => {
@@ -27,6 +28,7 @@ export const NewWorkout = (props) => {
     selectedFolder,
     match,
     onFetchWorkout,
+    onFetchFormattedWorkout,
     onFetchFolder,
     onSetPhase,
   } = props;
@@ -45,6 +47,7 @@ export const NewWorkout = (props) => {
 
   useEffect(() => {
     !selectedWorkout && onFetchWorkout(workoutId);
+    !selectedWorkout && onFetchFormattedWorkout(workoutId);
     !selectedFolder && onFetchFolder(folderId);
     selectedWorkout && setTitle(selectedWorkout.title);
     selectedWorkout && setDesc(selectedWorkout.description);
@@ -198,6 +201,8 @@ const mapDispatchToProps = (dispatch) => ({
   onFetchWorkout: (workoutId) => dispatch(fetchWorkout(workoutId)),
   onFetchFolder: (folderId) => dispatch(fetchFolder(folderId)),
   onSetPhase: (phase) => dispatch(setPhase(phase)),
+  onFetchFormattedWorkout: (workoutId) =>
+    dispatch(fetchFormattedWorkout(workoutId)),
 });
 export default AuthHOC(
   connect(mapStateToProps, mapDispatchToProps)(NewWorkout)

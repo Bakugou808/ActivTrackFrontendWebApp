@@ -50,16 +50,16 @@ export const CircuitFormPt1 = (props) => {
   const [showExFormDesc, setShowExFormDesc] = useState(false);
   // * Circuit_Exercise/Attributes Field State
   const [showCustomAttFields, setShowCustomAttFields] = useState(false);
-  const [customAtts, setCustomAtts] = useState({});
+  const [customAtts, setCustomAtts] = useState({ reps: 1 });
   const [openSnackBar, setOpenSnackBar] = useState(false);
   const [newCustAtt, setNewCustAtt] = useState("");
 
   const [error, setError] = useState(false);
 
   const [checked, setChecked] = useState({
-    reps: false,
+    reps: true,
     weight: false,
-    height: false,
+    holdTime: false,
     restPeriod: false,
   });
 
@@ -91,9 +91,11 @@ export const CircuitFormPt1 = (props) => {
 
     if (selectedExercise) {
       onPatchExercise({ exercise: { ...exFields, id: selectedExercise.id } });
-    } else {
+    } else if (!selectedCircuit) {
       onPostExercise({ exercise: { ...exFields } });
       handleCircuitSubmit();
+    } else {
+      onPostExercise({ exercise: { ...exFields } });
     }
     closeExForms();
   };
@@ -242,9 +244,11 @@ export const CircuitFormPt1 = (props) => {
           onClose={handleCloseSnackBar}
         >
           <Alert onClose={handleCloseSnackBar} severity="success">
-            {newCustAtt != "restPeriod"
+            {newCustAtt != "restPeriod" && newCustAtt != "holdTime"
               ? `Added ${newCustAtt} To Attributes`
-              : `Added Rest Period To Attributes`}
+              : newCustAtt === "restPeriod"
+              ? `Added Rest Period To Attributes`
+              : "Added Hold Time To Attributes"}
           </Alert>
         </Snackbar>
       </div>

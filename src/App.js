@@ -10,31 +10,45 @@ import Folders from "./Components/Folders/Folders";
 import Folder from "./Components/Folders/Folder";
 import SessionsContainer from "./Components/Sessions/SessionsContainer";
 import NewWorkout from "./Components/Workouts/NewWorkout";
+import Workout from "./Components/Workouts/Workout";
 
-function App() {
-  return (
-    <div className="App">
-      <Route path="/" render={(props) => <NavBar {...props} />} />
-      <Route exact path="/" render={(props) => <About {...props} />} />
-      <Route path="/signup" render={(props) => <SignUp {...props} />} />
-      <Route path="/signin" render={(props) => <LogIn {...props} />} />
-      {/* left drawer paths */}
-      <Route path="/home" render={(props) => <Home {...props} />} />
-      <Route exact path="/folders" render={(props) => <Folders {...props} />} />
-      <Route
-        path={`/folders/:folderName/:folderId`}
-        render={(props) => <Folder {...props} />}
-      />
-      <Route
-        path="/new_workout/:folderName/:folderId/:workoutTitle/:workoutId"
-        render={(props) => <NewWorkout {...props} />}
-      />
-      <Route
-        path="/session"
-        render={(props) => <SessionsContainer {...props} />}
-      />
-    </div>
-  );
+class App extends React.Component {
+  render() {
+    return (
+      <div className="App">
+        <Route path="/" render={(props) => <NavBar {...props} />} />
+        <Switch>
+          <Route path="/about" render={(props) => <About {...props} />} />
+          <Route path="/signup" render={(props) => <SignUp {...props} />} />
+          <Route path="/signin" render={(props) => <LogIn {...props} />} />
+          {/* left drawer paths */}
+          <Route path="/home" render={(props) => <Home {...props} />} />
+          <Route
+            exact
+            path="/folders"
+            render={(props) => <Folders {...props} />}
+          />
+          {/* custom paths with ids */}
+          <Route
+            path="/session"
+            render={(props) => <SessionsContainer {...props} />}
+          />
+          <Route
+            path={`/folders/:folderName/:folderId`}
+            render={(props) => <Folder {...props} />}
+          />
+          <Route
+            path="/new_workout/:folderName/:folderId/:workoutTitle/:workoutId"
+            render={(props) => <NewWorkout {...props} />}
+          />
+          <Route
+            path="/workouts/:folderName/:folderId/:workoutTitle/:workoutId"
+            render={(props) => <Workout {...props} />}
+          />
+        </Switch>
+      </div>
+    );
+  }
 }
 
 export default App;

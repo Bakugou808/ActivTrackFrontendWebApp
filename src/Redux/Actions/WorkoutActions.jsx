@@ -79,6 +79,42 @@ export const fetchWorkout = (workoutId) => {
   };
 };
 
+// ------- FETCH FORMATTED WORKOUT ACTIONS--------
+
+export const fetchFormattedWorkoutRequest = () => ({
+  type: "FETCH_FORMATTED_WORKOUT_REQUEST",
+});
+
+export const fetchFormattedWorkoutFailed = (error) => ({
+  type: "FETCH_FORMATTED_WORKOUT_FAILED",
+  error: error,
+});
+
+export const fetchFormattedWorkoutSuccess = (workout) => ({
+  type: "FETCH_FORMATTED_WORKOUT_SUCCESSFUL",
+  workout: workout,
+});
+
+// ------- FETCH FORMATTED WORKOUT FUNCTION--------
+
+export const fetchFormattedWorkout = (workoutId) => {
+  return (dispatch) => {
+    dispatch(fetchFormattedWorkoutRequest());
+    fetch(`${API}/formatted_workout/${workoutId}`, {
+      method: "GET",
+      headers: headers(),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.error) {
+          dispatch(fetchFormattedWorkoutFailed(data.error));
+        } else {
+          dispatch(fetchFormattedWorkoutSuccess(data));
+        }
+      });
+  };
+};
+
 // ------- POST NEW WORKOUT ACTIONS--------
 
 export const postWorkoutRequest = () => ({
