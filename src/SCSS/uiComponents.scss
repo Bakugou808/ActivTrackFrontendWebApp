@@ -1,0 +1,65 @@
+.circuit {
+  //   display: flex;
+  //   align-items: center;
+  //   justify-content: center;
+  margin-top: 15px;
+  margin-bottom: 15px;
+  cursor: pointer;
+  border: 5px;
+  border-style: dotted;
+  border-color: orangered;
+  border-radius: 3px;
+}
+
+.stack {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 15px;
+  margin-bottom: 15px;
+  cursor: pointer;
+  border: 5px;
+  border-style: solid;
+  border-color: rgb(181, 197, 184);
+  border-radius: 3px;
+}
+
+// timer styles
+
+.timer-wrapper {
+  display: flex;
+  justify-content: center;
+}
+
+.timer {
+  font-family: "Montserrat";
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.text {
+  color: #aaa;
+}
+
+.value {
+  font-size: 40px;
+}
+
+.info {
+  max-width: 360px;
+  margin: 40px auto 0;
+  text-align: center;
+  font-size: 16px;
+}
+
+// .react-stopwatch-timer__element {
+//   width: 3px !important;
+//   height: 3px !important;
+//   border-radius: 5px;
+// }
+
+// .react-stopwatch-timer__table {
+//   width: 300px !important;
+//   height: 300px !important;
+// }

@@ -10,6 +10,12 @@ export const headers = () => {
 
 // *rxaction -> action template
 
+// ------- CLEAR SELECTED WORKOUT AND FORMATTED WORKOUT FROM STATE ACTIONS--------
+
+export const clearSelectedAndFormattedWorkouts = () => ({
+  type: "CLEAR_SELECTED_AND_FORMATTED_WORKOUT_STATE",
+});
+
 // ------- FETCH FOLDER WORKOUTS ACTIONS--------
 
 export const fetchWorkoutsRequest = () => ({

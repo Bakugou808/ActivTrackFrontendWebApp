@@ -8,12 +8,41 @@ import {
   fetchFormattedWorkout,
 } from "../../Redux/Actions/WorkoutActions";
 import { fetchFolder } from "../../Redux/Actions/FolderActions";
+import { postSession } from "../../Redux/Actions/SessionsActions";
 
 // * Material UI Imports
 import { makeStyles } from "@material-ui/core/styles";
-import Paper from "@material-ui/core/Paper";
+import { Paper, Button } from "@material-ui/core";
 
-export const Workout = (props) => {
+export const renderExercises = (phase) => {
+  return phase.map((circuit) => {
+    let keyName = Object.keys(circuit)[0];
+    let arr = circuit[keyName];
+    if (arr[0].circuit_type === "circuit") {
+      return renderCirc(arr);
+    } else {
+      return arr.map((record) => {
+        return (
+          <div className="container grid stack">
+            <Paper elevation={6}> {record.ex_name} </Paper>{" "}
+          </div>
+        );
+      });
+    }
+  });
+};
+
+export const renderCirc = (arr) => {
+  return (
+    <div className="container grid circuit">
+      {arr.map((ex) => {
+        return <Paper elevation={6}> {ex.ex_name} </Paper>;
+      })}
+    </div>
+  );
+};
+
+const Workout = (props) => {
   const {
     history,
     match,
@@ -23,9 +52,12 @@ export const Workout = (props) => {
     selectedFolder,
     selectedWorkout,
     formattedWorkout,
+    onPostSession,
   } = props;
   const folderId = match.params.folderId;
   const workoutId = match.params.workoutId;
+  const folderName = match.params.folderName;
+  const workoutTitle = match.params.workoutTitle;
 
   useEffect(() => {
     workoutId && onFetchWorkout(workoutId);
@@ -34,33 +66,62 @@ export const Workout = (props) => {
     !selectedFolder && onFetchFolder(folderId);
   }, [workoutId]);
 
-  const renderCircuits = (phase) => {
-    return phase.map((circuit) => {
-      return <Paper elevation={6}>{circuit.ex_name}</Paper>;
-    });
+  const handleStartWorkout = () => {
+    const sideEffects = () => {
+      history.push(
+        `/start_workouts/${folderName}/${folderId}/${workoutTitle}/${workoutId}`
+      );
+    };
+
+    // post session here then patch at the end of workout
+    const count =
+      selectedWorkout.sessions.length > 0
+        ? selectedWorkout.sessions.length + 1
+        : 1;
+    const sessionData = {
+      session: {
+        workout_id: workoutId,
+        count: count,
+        active_time: 0,
+        rest_time: 0,
+        total_time: 0,
+      },
+    };
+    onPostSession(sessionData, sideEffects);
   };
 
   return (
     <div>
+      <div>
+        <Button
+          variant="contained"
+          color="secondary"
+          onClick={handleStartWorkout}
+        >
+          Start Workout
+        </Button>
+      </div>
       <div className="container grid">
-        <div className="container">
+        <Paper elevation={3} className="container">
           //*Warm up
           <div>
-            {formattedWorkout && renderCircuits(formattedWorkout.warmup)}
+            {formattedWorkout && renderExercises(formattedWorkout.warmup)}
           </div>
-        </div>
+        </Paper>
 
-        <div className="container">
+        <Paper elevation={6} className="container">
           //*Body
-          <div>{formattedWorkout && renderCircuits(formattedWorkout.body)}</div>
-        </div>
+          <div>
+            {formattedWorkout && renderExercises(formattedWorkout.body)}
+          </div>
+        </Paper>
 
-        <div className="container">
+        <Paper elevation={6} className="container">
           //*Cool Down
           <div>
-            {formattedWorkout && renderCircuits(formattedWorkout.cool_down)}
+            {formattedWorkout && renderExercises(formattedWorkout.cool_down)}
           </div>
-        </div>
+        </Paper>
       </div>
     </div>
   );
@@ -77,6 +138,8 @@ const mapDispatchToProps = (dispatch) => ({
   onFetchFolder: (folderId) => dispatch(fetchFolder(folderId)),
   onFetchFormattedWorkout: (workoutId) =>
     dispatch(fetchFormattedWorkout(workoutId)),
+  onPostSession: (sessionData, sideEffects) =>
+    dispatch(postSession(sessionData, sideEffects)),
 });
 
 export default AuthHOC(connect(mapStateToProps, mapDispatchToProps)(Workout));

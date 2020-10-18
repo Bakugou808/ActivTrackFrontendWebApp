@@ -11,6 +11,7 @@ import {
 } from "../../Redux/Actions/CircExActions";
 import { postWorkCircuit } from "../../Redux/Actions/WorkCircuitsActions";
 import { clearSelectedExercise } from "../../Redux/Actions/ExerciseActions";
+import { fetchFormattedWorkout } from "../../Redux/Actions/WorkoutActions";
 // * Material UI Imports
 import { makeStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
@@ -32,6 +33,7 @@ export const CircuitFormPt2 = (props) => {
     onClearSelectedCircEx,
     onClearSelectedExercise,
     onClearPosValCircEx,
+    onFetchFormattedWorkout,
     setShowModal,
   } = props;
   const classes = useStyles();
@@ -44,10 +46,6 @@ export const CircuitFormPt2 = (props) => {
 
   const handleChange = (e) => {
     const obj = { [e.target.name]: e.target.value };
-    console.log(obj);
-    // if (!([e.target.name] === "reps" && e.target.value === 0)) {
-    //   setAtts((prev) => ({ ...prev, ...obj }));
-    // }
     setAtts((prev) => ({ ...prev, ...obj }));
   };
 
@@ -68,6 +66,7 @@ export const CircuitFormPt2 = (props) => {
     };
     const sideEffects = () => {
       onClearPosValCircEx();
+      onFetchFormattedWorkout(selectedWorkout.id);
       setShowModal(false);
     };
     onPostWorkCircuit(data, sideEffects);
@@ -84,10 +83,6 @@ export const CircuitFormPt2 = (props) => {
       setAddEx(true);
     };
     onPatchCircEx(circExData, sideEffects);
-    // onIncreasePositionCircEx();
-    // onClearSelectedCircEx();
-
-    // setAddEx(true);
   };
   function toTitleCase(str) {
     return str.replace(/\w\S*/g, function (txt) {
@@ -215,6 +210,8 @@ const mapDispatchToProps = (dispatch) => ({
   onClearSelectedExercise: () => dispatch(clearSelectedExercise()),
   onClearPosValCircEx: (data, sideEffects) =>
     dispatch(clearPosValCircEx(data, sideEffects)),
+  onFetchFormattedWorkout: (workoutId) =>
+    dispatch(fetchFormattedWorkout(workoutId)),
 });
 export default connect(mapStateToProps, mapDispatchToProps)(CircuitFormPt2);
 

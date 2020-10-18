@@ -10,11 +10,16 @@ const initialState = {
 
 const workCircuitReducer = (state = initialState, action) => {
   switch (action.type) {
-    //* Set Selected Folder
-    case "SET_SELECTED_FOLDER":
-      return { ...state, selectedFolder: action.folder };
+    //* Set Selected Workout
+    case "SET_SELECTED_WORKOUT":
+      return { ...state, selectedWorkout: action.workout };
+    //* Set Workouts Based On Selected Folder
     case "FETCH_FOLDER_SUCCESSFUL":
       return { ...state, workouts: action.folder.workouts };
+
+    // * Clear Selected Workout and Formatted Workout State
+    case "CLEAR_SELECTED_AND_FORMATTED_WORKOUT_STATE":
+      return { ...state, selectedWorkout: null, formattedWorkout: null };
 
     //* Fetch Workouts Belonging To User
 
