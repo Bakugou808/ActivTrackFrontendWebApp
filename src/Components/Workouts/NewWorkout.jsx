@@ -7,7 +7,9 @@ import TabBar from "../Circuits/TabBar";
 // * Material UI Imports
 import { makeStyles } from "@material-ui/core/styles";
 import QueueIcon from "@material-ui/icons/Queue";
-import { Tooltip, Fab, IconButton } from "@material-ui/core";
+import { Tooltip, Fab, Button } from "@material-ui/core";
+// * Function Imports
+import { renderCirc, renderExercises } from "./Workout";
 
 // * Action Imports
 import { fetchFolder } from "../../Redux/Actions/FolderActions";
@@ -31,10 +33,16 @@ export const NewWorkout = (props) => {
     onFetchFormattedWorkout,
     onFetchFolder,
     onSetPhase,
+    formattedWorkout,
+    warmup,
+    body,
+    cool_down,
   } = props;
 
   const folderId = parseInt(match.params.folderId);
+  const folderName = match.params.folderName;
   const workoutId = parseInt(match.params.workoutId);
+  const workoutTitle = match.params.workoutTitle;
   const [title, setTitle] = useState("Add Title");
   const [showTitleForm, setShowTitleForm] = useState(false);
   const [showDescForm, setShowDescForm] = useState(false);
@@ -76,6 +84,12 @@ export const NewWorkout = (props) => {
   const handleAdd = (phase) => {
     onSetPhase(phase);
     setShowForm(true);
+  };
+
+  const handleSave = () => {
+    history.push(
+      `/workouts/${folderName}/${folderId}/${workoutTitle}/${workoutId}`
+    );
   };
 
   return (
@@ -127,6 +141,11 @@ export const NewWorkout = (props) => {
           )}
         </div>
       </div>
+      <div>
+        <Button variant="contained" color="secondary" onClick={handleSave}>
+          Save Workout
+        </Button>
+      </div>
 
       <div className="container grid">
         <div>
@@ -143,8 +162,9 @@ export const NewWorkout = (props) => {
               </Fab>
             </Tooltip>
           </div>
-          <div className="addNewString"></div>
-          {/* {warmUpEx && renderWarmUp()} */}
+          <div className="container grid">
+            {warmup && renderExercises(warmup)}
+          </div>
         </div>
 
         <div>
@@ -161,6 +181,7 @@ export const NewWorkout = (props) => {
               </Fab>
             </Tooltip>
           </div>
+          <div className="container grid">{body && renderExercises(body)}</div>
         </div>
 
         <div>
@@ -177,6 +198,9 @@ export const NewWorkout = (props) => {
               </Fab>
             </Tooltip>
           </div>
+          <div className="container grid">
+            {cool_down && renderExercises(cool_down)}
+          </div>
         </div>
       </div>
       <MyModal
@@ -191,6 +215,13 @@ export const NewWorkout = (props) => {
 const mapStateToProps = (store) => ({
   selectedFolder: store.folders.selectedFolder,
   selectedWorkout: store.workouts.selectedWorkout,
+  formattedWorkout: store.workouts.formattedWorkout,
+  warmup:
+    store.workouts.formattedWorkout && store.workouts.formattedWorkout.warmup,
+  body: store.workouts.formattedWorkout && store.workouts.formattedWorkout.body,
+  coolDown:
+    store.workouts.formattedWorkout &&
+    store.workouts.formattedWorkout.cool_down,
 });
 
 const mapDispatchToProps = (dispatch) => ({

@@ -8,7 +8,7 @@ const initialState = {
   error: false,
 };
 
-const workCircuitReducer = (state = initialState, action) => {
+const statReducer = (state = initialState, action) => {
   switch (action.type) {
     //* Set Selected Workout
     case "SET_SELECTED_WORKOUT":
@@ -105,4 +105,4 @@ const workCircuitReducer = (state = initialState, action) => {
   }
 };
 
-export default workCircuitReducer;
+export default statReducer;

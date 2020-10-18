@@ -4,7 +4,11 @@ import { AuthHOC } from "../AuthHOC";
 import WorkoutForm from "../Workouts/WorkoutForm";
 //* Action Imports
 import { fetchFolder } from "../../Redux/Actions/FolderActions";
-import { postWorkout, fetchWorkout } from "../../Redux/Actions/WorkoutActions";
+import {
+  postWorkout,
+  fetchWorkout,
+  clearSelectedAndFormattedWorkouts,
+} from "../../Redux/Actions/WorkoutActions";
 // Material UI Imports
 import { makeStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
@@ -18,6 +22,7 @@ export const Folder = (props) => {
     workouts,
     onPostWorkout,
     onFetchWorkout,
+    onClearSelectedAndFormattedWorkouts,
   } = props;
   const folderId = parseInt(match.params.folderId);
   const folderName = match.params.folderName;
@@ -62,10 +67,15 @@ export const Folder = (props) => {
     onPostWorkout(workoutData, redirectNewWorkout);
   };
 
+  const handleNewWorkout = () => {
+    onClearSelectedAndFormattedWorkouts();
+    setShowForm(true);
+  };
+
   return (
     <div>
       <div>
-        <span className={"addNewString"} onClick={() => setShowForm(true)}>
+        <span className={"addNewString"} onClick={handleNewWorkout}>
           + Add New Workout
         </span>
       </div>
@@ -98,6 +108,8 @@ const mapDispatchToProps = (dispatch) => ({
   onPostWorkout: (workoutData, redirectNewWorkout) =>
     dispatch(postWorkout(workoutData, redirectNewWorkout)),
   onFetchWorkout: (workoutId) => dispatch(fetchWorkout(workoutId)),
+  onClearSelectedAndFormattedWorkouts: () =>
+    dispatch(clearSelectedAndFormattedWorkouts()),
 });
 
 export default AuthHOC(connect(mapStateToProps, mapDispatchToProps)(Folder));

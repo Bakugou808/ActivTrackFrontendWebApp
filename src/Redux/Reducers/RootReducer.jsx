@@ -7,6 +7,7 @@ import circuitReducer from "./CircuitsReducer";
 import exerciseReducer from "./ExerciseReducer";
 import circExReducer from "./CircExReducer";
 import workCircuitReducer from "./WorkCircuitReducer";
+import statReducer from "./StatReducer";
 
 const rootReducer = combineReducers({
   user: userReducer,
@@ -17,6 +18,7 @@ const rootReducer = combineReducers({
   circuits: circuitReducer,
   circExs: circExReducer,
   workCircuits: workCircuitReducer,
+  stats: statReducer,
 });
 
 export default rootReducer;

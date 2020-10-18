@@ -11,6 +11,7 @@ import Folder from "./Components/Folders/Folder";
 import SessionsContainer from "./Components/Sessions/SessionsContainer";
 import NewWorkout from "./Components/Workouts/NewWorkout";
 import Workout from "./Components/Workouts/Workout";
+import StartWorkout from "./Components/Workouts/StartWorkout";
 
 class App extends React.Component {
   render() {
@@ -44,6 +45,10 @@ class App extends React.Component {
           <Route
             path="/workouts/:folderName/:folderId/:workoutTitle/:workoutId"
             render={(props) => <Workout {...props} />}
+          />
+          <Route
+            path="/start_workouts/:folderName/:folderId/:workoutTitle/:workoutId"
+            render={(props) => <StartWorkout {...props} />}
           />
         </Switch>
       </div>
