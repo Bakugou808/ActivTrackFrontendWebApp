@@ -14,6 +14,9 @@ import {
   fetchWorkout,
   fetchFormattedWorkout,
 } from "../../Redux/Actions/WorkoutActions";
+import { postStat } from "../../Redux/Actions/StatsActions";
+
+//*! add the session id to the url path to have access for refresh, maybe add the circ_ex id as well and keep the route open... that way on refresh during a session you can fetch the exercise the user was on and slice the exObjs from indexOf(circ_ex) to the end*/
 
 const StartWorkout = (props) => {
   const {
@@ -23,20 +26,26 @@ const StartWorkout = (props) => {
     selectedWorkout,
     onFetchWorkout,
     onFetchFormattedWorkout,
+    onPostStat,
+    selectedSession,
   } = props;
   const workoutId = match.params.workoutId;
   const [exObj, setExObj] = useState(false);
   const [exObjs, setExObjs] = useState([]);
   const [goToNext, setGoToNext] = useState(false);
-  const [endEx, setEndEx] = useState(false);
+  // *start/stop exercise
   const [startEx, setStartEx] = useState(false);
+  const [endEx, setEndEx] = useState(false);
+  // *log total time for entire workout
   const [totalTime, setTotalTime] = useState(0);
-  const [activeTime, setActiveTime] = useState(0);
-  const [restTime, setRestTime] = useState(0);
-  const [exStats, setExStats] = useState({ activeTime: 0, restTime: 0 });
-
+  // *store stats (att + active/rest times + note?)
+  const [exStats, setExStats] = useState({ active_time: 0, rest_time: 0 });
+  const [submitClicked, setSubmitClicked] = useState(false);
+  //  *expand att fields once exercise is completed
+  const [focusAttFields, setFocusAttFields] = useState(false);
+  // *state and functions for timer hook --> rename the props and see if you can have more than one timer?
   const { time, start, pause, reset, isRunning } = useTimer({
-    // endTime,
+    // endTime: 10,
     onTimeUpdate: (time) => {
       // console.log("Time is over", time);
     },
@@ -64,7 +73,7 @@ const StartWorkout = (props) => {
   };
 
   const handleStartWorkout = () => {
-    deliverNextExObj();
+    !exObj && deliverNextExObj();
     setStartEx(true);
     start();
   };
@@ -72,13 +81,34 @@ const StartWorkout = (props) => {
   const handleEndEx = (t) => {
     setStartEx(false);
     setEndEx(true);
-    setExStats((prev) => ({ ...prev, activeTime: t }));
+    setExStats((prev) => ({ ...prev, active_time: t }));
+    setFocusAttFields(true);
     reset();
     start();
   };
 
-  const handleSetExStats = (stats) => {
-    setExStats();
+  const handleSubmitStats = (t) => {
+    const statData = {
+      circuit_exercise_session_details: {
+        stats: exStats,
+        ...{
+          rest_time: t,
+          session_id: selectedSession.id,
+          circuit_exercise_id: exObj.circuit_exercise_id,
+        },
+      },
+    };
+
+    const sideEffects = () => {
+      deliverNextExObj();
+      reset();
+      setStartEx(true);
+      setEndEx(false);
+      start();
+    };
+
+    onPostStat(statData, sideEffects);
+    setFocusAttFields(false);
   };
 
   const deliverNextExObj = () => {
@@ -101,7 +131,6 @@ const StartWorkout = (props) => {
         <UiComponent
           exObj={exObj}
           startEx={startEx}
-          goToNext={goToNext}
           stopWatch={stopWatch}
           handleEndEx={handleEndEx}
         />
@@ -110,10 +139,13 @@ const StartWorkout = (props) => {
         <AttributeFields
           exObj={exObj}
           startEx={startEx}
-          goToNext={goToNext}
+          setGoToNext={setGoToNext}
           stopWatch={stopWatch}
           setExStats={setExStats}
-          handleSetExStats={handleSetExStats}
+          submitClicked={submitClicked}
+          handleSubmitStats={handleSubmitStats}
+          setSubmitClicked={setSubmitClicked}
+          focusAttFields={focusAttFields}
         />
       </div>
       {endEx && (
@@ -126,11 +158,14 @@ const StartWorkout = (props) => {
 const mapStateToProps = (store) => ({
   selectedWorkout: store.workouts.selectedWorkout,
   formattedWorkout: store.workouts.formattedWorkout,
+  selectedSession: store.sessions.selectedSession,
 });
 
 const mapDispatchToProps = (dispatch) => ({
   onFetchFormattedWorkout: (workoutId) =>
     dispatch(fetchFormattedWorkout(workoutId)),
   onFetchWorkout: (workoutId) => dispatch(fetchWorkout(workoutId)),
+  onPostStat: (statData, sideEffects) =>
+    dispatch(postStat(statData, sideEffects)),
 });
 export default connect(mapStateToProps, mapDispatchToProps)(StartWorkout);

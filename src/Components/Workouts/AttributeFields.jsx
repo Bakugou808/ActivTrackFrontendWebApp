@@ -5,7 +5,14 @@ import { makeStyles } from "@material-ui/core/styles";
 import { Tooltip, Fab, Paper, TextField, Button } from "@material-ui/core";
 
 export const AttributeFields = (props) => {
-  const { exObj, stopWatch, setExStats } = props;
+  const {
+    exObj,
+    stopWatch,
+    setExStats,
+    isSubmitted,
+    handleSubmitStats,
+    setSubmitClicked,
+  } = props;
   const [exAtts, setExAtts] = useState([]);
 
   useEffect(() => {
@@ -55,25 +62,34 @@ export const AttributeFields = (props) => {
     });
   };
 
-  const handleSubmitAtts = () => {
-    console.log(exAtts);
-  };
-
   return (
     <div className="addNewString">
-      <Paper className="container grid" elevation={3}>
-        <div>Attributes</div>
-        <form className="container grid" onSubmit={handleSubmitAtts}>
-          {exAtts && renderAtts()}
-          <Button
-            variant="contained"
-            color="primary"
-            onClick={handleSubmitAtts}
+      {isSubmitted ? (
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={() => handleSubmitStats(stopWatch.time)}
+        >
+          Go To Next
+        </Button>
+      ) : (
+        <Paper className="container grid" elevation={3}>
+          <div>Attributes</div>
+          <form
+            className="container grid"
+            onSubmit={() => setSubmitClicked(true)}
           >
-            Submit
-          </Button>
-        </form>
-      </Paper>
+            {exAtts && renderAtts()}
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={() => setSubmitClicked(true)}
+            >
+              Submit
+            </Button>
+          </form>
+        </Paper>
+      )}
     </div>
   );
 };

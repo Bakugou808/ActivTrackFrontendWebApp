@@ -8,6 +8,7 @@ import {
   fetchFormattedWorkout,
 } from "../../Redux/Actions/WorkoutActions";
 import { fetchFolder } from "../../Redux/Actions/FolderActions";
+import { postSession } from "../../Redux/Actions/SessionsActions";
 
 // * Material UI Imports
 import { makeStyles } from "@material-ui/core/styles";
@@ -51,6 +52,7 @@ const Workout = (props) => {
     selectedFolder,
     selectedWorkout,
     formattedWorkout,
+    onPostSession,
   } = props;
   const folderId = match.params.folderId;
   const workoutId = match.params.workoutId;
@@ -65,9 +67,27 @@ const Workout = (props) => {
   }, [workoutId]);
 
   const handleStartWorkout = () => {
-    history.push(
-      `/start_workouts/${folderName}/${folderId}/${workoutTitle}/${workoutId}`
-    );
+    const sideEffects = () => {
+      history.push(
+        `/start_workouts/${folderName}/${folderId}/${workoutTitle}/${workoutId}`
+      );
+    };
+
+    // post session here then patch at the end of workout
+    const count =
+      selectedWorkout.sessions.length > 0
+        ? selectedWorkout.sessions.length + 1
+        : 1;
+    const sessionData = {
+      session: {
+        workout_id: workoutId,
+        count: count,
+        active_time: 0,
+        rest_time: 0,
+        total_time: 0,
+      },
+    };
+    onPostSession(sessionData, sideEffects);
   };
 
   return (
@@ -118,6 +138,8 @@ const mapDispatchToProps = (dispatch) => ({
   onFetchFolder: (folderId) => dispatch(fetchFolder(folderId)),
   onFetchFormattedWorkout: (workoutId) =>
     dispatch(fetchFormattedWorkout(workoutId)),
+  onPostSession: (sessionData, sideEffects) =>
+    dispatch(postSession(sessionData, sideEffects)),
 });
 
 export default AuthHOC(connect(mapStateToProps, mapDispatchToProps)(Workout));

@@ -1,105 +1,102 @@
 // *rxreducer
 
 const initialState = {
-  selectedWorkout: null,
-  formattedWorkout: null,
-  workouts: [],
+  selectedStat: null,
+  // * may not need this. formattedStat: null,
+  workoutsStats: [],
+  stats: [],
   fetching: false,
   error: false,
 };
 
 const statReducer = (state = initialState, action) => {
   switch (action.type) {
-    //* Set Selected Workout
-    case "SET_SELECTED_WORKOUT":
-      return { ...state, selectedWorkout: action.workout };
-    //* Set Workouts Based On Selected Folder
+    //* Set Selected Stat
+    case "SET_SELECTED_STAT":
+      return { ...state, selectedStat: action.stat };
+    //* Set Stats Based On Selected Folder
     case "FETCH_FOLDER_SUCCESSFUL":
-      return { ...state, workouts: action.folder.workouts };
+      return { ...state, stats: action.folder.stats };
 
-    // * Clear Selected Workout and Formatted Workout State
-    case "CLEAR_SELECTED_AND_FORMATTED_WORKOUT_STATE":
-      return { ...state, selectedWorkout: null, formattedWorkout: null };
+    // * Clear Selected Stat and Formatted Stat State
+    case "CLEAR_SELECTED_AND_FORMATTED_STAT_STATE":
+      return { ...state, selectedStat: null, formattedStat: null };
 
-    //* Fetch Workouts Belonging To User
+    //* Fetch Stats Belonging To User
 
-    case "FETCH_WORKOUTS_REQUEST":
+    case "FETCH_STATS_REQUEST":
       return { ...state, fetching: true };
-    case "FETCH_WORKOUTS_FAILED":
+    case "FETCH_STATS_FAILED":
       return { ...state, fetching: false, error: action.error };
-    case "FETCH_WORKOUTS_SUCCESSFUL":
-      return { ...state, fetching: false, workouts: action.workouts };
+    case "FETCH_STATS_SUCCESSFUL":
+      return { ...state, fetching: false, stats: action.stats };
 
-    //* Fetch SHOW Workout
+    //* Fetch SHOW Stat
 
-    case "FETCH_WORKOUT_REQUEST":
+    case "FETCH_STAT_REQUEST":
       return { ...state, fetching: true };
-    case "FETCH_WORKOUT_FAILED":
+    case "FETCH_STAT_FAILED":
       return { ...state, fetching: false, error: action.error };
-    case "FETCH_WORKOUT_SUCCESSFUL":
-      return { ...state, fetching: false, selectedWorkout: action.workout };
+    case "FETCH_STAT_SUCCESSFUL":
+      return { ...state, fetching: false, selectedStat: action.stat };
 
-    //* Fetch FORMATTED Workout
+    //* Fetch FORMATTED Stat
 
-    case "FETCH_FORMATTED_WORKOUT_REQUEST":
+    case "FETCH_FORMATTED_STAT_REQUEST":
       return { ...state, fetching: true };
-    case "FETCH_FORMATTED_WORKOUT_FAILED":
+    case "FETCH_FORMATTED_STAT_FAILED":
       return { ...state, fetching: false, error: action.error };
-    case "FETCH_FORMATTED_WORKOUT_SUCCESSFUL":
-      return { ...state, fetching: false, formattedWorkout: action.workout };
+    case "FETCH_FORMATTED_STAT_SUCCESSFUL":
+      return { ...state, fetching: false, formattedStat: action.stat };
 
-    //* POST New Workout
+    //* POST New Stat
 
-    case "POST_WORKOUT_REQUEST":
+    case "POST_STAT_REQUEST":
       return { ...state, fetching: true };
-    case "POST_WORKOUT_FAILED":
+    case "POST_STAT_FAILED":
       return { ...state, fetching: false, error: action.error };
-    case "POST_WORKOUT_SUCCESSFUL":
-      //   const newWorkoutsPOST = [...state.workouts, action.workout];
-      //   return { ...state, fetching: false, workouts: newWorkoutsPOST };
+    case "POST_STAT_SUCCESSFUL":
+      //   const newStatsPOST = [...state.stats, action.stat];
+      //   return { ...state, fetching: false, stats: newStatsPOST };
       return {
         ...state,
         fetching: false,
-        workouts: [...state.workouts, action.workout],
-        selectedWorkout: action.workout,
+        stats: [...state.stats, action.stat],
+        selectedStat: action.stat,
       };
 
-    //* PATCH workout
+    //* PATCH stat
 
-    case "PATCH_WORKOUT_REQUEST":
+    case "PATCH_STAT_REQUEST":
       return { ...state, fetching: true };
-    case "PATCH_WORKOUT_FAILED":
+    case "PATCH_STAT_FAILED":
       return { ...state, fetching: false, error: action.error };
-    case "PATCH_WORKOUT_SUCCESSFUL":
-      const newWorkoutsPATCH = [
-        ...[
-          ...state.workouts.filter(
-            (workout) => workout.id != action.workout.id
-          ),
-        ],
-        action.workout,
+    case "PATCH_STAT_SUCCESSFUL":
+      const newStatsPATCH = [
+        ...[...state.stats.filter((stat) => stat.id != action.stat.id)],
+        action.stat,
       ];
-      const sortedPATCH = newWorkoutsPATCH.sort(
+      const sortedPATCH = newStatsPATCH.sort(
         (a, b) => new Date(b.created_at) - new Date(a.created_at)
       );
 
       return {
         ...state,
         fetching: false,
-        workouts: sortedPATCH,
-        selectedWorkout: action.workout,
+        stats: sortedPATCH,
+        selectedStat: action.stat,
       };
-    //* DESTROY workout
+    //* DESTROY stat
 
-    case "DELETE_WORKOUT_REQUEST":
+    case "DELETE_STAT_REQUEST":
       return { ...state, fetching: true };
-    case "DELETE_WORKOUT_FAILED":
+    case "DELETE_STAT_FAILED":
       return { ...state, fetching: false, error: action.error };
-    case "DELETE_WORKOUT_SUCCESSFUL":
-      const newWorkoutsDESTROY = [
-        ...state.workouts.filter((workout) => workout.id != action.workout.id),
+    case "DELETE_STAT_SUCCESSFUL":
+      const newStatsDESTROY = [
+        ...state.stats.filter((stat) => stat.id != action.stat.id),
       ];
-      return { ...state, fetching: false, workouts: newWorkoutsDESTROY };
+      return { ...state, fetching: false, stats: newStatsDESTROY };
     default:
       return state;
   }

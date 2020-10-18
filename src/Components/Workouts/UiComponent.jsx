@@ -9,7 +9,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import { Button } from "@material-ui/core";
 
 export const UiComponent = (props) => {
-  const { goToNext, exObj, startEx, endEx, stopWatch, handleEndEx } = props;
+  const { exObj, startEx, endEx, stopWatch, handleEndEx } = props;
   const [setNum, setSetNum] = useState(1);
   const [defTimerVal, setDefTimerVal] = useState(10);
   const [defRestPeriod, setDefRestPeriod] = useState(120);
@@ -51,8 +51,6 @@ export const UiComponent = (props) => {
 
   return (
     <div>
-      {" "}
-      title, set: reps: timer
       <div className="container grid">
         <div className="addNewString">
           <div>
