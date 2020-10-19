@@ -17,8 +17,9 @@ import {
 import { postStat } from "../../Redux/Actions/StatsActions";
 import { fetchSession } from "../../Redux/Actions/SessionsActions";
 
+// *for LATER
 //*! add the session id to the url path to have access for refresh, maybe add the circ_ex id as well and keep the route open... that way on refresh during a session you can fetch the exercise the user was on and slice the exObjs from indexOf(circ_ex) to the end*/
-
+// * TO-DO: incorporate default rest time, sound effects on start and end and finished workout (add that to EndWorkout Component)
 const StartWorkout = (props) => {
   const {
     history,
@@ -33,6 +34,10 @@ const StartWorkout = (props) => {
   } = props;
   const workoutId = match.params.workoutId;
   const sessionId = match.params.sessionId;
+  const folderName = match.params.folderName;
+  const folderId = match.params.folderId;
+  const workoutTitle = match.params.workoutTitle;
+
   const [exObj, setExObj] = useState(false);
   const [exObjs, setExObjs] = useState([]);
   const [goToNext, setGoToNext] = useState(false);
@@ -73,7 +78,15 @@ const StartWorkout = (props) => {
     workout.map((phase) => {
       phase.map((item) => {
         let key = Object.keys(item)[0];
-        item[key].map((ex) => setExObjs((prev) => [...prev, ex]));
+
+        let setCount = item[key][0].circuit_sets;
+        let circuitArr = [];
+        for (let i = 0; i < setCount; i++) {
+          item[key].map((ex) => {
+            circuitArr.push(ex);
+          });
+        }
+        setExObjs((prev) => [...prev, ...circuitArr]);
       });
     });
     setGoToNext(true);
@@ -133,11 +146,18 @@ const StartWorkout = (props) => {
     setFocusAttFields(false);
   };
 
+  const handleFinishWorkout = () => {
+    history.push(
+      `/workout_finished/${folderName}/${folderId}/${workoutTitle}/${workoutId}/${sessionId}`
+    );
+    // !clear states where necessary
+  };
+
   const deliverNextExObj = () => {
-    debugger;
     setExObj(exObjs[0]);
-    setExObjs((prev) => prev.slice(1));
-    // !have a catch for if its at the last exObj --> success page --> stats/home redirect
+    exObjs.length > 0
+      ? setExObjs((prev) => prev.slice(1))
+      : handleFinishWorkout();
   };
 
   return (
