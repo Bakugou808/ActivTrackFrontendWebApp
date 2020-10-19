@@ -154,7 +154,7 @@ export const postSession = (sessionData, sideEffects) => {
           dispatch(postSessionFailed(data.error));
         } else {
           dispatch(postSessionSuccess(data));
-          sideEffects();
+          sideEffects(data.id);
         }
       });
   };

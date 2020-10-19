@@ -47,7 +47,7 @@ class App extends React.Component {
             render={(props) => <Workout {...props} />}
           />
           <Route
-            path="/start_workouts/:folderName/:folderId/:workoutTitle/:workoutId"
+            path="/start_workouts/:folderName/:folderId/:workoutTitle/:workoutId/:sessionId"
             render={(props) => <StartWorkout {...props} />}
           />
         </Switch>

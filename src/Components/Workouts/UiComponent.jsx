@@ -14,6 +14,7 @@ export const UiComponent = (props) => {
   const [defTimerVal, setDefTimerVal] = useState(10);
   const [defRestPeriod, setDefRestPeriod] = useState(120);
 
+  useEffect(() => {}, [exObj]);
   const renderTime = ({ remainingTime }) => {
     const minutes = Math.floor(stopWatch.time / 60);
     const seconds = stopWatch.time - minutes * 60;
@@ -27,15 +28,17 @@ export const UiComponent = (props) => {
     if (!endEx) {
       return (
         <div className="timer">
+          <div className="text">Active Time</div>
           <div className="value">{timerValue}</div>
         </div>
       );
     } else if (endEx) {
       return (
         <div className="timer">
-          <div className="text">Remaining</div>
-          <div className="value">{remainingTime}</div>
-          <div className="text">seconds</div>
+          {/* <div className="text">Remaining</div> */}
+          <div className="text">Rest Time</div>
+          {/* <div className="value">{remainingTime}</div> */}
+          <div className="value">{timerValue}</div>
         </div>
       );
     }
@@ -43,10 +46,6 @@ export const UiComponent = (props) => {
 
   const handleStartPause = () => {
     startEx && (stopWatch.isRunning ? stopWatch.pause() : stopWatch.start());
-  };
-
-  const handleReset = () => {
-    stopWatch.reset();
   };
 
   return (
@@ -83,13 +82,15 @@ export const UiComponent = (props) => {
         </div>
 
         <div>
-          <Button
-            variant="contained"
-            color="secondary"
-            onClick={() => handleEndEx(stopWatch.time)}
-          >
-            Finished
-          </Button>
+          {startEx && (
+            <Button
+              variant="contained"
+              color="secondary"
+              onClick={() => handleEndEx(stopWatch.time)}
+            >
+              Finished
+            </Button>
+          )}
         </div>
         {/* <div className="addNewString">
           <div>

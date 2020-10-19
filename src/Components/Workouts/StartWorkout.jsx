@@ -4,7 +4,7 @@ import { useTimer } from "use-timer";
 
 // * Component Imports
 import UiComponent from "./UiComponent";
-
+import AutoRollSwitch from "./AutoRollSwitch";
 import AttributeFields from "./AttributeFields";
 // * Material UI Imports
 import { Tooltip, Fab, Button } from "@material-ui/core";
@@ -15,6 +15,7 @@ import {
   fetchFormattedWorkout,
 } from "../../Redux/Actions/WorkoutActions";
 import { postStat } from "../../Redux/Actions/StatsActions";
+import { fetchSession } from "../../Redux/Actions/SessionsActions";
 
 //*! add the session id to the url path to have access for refresh, maybe add the circ_ex id as well and keep the route open... that way on refresh during a session you can fetch the exercise the user was on and slice the exObjs from indexOf(circ_ex) to the end*/
 
@@ -24,12 +25,14 @@ const StartWorkout = (props) => {
     match,
     formattedWorkout,
     selectedWorkout,
+    onFetchSession,
     onFetchWorkout,
     onFetchFormattedWorkout,
     onPostStat,
     selectedSession,
   } = props;
   const workoutId = match.params.workoutId;
+  const sessionId = match.params.sessionId;
   const [exObj, setExObj] = useState(false);
   const [exObjs, setExObjs] = useState([]);
   const [goToNext, setGoToNext] = useState(false);
@@ -39,10 +42,12 @@ const StartWorkout = (props) => {
   // *log total time for entire workout
   const [totalTime, setTotalTime] = useState(0);
   // *store stats (att + active/rest times + note?)
-  const [exStats, setExStats] = useState({ active_time: 0, rest_time: 0 });
+  const [exStats, setExStats] = useState({ activeTime: 0 });
   const [submitClicked, setSubmitClicked] = useState(false);
   //  *expand att fields once exercise is completed
   const [focusAttFields, setFocusAttFields] = useState(false);
+  // * autoroll to the next exercise as soon as you click go to next, or start on click let's go
+  const [autoRoll, setAutoRoll] = useState(false);
   // *state and functions for timer hook --> rename the props and see if you can have more than one timer?
   const { time, start, pause, reset, isRunning } = useTimer({
     // endTime: 10,
@@ -55,6 +60,7 @@ const StartWorkout = (props) => {
 
   useEffect(() => {
     formattedWorkout ? formatExObjs(formattedWorkout) : fetchWorkouts();
+    !selectedSession && onFetchSession(sessionId);
   }, [formattedWorkout]);
 
   const fetchWorkouts = () => {
@@ -70,29 +76,43 @@ const StartWorkout = (props) => {
         item[key].map((ex) => setExObjs((prev) => [...prev, ex]));
       });
     });
+    setGoToNext(true);
   };
 
+  // 1. user starts workout
   const handleStartWorkout = () => {
-    !exObj && deliverNextExObj();
+    deliverNextExObj();
+    setGoToNext(false);
     setStartEx(true);
+    setEndEx(false);
+    setSubmitClicked(false);
     start();
   };
 
+  // 2. when the user finshes executing ex. stop timer and restart for rest period
   const handleEndEx = (t) => {
     setStartEx(false);
     setEndEx(true);
-    setExStats((prev) => ({ ...prev, active_time: t }));
-    setFocusAttFields(true);
+    setExStats((prev) => ({ ...prev, activeTime: t }));
+    // setFocusAttFields(true);
     reset();
     start();
   };
 
+  // 3. user is prompted to fill att values and submit -> autoRoll ? run handleSubmitState : set submitClicked(true)
+  // !but take into account rest time.
+
+  // when user is ready to move to next workout submit
   const handleSubmitStats = (t) => {
+    const statsObj = {
+      ...exObj.circuit_exercise_attributes,
+      ...exStats,
+      ...{ restPeriod: t },
+    };
     const statData = {
-      circuit_exercise_session_details: {
-        stats: exStats,
+      circuit_exercise_session_detail: {
+        stats: statsObj,
         ...{
-          rest_time: t,
           session_id: selectedSession.id,
           circuit_exercise_id: exObj.circuit_exercise_id,
         },
@@ -100,11 +120,13 @@ const StartWorkout = (props) => {
     };
 
     const sideEffects = () => {
-      deliverNextExObj();
       reset();
-      setStartEx(true);
-      setEndEx(false);
-      start();
+      if (autoRoll) {
+        handleStartWorkout();
+      } else {
+        reset();
+        setGoToNext(true);
+      }
     };
 
     onPostStat(statData, sideEffects);
@@ -112,13 +134,15 @@ const StartWorkout = (props) => {
   };
 
   const deliverNextExObj = () => {
+    debugger;
     setExObj(exObjs[0]);
     setExObjs((prev) => prev.slice(1));
+    // !have a catch for if its at the last exObj --> success page --> stats/home redirect
   };
 
   return (
     <div className="container grid">
-      {(!startEx || endEx) && (
+      {goToNext && (
         <Button
           variant="contained"
           color="secondary"
@@ -128,9 +152,13 @@ const StartWorkout = (props) => {
         </Button>
       )}
       <div>
+        <AutoRollSwitch autRoll={autoRoll} setAutoRoll={setAutoRoll} />{" "}
+      </div>
+      <div>
         <UiComponent
           exObj={exObj}
           startEx={startEx}
+          endEx={endEx}
           stopWatch={stopWatch}
           handleEndEx={handleEndEx}
         />
@@ -148,9 +176,6 @@ const StartWorkout = (props) => {
           focusAttFields={focusAttFields}
         />
       </div>
-      {endEx && (
-        <Button onClick={() => setGoToNext(true)}>Go To Next Exercise</Button>
-      )}
     </div>
   );
 };
@@ -167,5 +192,6 @@ const mapDispatchToProps = (dispatch) => ({
   onFetchWorkout: (workoutId) => dispatch(fetchWorkout(workoutId)),
   onPostStat: (statData, sideEffects) =>
     dispatch(postStat(statData, sideEffects)),
+  onFetchSession: (sessionId) => dispatch(fetchSession(sessionId)),
 });
 export default connect(mapStateToProps, mapDispatchToProps)(StartWorkout);

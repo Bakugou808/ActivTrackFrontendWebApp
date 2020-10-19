@@ -23,7 +23,7 @@ export const renderExercises = (phase) => {
     } else {
       return arr.map((record) => {
         return (
-          <div className="container grid stack">
+          <div key={record.id} className="container grid stack">
             <Paper elevation={6}> {record.ex_name} </Paper>{" "}
           </div>
         );
@@ -36,7 +36,12 @@ export const renderCirc = (arr) => {
   return (
     <div className="container grid circuit">
       {arr.map((ex) => {
-        return <Paper elevation={6}> {ex.ex_name} </Paper>;
+        return (
+          <Paper key={ex.id} elevation={6}>
+            {" "}
+            {ex.ex_name}{" "}
+          </Paper>
+        );
       })}
     </div>
   );
@@ -67,9 +72,9 @@ const Workout = (props) => {
   }, [workoutId]);
 
   const handleStartWorkout = () => {
-    const sideEffects = () => {
+    const sideEffects = (sessionId) => {
       history.push(
-        `/start_workouts/${folderName}/${folderId}/${workoutTitle}/${workoutId}`
+        `/start_workouts/${folderName}/${folderId}/${workoutTitle}/${workoutId}/${sessionId}`
       );
     };
 
