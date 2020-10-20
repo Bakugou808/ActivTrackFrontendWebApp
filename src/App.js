@@ -12,6 +12,7 @@ import SessionsContainer from "./Components/Sessions/SessionsContainer";
 import NewWorkout from "./Components/Workouts/NewWorkout";
 import Workout from "./Components/Workouts/Workout";
 import StartWorkout from "./Components/Workouts/StartWorkout";
+import EndWorkout from "./Components/Workouts/EndWorkout";
 
 class App extends React.Component {
   render() {
@@ -47,8 +48,12 @@ class App extends React.Component {
             render={(props) => <Workout {...props} />}
           />
           <Route
-            path="/start_workouts/:folderName/:folderId/:workoutTitle/:workoutId"
+            path="/start_workouts/:folderName/:folderId/:workoutTitle/:workoutId/:sessionId"
             render={(props) => <StartWorkout {...props} />}
+          />
+          <Route
+            path="/workout_finished/:folderName/:folderId/:workoutTitle/:workoutId/:sessionId"
+            render={(props) => <EndWorkout {...props} />}
           />
         </Switch>
       </div>

@@ -9,9 +9,10 @@ export const AttributeFields = (props) => {
     exObj,
     stopWatch,
     setExStats,
-    isSubmitted,
+    submitClicked,
     handleSubmitStats,
     setSubmitClicked,
+    startEx,
   } = props;
   const [exAtts, setExAtts] = useState([]);
 
@@ -64,7 +65,7 @@ export const AttributeFields = (props) => {
 
   return (
     <div className="addNewString">
-      {isSubmitted ? (
+      {submitClicked ? (
         <Button
           variant="contained"
           color="primary"
@@ -75,19 +76,14 @@ export const AttributeFields = (props) => {
       ) : (
         <Paper className="container grid" elevation={3}>
           <div>Attributes</div>
-          <form
-            className="container grid"
-            onSubmit={() => setSubmitClicked(true)}
+          {exAtts && renderAtts()}
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={() => setSubmitClicked(true)}
           >
-            {exAtts && renderAtts()}
-            <Button
-              variant="contained"
-              color="primary"
-              onClick={() => setSubmitClicked(true)}
-            >
-              Submit
-            </Button>
-          </form>
+            Submit
+          </Button>
         </Paper>
       )}
     </div>

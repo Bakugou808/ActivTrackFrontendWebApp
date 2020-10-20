@@ -1,18 +1,33 @@
 import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
 // * Component Imports
+import { handleRestPeriod } from "./StartWorkout";
 // * Package Imports
 import { CountdownCircleTimer } from "react-countdown-circle-timer";
 
 // * Material UI Imports
 import { makeStyles } from "@material-ui/core/styles";
-import { Button } from "@material-ui/core";
+import { Button, TextField } from "@material-ui/core";
 
 export const UiComponent = (props) => {
-  const { exObj, startEx, endEx, stopWatch, handleEndEx } = props;
-  const [setNum, setSetNum] = useState(1);
+  const {
+    exObj,
+    startEx,
+    endEx,
+    stopWatch,
+    handleEndEx,
+    setNum,
+    restPeriod,
+    handleRestPeriod,
+  } = props;
   const [defTimerVal, setDefTimerVal] = useState(10);
   const [defRestPeriod, setDefRestPeriod] = useState(120);
+  const [isSet, setIsSet] = useState(false);
+  const [showRpForm, setShowRpForm] = useState(false);
+  const [rp2, setRp2] = useState();
+  const [timeAlert, setTimeAlert] = useState(false);
+
+  useEffect(() => {}, [exObj, restPeriod]);
 
   const renderTime = ({ remainingTime }) => {
     const minutes = Math.floor(stopWatch.time / 60);
@@ -25,17 +40,21 @@ export const UiComponent = (props) => {
       str_pad_left(minutes, "0", 2) + ":" + str_pad_left(seconds, "0", 2);
 
     if (!endEx) {
+      setTimeAlert(false);
       return (
         <div className="timer">
+          <div className="text">Active Time</div>
           <div className="value">{timerValue}</div>
         </div>
       );
     } else if (endEx) {
+      handleExceededRest();
       return (
         <div className="timer">
-          <div className="text">Remaining</div>
-          <div className="value">{remainingTime}</div>
-          <div className="text">seconds</div>
+          {/* <div className="text">Remaining</div> */}
+          <div className="text">Rest Time</div>
+          {/* <div className="value">{remainingTime}</div> */}
+          <div className="value">{timerValue}</div>
         </div>
       );
     }
@@ -45,8 +64,28 @@ export const UiComponent = (props) => {
     startEx && (stopWatch.isRunning ? stopWatch.pause() : stopWatch.start());
   };
 
-  const handleReset = () => {
-    stopWatch.reset();
+  const handleRpSubmit = (e) => {
+    e.preventDefault();
+    let obj = { circuit_exercise_attributes: { restPeriod: `${rp2}` } };
+    handleRestPeriod(obj);
+    setShowRpForm(false);
+  };
+
+  const handleExceededRest = () => {
+    let timeInSec = stopWatch.time;
+    let restInSec = 0;
+
+    if (restPeriod.unit.includes("sec")) {
+      restInSec = restPeriod.num;
+    } else if (restPeriod.unit.includes("min")) {
+      restInSec = restPeriod.num * 60;
+    }
+
+    if (restInSec <= timeInSec) {
+      setTimeAlert(true);
+    } else {
+      setTimeAlert(false);
+    }
   };
 
   return (
@@ -57,19 +96,57 @@ export const UiComponent = (props) => {
             {exObj && (
               <>
                 <div> {exObj.circuit_phase} </div>
+                <div> {exObj.circuit_type} </div>
                 <div> {exObj.ex_name} </div>
               </>
             )}
           </div>
-          {/* <p>Set: {exObj.attributes.circuit_position} </p> */}
         </div>
         <div className="addNewString">
-          <p>Set #: {startEx && setNum} </p>
-          {/* <p>Set: {exObj.attributes.circuit_position} </p> */}
+          <p> {exObj && `Set #: ${setNum}`} </p>
+          -----------------------------------------
+          <p> {exObj && `Set Total: ${exObj.circuit_sets}`} </p>
         </div>
         <div className="addNewString">
-          <p>Rep Goal: {exObj && exObj.circuit_exercise_attributes.reps} </p>
-          {/* <p>Set: {exObj.attributes.circuit_position} </p> */}
+          <p>
+            {exObj && `Rep Goal: ${exObj.circuit_exercise_attributes.reps}`}{" "}
+          </p>
+          <div>
+            Rest Period:{" "}
+            {restPeriod.message ? (
+              showRpForm ? (
+                // show form
+                <form onSubmit={handleRpSubmit}>
+                  <TextField
+                    type="text"
+                    margin="dense"
+                    placeholder={`${restPeriod.num} ${restPeriod.unit}`}
+                    onChange={(e) => setRp2(e.target.value)}
+                    value={rp2}
+                  />
+                </form>
+              ) : (
+                <div onClick={() => setShowRpForm(true)}>
+                  {restPeriod.message}
+                </div>
+              )
+            ) : showRpForm ? (
+              <form onSubmit={handleRpSubmit}>
+                <TextField
+                  type="text"
+                  margin="dense"
+                  placeholder={`${restPeriod.num} ${restPeriod.unit}`}
+                  onChange={(e) => setRp2(e.target.value)}
+                  value={rp2}
+                />
+              </form>
+            ) : (
+              <div onClick={() => setShowRpForm(true)}>
+                {restPeriod.num} {restPeriod.unit}
+              </div>
+            )}
+          </div>
+          {timeAlert && "RestTime Exceeded!!!"}
         </div>
         <div className="addNewString" onClick={handleStartPause}>
           <CountdownCircleTimer
@@ -83,23 +160,16 @@ export const UiComponent = (props) => {
         </div>
 
         <div>
-          <Button
-            variant="contained"
-            color="secondary"
-            onClick={() => handleEndEx(stopWatch.time)}
-          >
-            Finished
-          </Button>
+          {startEx && (
+            <Button
+              variant="contained"
+              color="secondary"
+              onClick={() => handleEndEx(stopWatch.time)}
+            >
+              Finished
+            </Button>
+          )}
         </div>
-        {/* <div className="addNewString">
-          <div>
-            <button onClick={stopWatch.start}>Start</button>
-            <button onClick={stopWatch.pause}>Pause</button>
-            <button onClick={handleReset}>Reset</button>
-          </div>
-          <p>Elapsed time: {stopWatch.time}</p>
-          {stopWatch.isRunning && <p>Running...</p>}
-        </div> */}
       </div>
     </div>
   );

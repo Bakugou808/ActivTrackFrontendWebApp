@@ -2,6 +2,9 @@ import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
 import { AuthHOC } from "../AuthHOC";
 
+// * Component Imports
+import SetIconUi from "./SetIconUi";
+
 // * Action Imports
 import {
   fetchWorkout,
@@ -14,6 +17,7 @@ import { postSession } from "../../Redux/Actions/SessionsActions";
 import { makeStyles } from "@material-ui/core/styles";
 import { Paper, Button } from "@material-ui/core";
 
+// * create a new button -> onClick will open a form field in the button --> onSubmit will patch the Circuit and change the value -> place the button in front of the Paper tag
 export const renderExercises = (phase) => {
   return phase.map((circuit) => {
     let keyName = Object.keys(circuit)[0];
@@ -24,6 +28,10 @@ export const renderExercises = (phase) => {
       return arr.map((record) => {
         return (
           <div className="container grid stack">
+            <SetIconUi
+              setCount={record.circuit_sets}
+              circuitId={record.circuit_id}
+            />
             <Paper elevation={6}> {record.ex_name} </Paper>{" "}
           </div>
         );
@@ -33,8 +41,11 @@ export const renderExercises = (phase) => {
 };
 
 export const renderCirc = (arr) => {
+  const setCount = arr[0].circuit_sets;
+  const circuitId = arr[0].circuit_id;
   return (
     <div className="container grid circuit">
+      <SetIconUi setCount={setCount} circuitId={circuitId} />
       {arr.map((ex) => {
         return <Paper elevation={6}> {ex.ex_name} </Paper>;
       })}
@@ -67,9 +78,9 @@ const Workout = (props) => {
   }, [workoutId]);
 
   const handleStartWorkout = () => {
-    const sideEffects = () => {
+    const sideEffects = (sessionId) => {
       history.push(
-        `/start_workouts/${folderName}/${folderId}/${workoutTitle}/${workoutId}`
+        `/start_workouts/${folderName}/${folderId}/${workoutTitle}/${workoutId}/${sessionId}`
       );
     };
 

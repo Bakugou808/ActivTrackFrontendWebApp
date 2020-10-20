@@ -36,7 +36,7 @@ export const NewWorkout = (props) => {
     formattedWorkout,
     warmup,
     body,
-    cool_down,
+    coolDown,
   } = props;
 
   const folderId = parseInt(match.params.folderId);
@@ -59,7 +59,7 @@ export const NewWorkout = (props) => {
     !selectedFolder && onFetchFolder(folderId);
     selectedWorkout && setTitle(selectedWorkout.title);
     selectedWorkout && setDesc(selectedWorkout.description);
-  }, [selectedWorkout]);
+  }, [selectedWorkout, formattedWorkout]);
 
   const handleTitleDescSubmit = (e) => {
     e.preventDefault();
@@ -199,7 +199,7 @@ export const NewWorkout = (props) => {
             </Tooltip>
           </div>
           <div className="container grid">
-            {cool_down && renderExercises(cool_down)}
+            {coolDown && renderExercises(coolDown)}
           </div>
         </div>
       </div>
