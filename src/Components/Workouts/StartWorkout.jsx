@@ -95,7 +95,6 @@ const StartWorkout = (props) => {
       let num = nxtObj.circuit_exercise_attributes.restPeriod.match(
         numberPattern
       );
-      debugger;
       let unit = nxtObj.circuit_exercise_attributes.restPeriod
         .replace(/[^a-zA-Z]+/g, "")
         .toLowerCase();
@@ -243,6 +242,7 @@ const StartWorkout = (props) => {
           goToNext={goToNext}
           setNum={setNum}
           restPeriod={restPeriod}
+          setRestPeriod={setRestPeriod}
         />
       </div>
       <div>

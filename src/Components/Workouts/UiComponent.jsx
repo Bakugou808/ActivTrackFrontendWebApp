@@ -6,7 +6,7 @@ import { CountdownCircleTimer } from "react-countdown-circle-timer";
 
 // * Material UI Imports
 import { makeStyles } from "@material-ui/core/styles";
-import { Button } from "@material-ui/core";
+import { Button, TextField } from "@material-ui/core";
 
 export const UiComponent = (props) => {
   const {
@@ -17,17 +17,18 @@ export const UiComponent = (props) => {
     handleEndEx,
     setNum,
     restPeriod,
+    setRestPeriod,
   } = props;
   const [defTimerVal, setDefTimerVal] = useState(10);
   const [defRestPeriod, setDefRestPeriod] = useState(120);
   const [isSet, setIsSet] = useState(false);
-  const [showRpForm, setShowRpForm] = useState(false)
-
+  const [showRpForm, setShowRpForm] = useState(false);
+  const [rp2, setRp2] = useState();
   useEffect(() => {
     if (exObj) {
       exObj.circuit_type === "circuit" ? setIsSet(true) : setIsSet(false);
     }
-  }, [exObj]);
+  }, [exObj, restPeriod]);
   const renderTime = ({ remainingTime }) => {
     const minutes = Math.floor(stopWatch.time / 60);
     const seconds = stopWatch.time - minutes * 60;
@@ -61,6 +62,13 @@ export const UiComponent = (props) => {
     startEx && (stopWatch.isRunning ? stopWatch.pause() : stopWatch.start());
   };
 
+  const handleRpSubmit = (e) => {
+    e.preventDefault();
+    let value = e.target.value;
+    setRestPeriod((prev) => ({ num: value, unit: prev.unit }));
+    setShowRpForm(false);
+  };
+
   return (
     <div>
       <div className="container grid">
@@ -84,20 +92,41 @@ export const UiComponent = (props) => {
           <p>
             {exObj && `Rep Goal: ${exObj.circuit_exercise_attributes.reps}`}{" "}
           </p>
-          <p>
+          <div>
             Rest Period:{" "}
-            {restPeriod.message
-              ? 
-              (showRpForm ? 
+            {restPeriod.message ? (
+              showRpForm ? (
                 // show form
-                :
-                <div>{restPeriod.message}</div>
-                )
-              
-              : 
-              ()
-              `${restPeriod.num} ${restPeriod.unit}`}
-          </p>
+                <form onSubmit={handleRpSubmit}>
+                  <TextField
+                    type="text"
+                    margin="dense"
+                    placeholder={`${restPeriod.num} ${restPeriod.unit}`}
+                    onChange={(e) => setRp2(e.target.value)}
+                    value={rp2}
+                  />
+                </form>
+              ) : (
+                <div onClick={() => setShowRpForm(true)}>
+                  {restPeriod.message}
+                </div>
+              )
+            ) : showRpForm ? (
+              <form onSubmit={handleRpSubmit}>
+                <TextField
+                  type="text"
+                  margin="dense"
+                  placeholder={`${restPeriod.num} ${restPeriod.unit}`}
+                  onChange={(e) => setRp2(e.target.value)}
+                  value={rp2}
+                />
+              </form>
+            ) : (
+              <div onClick={() => setShowRpForm(true)}>
+                {restPeriod.num} {restPeriod.unit}
+              </div>
+            )}
+          </div>
         </div>
         <div className="addNewString" onClick={handleStartPause}>
           <CountdownCircleTimer
