@@ -9,12 +9,25 @@ import { makeStyles } from "@material-ui/core/styles";
 import { Button } from "@material-ui/core";
 
 export const UiComponent = (props) => {
-  const { exObj, startEx, endEx, stopWatch, handleEndEx } = props;
-  const [setNum, setSetNum] = useState(1);
+  const {
+    exObj,
+    startEx,
+    endEx,
+    stopWatch,
+    handleEndEx,
+    setNum,
+    restPeriod,
+  } = props;
   const [defTimerVal, setDefTimerVal] = useState(10);
   const [defRestPeriod, setDefRestPeriod] = useState(120);
+  const [isSet, setIsSet] = useState(false);
+  const [showRpForm, setShowRpForm] = useState(false)
 
-  useEffect(() => {}, [exObj]);
+  useEffect(() => {
+    if (exObj) {
+      exObj.circuit_type === "circuit" ? setIsSet(true) : setIsSet(false);
+    }
+  }, [exObj]);
   const renderTime = ({ remainingTime }) => {
     const minutes = Math.floor(stopWatch.time / 60);
     const seconds = stopWatch.time - minutes * 60;
@@ -56,19 +69,35 @@ export const UiComponent = (props) => {
             {exObj && (
               <>
                 <div> {exObj.circuit_phase} </div>
+                <div> {exObj.circuit_type} </div>
                 <div> {exObj.ex_name} </div>
               </>
             )}
           </div>
-          {/* <p>Set: {exObj.attributes.circuit_position} </p> */}
         </div>
         <div className="addNewString">
-          <p>Set #: {startEx && setNum} </p>
-          {/* <p>Set: {exObj.attributes.circuit_position} </p> */}
+          <p> {exObj && `Set #: ${setNum}`} </p>
+          -----------------------------------------
+          <p> {exObj && `Set Total: ${exObj.circuit_sets}`} </p>
         </div>
         <div className="addNewString">
-          <p>Rep Goal: {exObj && exObj.circuit_exercise_attributes.reps} </p>
-          {/* <p>Set: {exObj.attributes.circuit_position} </p> */}
+          <p>
+            {exObj && `Rep Goal: ${exObj.circuit_exercise_attributes.reps}`}{" "}
+          </p>
+          <p>
+            Rest Period:{" "}
+            {restPeriod.message
+              ? 
+              (showRpForm ? 
+                // show form
+                :
+                <div>{restPeriod.message}</div>
+                )
+              
+              : 
+              ()
+              `${restPeriod.num} ${restPeriod.unit}`}
+          </p>
         </div>
         <div className="addNewString" onClick={handleStartPause}>
           <CountdownCircleTimer
@@ -92,15 +121,6 @@ export const UiComponent = (props) => {
             </Button>
           )}
         </div>
-        {/* <div className="addNewString">
-          <div>
-            <button onClick={stopWatch.start}>Start</button>
-            <button onClick={stopWatch.pause}>Pause</button>
-            <button onClick={handleReset}>Reset</button>
-          </div>
-          <p>Elapsed time: {stopWatch.time}</p>
-          {stopWatch.isRunning && <p>Running...</p>}
-        </div> */}
       </div>
     </div>
   );

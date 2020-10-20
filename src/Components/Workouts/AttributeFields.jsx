@@ -12,6 +12,7 @@ export const AttributeFields = (props) => {
     submitClicked,
     handleSubmitStats,
     setSubmitClicked,
+    startEx,
   } = props;
   const [exAtts, setExAtts] = useState([]);
 

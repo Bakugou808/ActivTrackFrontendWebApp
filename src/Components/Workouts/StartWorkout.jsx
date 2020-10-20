@@ -41,9 +41,15 @@ const StartWorkout = (props) => {
   const [exObj, setExObj] = useState(false);
   const [exObjs, setExObjs] = useState([]);
   const [goToNext, setGoToNext] = useState(false);
+  // *for determining set values
+  const [records, setRecords] = useState([]);
+  const [setNum, setSetNum] = useState(1);
+  const [restPeriod, setRestPeriod] = useState({ num: 0, unit: "min" });
+
   // *start/stop exercise
   const [startEx, setStartEx] = useState(false);
   const [endEx, setEndEx] = useState(false);
+  const [startWorkout, setStartWorkout] = useState(false);
   // *log total time for entire workout
   const [totalTime, setTotalTime] = useState(0);
   // *store stats (att + active/rest times + note?)
@@ -67,6 +73,37 @@ const StartWorkout = (props) => {
     formattedWorkout ? formatExObjs(formattedWorkout) : fetchWorkouts();
     !selectedSession && onFetchSession(sessionId);
   }, [formattedWorkout]);
+
+  const handleSetNum = (nxtObj) => {
+    if (
+      records.length > 0 &&
+      records[records.length - 1].circuit_id === nxtObj.circuit_id
+    ) {
+      let count = records.filter((ex) => ex === nxtObj);
+      setSetNum(count.length + 1);
+      setRecords((prev) => [...prev, nxtObj]);
+    } else {
+      setSetNum(1);
+      setRecords([nxtObj]);
+    }
+  };
+
+  const handleRestPeriod = (nxtObj) => {
+    const numberPattern = /\d+/g;
+
+    if (nxtObj.circuit_exercise_attributes.restPeriod) {
+      let num = nxtObj.circuit_exercise_attributes.restPeriod.match(
+        numberPattern
+      );
+      debugger;
+      let unit = nxtObj.circuit_exercise_attributes.restPeriod
+        .replace(/[^a-zA-Z]+/g, "")
+        .toLowerCase();
+      setRestPeriod({ num: num, unit: unit });
+    } else {
+      setRestPeriod((prev) => ({ ...prev, message: "Add Rest Period" }));
+    }
+  };
 
   const fetchWorkouts = () => {
     onFetchWorkout(workoutId);
@@ -92,9 +129,15 @@ const StartWorkout = (props) => {
     setGoToNext(true);
   };
 
+  const handleBeginWorkout = () => {
+    deliverNextExObj();
+    handleStartWorkout();
+    setStartWorkout(true);
+  };
+
   // 1. user starts workout
   const handleStartWorkout = () => {
-    deliverNextExObj();
+    // deliverNextExObj();
     setGoToNext(false);
     setStartEx(true);
     setEndEx(false);
@@ -134,16 +177,19 @@ const StartWorkout = (props) => {
 
     const sideEffects = () => {
       reset();
+      setSubmitClicked(false);
       if (autoRoll) {
         handleStartWorkout();
+        deliverNextExObj();
       } else {
         reset();
+        deliverNextExObj();
         setGoToNext(true);
       }
     };
 
     onPostStat(statData, sideEffects);
-    setFocusAttFields(false);
+    // setFocusAttFields(false);
   };
 
   const handleFinishWorkout = () => {
@@ -155,6 +201,9 @@ const StartWorkout = (props) => {
 
   const deliverNextExObj = () => {
     setExObj(exObjs[0]);
+    exObjs[0] && handleSetNum(exObjs[0]);
+    exObjs[0] && handleRestPeriod(exObjs[0]);
+
     exObjs.length > 0
       ? setExObjs((prev) => prev.slice(1))
       : handleFinishWorkout();
@@ -162,14 +211,24 @@ const StartWorkout = (props) => {
 
   return (
     <div className="container grid">
-      {goToNext && (
+      {!startWorkout ? (
         <Button
           variant="contained"
           color="secondary"
-          onClick={handleStartWorkout}
+          onClick={handleBeginWorkout}
         >
-          Ready? Lets Go!
+          Ready? Lets Begin!
         </Button>
+      ) : (
+        goToNext && (
+          <Button
+            variant="contained"
+            color="secondary"
+            onClick={handleStartWorkout}
+          >
+            Ready? Lets Go!
+          </Button>
+        )
       )}
       <div>
         <AutoRollSwitch autRoll={autoRoll} setAutoRoll={setAutoRoll} />{" "}
@@ -181,6 +240,9 @@ const StartWorkout = (props) => {
           endEx={endEx}
           stopWatch={stopWatch}
           handleEndEx={handleEndEx}
+          goToNext={goToNext}
+          setNum={setNum}
+          restPeriod={restPeriod}
         />
       </div>
       <div>
