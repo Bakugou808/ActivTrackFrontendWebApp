@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
 // * Component Imports
+import { handleRestPeriod } from "./StartWorkout";
 // * Package Imports
 import { CountdownCircleTimer } from "react-countdown-circle-timer";
 
@@ -17,18 +18,17 @@ export const UiComponent = (props) => {
     handleEndEx,
     setNum,
     restPeriod,
-    setRestPeriod,
+    handleRestPeriod,
   } = props;
   const [defTimerVal, setDefTimerVal] = useState(10);
   const [defRestPeriod, setDefRestPeriod] = useState(120);
   const [isSet, setIsSet] = useState(false);
   const [showRpForm, setShowRpForm] = useState(false);
   const [rp2, setRp2] = useState();
-  useEffect(() => {
-    if (exObj) {
-      exObj.circuit_type === "circuit" ? setIsSet(true) : setIsSet(false);
-    }
-  }, [exObj, restPeriod]);
+  const [timeAlert, setTimeAlert] = useState(false);
+
+  useEffect(() => {}, [exObj, restPeriod]);
+
   const renderTime = ({ remainingTime }) => {
     const minutes = Math.floor(stopWatch.time / 60);
     const seconds = stopWatch.time - minutes * 60;
@@ -40,6 +40,7 @@ export const UiComponent = (props) => {
       str_pad_left(minutes, "0", 2) + ":" + str_pad_left(seconds, "0", 2);
 
     if (!endEx) {
+      setTimeAlert(false);
       return (
         <div className="timer">
           <div className="text">Active Time</div>
@@ -47,6 +48,7 @@ export const UiComponent = (props) => {
         </div>
       );
     } else if (endEx) {
+      handleExceededRest();
       return (
         <div className="timer">
           {/* <div className="text">Remaining</div> */}
@@ -64,9 +66,26 @@ export const UiComponent = (props) => {
 
   const handleRpSubmit = (e) => {
     e.preventDefault();
-    let value = e.target.value;
-    setRestPeriod((prev) => ({ num: value, unit: prev.unit }));
+    let obj = { circuit_exercise_attributes: { restPeriod: `${rp2}` } };
+    handleRestPeriod(obj);
     setShowRpForm(false);
+  };
+
+  const handleExceededRest = () => {
+    let timeInSec = stopWatch.time;
+    let restInSec = 0;
+
+    if (restPeriod.unit.includes("sec")) {
+      restInSec = restPeriod.num;
+    } else if (restPeriod.unit.includes("min")) {
+      restInSec = restPeriod.num * 60;
+    }
+
+    if (restInSec <= timeInSec) {
+      setTimeAlert(true);
+    } else {
+      setTimeAlert(false);
+    }
   };
 
   return (
@@ -127,6 +146,7 @@ export const UiComponent = (props) => {
               </div>
             )}
           </div>
+          {timeAlert && "RestTime Exceeded!!!"}
         </div>
         <div className="addNewString" onClick={handleStartPause}>
           <CountdownCircleTimer

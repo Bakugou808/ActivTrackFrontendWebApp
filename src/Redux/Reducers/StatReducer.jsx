@@ -56,14 +56,23 @@ const statReducer = (state = initialState, action) => {
     case "POST_STAT_FAILED":
       return { ...state, fetching: false, error: action.error };
     case "POST_STAT_SUCCESSFUL":
-      const newStatsPOST = [...state.stats, action.stat];
+      // const newStatsPOST = [...state.stats, action.stat];
       //   return { ...state, fetching: false, stats: newStatsPOST };
-      return {
-        ...state,
-        fetching: false,
-        stats: newStatsPOST,
-        selectedStat: action.stat,
-      };
+      if (state.stats) {
+        return {
+          ...state,
+          fetching: false,
+          stats: [...state.stats, action.stat],
+          selectedStat: action.stat,
+        };
+      } else {
+        return {
+          ...state,
+          fetching: false,
+          stats: [action.stat],
+          selectedStat: action.stat,
+        };
+      }
 
     //* PATCH stat
 

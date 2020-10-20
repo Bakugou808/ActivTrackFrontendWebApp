@@ -98,7 +98,9 @@ const StartWorkout = (props) => {
       let unit = nxtObj.circuit_exercise_attributes.restPeriod
         .replace(/[^a-zA-Z]+/g, "")
         .toLowerCase();
-      setRestPeriod({ num: num, unit: unit });
+      unit
+        ? setRestPeriod({ num: num, unit: unit })
+        : setRestPeriod((prev) => ({ num: num, unit: prev.unit }));
     } else {
       setRestPeriod((prev) => ({ ...prev, message: "Add Rest Period" }));
     }
@@ -243,6 +245,7 @@ const StartWorkout = (props) => {
           setNum={setNum}
           restPeriod={restPeriod}
           setRestPeriod={setRestPeriod}
+          handleRestPeriod={handleRestPeriod}
         />
       </div>
       <div>
