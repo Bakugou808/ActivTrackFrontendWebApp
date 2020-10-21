@@ -12,7 +12,7 @@ export const EndWorkout = (props) => {
   const workoutId = match.params.workoutId;
 
   useEffect(() => {
-    onFetchWorkoutsStats(workoutId);
+    onFetchWorkoutsStats(workoutId, 2);
   }, []);
 
   const renderStatCards = () => {};
@@ -25,6 +25,7 @@ const mapStateToProps = (store) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  onFetchWorkoutsStats: (workoutId) => dispatch(fetchWorkoutsStats(workoutId)),
+  onFetchWorkoutsStats: (workoutId, numOfSessions) =>
+    dispatch(fetchWorkoutsStats(workoutId, numOfSessions)),
 });
 export default connect(mapStateToProps, mapDispatchToProps)(EndWorkout);

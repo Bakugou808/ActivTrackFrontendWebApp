@@ -96,18 +96,18 @@ export const fetchWorkoutsStatsFailed = (error) => ({
   error: error,
 });
 
-export const fetchWorkoutsStatsSuccess = (stat) => ({
+export const fetchWorkoutsStatsSuccess = (stats) => ({
   type: "FETCH_WORKOUTS_STATS_SUCCESSFUL",
-  stat: stat,
+  stats: stats,
 });
 
 // ------- FETCH WORKOUTS STATS FUNCTION--------
 // *You May Not Need This
 
-export const fetchWorkoutsStats = (workoutId) => {
+export const fetchWorkoutsStats = (workoutId, numOfSessions = null) => {
   return (dispatch) => {
     dispatch(fetchWorkoutsStatsRequest());
-    fetch(`${API}/workouts_stats/${workoutId}`, {
+    fetch(`${API}/workouts_stats/${workoutId}/${numOfSessions}`, {
       method: "GET",
       headers: headers(),
     })

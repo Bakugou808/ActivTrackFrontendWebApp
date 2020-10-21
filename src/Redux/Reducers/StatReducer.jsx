@@ -22,7 +22,7 @@ const statReducer = (state = initialState, action) => {
     case "CLEAR_SELECTED_AND_FORMATTED_STAT_STATE":
       return { ...state, selectedStat: null, formattedStat: null };
 
-    //* Fetch Workouts Stats Belonging
+    //* Fetch Workouts Stats Belonging to Workout
 
     case "FETCH_WORKOUTS_STATS_REQUEST":
       return { ...state, fetching: true };
