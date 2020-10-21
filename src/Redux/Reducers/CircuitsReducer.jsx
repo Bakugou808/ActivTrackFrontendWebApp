@@ -19,6 +19,10 @@ const circuitReducer = (state = initialState, action) => {
     //   case "FETCH_FOLDER_SUCCESSFUL":
     //     return { ...state, circuits: action.folder.circuits };
 
+    //* Set SelectedCircuit
+    case "CLEAR_SELECTED_CIRCUIT":
+      return { ...state, selectedCircuit: null };
+
     //* Set Circuit Phase
 
     case "SETTING_PHASE":

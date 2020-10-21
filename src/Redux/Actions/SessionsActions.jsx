@@ -32,7 +32,7 @@ export const fetchSessionsSuccess = (sessions) => ({
   sessions: sessions,
 });
 
-// ------- FETCH FOLDER SESSIONS FUNCTION--------
+// ------- FETCH WORKOUT SESSIONS FUNCTION--------
 
 export const fetchSessions = (sessionId) => {
   return (dispatch) => {

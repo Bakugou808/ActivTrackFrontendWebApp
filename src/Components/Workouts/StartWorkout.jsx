@@ -157,7 +157,6 @@ const StartWorkout = (props) => {
   };
 
   // 3. user is prompted to fill att values and submit -> autoRoll ? run handleSubmitState : set submitClicked(true)
-  // !but take into account rest time.
 
   // when user is ready to move to next workout submit
   const handleSubmitStats = (t) => {

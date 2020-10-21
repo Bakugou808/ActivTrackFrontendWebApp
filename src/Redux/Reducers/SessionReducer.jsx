@@ -2,7 +2,7 @@
 
 const initialState = {
   selectedSession: null,
-  // * may not need this. formattedSession: null,
+  // sessionStats: [],
   workoutsSessions: [],
   sessions: [],
   fetching: false,

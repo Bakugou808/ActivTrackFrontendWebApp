@@ -22,6 +22,15 @@ const statReducer = (state = initialState, action) => {
     case "CLEAR_SELECTED_AND_FORMATTED_STAT_STATE":
       return { ...state, selectedStat: null, formattedStat: null };
 
+    //* Fetch Workouts Stats Belonging
+
+    case "FETCH_WORKOUTS_STATS_REQUEST":
+      return { ...state, fetching: true };
+    case "FETCH_WORKOUTS_STATS_FAILED":
+      return { ...state, fetching: false, error: action.error };
+    case "FETCH_WORKOUTS_STATS_SUCCESSFUL":
+      return { ...state, fetching: false, workoutsStats: action.stats };
+
     //* Fetch Stats Belonging To User
 
     case "FETCH_STATS_REQUEST":
