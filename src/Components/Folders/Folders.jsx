@@ -54,7 +54,7 @@ export const Folders = (props) => {
   return (
     <div>
       <div>
-        <span className={"center pointer"} onClick={() => setShowForm(true)}>
+        <span className={classes.addNew} onClick={() => setShowForm(true)}>
           + Add New Folder
         </span>
       </div>
@@ -112,8 +112,26 @@ const useStyles = makeStyles((theme) => ({
   folder: {
     padding: theme.spacing(2),
     textAlign: "center",
-    color: theme.palette.text.secondary,
-    "min-height": "30px",
+    color: theme.palette.primary.light,
+    // minHeight: "3rem",
+    height: "4vw",
+
+    maxWidth: "20 rem",
+    cursor: "pointer",
+    justifyContent: "center",
+    fontSize: "18px",
+    alignItems: "center",
+    display: "flex",
+    opacity: ".8",
+    // backgroundColor: "#ffee58",
+    // backgroundColor: "#26a69a",
+  },
+  addNew: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    margin: "20px",
+    color: theme.palette.secondary.main,
     cursor: "pointer",
   },
 }));

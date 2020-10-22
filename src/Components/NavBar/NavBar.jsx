@@ -78,7 +78,7 @@ function NavBar(props) {
           // ["Search", <SearchIcon />, ""],
           ["Home", <HomeIcon />, "home"],
           ["Folders", <FolderOpenIcon />, "folders"],
-          ["Stats", <BubbleChartIcon />, "stats"],
+          // ["Stats", <BubbleChartIcon />, "stats"],
         ].map((arr, index) => (
           <ListItem button key={index} onClick={() => redirect(arr[2])}>
             <ListItemIcon>{arr[1]}</ListItemIcon>
@@ -91,7 +91,7 @@ function NavBar(props) {
 
   return (
     <div className={classes.root}>
-      <AppBar position="static">
+      <AppBar position="static" className={classes.bar}>
         <Toolbar>
           <IconButton
             edge="start"
@@ -103,9 +103,15 @@ function NavBar(props) {
             {isLoggedIn && <MenuIcon />}
           </IconButton>
           <Typography component={"span"} variant="h6" className={classes.title}>
-            <Link href="/about" color="inherit">
-              ActivTrack
-            </Link>
+            {isLoggedIn ? (
+              <Link href="/home" color="inherit">
+                ActivTrack
+              </Link>
+            ) : (
+              <Link href="/about" color="inherit">
+                ActivTrack
+              </Link>
+            )}
           </Typography>
           {isLoggedIn ? (
             <Typography
@@ -161,6 +167,10 @@ export default connect(mapStateToProps, mapDispatchToProps)(NavBar);
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
+  },
+  bar: {
+    height: "55px",
+    marginBottom: "30px",
   },
   menuButton: {
     marginRight: theme.spacing(2),

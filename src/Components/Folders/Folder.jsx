@@ -77,7 +77,7 @@ export const Folder = (props) => {
   return (
     <div>
       <div>
-        <span className={"center pointer"} onClick={handleNewWorkout}>
+        <span className={classes.addNew} onClick={handleNewWorkout}>
           + Add New Workout
         </span>
       </div>
@@ -140,14 +140,26 @@ const useStyles = makeStyles((theme) => ({
   workout: {
     padding: theme.spacing(2),
     textAlign: "center",
-    // color: theme.palette.text.secondary,
-    color: "darkorange",
-    minHeight: "3rem",
+    color: theme.palette.secondary.dark,
+    // minHeight: "3rem",
+    height: "4vw",
+
     maxWidth: "20 rem",
     cursor: "pointer",
     justifyContent: "center",
-
+    fontSize: "18px",
     alignItems: "center",
     display: "flex",
+    opacity: ".8",
+    // backgroundColor: "#ffee58",
+    // backgroundColor: "#fff179",
+  },
+  addNew: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    margin: "20px",
+    color: theme.palette.secondary.main,
+    cursor: "pointer",
   },
 }));

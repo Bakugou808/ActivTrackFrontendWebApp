@@ -102,9 +102,9 @@ export const UiComponent = (props) => {
           <div className="exHeaders">
             {exObj && (
               <div className="horizontal1">
-                <div> {exObj.circuit_phase} </div>
-                <div> {exObj.ex_name} </div>
-                <div> {exObj.circuit_type} </div>
+                <div id="phaseDisp">{exObj.circuit_phase}</div>
+                <div className="exTitleWorkout">{exObj.ex_name}</div>
+                <div id="typeDisp">{exObj.circuit_type}</div>
               </div>
             )}
           </div>
@@ -113,9 +113,12 @@ export const UiComponent = (props) => {
           </div>
         </div>
         <div className="setDisplay">
-          <p> {exObj && `Set #: ${setNum}`} </p>
-          -----------------------------------------
-          <p> {exObj && `Set Total: ${exObj.circuit_sets}`} </p>
+          <p className="setNum"> {exObj && `Set #: ${setNum}`} </p>
+
+          <p className="setGoal">
+            {" "}
+            {exObj && `Set Total: ${exObj.circuit_sets}`}{" "}
+          </p>
         </div>
 
         <div className="horizontal1">

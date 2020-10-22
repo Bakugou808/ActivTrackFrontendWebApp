@@ -36,7 +36,8 @@ export const renderExercises = (phase) => {
             <div className="exStack">
               <Paper elevation={6} className={"exPaper"}>
                 {/* <div className="container grid"> */}
-                {record.ex_name} - {renderExDetails(record)}
+                <p className="exTitle">{record.ex_name}</p>
+                <p className={"exPaperAtts"}>{renderExDetails(record)}</p>
                 {/* </div> */}
               </Paper>
             </div>
@@ -68,7 +69,8 @@ export const renderCirc = (arr) => {
           return (
             <Paper elevation={6} className={"exPaper"}>
               {/* <div className="container grid"> */}
-              {ex.ex_name} - {renderExDetails(ex)}
+              <p className="exTitle">{ex.ex_name}</p>
+              <p className={"exPaperAtts"}>{renderExDetails(ex)}</p>
               {/* </div> */}
             </Paper>
           );
@@ -140,23 +142,23 @@ const Workout = (props) => {
         </Button>
       </div>
       <div className="container grid">
-        <Paper elevation={3} className="container">
-          <div className={"centerDiv"}>Warm Up</div>
+        <Paper elevation={3} className={classes.paper}>
+          <div className={"centerDiv phaseTitle"}>Warm Up</div>
           <div>
             {formattedWorkout && renderExercises(formattedWorkout.warmup)}
           </div>
         </Paper>
 
-        <Paper elevation={6} className="container">
-          <div className={"centerDiv"}>Body</div>
+        <Paper elevation={6} className={classes.paper}>
+          <div className={"centerDiv phaseTitle"}>Body</div>
 
           <div>
             {formattedWorkout && renderExercises(formattedWorkout.body)}
           </div>
         </Paper>
 
-        <Paper elevation={6} className="container">
-          <div className={"centerDiv"}>Cool Down</div>
+        <Paper elevation={6} className={classes.paper}>
+          <div className={"centerDiv phaseTitle"}>Cool Down</div>
 
           <div>
             {formattedWorkout && renderExercises(formattedWorkout.cool_down)}
@@ -188,14 +190,23 @@ const useStyles = makeStyles((theme) => ({
   paper: {
     padding: theme.spacing(2),
     textAlign: "center",
-    // color: theme.palette.text.secondary,
-    color: "darkorange",
+    color: theme.palette.primary.main,
     minHeight: "3rem",
     maxWidth: "20 rem",
-    cursor: "pointer",
     justifyContent: "center",
-
+    // background: theme.palette.
     alignItems: "center",
+    opacity: ".9",
+  },
+  center: {
     display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    margin: "1rem",
+  },
+  button: {
+    textSizeAdjust: "1 rem",
+    maxWidth: "30rem",
+    margin: "2rem",
   },
 }));

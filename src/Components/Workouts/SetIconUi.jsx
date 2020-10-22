@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
 // * Material UI Imports
 import { makeStyles } from "@material-ui/core/styles";
-import { Paper, Button } from "@material-ui/core";
+import { Paper, Button, TextField } from "@material-ui/core";
 // * Action Imports
 import {
   patchCircuit,
@@ -44,7 +44,8 @@ export const SetIconUi = (props) => {
       >
         {showForm ? (
           <form onSubmit={handleSubmit}>
-            <input
+            <TextField
+              size="small"
               type="number"
               value={setVal}
               onChange={(e) => setSetVal(e.target.value)}

@@ -9,25 +9,64 @@ import { store } from "./Redux/ReduxStore";
 
 import { createMuiTheme } from "@material-ui/core/styles";
 import { ThemeProvider } from "@material-ui/styles";
-import { purple } from "@material-ui/core/colors";
+import CssBaseline from "@material-ui/core/CssBaseline";
+import { deepOrange } from "@material-ui/core/colors";
+import Typography from "@material-ui/core/Typography";
 
 const theme = createMuiTheme({
   palette: {
     primary: {
-      // Purple and green play nicely together.
-      main: purple[500],
+      // deep orange.
+      main: "#ff5722",
     },
     secondary: {
-      // This is green.A700 as hex.
-      main: "#11cb5f",
+      // light -> light blue, main -> deep turquoise
+      light: "#18ffff",
+      main: "#26a69a",
+      dark: "#00796b",
     },
+    contrastThreshold: 3,
+    tonalOffset: 0.2,
   },
+  typography: {
+    fontSize: 16,
+    // fontFamily: [
+    //   "-apple-system",
+    //   "BlinkMacSystemFont",
+    //   '"Segoe UI"',
+    //   "Roboto",
+    //   '"Helvetica Neue"',
+    //   "Arial",
+    //   "sans-serif",
+    //   '"Apple Color Emoji"',
+    //   '"Segoe UI Emoji"',
+    //   '"Segoe UI Symbol"',
+    // ].join(","),
+  },
+  // overrides: {
+  //   MuiCssBaseline: {
+  //     "@global": {
+  //       "@font-face": [arial],
+  //     },
+  //   },
+  // },
 });
+
+theme.typography.h3 = {
+  fontSize: "1.2rem",
+  "@media (min-width:600px)": {
+    fontSize: "1.5rem",
+  },
+  [theme.breakpoints.up("md")]: {
+    fontSize: "2.4rem",
+  },
+};
 
 ReactDOM.render(
   // <React.StrictMode>
   <Provider store={store}>
     <Router>
+      {/* <CssBaseline /> */}
       <ThemeProvider theme={theme}>
         <App />
       </ThemeProvider>
