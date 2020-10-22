@@ -2,12 +2,13 @@ import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
 // * Component Imports
 import { handleRestPeriod } from "./StartWorkout";
+import AutoRollSwitch from "./AutoRollSwitch";
 // * Package Imports
 import { CountdownCircleTimer } from "react-countdown-circle-timer";
 
 // * Material UI Imports
 import { makeStyles } from "@material-ui/core/styles";
-import { Button, TextField } from "@material-ui/core";
+import { Button, TextField, Paper } from "@material-ui/core";
 
 export const UiComponent = (props) => {
   const {
@@ -19,6 +20,12 @@ export const UiComponent = (props) => {
     setNum,
     restPeriod,
     handleRestPeriod,
+    autoRoll,
+    setAutoRoll,
+    startWorkout,
+    handleBeginWorkout,
+    handleStartWorkout,
+    goToNext,
   } = props;
   const [defTimerVal, setDefTimerVal] = useState(10);
   const [defRestPeriod, setDefRestPeriod] = useState(120);
@@ -89,30 +96,36 @@ export const UiComponent = (props) => {
   };
 
   return (
-    <div>
-      <div className="container grid">
-        <div className="addNewString">
-          <div>
+    <Paper elevation={6} className="UiComponentContainer">
+      <div className="container grid no-margin">
+        <div className="UiComponent">
+          <div className="exHeaders">
             {exObj && (
-              <>
+              <div className="horizontal1">
                 <div> {exObj.circuit_phase} </div>
-                <div> {exObj.circuit_type} </div>
                 <div> {exObj.ex_name} </div>
-              </>
+                <div> {exObj.circuit_type} </div>
+              </div>
             )}
           </div>
+          <div>
+            <AutoRollSwitch autoRoll={autoRoll} setAutoRoll={setAutoRoll} />
+          </div>
         </div>
-        <div className="addNewString">
+        <div className="setDisplay">
           <p> {exObj && `Set #: ${setNum}`} </p>
           -----------------------------------------
           <p> {exObj && `Set Total: ${exObj.circuit_sets}`} </p>
         </div>
-        <div className="addNewString">
-          <p>
-            {exObj && `Rep Goal: ${exObj.circuit_exercise_attributes.reps}`}{" "}
-          </p>
-          <div>
-            Rest Period:{" "}
+
+        <div className="horizontal1">
+          <div className="horizontal2">
+            {`Rep Goal: `}
+            <span>{exObj && exObj.circuit_exercise_attributes.reps}</span>
+          </div>
+
+          <div className="horizontal2">
+            <div>{`Rest Period: `}</div>
             {restPeriod.message ? (
               showRpForm ? (
                 // show form
@@ -141,14 +154,17 @@ export const UiComponent = (props) => {
                 />
               </form>
             ) : (
-              <div onClick={() => setShowRpForm(true)}>
+              <span
+                className="restPeriodDisplay pointer"
+                onClick={() => setShowRpForm(true)}
+              >
                 {restPeriod.num} {restPeriod.unit}
-              </div>
+              </span>
             )}
           </div>
-          {timeAlert && "RestTime Exceeded!!!"}
         </div>
-        <div className="addNewString" onClick={handleStartPause}>
+        <div className={"timeAlert"}>{timeAlert && "RestTime Exceeded!!!"}</div>
+        <div className="timer" onClick={handleStartPause}>
           <CountdownCircleTimer
             isPlaying={stopWatch.isRunning}
             duration={defTimerVal}
@@ -159,19 +175,45 @@ export const UiComponent = (props) => {
           </CountdownCircleTimer>
         </div>
 
-        <div>
-          {startEx && (
+        {!startWorkout ? (
+          <div className="startButton">
             <Button
               variant="contained"
               color="secondary"
-              onClick={() => handleEndEx(stopWatch.time)}
+              onClick={handleBeginWorkout}
             >
-              Finished
+              Ready? Lets Begin!
             </Button>
+          </div>
+        ) : (
+          goToNext && (
+            <div className="startButton">
+              <Button
+                variant="contained"
+                color="secondary"
+                onClick={handleStartWorkout}
+              >
+                Ready? Lets Go!
+              </Button>
+            </div>
+          )
+        )}
+        <div>
+          {startEx && (
+            <div className="finButton">
+              <Button
+                variant="contained"
+                color="secondary"
+                onClick={() => handleEndEx(stopWatch.time)}
+                className="center"
+              >
+                Finished
+              </Button>
+            </div>
           )}
         </div>
       </div>
-    </div>
+    </Paper>
   );
 };
 

@@ -54,7 +54,9 @@ export const Folder = (props) => {
         <Paper
           key={workout.id}
           onClick={() => redirectToWorkout(workout)}
+          // className={"displayPaper pointer center"}
           className={classes.workout}
+          elevation={6}
         >
           {workout.title}
         </Paper>
@@ -75,7 +77,7 @@ export const Folder = (props) => {
   return (
     <div>
       <div>
-        <span className={"addNewString"} onClick={handleNewWorkout}>
+        <span className={"center pointer"} onClick={handleNewWorkout}>
           + Add New Workout
         </span>
       </div>
@@ -138,8 +140,14 @@ const useStyles = makeStyles((theme) => ({
   workout: {
     padding: theme.spacing(2),
     textAlign: "center",
-    color: theme.palette.text.secondary,
-    "min-height": "30px",
+    // color: theme.palette.text.secondary,
+    color: "darkorange",
+    minHeight: "3rem",
+    maxWidth: "20 rem",
     cursor: "pointer",
+    justifyContent: "center",
+
+    alignItems: "center",
+    display: "flex",
   },
 }));

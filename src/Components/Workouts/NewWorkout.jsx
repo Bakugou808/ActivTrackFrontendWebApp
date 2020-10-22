@@ -94,7 +94,7 @@ export const NewWorkout = (props) => {
 
   return (
     <div>
-      <div className="addNewString container">
+      <div className="center container">
         {/* Title Input */}
         <div>
           {showTitleForm ? (

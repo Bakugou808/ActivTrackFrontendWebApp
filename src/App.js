@@ -31,10 +31,10 @@ class App extends React.Component {
             render={(props) => <Folders {...props} />}
           />
           {/* custom paths with ids */}
-          <Route
+          {/* <Route
             path="/session"
             render={(props) => <SessionsContainer {...props} />}
-          />
+          /> */}
           <Route
             path={`/folders/:folderName/:folderId`}
             render={(props) => <Folder {...props} />}

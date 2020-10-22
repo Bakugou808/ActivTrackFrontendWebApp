@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
 import { AuthHOC } from "../AuthHOC";
-
+import { normalizeString } from "./AttributeFields";
 // * Component Imports
 import SetIconUi from "./SetIconUi";
 
@@ -18,6 +18,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import { Paper, Button } from "@material-ui/core";
 
 // * create a new button -> onClick will open a form field in the button --> onSubmit will patch the Circuit and change the value -> place the button in front of the Paper tag
+
 export const renderExercises = (phase) => {
   return phase.map((circuit) => {
     let keyName = Object.keys(circuit)[0];
@@ -27,12 +28,18 @@ export const renderExercises = (phase) => {
     } else {
       return arr.map((record) => {
         return (
-          <div className="container grid stack">
+          <div className={"exContainer"}>
             <SetIconUi
               setCount={record.circuit_sets}
               circuitId={record.circuit_id}
             />
-            <Paper elevation={6}> {record.ex_name} </Paper>{" "}
+            <div className="exStack">
+              <Paper elevation={6} className={"exPaper"}>
+                {/* <div className="container grid"> */}
+                {record.ex_name} - {renderExDetails(record)}
+                {/* </div> */}
+              </Paper>
+            </div>
           </div>
         );
       });
@@ -40,15 +47,33 @@ export const renderExercises = (phase) => {
   });
 };
 
+const renderExDetails = (ex) => {
+  const obj = ex.circuit_exercise_attributes;
+  const arr = [];
+  for (const [key, val] of Object.entries(obj)) {
+    let str = `${normalizeString(key)}: ${val}`;
+    arr.push(str);
+  }
+  return arr.join(", ");
+};
+
 export const renderCirc = (arr) => {
   const setCount = arr[0].circuit_sets;
   const circuitId = arr[0].circuit_id;
   return (
-    <div className="container grid circuit">
+    <div className={"exContainer"}>
       <SetIconUi setCount={setCount} circuitId={circuitId} />
-      {arr.map((ex) => {
-        return <Paper elevation={6}> {ex.ex_name} </Paper>;
-      })}
+      <div className="exCircuit">
+        {arr.map((ex) => {
+          return (
+            <Paper elevation={6} className={"exPaper"}>
+              {/* <div className="container grid"> */}
+              {ex.ex_name} - {renderExDetails(ex)}
+              {/* </div> */}
+            </Paper>
+          );
+        })}
+      </div>
     </div>
   );
 };
@@ -69,6 +94,7 @@ const Workout = (props) => {
   const workoutId = match.params.workoutId;
   const folderName = match.params.folderName;
   const workoutTitle = match.params.workoutTitle;
+  const classes = useStyles();
 
   useEffect(() => {
     workoutId && onFetchWorkout(workoutId);
@@ -103,32 +129,35 @@ const Workout = (props) => {
 
   return (
     <div>
-      <div>
+      <div className={"centerDiv"}>
         <Button
           variant="contained"
           color="secondary"
           onClick={handleStartWorkout}
+          className={"centerDiv pointer button"}
         >
           Start Workout
         </Button>
       </div>
       <div className="container grid">
         <Paper elevation={3} className="container">
-          //*Warm up
+          <div className={"centerDiv"}>Warm Up</div>
           <div>
             {formattedWorkout && renderExercises(formattedWorkout.warmup)}
           </div>
         </Paper>
 
         <Paper elevation={6} className="container">
-          //*Body
+          <div className={"centerDiv"}>Body</div>
+
           <div>
             {formattedWorkout && renderExercises(formattedWorkout.body)}
           </div>
         </Paper>
 
         <Paper elevation={6} className="container">
-          //*Cool Down
+          <div className={"centerDiv"}>Cool Down</div>
+
           <div>
             {formattedWorkout && renderExercises(formattedWorkout.cool_down)}
           </div>
@@ -154,3 +183,19 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export default AuthHOC(connect(mapStateToProps, mapDispatchToProps)(Workout));
+
+const useStyles = makeStyles((theme) => ({
+  paper: {
+    padding: theme.spacing(2),
+    textAlign: "center",
+    // color: theme.palette.text.secondary,
+    color: "darkorange",
+    minHeight: "3rem",
+    maxWidth: "20 rem",
+    cursor: "pointer",
+    justifyContent: "center",
+
+    alignItems: "center",
+    display: "flex",
+  },
+}));

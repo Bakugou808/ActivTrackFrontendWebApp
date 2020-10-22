@@ -54,7 +54,7 @@ export const Folders = (props) => {
   return (
     <div>
       <div>
-        <span className={"addNewString"} onClick={() => setShowForm(true)}>
+        <span className={"center pointer"} onClick={() => setShowForm(true)}>
           + Add New Folder
         </span>
       </div>
