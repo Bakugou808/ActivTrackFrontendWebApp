@@ -56,11 +56,6 @@ function NavBar(props) {
   };
 
   const redirect = (path) => {
-    console.log(path);
-    // const clearStates = () => {
-    //!add actions to clear store on logout/or redirect if necessary
-    // }
-    // clearStates()
     history.push(`/${path}`);
   };
 
@@ -78,7 +73,7 @@ function NavBar(props) {
           // ["Search", <SearchIcon />, ""],
           ["Home", <HomeIcon />, "home"],
           ["Folders", <FolderOpenIcon />, "folders"],
-          // ["Stats", <BubbleChartIcon />, "stats"],
+          ["Stats", <BubbleChartIcon />, "statsPage"],
         ].map((arr, index) => (
           <ListItem button key={index} onClick={() => redirect(arr[2])}>
             <ListItemIcon>{arr[1]}</ListItemIcon>

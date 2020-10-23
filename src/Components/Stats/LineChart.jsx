@@ -6,7 +6,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import { Paper } from "@material-ui/core";
 
 export const LineChart = (props) => {
-  const { data, lineData } = props;
+  const { data, lineData, session } = props;
   const classes = useStyles();
 
   function titleCase(string) {
@@ -83,7 +83,12 @@ export const LineChart = (props) => {
 
   const handleToolTip = (point, event) => {
     let name = point.point.data.x;
-    let obj = data.filter((obj) => obj.exercise_name === name)[0];
+    let obj = "";
+    if (data) {
+      obj = data.filter((obj) => obj.exercise_name === name)[0];
+    } else if (session) {
+      obj = session.filter((obj) => obj.exercise_name === name)[0];
+    }
     if (name) {
       return (
         <Paper className={[classes.paper, classes.root]}>
@@ -99,7 +104,7 @@ export const LineChart = (props) => {
         <ResponsiveLine
           data={lineData}
           //   onClick={(point, event) => handleClick(point, event)}
-          tooltip={handleToolTip}
+          // tooltip={handleToolTip}
           margin={{ top: 50, right: 110, bottom: 50, left: 60 }}
           xScale={{ type: "point" }}
           yScale={{

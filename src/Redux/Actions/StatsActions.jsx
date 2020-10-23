@@ -10,13 +10,20 @@ export const headers = () => {
 
 // *rxaction -> action template
 
+// ------- SET WORKOUTS STATS ACTIONS--------
+
+export const setWorkoutsStats = (stats) => ({
+  type: "SET_WORKOUTS_STATS",
+  stats: stats,
+});
+
 // ------- CLEAR SELECTED STAT AND FORMATTED STAT FROM STATE ACTIONS--------
 
 export const clearSelectedAndFormattedStats = () => ({
   type: "CLEAR_SELECTED_AND_FORMATTED_STAT_STATE",
 });
 
-// ------- FETCH FOLDER STATS ACTIONS--------
+// ------- FETCH WORKOUTS STATS ACTIONS--------
 
 export const fetchStatsRequest = () => ({
   type: "FETCH_STATS_REQUEST",
@@ -32,7 +39,7 @@ export const fetchStatsSuccess = (stats) => ({
   stats: stats,
 });
 
-// ------- FETCH FOLDER STATS FUNCTION--------
+// ------- FETCH WORKOUTS STATS FUNCTION--------
 
 export const fetchStats = (statId) => {
   return (dispatch) => {
@@ -101,10 +108,13 @@ export const fetchWorkoutsStatsSuccess = (stats) => ({
   stats: stats,
 });
 
-// ------- FETCH WORKOUTS STATS FUNCTION--------
-// *You May Not Need This
+// ------- FETCH WORKOUT'S STATS FUNCTION--------
 
-export const fetchWorkoutsStats = (workoutId, numOfSessions = null) => {
+export const fetchWorkoutsStats = (
+  workoutId,
+  numOfSessions = null,
+  sideEffects
+) => {
   return (dispatch) => {
     dispatch(fetchWorkoutsStatsRequest());
     fetch(`${API}/workouts_stats/${workoutId}/${numOfSessions}`, {
@@ -117,6 +127,43 @@ export const fetchWorkoutsStats = (workoutId, numOfSessions = null) => {
           dispatch(fetchWorkoutsStatsFailed(data.error));
         } else {
           dispatch(fetchWorkoutsStatsSuccess(data));
+          sideEffects && sideEffects();
+        }
+      });
+  };
+};
+
+// * FETCH ALL WORKOUTS WITH STATS ACTIONS
+export const fetchAllWorkoutsWithStatsRequest = () => ({
+  type: "FETCH_ALL_WORKOUTS_WITH_STATS_REQUEST",
+});
+
+export const fetchAllWorkoutsWithStatsFailed = (error) => ({
+  type: "FETCH_ALL_WORKOUTS_WITH_STATS_FAILED",
+  error: error,
+});
+
+export const fetchAllWorkoutsWithStatsSuccess = (stats) => ({
+  type: "FETCH_ALL_WORKOUTS_WITH_STATS_SUCCESSFUL",
+  stats: stats,
+});
+
+// *------- FETCH ALL WORKOUTS WITH STATS FUNCTION--------
+
+export const fetchAllWorkoutsWithStats = (userId, sideEffects) => {
+  return (dispatch) => {
+    dispatch(fetchAllWorkoutsWithStatsRequest());
+    fetch(`${API}/all_workouts_with_stats/${userId}`, {
+      method: "GET",
+      headers: headers(),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.error) {
+          dispatch(fetchAllWorkoutsWithStatsFailed(data.error));
+        } else {
+          dispatch(fetchAllWorkoutsWithStatsSuccess(data));
+          sideEffects && sideEffects();
         }
       });
   };

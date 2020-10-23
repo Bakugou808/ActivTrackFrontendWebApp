@@ -4,6 +4,7 @@ const initialState = {
   selectedStat: null,
   // * may not need this. formattedStat: null,
   workoutsStats: [],
+  allWorkoutsWithStats: [],
   stats: [],
   fetching: false,
   error: false,
@@ -15,8 +16,8 @@ const statReducer = (state = initialState, action) => {
     case "SET_SELECTED_STAT":
       return { ...state, selectedStat: action.stat };
     //* Set Stats Based On Selected Folder
-    case "FETCH_FOLDER_SUCCESSFUL":
-      return { ...state, stats: action.folder.stats };
+    case "SET_WORKOUTS_STATS":
+      return { ...state, workoutsStats: action.stats };
 
     // * Clear Selected Stat and Formatted Stat State
     case "CLEAR_SELECTED_AND_FORMATTED_STAT_STATE":
@@ -30,6 +31,11 @@ const statReducer = (state = initialState, action) => {
       return { ...state, fetching: false, error: action.error };
     case "FETCH_WORKOUTS_STATS_SUCCESSFUL":
       return { ...state, fetching: false, workoutsStats: action.stats };
+
+    // * Fetch all Workouts with Stats Belonging to User
+
+    case "FETCH_ALL_WORKOUTS_WITH_STATS_SUCCESSFUL":
+      return { ...state, fetching: false, allWorkoutsWithStats: action.stats };
 
     //* Fetch Stats Belonging To User
 
