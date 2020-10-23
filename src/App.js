@@ -17,7 +17,7 @@ import EndWorkout from "./Components/Workouts/EndWorkout";
 class App extends React.Component {
   render() {
     return (
-      <div className="App">
+      <div className="App overflowYHidden">
         <Route path="/" render={(props) => <NavBar {...props} />} />
         <Switch>
           <Route path="/about" render={(props) => <About {...props} />} />

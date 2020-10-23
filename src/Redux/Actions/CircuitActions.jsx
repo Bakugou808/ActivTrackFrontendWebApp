@@ -196,7 +196,7 @@ export const deleteCircuitSuccess = (circuitId) => ({
 
 // ------- DELETE NEW CIRCUIT FUNCTION--------
 
-export const deleteCircuit = (circuitId) => {
+export const deleteCircuit = (circuitId, sideEffects) => {
   return (dispatch) => {
     dispatch(deleteCircuitRequest());
     fetch(`${API}/circuits/${circuitId}`, {
@@ -209,6 +209,7 @@ export const deleteCircuit = (circuitId) => {
           dispatch(deleteCircuitFailed(data.error));
         } else {
           dispatch(deleteCircuitSuccess(circuitId));
+          sideEffects();
         }
       });
   };

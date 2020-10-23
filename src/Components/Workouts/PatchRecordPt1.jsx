@@ -5,10 +5,15 @@ import CustAttForm from "../Circuits/CustAttForm";
 import CheckBoxes2 from "../Circuits/CheckBoxes2";
 // import CircFlowCont from '../Circuits/CircFlowCont'
 // * Action Imports
+import { patchExercise } from "../../Redux/Actions/ExerciseActions";
+import { fetchFormattedWorkout } from "../../Redux/Actions/WorkoutActions";
 import {
-  postExercise,
-  patchExercise,
-} from "../../Redux/Actions/ExerciseActions";
+  clearSelectedCircEx,
+  clearPosValCircEx,
+} from "../../Redux/Actions/CircExActions";
+import { clearSelectedExercise } from "../../Redux/Actions/ExerciseActions";
+import { deleteCircuit } from "../../Redux/Actions/CircuitActions";
+
 // * Material UI Imports
 import MuiAlert from "@material-ui/lab/Alert";
 
@@ -26,9 +31,16 @@ export const PatchRecordPt1 = (props) => {
     goToNextPage,
     exFields,
     setExFields,
-    customAttsParent,
-    setCustomAttsParent,
+    // customAttsParent,
+    // setCustomAttsParent,
+    setShowModal,
     handleCustomAdd,
+    onFetchFormattedWorkout,
+    onClearSelectedCircEx,
+    onClearSelectedExercise,
+    onClearPosValCircEx,
+    workoutId,
+    onDeleteCircuit,
   } = props;
   const classes = useStyles();
 
@@ -111,7 +123,6 @@ export const PatchRecordPt1 = (props) => {
   // ** Need to put onPostCircEx in NewWorkout and figure out the position, circuit id and exercise id
   const handleNext = (e) => {
     handleCustomAdd(customAtts, goToNextPage);
-    // goToNextPage(true);
   };
 
   const handleCustomAttAdd = (custAtt) => {
@@ -124,6 +135,17 @@ export const PatchRecordPt1 = (props) => {
       setNewCustAtt(custAtt);
       setOpenSnackBar(true);
     }
+  };
+
+  const handleDelete = () => {
+    const sideEffects = () => {
+      setShowModal(false);
+      onFetchFormattedWorkout(workoutId);
+      onClearSelectedCircEx();
+      onClearSelectedExercise();
+      onClearPosValCircEx();
+    };
+    onDeleteCircuit(record.circuit_id, sideEffects);
   };
 
   return (
@@ -204,6 +226,14 @@ export const PatchRecordPt1 = (props) => {
             <Button
               variant="outlined"
               className={classes.paper}
+              onClick={handleDelete}
+              color="secondary"
+            >
+              Delete
+            </Button>
+            <Button
+              variant="outlined"
+              className={classes.paper}
               onClick={handleNext}
             >
               Next
@@ -245,6 +275,14 @@ const mapStateToProps = (state) => ({});
 
 const mapDispatchToProps = (dispatch) => ({
   onPatchExercise: (exData) => dispatch(patchExercise(exData)),
+  onClearSelectedCircEx: () => dispatch(clearSelectedCircEx()),
+  onClearSelectedExercise: () => dispatch(clearSelectedExercise()),
+  onClearPosValCircEx: (data, sideEffects) =>
+    dispatch(clearPosValCircEx(data, sideEffects)),
+  onFetchFormattedWorkout: (workoutId) =>
+    dispatch(fetchFormattedWorkout(workoutId)),
+  onDeleteCircuit: (circuitId, sideEffects) =>
+    dispatch(deleteCircuit(circuitId, sideEffects)),
 });
 export default connect(mapStateToProps, mapDispatchToProps)(PatchRecordPt1);
 
@@ -272,7 +310,6 @@ const useStyles = makeStyles((theme) => ({
   },
   button: {
     textSizeAdjust: "1 rem",
-    maxWidth: "30rem",
-    margin: "2rem",
+    color: theme.palette.secondary.dark,
   },
 }));

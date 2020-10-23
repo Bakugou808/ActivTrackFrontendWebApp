@@ -28,6 +28,8 @@ export const PatchFlowCont = (props) => {
           exFields={exFields}
           setExFields={setExFields}
           handleCustomAdd={handleCustomAdd}
+          setShowModal={setShowForm}
+          workoutId={workoutId}
         />
       ) : (
         <PatchRecordPt2
