@@ -5,8 +5,7 @@ import { normalizeString } from "./AttributeFields";
 // * Component Imports
 import SetIconUi from "./SetIconUi";
 import MyModal from "../Modal";
-// import CircFlowCont from '../Circuits/CircFlowCont'
-import PatchRecord from "./PatchRecord";
+import PatchFlowCont from "./PatchFlowCont";
 // * Action Imports
 import {
   fetchWorkout,
@@ -26,7 +25,7 @@ export const renderExercises = (phase, handlePatch) => {
     let keyName = Object.keys(circuit)[0];
     let arr = circuit[keyName];
     if (arr[0].circuit_type === "circuit") {
-      return renderCirc(arr);
+      return renderCirc(arr, handlePatch);
     } else {
       return arr.map((record) => {
         return (
@@ -58,7 +57,7 @@ const renderExDetails = (ex) => {
   return arr.join(", ");
 };
 
-export const renderCirc = (arr) => {
+export const renderCirc = (arr, handlePatch) => {
   const setCount = arr[0].circuit_sets;
   const circuitId = arr[0].circuit_id;
   return (
@@ -67,7 +66,11 @@ export const renderCirc = (arr) => {
       <div className="exCircuit">
         {arr.map((ex) => {
           return (
-            <Paper elevation={6} className={"exPaper"}>
+            <Paper
+              elevation={6}
+              className={"exPaper"}
+              onClick={() => handlePatch(ex)}
+            >
               <p className="exTitle">{ex.ex_name}</p>
               <p className={"exPaperAtts"}>{renderExDetails(ex)}</p>
             </Paper>
@@ -178,10 +181,10 @@ const Workout = (props) => {
         showModal={showForm}
         setShowModal={setShowForm}
         component={
-          <PatchRecord
+          <PatchFlowCont
             setShowForm={setShowForm}
-            setPatchRecord={setPatchRecord}
             record={patchRecord}
+            workoutId={workoutId}
           />
         }
       />

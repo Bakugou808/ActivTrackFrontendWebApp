@@ -1,53 +1,44 @@
 import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
-
+// * Component Imports
+import CustAttForm from "../Circuits/CustAttForm";
+import CheckBoxes2 from "../Circuits/CheckBoxes2";
+// import CircFlowCont from '../Circuits/CircFlowCont'
 // * Action Imports
 import {
   postExercise,
   patchExercise,
 } from "../../Redux/Actions/ExerciseActions";
-import { postCircEx } from "../../Redux/Actions/CircExActions";
-import { postCircuit } from "../../Redux/Actions/CircuitActions";
-
-// * Component Imports
-import CheckBoxes from "./CheckBoxes";
-import CustAttForm from "./CustAttForm";
 // * Material UI Imports
-import { makeStyles } from "@material-ui/core/styles";
-import Paper from "@material-ui/core/Paper";
-import Grid from "@material-ui/core/Grid";
-import TextField from "@material-ui/core/TextField";
-import Snackbar from "@material-ui/core/Snackbar";
 import MuiAlert from "@material-ui/lab/Alert";
-import Button from "@material-ui/core/Button";
+
+import { makeStyles } from "@material-ui/core/styles";
+import { Paper, Button, TextField, Grid, Snackbar } from "@material-ui/core";
 
 function Alert(props) {
   return <MuiAlert elevation={2} variant="filled" {...props} />;
 }
 
-export const CircuitFormPt1 = (props) => {
+export const PatchRecordPt1 = (props) => {
   const {
-    phase,
-    circuit_type,
-    selectedExercise,
-    selectedCircuit,
-    onPostExercise,
+    record,
     onPatchExercise,
     goToNextPage,
-    onPostCircEx,
-    positionCircEx,
-    positionCircuit,
-    onPostCircuit,
+    exFields,
+    setExFields,
+    customAttsParent,
+    setCustomAttsParent,
+    handleCustomAdd,
   } = props;
-
   const classes = useStyles();
-  //   *Exercise Field State
-  const [exFields, setExFields] = useState({
-    exercise_name: "Add Exercise",
-    description: "Add Description",
-  });
+
+  //   * taken from circuitformpt`1
   const [showExFormName, setShowExFormName] = useState(false);
   const [showExFormDesc, setShowExFormDesc] = useState(false);
+  // const [exFields, setExFields] = useState({
+  //   exercise_name: "Add Exercise",
+  //   description: "Add Description",
+  // });
   // * Circuit_Exercise/Attributes Field State
   const [showCustomAttFields, setShowCustomAttFields] = useState(false);
   const [customAtts, setCustomAtts] = useState({ reps: 1 });
@@ -62,6 +53,28 @@ export const CircuitFormPt1 = (props) => {
     holdTime: false,
     restPeriod: false,
   });
+
+  useEffect(() => {
+    if (record) {
+      let exData = {
+        exercise_name: record.ex_name,
+        description: record.ex_description,
+      };
+      setExFields(exData);
+      handleCheckBoxes(record);
+      setCustomAtts(record.circuit_exercise_attributes);
+    }
+  }, [record]);
+
+  const handleCheckBoxes = (record) => {
+    const atts = record.circuit_exercise_attributes;
+    const keyArr = Object.keys(atts);
+    keyArr.forEach((kx) => {
+      let obj = {};
+      obj[`${kx}`] = true;
+      setChecked((prev) => ({ ...prev, ...obj }));
+    });
+  };
 
   const handleCloseSnackBar = (event, reason) => {
     if (reason === "clickaway") {
@@ -83,33 +96,12 @@ export const CircuitFormPt1 = (props) => {
     e.preventDefault();
     const data = { [e.target.name]: e.target.value };
     setExFields((prev) => ({ ...prev, ...data }));
-    console.log(exFields);
   };
 
   const handleExSubmit = (e) => {
     e.preventDefault();
-
-    if (selectedExercise) {
-      onPatchExercise({ exercise: { ...exFields, id: selectedExercise.id } });
-    } else if (!selectedCircuit) {
-      onPostExercise({ exercise: { ...exFields } });
-      handleCircuitSubmit();
-    } else {
-      onPostExercise({ exercise: { ...exFields } });
-    }
+    onPatchExercise({ exercise: { ...exFields, id: record.ex_id } });
     closeExForms();
-  };
-
-  const handleCircuitSubmit = () => {
-    let pos = positionCircuit();
-    onPostCircuit({
-      circuit: {
-        phase: phase,
-        position: pos,
-        sets: 1,
-        circuit_type: circuit_type,
-      },
-    });
   };
 
   const closeExForms = () => {
@@ -118,19 +110,8 @@ export const CircuitFormPt1 = (props) => {
   };
   // ** Need to put onPostCircEx in NewWorkout and figure out the position, circuit id and exercise id
   const handleNext = (e) => {
-    if (selectedExercise) {
-      const circExData = {
-        circuit_exercise: {
-          circuit_id: selectedCircuit.id,
-          exercise_id: selectedExercise.id,
-          position: positionCircEx,
-          ex_attributes: customAtts,
-        },
-      };
-      onPostCircEx(circExData, goToNextPage);
-    } else {
-      setError(true);
-    }
+    handleCustomAdd(customAtts, goToNextPage);
+    // goToNextPage(true);
   };
 
   const handleCustomAttAdd = (custAtt) => {
@@ -146,16 +127,9 @@ export const CircuitFormPt1 = (props) => {
   };
 
   return (
-    <>
+    <div>
       <div className={classes.root}>
         <Grid container spacing={1}>
-          {circuit_type === "circuit" && (
-            <Grid item xs={12}>
-              <Paper className={classes.paper}>
-                Exercise #{positionCircEx}
-              </Paper>
-            </Grid>
-          )}
           <Grid item xs={12}>
             <Paper className={classes.paper}>
               {showExFormName ? (
@@ -200,7 +174,7 @@ export const CircuitFormPt1 = (props) => {
           </Grid>
           <Grid item xs={12}>
             <Paper className={classes.paper}>
-              <CheckBoxes
+              <CheckBoxes2
                 checked={checked}
                 setChecked={setChecked}
                 customAtts={customAtts}
@@ -263,37 +237,16 @@ export const CircuitFormPt1 = (props) => {
           </Alert>
         </Snackbar>
       </div>
-    </>
+    </div>
   );
 };
 
-const mapStateToProps = (store) => ({
-  selectedExercise: store.exercises.selectedExercise,
-  selectedCircuit: store.circuits.selectedCircuit,
-  positionCircEx: store.circExs.position,
-  positionCircuit: () => {
-    switch (store.circuits.phase) {
-      case "Warm Up":
-        return store.circuits.posWarmUp;
-      case "Body":
-        return store.circuits.posBody;
-      case "Cool Down":
-        return store.circuits.posCoolDown;
-      default:
-        return null;
-    }
-  },
-  phase: store.circuits.phase,
-});
+const mapStateToProps = (state) => ({});
 
 const mapDispatchToProps = (dispatch) => ({
-  onPostExercise: (exData) => dispatch(postExercise(exData)),
   onPatchExercise: (exData) => dispatch(patchExercise(exData)),
-  onPostCircEx: (circExData, goToNextPage) =>
-    dispatch(postCircEx(circExData, goToNextPage)),
-  onPostCircuit: (circuitData) => dispatch(postCircuit(circuitData)),
 });
-export default connect(mapStateToProps, mapDispatchToProps)(CircuitFormPt1);
+export default connect(mapStateToProps, mapDispatchToProps)(PatchRecordPt1);
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -303,6 +256,23 @@ const useStyles = makeStyles((theme) => ({
   paper: {
     padding: theme.spacing(2),
     textAlign: "center",
-    color: theme.palette.text.secondary,
+    color: theme.palette.primary.main,
+    minHeight: "3rem",
+    maxWidth: "20 rem",
+    justifyContent: "center",
+    // background: theme.palette.
+    alignItems: "center",
+    opacity: ".9",
+  },
+  center: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    margin: "1rem",
+  },
+  button: {
+    textSizeAdjust: "1 rem",
+    maxWidth: "30rem",
+    margin: "2rem",
   },
 }));
