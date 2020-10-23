@@ -29,13 +29,17 @@ export const renderExercises = (phase, handlePatch) => {
     } else {
       return arr.map((record) => {
         return (
-          <div className={"exContainer"} onClick={() => handlePatch(record)}>
+          <div className={"exContainer"}>
             <SetIconUi
               setCount={record.circuit_sets}
               circuitId={record.circuit_id}
             />
             <div className="exStack">
-              <Paper elevation={6} className={"exPaper"}>
+              <Paper
+                elevation={6}
+                className={"exPaper"}
+                onClick={() => handlePatch(record)}
+              >
                 <p className="exTitle">{record.ex_name}</p>
                 <p className={"exPaperAtts"}>{renderExDetails(record)}</p>
               </Paper>

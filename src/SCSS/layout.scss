@@ -4,15 +4,15 @@ $large: 939px;
 $extra-large: 1200px;
 
 #root {
-  background: rgba(255, 255, 255, 0.8);
+  overflow-y: hidden;
 }
 
 .overflowYHidden {
   overflow-y: hidden;
 }
 
-.backgroundImg {
-  background: url("./ActivTrack Background.jpeg") no-repeat center center fixed;
+body {
+  background: url("./ActivTrack Background2.jpeg") no-repeat center center fixed;
   /* background-repeat: no-repeat; */
   /* background-size: auto; */
   -webkit-background-size: cover;

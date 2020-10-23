@@ -9,18 +9,16 @@ const MyModal = (props) => {
   const classes = useStyles();
   const { component, showModal, setShowModal } = props;
   return (
-    <div>
-      <Modal
-        open={showModal}
-        onClose={() => setShowModal(false)}
-        aria-labelledby="simple-modal-title"
-        aria-describedby="simple-modal-description"
-      >
-        <div style={modalStyle} className={classes.paperModal}>
-          {component}
-        </div>
-      </Modal>
-    </div>
+    <Modal
+      open={showModal}
+      onClose={() => setShowModal(false)}
+      aria-labelledby="simple-modal-title"
+      aria-describedby="simple-modal-description"
+    >
+      <div style={modalStyle} className={classes.paperModal}>
+        {component}
+      </div>
+    </Modal>
   );
 };
 
@@ -40,16 +38,12 @@ function getModalStyle() {
 
 const useStyles = makeStyles((theme) => ({
   paperModal: {
-    position: "relative",
-    width: "auto",
+    position: "absolute",
+    width: "70vw",
     backgroundColor: theme.palette.background.paper,
-    border: "2px solid #000",
     borderRadius: "5px",
     boxShadow: theme.shadows[5],
     padding: theme.spacing(2, 2, 3),
-    top: `${50}%`,
-    left: `${50}%`,
-    transform: `translate(-${50}%, -${50}%)`,
     margin: "5px",
   },
 }));

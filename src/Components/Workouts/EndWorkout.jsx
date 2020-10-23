@@ -22,11 +22,11 @@ export const EndWorkout = (props) => {
 
   return (
     <div className="container grid">
-      Congrats on finishing!
-      <div>
-        {showStats ? (
-          <StatsContainer />
-        ) : (
+      {showStats ? (
+        <StatsContainer />
+      ) : (
+        <div>
+          <div>Congrats on finishing!</div>
           <Button
             variant="contained"
             color="primary"
@@ -34,8 +34,8 @@ export const EndWorkout = (props) => {
           >
             View Stats
           </Button>
-        )}
-      </div>
+        </div>
+      )}
     </div>
   );
 };
