@@ -38,6 +38,7 @@ export const CircuitFormPt1 = (props) => {
     positionCircEx,
     positionCircuit,
     onPostCircuit,
+    record,
   } = props;
 
   const classes = useStyles();
@@ -53,6 +54,7 @@ export const CircuitFormPt1 = (props) => {
   const [customAtts, setCustomAtts] = useState({ reps: 1 });
   const [openSnackBar, setOpenSnackBar] = useState(false);
   const [newCustAtt, setNewCustAtt] = useState("");
+  const [edit, setEdit] = useState(false);
 
   const [error, setError] = useState(false);
 
@@ -62,6 +64,10 @@ export const CircuitFormPt1 = (props) => {
     holdTime: false,
     restPeriod: false,
   });
+
+  useEffect(() => {
+    record ? setEdit(true) : setEdit(false);
+  }, [record]);
 
   const handleCloseSnackBar = (event, reason) => {
     if (reason === "clickaway") {

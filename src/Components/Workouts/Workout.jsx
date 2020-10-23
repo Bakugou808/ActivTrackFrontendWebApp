@@ -4,7 +4,9 @@ import { AuthHOC } from "../AuthHOC";
 import { normalizeString } from "./AttributeFields";
 // * Component Imports
 import SetIconUi from "./SetIconUi";
-
+import MyModal from "../Modal";
+// import CircFlowCont from '../Circuits/CircFlowCont'
+import PatchRecord from "./PatchRecord";
 // * Action Imports
 import {
   fetchWorkout,
@@ -19,7 +21,7 @@ import { Paper, Button } from "@material-ui/core";
 
 // * create a new button -> onClick will open a form field in the button --> onSubmit will patch the Circuit and change the value -> place the button in front of the Paper tag
 
-export const renderExercises = (phase) => {
+export const renderExercises = (phase, handlePatch) => {
   return phase.map((circuit) => {
     let keyName = Object.keys(circuit)[0];
     let arr = circuit[keyName];
@@ -28,17 +30,15 @@ export const renderExercises = (phase) => {
     } else {
       return arr.map((record) => {
         return (
-          <div className={"exContainer"}>
+          <div className={"exContainer"} onClick={() => handlePatch(record)}>
             <SetIconUi
               setCount={record.circuit_sets}
               circuitId={record.circuit_id}
             />
             <div className="exStack">
               <Paper elevation={6} className={"exPaper"}>
-                {/* <div className="container grid"> */}
                 <p className="exTitle">{record.ex_name}</p>
                 <p className={"exPaperAtts"}>{renderExDetails(record)}</p>
-                {/* </div> */}
               </Paper>
             </div>
           </div>
@@ -68,10 +68,8 @@ export const renderCirc = (arr) => {
         {arr.map((ex) => {
           return (
             <Paper elevation={6} className={"exPaper"}>
-              {/* <div className="container grid"> */}
               <p className="exTitle">{ex.ex_name}</p>
               <p className={"exPaperAtts"}>{renderExDetails(ex)}</p>
-              {/* </div> */}
             </Paper>
           );
         })}
@@ -97,6 +95,14 @@ const Workout = (props) => {
   const folderName = match.params.folderName;
   const workoutTitle = match.params.workoutTitle;
   const classes = useStyles();
+
+  const [showForm, setShowForm] = useState(false);
+  const [patchRecord, setPatchRecord] = useState(null);
+
+  const handlePatch = (record) => {
+    setPatchRecord(record);
+    setShowForm(true);
+  };
 
   useEffect(() => {
     workoutId && onFetchWorkout(workoutId);
@@ -142,29 +148,43 @@ const Workout = (props) => {
         </Button>
       </div>
       <div className="container grid">
-        <Paper elevation={3} className={classes.paper}>
+        <div elevation={3} className={classes.paper}>
           <div className={"centerDiv phaseTitle"}>Warm Up</div>
           <div>
-            {formattedWorkout && renderExercises(formattedWorkout.warmup)}
+            {formattedWorkout &&
+              renderExercises(formattedWorkout.warmup, handlePatch)}
           </div>
-        </Paper>
+        </div>
 
-        <Paper elevation={6} className={classes.paper}>
+        <div elevation={6} className={classes.paper}>
           <div className={"centerDiv phaseTitle"}>Body</div>
 
           <div>
-            {formattedWorkout && renderExercises(formattedWorkout.body)}
+            {formattedWorkout &&
+              renderExercises(formattedWorkout.body, handlePatch)}
           </div>
-        </Paper>
+        </div>
 
-        <Paper elevation={6} className={classes.paper}>
+        <div elevation={6} className={classes.paper}>
           <div className={"centerDiv phaseTitle"}>Cool Down</div>
 
           <div>
-            {formattedWorkout && renderExercises(formattedWorkout.cool_down)}
+            {formattedWorkout &&
+              renderExercises(formattedWorkout.cool_down, handlePatch)}
           </div>
-        </Paper>
+        </div>
       </div>
+      <MyModal
+        showModal={showForm}
+        setShowModal={setShowForm}
+        component={
+          <PatchRecord
+            setShowForm={setShowForm}
+            setPatchRecord={setPatchRecord}
+            record={patchRecord}
+          />
+        }
+      />
     </div>
   );
 };

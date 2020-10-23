@@ -122,12 +122,14 @@ export const UiComponent = (props) => {
         </div>
 
         <div className="horizontal1">
-          <div className="horizontal2">
+          <div className="horizontal2 cardRepRest">
             {`Rep Goal: `}
-            <span>{exObj && exObj.circuit_exercise_attributes.reps}</span>
+            {exObj && (
+              <span>{` ${exObj.circuit_exercise_attributes.reps}`}</span>
+            )}
           </div>
 
-          <div className="horizontal2">
+          <div className="horizontal2 cardRepRest">
             <div>{`Rest Period: `}</div>
             {restPeriod.message ? (
               showRpForm ? (
@@ -161,7 +163,7 @@ export const UiComponent = (props) => {
                 className="restPeriodDisplay pointer"
                 onClick={() => setShowRpForm(true)}
               >
-                {restPeriod.num} {restPeriod.unit}
+                <p>{` ${restPeriod.num} ${restPeriod.unit}`}</p>
               </span>
             )}
           </div>

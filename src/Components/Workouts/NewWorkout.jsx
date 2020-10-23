@@ -7,7 +7,7 @@ import TabBar from "../Circuits/TabBar";
 // * Material UI Imports
 import { makeStyles } from "@material-ui/core/styles";
 import QueueIcon from "@material-ui/icons/Queue";
-import { Tooltip, Fab, Button } from "@material-ui/core";
+import { Tooltip, Fab, Button, TextField } from "@material-ui/core";
 // * Function Imports
 import { renderCirc, renderExercises } from "./Workout";
 
@@ -94,13 +94,16 @@ export const NewWorkout = (props) => {
 
   return (
     <div>
-      <div className="center container">
+      <div className="center2 container horizontal3">
         {/* Title Input */}
         <div>
           {showTitleForm ? (
             <>
-              <form onSubmit={handleTitleDescSubmit}>
-                <input
+              <form
+                onSubmit={handleTitleDescSubmit}
+                className="exTitle fsize20 horizontal2"
+              >
+                <TextField
                   required
                   type="text"
                   placeholder="Add Title"
@@ -109,11 +112,20 @@ export const NewWorkout = (props) => {
                   onChange={(e) => setTitle(e.target.value)}
                 />
               </form>
-              <div onClick={() => setShowTitleForm(false)}>Cancel</div>
+              <div
+                className="exTitle fsize20 horizontal2"
+                onClick={() => setShowTitleForm(false)}
+              >
+                Cancel
+              </div>
             </>
           ) : (
-            <div>
-              <div onClick={() => setShowTitleForm(true)}> {title} </div>
+            <div
+              className="exTitle fsize20 horizontal2"
+              onClick={() => setShowTitleForm(true)}
+            >
+              {" "}
+              {title}{" "}
             </div>
           )}
         </div>
@@ -121,10 +133,13 @@ export const NewWorkout = (props) => {
         <div>
           {showDescForm ? (
             <>
-              <form onSubmit={handleTitleDescSubmit}>
-                <input
+              <form
+                onSubmit={handleTitleDescSubmit}
+                className="exTitle horizontal2"
+              >
+                <TextField
                   required
-                  size={30}
+                  // size={30}
                   type="text"
                   placeholder="Add Description"
                   value={desc}
@@ -132,29 +147,45 @@ export const NewWorkout = (props) => {
                   onChange={(e) => setDesc(e.target.value)}
                 />
               </form>
-              <div onClick={() => setShowDescForm(false)}>Cancel</div>
+              <div
+                className="exTitle horizontal2"
+                onClick={() => setShowDescForm(false)}
+              >
+                Cancel
+              </div>
             </>
           ) : (
             <div>
-              <div onClick={() => setShowDescForm(true)}> {desc} </div>
+              <div
+                className="exTitle horizontal2"
+                onClick={() => setShowDescForm(true)}
+              >
+                {desc}
+              </div>
             </div>
           )}
         </div>
       </div>
-      <div>
-        <Button variant="contained" color="secondary" onClick={handleSave}>
+      <div className="saveButtonCont">
+        <Button
+          variant="contained"
+          color="secondary"
+          className="saveButton"
+          onClick={handleSave}
+        >
           Save Workout
         </Button>
       </div>
 
-      <div className="container grid">
+      <div className="container grid marginLeft20">
         <div>
           {" "}
-          //*Warm up
+          <div className="phaseTitle2"> Warm up</div>
           <div>
             <Tooltip title="Add" aria-label="add">
               <Fab
-                className={classes.fab}
+                // className={classes.fab}
+                color="primary"
                 size="medium"
                 onClick={() => handleAdd("Warm Up")}
               >
@@ -169,11 +200,11 @@ export const NewWorkout = (props) => {
 
         <div>
           {" "}
-          //*Body
+          <div className="phaseTitle2"> Body</div>
           <div>
             <Tooltip title="Add" aria-label="add">
               <Fab
-                color="secondary"
+                color="primary"
                 size="medium"
                 onClick={() => handleAdd("Body")}
               >
@@ -186,7 +217,7 @@ export const NewWorkout = (props) => {
 
         <div>
           {" "}
-          //*Cool Down
+          <div className="phaseTitle2"> Cool Down</div>
           <div>
             <Tooltip title="Add" aria-label="add">
               <Fab

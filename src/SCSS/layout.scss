@@ -17,6 +17,10 @@ $extra-large: 1200px;
   width: 100vw;
 }
 
+.overflowYHidden {
+  overflow-y: hidden;
+}
+
 .backgroundImg {
   background: url("./ActivTrack Background.jpeg") no-repeat center center fixed;
   /* background-repeat: no-repeat; */

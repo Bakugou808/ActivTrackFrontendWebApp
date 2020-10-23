@@ -87,6 +87,33 @@
   align-items: center;
 }
 
+.horizontal3 {
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.center2 {
+  margin: auto;
+  width: 80vw;
+  border: 1px solid green;
+  padding: 10px;
+  border-radius: 10px;
+}
+.marginLeft20 {
+  margin-left: 20px;
+}
+.saveButtonCont {
+  align-items: center;
+  justify-content: center;
+  display: flex;
+  margin: 30px;
+}
+.saveButton {
+  width: 70%;
+  height: 5vh;
+  min-height: 50px;
+}
 .repDisplay {
 }
 .finButton {
@@ -145,11 +172,25 @@
   margin-bottom: 25px;
   text-decoration: underline;
 }
+
+.phaseTitle2 {
+  font-size: 27px;
+  font-weight: 350;
+  font-family: "Roboto";
+  font-style: italic;
+  margin-bottom: 25px;
+  text-decoration: underline;
+  color: #ff5722;
+}
 .exTitle {
   font-size: 17px;
   margin: 0;
   margin-bottom: 3px;
   color: #ff5722;
+}
+
+.fsize20 {
+  font-size: 20px;
 }
 .exPaperAtts {
   margin: 0;
@@ -179,9 +220,13 @@
   font-size: 20px;
 }
 
+.cardRepRest {
+  font-size: 20px;
+  color: #26a69a;
+}
 .setNum {
   margin: 0;
-  font-size: 20px;
+  font-size: 23px;
   color: #f57c00;
   font-family: "Roboto";
 }
@@ -201,6 +246,9 @@
   text-size-adjust: 1 rem;
   max-width: 30rem;
   margin: 2 rem;
+  width: 70%;
+  height: 5vh;
+  min-height: 50px;
 }
 // Workouts exercise display
 .circuit {
