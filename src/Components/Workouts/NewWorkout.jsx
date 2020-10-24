@@ -4,6 +4,8 @@ import { AuthHOC } from "../AuthHOC";
 // * Component Imports
 import MyModal from "../Modal";
 import TabBar from "../Circuits/TabBar";
+import PatchFlowCont from "./PatchFlowCont";
+
 // * Material UI Imports
 import { makeStyles } from "@material-ui/core/styles";
 import QueueIcon from "@material-ui/icons/Queue";
@@ -50,6 +52,8 @@ export const NewWorkout = (props) => {
   const [circuitPosition, setCircuitPosition] = useState(0);
 
   const [showForm, setShowForm] = useState(false);
+  const [showFormEdit, setShowFormEdit] = useState(false);
+  const [patchRecord, setPatchRecord] = useState(null);
 
   const classes = useStyles();
 
@@ -79,6 +83,11 @@ export const NewWorkout = (props) => {
   const closeForms = () => {
     setShowTitleForm(false);
     setShowDescForm(false);
+  };
+
+  const handlePatch = (record) => {
+    setPatchRecord(record);
+    setShowFormEdit(true);
   };
 
   const handleAdd = (phase) => {
@@ -194,7 +203,7 @@ export const NewWorkout = (props) => {
             </Tooltip>
           </div>
           <div className="container grid">
-            {warmup && renderExercises(warmup)}
+            {warmup && renderExercises(warmup, handlePatch)}
           </div>
         </div>
 
@@ -212,7 +221,9 @@ export const NewWorkout = (props) => {
               </Fab>
             </Tooltip>
           </div>
-          <div className="container grid">{body && renderExercises(body)}</div>
+          <div className="container grid">
+            {body && renderExercises(body, handlePatch)}
+          </div>
         </div>
 
         <div>
@@ -230,7 +241,7 @@ export const NewWorkout = (props) => {
             </Tooltip>
           </div>
           <div className="container grid">
-            {coolDown && renderExercises(coolDown)}
+            {coolDown && renderExercises(coolDown, handlePatch)}
           </div>
         </div>
       </div>
@@ -238,6 +249,17 @@ export const NewWorkout = (props) => {
         showModal={showForm}
         setShowModal={setShowForm}
         component={<TabBar setShowModal={setShowForm} />}
+      />
+      <MyModal
+        showModal={showFormEdit}
+        setShowModal={setShowFormEdit}
+        component={
+          <PatchFlowCont
+            setShowForm={setShowFormEdit}
+            record={patchRecord}
+            workoutId={workoutId}
+          />
+        }
       />
     </div>
   );

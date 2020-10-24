@@ -55,7 +55,6 @@ export const StatsPage = (props) => {
 
   return (
     <div>
-      put all the workouts with stats here
       <div className={"container grid "}>
         {workouts.data && renderWorkout()}
       </div>

@@ -107,6 +107,7 @@ export const LineChart = (props) => {
           // tooltip={handleToolTip}
           margin={{ top: 50, right: 110, bottom: 50, left: 60 }}
           xScale={{ type: "point" }}
+          colors="#004466"
           yScale={{
             type: "linear",
             min: "auto",
@@ -144,11 +145,11 @@ export const LineChart = (props) => {
           useMesh={true}
           legends={[
             {
-              anchor: "bottom-right",
+              anchor: "top-left",
               direction: "column",
               justify: false,
-              translateX: 100,
-              translateY: -30,
+              translateX: -8,
+              translateY: -50,
               itemsSpacing: 0,
               itemDirection: "left-to-right",
               itemWidth: 80,

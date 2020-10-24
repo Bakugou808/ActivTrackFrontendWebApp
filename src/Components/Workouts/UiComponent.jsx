@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
+import { normalizeString } from "./AttributeFields";
 // * Component Imports
 import { handleRestPeriod } from "./StartWorkout";
 import AutoRollSwitch from "./AutoRollSwitch";
@@ -9,6 +10,14 @@ import { CountdownCircleTimer } from "react-countdown-circle-timer";
 // * Material UI Imports
 import { makeStyles } from "@material-ui/core/styles";
 import { Button, TextField, Paper } from "@material-ui/core";
+
+function toTitleCase(str) {
+  str = str.toLowerCase().split(" ");
+  for (var i = 0; i < str.length; i++) {
+    str[i] = str[i].charAt(0).toUpperCase() + str[i].slice(1);
+  }
+  return str.join(" ");
+}
 
 export const UiComponent = (props) => {
   const {
@@ -102,9 +111,11 @@ export const UiComponent = (props) => {
           <div className="exHeaders">
             {exObj && (
               <div className="horizontal1">
-                <div id="phaseDisp">{exObj.circuit_phase}</div>
-                <div className="exTitleWorkout">{exObj.ex_name}</div>
-                <div id="typeDisp">{exObj.circuit_type}</div>
+                <div id="phaseDisp">{toTitleCase(exObj.circuit_phase)}</div>
+                <div className="exTitleWorkout">
+                  {toTitleCase(exObj.ex_name)}
+                </div>
+                <div id="typeDisp">{toTitleCase(exObj.circuit_type)}</div>
               </div>
             )}
           </div>

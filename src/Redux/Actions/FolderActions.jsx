@@ -10,6 +10,10 @@ export const headers = () => {
 
 // *rxaction -> action template
 
+export const clearFoldersState = () => ({
+  type: "CLEAR_FOLDERS_FROM_STATE",
+});
+
 // ------- SET SELECTED FOLDER ACTIONS--------
 export const setSelectedFolder = (folder) => ({
   type: "SET_SELECTED_FOLDER",

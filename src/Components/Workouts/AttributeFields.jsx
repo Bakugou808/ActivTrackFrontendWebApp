@@ -82,7 +82,9 @@ export const AttributeFields = (props) => {
         focusAttFields && (
           <div className="attFields">
             <Paper className="container grid" elevation={3}>
-              <div className="centerDiv2 removeMarginBottom">Attributes</div>
+              <div className="centerDiv2 removeMarginBottom orange fsize20">
+                Attributes
+              </div>
               <div>{exAtts && renderAtts()}</div>
               <Button
                 variant="contained"

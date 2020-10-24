@@ -1,6 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
 import { AuthHOC } from "../AuthHOC";
+
+import Backdrop from "@material-ui/core/Backdrop";
+import CircularProgress from "@material-ui/core/CircularProgress";
+
 // Component Imports
 import FolderForm from "./FolderForm";
 // Material UI Imports
@@ -9,7 +13,11 @@ import { makeStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
 
 // Action Imports
-import { fetchFolders, postFolder } from "../../Redux/Actions/FolderActions";
+import {
+  fetchFolders,
+  postFolder,
+  clearFoldersState,
+} from "../../Redux/Actions/FolderActions";
 
 export const Folders = (props) => {
   const {
@@ -19,6 +27,7 @@ export const Folders = (props) => {
     onFetchFolders,
     history,
     match,
+    loading,
   } = props;
   const [showForm, setShowForm] = useState(false);
   const classes = useStyles();
@@ -30,10 +39,12 @@ export const Folders = (props) => {
   };
 
   useEffect(() => {
+    // onClearFoldersState();
     userId && onFetchFolders(userId);
   }, [userId]);
 
   const handleFolderClick = (folder) => {
+    // onClearFoldersState();
     history.push(`${match.url}/${folder.folder_name}/${folder.id}`);
   };
 
@@ -71,6 +82,9 @@ export const Folders = (props) => {
           <FolderForm handleOnPostFolder={handleOnPostFolder} userId={userId} />
         </div>
       </Modal>
+      <Backdrop className={classes.backdrop} open={loading}>
+        <CircularProgress color="inherit" />
+      </Backdrop>
     </div>
   );
 };
@@ -78,12 +92,14 @@ export const Folders = (props) => {
 const mapStateToProps = (store) => ({
   userId: store.user.user.id,
   folders: store.folders.folders,
+  loading: store.folders.fetching,
 });
 
 const mapDispatchToProps = (dispatch) => ({
   onFetchFolders: (userId) => dispatch(fetchFolders(userId)),
   onPostFolder: (folderData, setShowForm) =>
     dispatch(postFolder(folderData, setShowForm)),
+  onClearFoldersState: () => dispatch(clearFoldersState()),
 });
 
 export default AuthHOC(connect(mapStateToProps, mapDispatchToProps)(Folders));
@@ -133,5 +149,9 @@ const useStyles = makeStyles((theme) => ({
     margin: "20px",
     color: theme.palette.secondary.main,
     cursor: "pointer",
+  },
+  backdrop: {
+    zIndex: theme.zIndex.drawer + 1,
+    color: "#fff",
   },
 }));

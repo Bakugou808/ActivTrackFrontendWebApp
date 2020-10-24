@@ -21,7 +21,7 @@ export const StatsContainer = (props) => {
     const lineData = [
       {
         id: `${title}`,
-        color: `hsl(302, 70%, 50%)`,
+        color: `hsl(200, 100%, 30%)`,
         data: data,
       },
     ];

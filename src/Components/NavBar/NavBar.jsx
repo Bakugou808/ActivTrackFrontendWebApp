@@ -27,9 +27,12 @@ import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
 
+// Action Imports
+import { clearFoldersState } from "../../Redux/Actions/FolderActions";
+
 function NavBar(props) {
   const classes = useStyles();
-  const { history, auth, onLogOut, isLoggedIn } = props;
+  const { history, auth, onLogOut, isLoggedIn, onClearFoldersState } = props;
 
   const onLogout = () => {
     const { onSignOutUser, user } = props;
@@ -154,6 +157,7 @@ const mapStateToProps = (store) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     onLogOut: () => dispatch(logOut()),
+    onClearFoldersState: () => dispatch(clearFoldersState()),
   };
 };
 

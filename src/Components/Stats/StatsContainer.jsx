@@ -24,7 +24,7 @@ export const StatsContainer = (props) => {
     const lineData = [
       {
         id: `${selectedWorkout.title}`,
-        color: `hsl(302, 70%, 50%)`,
+        // color: `hsl(302, 70%, 50%)`,
         data: formatData(),
       },
     ];
@@ -36,7 +36,20 @@ export const StatsContainer = (props) => {
   };
 
   return (
-    <div className="container grid">{<LineChart lineData={fLData} />}</div>
+    <div className="container grid">
+      {
+        <LineChart
+          lineData={fLData}
+          colors="set2"
+          margin={{
+            top: 20,
+            right: 20,
+            bottom: 60,
+            left: 80,
+          }}
+        />
+      }
+    </div>
   );
 };
 

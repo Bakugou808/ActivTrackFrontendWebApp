@@ -18,6 +18,9 @@ import { postSession } from "../../Redux/Actions/SessionsActions";
 import { makeStyles } from "@material-ui/core/styles";
 import { Paper, Button } from "@material-ui/core";
 
+import Backdrop from "@material-ui/core/Backdrop";
+import CircularProgress from "@material-ui/core/CircularProgress";
+
 // * create a new button -> onClick will open a form field in the button --> onSubmit will patch the Circuit and change the value -> place the button in front of the Paper tag
 
 export const renderExercises = (phase, handlePatch) => {
@@ -37,7 +40,7 @@ export const renderExercises = (phase, handlePatch) => {
             <div className="exStack">
               <Paper
                 elevation={6}
-                className={"exPaper"}
+                className={"exPaper pointer"}
                 onClick={() => handlePatch(record)}
               >
                 <p className="exTitle">{record.ex_name}</p>
@@ -72,7 +75,7 @@ export const renderCirc = (arr, handlePatch) => {
           return (
             <Paper
               elevation={6}
-              className={"exPaper"}
+              className={"exPaper pointer"}
               onClick={() => handlePatch(ex)}
             >
               <p className="exTitle">{ex.ex_name}</p>
@@ -96,6 +99,7 @@ const Workout = (props) => {
     selectedWorkout,
     formattedWorkout,
     onPostSession,
+    loading,
   } = props;
   const folderId = match.params.folderId;
   const workoutId = match.params.workoutId;
@@ -192,6 +196,9 @@ const Workout = (props) => {
           />
         }
       />
+      <Backdrop className={classes.backdrop} open={loading}>
+        <CircularProgress color="inherit" />
+      </Backdrop>
     </div>
   );
 };
@@ -200,6 +207,7 @@ const mapStateToProps = (store) => ({
   selectedFolder: store.folders.selectedFolder,
   selectedWorkout: store.workouts.selectedWorkout,
   formattedWorkout: store.workouts.formattedWorkout,
+  loading: store.workouts.fetching,
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -235,5 +243,9 @@ const useStyles = makeStyles((theme) => ({
     textSizeAdjust: "1 rem",
     maxWidth: "30rem",
     margin: "2rem",
+  },
+  backdrop: {
+    zIndex: theme.zIndex.drawer + 1,
+    color: "#fff",
   },
 }));

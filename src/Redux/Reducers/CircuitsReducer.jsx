@@ -138,7 +138,7 @@ const circuitReducer = (state = initialState, action) => {
       return { ...state, fetching: false, error: action.error };
     case "DELETE_CIRCUIT_SUCCESSFUL":
       const newCircuitsDESTROY = [
-        ...state.circuits.filter((circuit) => circuit.id != action.circuit.id),
+        ...state.circuits.filter((circuit) => circuit.id != action.circuitId),
       ];
       return { ...state, fetching: false, circuits: newCircuitsDESTROY };
     default:

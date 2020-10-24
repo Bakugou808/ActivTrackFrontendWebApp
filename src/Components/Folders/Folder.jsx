@@ -13,6 +13,8 @@ import {
 import { makeStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
 import Modal from "@material-ui/core/Modal";
+import Backdrop from "@material-ui/core/Backdrop";
+import CircularProgress from "@material-ui/core/CircularProgress";
 
 export const Folder = (props) => {
   const {
@@ -23,6 +25,7 @@ export const Folder = (props) => {
     onPostWorkout,
     onFetchWorkout,
     onClearSelectedAndFormattedWorkouts,
+    loading,
   } = props;
   const folderId = parseInt(match.params.folderId);
   const folderName = match.params.folderName;
@@ -97,12 +100,16 @@ export const Folder = (props) => {
           />
         </div>
       </Modal>
+      <Backdrop className={classes.backdrop} open={loading}>
+        <CircularProgress color="inherit" />
+      </Backdrop>
     </div>
   );
 };
 
 const mapStateToProps = (store) => ({
   workouts: store.workouts.workouts,
+  loading: store.folders.fetching,
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -161,5 +168,9 @@ const useStyles = makeStyles((theme) => ({
     margin: "20px",
     color: theme.palette.secondary.main,
     cursor: "pointer",
+  },
+  backdrop: {
+    zIndex: theme.zIndex.drawer + 1,
+    color: "#fff",
   },
 }));
