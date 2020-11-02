@@ -55,7 +55,7 @@ export const StatsPage = (props) => {
 
   return (
     <div>
-      <div className={"container grid "}>
+      <div className={"container grid graphs"}>
         {workouts.data && renderWorkout()}
       </div>
     </div>

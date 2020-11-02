@@ -24,19 +24,14 @@ export const StatsContainer = (props) => {
     const lineData = [
       {
         id: `${selectedWorkout.title}`,
-        // color: `hsl(302, 70%, 50%)`,
         data: formatData(),
       },
     ];
     setFLData(lineData);
   };
 
-  const renderCharts = () => {
-    // !remember you are calling 2 sets of data so if you have time figure out how to render both
-  };
-
   return (
-    <div className="container grid">
+    <div className="graph-container">
       {
         <LineChart
           lineData={fLData}

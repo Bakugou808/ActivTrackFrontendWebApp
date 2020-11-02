@@ -38,7 +38,7 @@ export const StatsContainer = (props) => {
     });
   };
 
-  return <div className="container grid">{data && renderCharts()}</div>;
+  return <div className="grid-container">{data && renderCharts()}</div>;
 };
 
 const mapStateToProps = (store) => ({
