@@ -7,21 +7,28 @@ import CircularProgress from "@material-ui/core/CircularProgress";
 
 // Component Imports
 import FolderForm from "./FolderForm";
+import MenuPopper from "./MenuPopper";
+import MyModal from "../Modal";
 // Material UI Imports
 import Modal from "@material-ui/core/Modal";
 import { makeStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
+import MoreVertIcon from "@material-ui/icons/MoreVert";
 
 // Action Imports
 import {
   fetchFolders,
   postFolder,
+  patchFolder,
+  deleteFolder,
   clearFoldersState,
 } from "../../Redux/Actions/FolderActions";
 
 export const Folders = (props) => {
   const {
     onPostFolder,
+    onPatchFolder,
+    onDeleteFolder,
     userId,
     folders,
     onFetchFolders,
@@ -29,35 +36,60 @@ export const Folders = (props) => {
     match,
     loading,
   } = props;
-  const [showForm, setShowForm] = useState(false);
+
   const classes = useStyles();
+  const [showForm, setShowForm] = useState(false);
+  const [showFormEdit, setShowFormEdit] = useState(false);
+  const [folder, setFolder] = useState(null);
   // getModalStyle is not a pure function, we roll the style only on the first render
   const [modalStyle] = React.useState(getModalStyle);
 
-  const handleOnPostFolder = (folderData) => {
-    onPostFolder(folderData, setShowForm);
-  };
-
   useEffect(() => {
-    // onClearFoldersState();
     userId && onFetchFolders(userId);
   }, [userId]);
 
   const handleFolderClick = (folder) => {
-    // onClearFoldersState();
     history.push(`${match.url}/${folder.folder_name}/${folder.id}`);
   };
 
+  const handleOnPostFolder = (folderData) => {
+    onPostFolder(folderData, setShowForm);
+  };
+  const handleOnPatchFolder = (folderData) => {
+    const sideEffects = () => {
+      setShowFormEdit(false);
+    };
+    onPatchFolder(folderData, sideEffects);
+  };
+
   const renderFolders = () => {
+    const handleDelete = (folderId) => {
+      const sideEffects = () => {
+        onFetchFolders(userId);
+      };
+      onDeleteFolder(folderId, sideEffects);
+    };
+
     return folders.map((folder) => {
       return (
-        <Paper
-          key={folder.id}
-          className={classes.folder}
-          onClick={() => handleFolderClick(folder)}
-        >
-          {folder.folder_name}
-        </Paper>
+        <div>
+          <Paper key={folder.id} className={classes.folder}>
+            <div
+              className={classes.folderItem1}
+              onClick={() => handleFolderClick(folder)}
+            >
+              {folder.folder_name}
+            </div>
+            <div className={classes.folderItemMenu}>
+              <MenuPopper
+                folder={folder}
+                setFolder={setFolder}
+                setShowFormEdit={setShowFormEdit}
+                handleDelete={handleDelete}
+              />
+            </div>
+          </Paper>
+        </div>
       );
     });
   };
@@ -72,16 +104,26 @@ export const Folders = (props) => {
 
       <div className={"container grid "}>{folders && renderFolders()}</div>
 
-      <Modal
-        open={showForm}
-        onClose={() => setShowForm(false)}
-        aria-labelledby="simple-modal-title"
-        aria-describedby="simple-modal-description"
-      >
-        <div style={modalStyle} className={classes.paperModal}>
+      <MyModal
+        component={
           <FolderForm handleOnPostFolder={handleOnPostFolder} userId={userId} />
-        </div>
-      </Modal>
+        }
+        showModal={showForm}
+        setShowModal={setShowForm}
+      />
+
+      <MyModal
+        component={
+          <FolderForm
+            handleOnPatchFolder={handleOnPatchFolder}
+            userId={userId}
+            folder={folder}
+          />
+        }
+        showModal={showFormEdit}
+        setShowModal={setShowFormEdit}
+      />
+
       <Backdrop className={classes.backdrop} open={loading}>
         <CircularProgress color="inherit" />
       </Backdrop>
@@ -100,6 +142,10 @@ const mapDispatchToProps = (dispatch) => ({
   onPostFolder: (folderData, setShowForm) =>
     dispatch(postFolder(folderData, setShowForm)),
   onClearFoldersState: () => dispatch(clearFoldersState()),
+  onPatchFolder: (folderData, sideEffects) =>
+    dispatch(patchFolder(folderData, sideEffects)),
+  onDeleteFolder: (folderId, sideEffects) =>
+    dispatch(deleteFolder(folderId, sideEffects)),
 });
 
 export default AuthHOC(connect(mapStateToProps, mapDispatchToProps)(Folders));
@@ -116,31 +162,27 @@ function getModalStyle() {
 }
 
 const useStyles = makeStyles((theme) => ({
-  paperModal: {
-    position: "absolute",
-    width: "70vw",
-    backgroundColor: theme.palette.background.paper,
-    border: "2px solid #000",
-    borderRadius: "5px",
-    boxShadow: theme.shadows[5],
-    padding: theme.spacing(2, 4, 3),
-  },
   folder: {
     padding: theme.spacing(2),
     textAlign: "center",
     color: theme.palette.primary.light,
-    // minHeight: "3rem",
     height: "4vw",
-
     maxWidth: "20 rem",
-    cursor: "pointer",
+
     justifyContent: "center",
     fontSize: "18px",
     alignItems: "center",
     display: "flex",
     opacity: ".8",
-    // backgroundColor: "#ffee58",
-    // backgroundColor: "#26a69a",
+  },
+  folderItem1: {
+    flex: "0 0 90%",
+    padding: "20px 5px",
+    cursor: "pointer",
+  },
+  folderItemMenu: {
+    flex: "0 0 10%",
+    cursor: "pointer",
   },
   addNew: {
     display: "flex",

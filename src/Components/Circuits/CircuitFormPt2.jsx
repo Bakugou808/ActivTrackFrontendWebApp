@@ -201,10 +201,10 @@ const mapStateToProps = (store) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  onPatchCircEx: (circExData, handleWorkCirc) =>
-    dispatch(patchCircEx(circExData, handleWorkCirc)),
-  onPostWorkCircuit: (workCircData, setShowModal) =>
-    dispatch(postWorkCircuit(workCircData, setShowModal)),
+  onPatchCircEx: (circExData, handlePostWorkCircuit) =>
+    dispatch(patchCircEx(circExData, handlePostWorkCircuit)),
+  onPostWorkCircuit: (workCircData, sideEffects) =>
+    dispatch(postWorkCircuit(workCircData, sideEffects)),
   onIncreasePositionCircEx: () => dispatch(increasePositionCircEx()),
   onClearSelectedCircEx: () => dispatch(clearSelectedCircEx()),
   onClearSelectedExercise: () => dispatch(clearSelectedExercise()),
