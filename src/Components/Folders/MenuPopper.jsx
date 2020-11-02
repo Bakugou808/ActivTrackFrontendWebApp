@@ -11,13 +11,13 @@ import MenuList from "@material-ui/core/MenuList";
 import { makeStyles } from "@material-ui/core/styles";
 
 function MenuPopper(props) {
-  const { folder, setShowFormEdit, setFolder, handleDelete } = props;
+  const { item, setShowFormEdit, setItem, handleDelete } = props;
   const [open, setOpen] = React.useState(false);
   const anchorRef = React.useRef(null);
 
   useEffect(() => {
-    folder && setFolder(folder) && console.log("set folder to", folder);
-  }, [folder]);
+    item && setItem(item) && console.log("set item to", item);
+  }, [item]);
 
   const handleToggle = () => {
     setOpen((prevOpen) => !prevOpen);
@@ -52,11 +52,11 @@ function MenuPopper(props) {
 
     switch (action) {
       case "delete":
-        handleDelete(folder.id);
+        handleDelete(item.id);
         setOpen(false);
         break;
       case "edit":
-        setFolder(folder);
+        setItem(item);
         setShowFormEdit(true);
       default:
         setOpen(false);

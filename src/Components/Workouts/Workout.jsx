@@ -159,7 +159,7 @@ const Workout = (props) => {
         </Button>
       </div>
       <div className="container grid">
-        <div elevation={3} className={classes.paper}>
+        <div className={classes.paper}>
           <div className={"centerDiv phaseTitle"}>Warm Up</div>
           <div>
             {formattedWorkout &&
@@ -167,7 +167,7 @@ const Workout = (props) => {
           </div>
         </div>
 
-        <div elevation={6} className={classes.paper}>
+        <div className={classes.paper}>
           <div className={"centerDiv phaseTitle"}>Body</div>
 
           <div>
@@ -176,7 +176,7 @@ const Workout = (props) => {
           </div>
         </div>
 
-        <div elevation={6} className={classes.paper}>
+        <div className={classes.paper}>
           <div className={"centerDiv phaseTitle"}>Cool Down</div>
 
           <div>
@@ -229,7 +229,6 @@ const useStyles = makeStyles((theme) => ({
     minHeight: "3rem",
     maxWidth: "20 rem",
     justifyContent: "center",
-    // background: theme.palette.
     alignItems: "center",
     opacity: ".9",
   },

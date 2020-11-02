@@ -13,7 +13,6 @@ import MyModal from "../Modal";
 import Modal from "@material-ui/core/Modal";
 import { makeStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
-import MoreVertIcon from "@material-ui/icons/MoreVert";
 
 // Action Imports
 import {
@@ -41,8 +40,6 @@ export const Folders = (props) => {
   const [showForm, setShowForm] = useState(false);
   const [showFormEdit, setShowFormEdit] = useState(false);
   const [folder, setFolder] = useState(null);
-  // getModalStyle is not a pure function, we roll the style only on the first render
-  const [modalStyle] = React.useState(getModalStyle);
 
   useEffect(() => {
     userId && onFetchFolders(userId);
@@ -58,6 +55,7 @@ export const Folders = (props) => {
   const handleOnPatchFolder = (folderData) => {
     const sideEffects = () => {
       setShowFormEdit(false);
+      setFolder(null);
     };
     onPatchFolder(folderData, sideEffects);
   };
@@ -66,6 +64,7 @@ export const Folders = (props) => {
     const handleDelete = (folderId) => {
       const sideEffects = () => {
         onFetchFolders(userId);
+        setFolder(null);
       };
       onDeleteFolder(folderId, sideEffects);
     };
@@ -82,8 +81,8 @@ export const Folders = (props) => {
             </div>
             <div className={classes.folderItemMenu}>
               <MenuPopper
-                folder={folder}
-                setFolder={setFolder}
+                item={folder}
+                setItem={setFolder}
                 setShowFormEdit={setShowFormEdit}
                 handleDelete={handleDelete}
               />
@@ -101,9 +100,9 @@ export const Folders = (props) => {
           + Add New Folder
         </span>
       </div>
-
+      {/* render folder cards */}
       <div className={"container grid "}>{folders && renderFolders()}</div>
-
+      {/* for posting new folders */}
       <MyModal
         component={
           <FolderForm handleOnPostFolder={handleOnPostFolder} userId={userId} />
@@ -111,7 +110,7 @@ export const Folders = (props) => {
         showModal={showForm}
         setShowModal={setShowForm}
       />
-
+      {/* for patching existing folders */}
       <MyModal
         component={
           <FolderForm
@@ -123,7 +122,7 @@ export const Folders = (props) => {
         showModal={showFormEdit}
         setShowModal={setShowFormEdit}
       />
-
+      {/* for loading/fetching */}
       <Backdrop className={classes.backdrop} open={loading}>
         <CircularProgress color="inherit" />
       </Backdrop>
@@ -149,17 +148,6 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export default AuthHOC(connect(mapStateToProps, mapDispatchToProps)(Folders));
-
-function getModalStyle() {
-  const top = 50;
-  const left = 50;
-
-  return {
-    top: `${top}%`,
-    left: `${left}%`,
-    transform: `translate(-${top}%, -${left}%)`,
-  };
-}
 
 const useStyles = makeStyles((theme) => ({
   folder: {

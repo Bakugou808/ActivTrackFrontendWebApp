@@ -177,7 +177,7 @@ export const patchWorkoutSuccess = (workout) => ({
 
 // ------- PATCH NEW WORKOUT FUNCTION--------
 
-export const patchWorkout = (workoutData, setShowForm) => {
+export const patchWorkout = (workoutData, sideEffects = null) => {
   return (dispatch) => {
     dispatch(patchWorkoutRequest());
     fetch(`${API}/workouts/${workoutData.workout.id}`, {
@@ -191,7 +191,7 @@ export const patchWorkout = (workoutData, setShowForm) => {
           dispatch(patchWorkoutFailed(data.error));
         } else {
           dispatch(patchWorkoutSuccess(data));
-          setShowForm();
+          sideEffects && sideEffects();
         }
       });
   };
@@ -215,7 +215,7 @@ export const deleteWorkoutSuccess = (workout) => ({
 
 // ------- DELETE NEW WORKOUT FUNCTION--------
 
-export const deleteWorkout = (workoutId) => {
+export const deleteWorkout = (workoutId, sideEffects = null) => {
   return (dispatch) => {
     dispatch(deleteWorkoutRequest());
     fetch(`${API}/workouts/${workoutId}`, {
@@ -228,6 +228,7 @@ export const deleteWorkout = (workoutId) => {
           dispatch(deleteWorkoutFailed(data.error));
         } else {
           dispatch(deleteWorkoutSuccess(workoutId));
+          sideEffects && sideEffects();
         }
       });
   };
