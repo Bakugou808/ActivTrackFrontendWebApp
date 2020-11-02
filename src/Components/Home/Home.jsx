@@ -7,13 +7,22 @@ import { logOut } from "../../Redux/Actions/AuthActions";
 import { AuthHOC } from "../AuthHOC";
 
 export const Home = (props) => {
-  const { user, onLogOut } = props;
+  const { user, onLogOut, match, history } = props;
 
   useEffect(() => {}, []);
 
+  const handleRedirect = (params) => {
+    history.push("/folders");
+  };
+
   return (
-    <div>
-      <h4>Welcome {user.username}.</h4>
+    <div className="setDisplay exTitle fsize20">
+      <div></div>
+      <h1>Welcome {user.username}</h1>
+      <div></div>
+      <h2 className="pointer" onClick={handleRedirect}>
+        Lets Get Busy
+      </h2>
     </div>
   );
 };

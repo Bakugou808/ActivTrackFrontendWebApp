@@ -71,6 +71,7 @@ export default function AutoRollSwitch(props) {
           />
         }
         label="AutoRoll"
+        className={"autoRollText"}
       />
     </FormGroup>
   );

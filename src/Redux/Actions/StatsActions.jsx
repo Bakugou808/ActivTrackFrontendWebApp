@@ -10,13 +10,20 @@ export const headers = () => {
 
 // *rxaction -> action template
 
+// ------- SET WORKOUTS STATS ACTIONS--------
+
+export const setWorkoutsStats = (stats) => ({
+  type: "SET_WORKOUTS_STATS",
+  stats: stats,
+});
+
 // ------- CLEAR SELECTED STAT AND FORMATTED STAT FROM STATE ACTIONS--------
 
 export const clearSelectedAndFormattedStats = () => ({
   type: "CLEAR_SELECTED_AND_FORMATTED_STAT_STATE",
 });
 
-// ------- FETCH FOLDER STATS ACTIONS--------
+// ------- FETCH WORKOUTS STATS ACTIONS--------
 
 export const fetchStatsRequest = () => ({
   type: "FETCH_STATS_REQUEST",
@@ -32,7 +39,7 @@ export const fetchStatsSuccess = (stats) => ({
   stats: stats,
 });
 
-// ------- FETCH FOLDER STATS FUNCTION--------
+// ------- FETCH WORKOUTS STATS FUNCTION--------
 
 export const fetchStats = (statId) => {
   return (dispatch) => {
@@ -87,40 +94,80 @@ export const fetchStat = (statId) => {
 
 // ------- FETCH FORMATTED STAT ACTIONS--------
 
-export const fetchFormattedStatRequest = () => ({
-  type: "FETCH_FORMATTED_STAT_REQUEST",
+export const fetchWorkoutsStatsRequest = () => ({
+  type: "FETCH_WORKOUTS_STATS_REQUEST",
 });
 
-export const fetchFormattedStatFailed = (error) => ({
-  type: "FETCH_FORMATTED_STAT_FAILED",
+export const fetchWorkoutsStatsFailed = (error) => ({
+  type: "FETCH_WORKOUTS_STATS_FAILED",
   error: error,
 });
 
-export const fetchFormattedStatSuccess = (stat) => ({
-  type: "FETCH_FORMATTED_STAT_SUCCESSFUL",
-  stat: stat,
+export const fetchWorkoutsStatsSuccess = (stats) => ({
+  type: "FETCH_WORKOUTS_STATS_SUCCESSFUL",
+  stats: stats,
 });
 
-// ------- FETCH FORMATTED STAT FUNCTION--------
-// *You May Not Need This
+// ------- FETCH WORKOUT'S STATS FUNCTION--------
 
-// export const fetchFormattedStat = (statId) => {
-//   return (dispatch) => {
-//     dispatch(fetchFormattedStatRequest());
-//     fetch(`${API}/formatted_stat/${statId}`, {
-//       method: "GET",
-//       headers: headers(),
-//     })
-//       .then((res) => res.json())
-//       .then((data) => {
-//         if (data.error) {
-//           dispatch(fetchFormattedStatFailed(data.error));
-//         } else {
-//           dispatch(fetchFormattedStatSuccess(data));
-//         }
-//       });
-//   };
-// };
+export const fetchWorkoutsStats = (
+  workoutId,
+  numOfSessions = null,
+  sideEffects
+) => {
+  return (dispatch) => {
+    dispatch(fetchWorkoutsStatsRequest());
+    fetch(`${API}/workouts_stats/${workoutId}/${numOfSessions}`, {
+      method: "GET",
+      headers: headers(),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.error) {
+          dispatch(fetchWorkoutsStatsFailed(data.error));
+        } else {
+          dispatch(fetchWorkoutsStatsSuccess(data));
+          sideEffects && sideEffects();
+        }
+      });
+  };
+};
+
+// * FETCH ALL WORKOUTS WITH STATS ACTIONS
+export const fetchAllWorkoutsWithStatsRequest = () => ({
+  type: "FETCH_ALL_WORKOUTS_WITH_STATS_REQUEST",
+});
+
+export const fetchAllWorkoutsWithStatsFailed = (error) => ({
+  type: "FETCH_ALL_WORKOUTS_WITH_STATS_FAILED",
+  error: error,
+});
+
+export const fetchAllWorkoutsWithStatsSuccess = (stats) => ({
+  type: "FETCH_ALL_WORKOUTS_WITH_STATS_SUCCESSFUL",
+  stats: stats,
+});
+
+// *------- FETCH ALL WORKOUTS WITH STATS FUNCTION--------
+
+export const fetchAllWorkoutsWithStats = (userId, sideEffects) => {
+  return (dispatch) => {
+    dispatch(fetchAllWorkoutsWithStatsRequest());
+    fetch(`${API}/all_workouts_with_stats/${userId}`, {
+      method: "GET",
+      headers: headers(),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.error) {
+          dispatch(fetchAllWorkoutsWithStatsFailed(data.error));
+        } else {
+          dispatch(fetchAllWorkoutsWithStatsSuccess(data));
+          sideEffects && sideEffects();
+        }
+      });
+  };
+};
 
 // ------- POST NEW STAT ACTIONS--------
 

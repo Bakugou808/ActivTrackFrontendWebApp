@@ -9,6 +9,11 @@ export const headers = () => {
 };
 
 // *rxaction -> action template
+// ------- CLEAR SELECTED CIRCUIT --------
+export const clearSelectedCircuit = () => ({
+  type: "CLEAR_SELECTED_CIRCUIT",
+});
+
 // ------- SET CIRCUIT PHASE --------
 export const setPhase = (phase) => ({
   type: "SETTING_PHASE",
@@ -153,7 +158,7 @@ export const patchCircuitSuccess = (circuit) => ({
 
 // ------- PATCH NEW CIRCUIT FUNCTION--------
 
-export const patchCircuit = (circuitData) => {
+export const patchCircuit = (circuitData, sideEffects) => {
   return (dispatch) => {
     dispatch(patchCircuitRequest());
     fetch(`${API}/circuits/${circuitData.circuit.id}`, {
@@ -167,6 +172,7 @@ export const patchCircuit = (circuitData) => {
           dispatch(patchCircuitFailed(data.error));
         } else {
           dispatch(patchCircuitSuccess(data));
+          sideEffects();
         }
       });
   };
@@ -190,7 +196,7 @@ export const deleteCircuitSuccess = (circuitId) => ({
 
 // ------- DELETE NEW CIRCUIT FUNCTION--------
 
-export const deleteCircuit = (circuitId) => {
+export const deleteCircuit = (circuitId, sideEffects) => {
   return (dispatch) => {
     dispatch(deleteCircuitRequest());
     fetch(`${API}/circuits/${circuitId}`, {
@@ -203,6 +209,7 @@ export const deleteCircuit = (circuitId) => {
           dispatch(deleteCircuitFailed(data.error));
         } else {
           dispatch(deleteCircuitSuccess(circuitId));
+          sideEffects();
         }
       });
   };

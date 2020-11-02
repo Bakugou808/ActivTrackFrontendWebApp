@@ -19,6 +19,10 @@ const circuitReducer = (state = initialState, action) => {
     //   case "FETCH_FOLDER_SUCCESSFUL":
     //     return { ...state, circuits: action.folder.circuits };
 
+    //* Set SelectedCircuit
+    case "CLEAR_SELECTED_CIRCUIT":
+      return { ...state, selectedCircuit: null };
+
     //* Set Circuit Phase
 
     case "SETTING_PHASE":
@@ -134,7 +138,7 @@ const circuitReducer = (state = initialState, action) => {
       return { ...state, fetching: false, error: action.error };
     case "DELETE_CIRCUIT_SUCCESSFUL":
       const newCircuitsDESTROY = [
-        ...state.circuits.filter((circuit) => circuit.id != action.circuit.id),
+        ...state.circuits.filter((circuit) => circuit.id != action.circuitId),
       ];
       return { ...state, fetching: false, circuits: newCircuitsDESTROY };
     default:

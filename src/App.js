@@ -13,11 +13,13 @@ import NewWorkout from "./Components/Workouts/NewWorkout";
 import Workout from "./Components/Workouts/Workout";
 import StartWorkout from "./Components/Workouts/StartWorkout";
 import EndWorkout from "./Components/Workouts/EndWorkout";
+import AllStatsContainer from "./Components/Stats/AllStatsContainer";
+import StatsPage from "./Components/Stats/StatsPage";
 
 class App extends React.Component {
   render() {
     return (
-      <div className="App">
+      <div className="App overflowYHidden">
         <Route path="/" render={(props) => <NavBar {...props} />} />
         <Switch>
           <Route path="/about" render={(props) => <About {...props} />} />
@@ -32,8 +34,12 @@ class App extends React.Component {
           />
           {/* custom paths with ids */}
           <Route
-            path="/session"
-            render={(props) => <SessionsContainer {...props} />}
+            path="/statsPage"
+            render={(props) => <StatsPage {...props} />}
+          />
+          <Route
+            path="/displayStats/:workoutTitle/:workoutId"
+            render={(props) => <AllStatsContainer {...props} />}
           />
           <Route
             path={`/folders/:folderName/:folderId`}

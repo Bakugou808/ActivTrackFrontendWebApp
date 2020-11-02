@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import { useTimer } from "use-timer";
 
 // * Component Imports
+import { AuthHOC } from "../AuthHOC";
 import UiComponent from "./UiComponent";
 import AutoRollSwitch from "./AutoRollSwitch";
 import AttributeFields from "./AttributeFields";
@@ -151,13 +152,12 @@ const StartWorkout = (props) => {
     setStartEx(false);
     setEndEx(true);
     setExStats((prev) => ({ ...prev, activeTime: t }));
-    // setFocusAttFields(true);
+    setFocusAttFields(true);
     reset();
     start();
   };
 
   // 3. user is prompted to fill att values and submit -> autoRoll ? run handleSubmitState : set submitClicked(true)
-  // !but take into account rest time.
 
   // when user is ready to move to next workout submit
   const handleSubmitStats = (t) => {
@@ -190,7 +190,7 @@ const StartWorkout = (props) => {
     };
 
     onPostStat(statData, sideEffects);
-    // setFocusAttFields(false);
+    setFocusAttFields(false);
   };
 
   const handleFinishWorkout = () => {
@@ -211,56 +211,35 @@ const StartWorkout = (props) => {
   };
 
   return (
-    <div className="container grid">
-      {!startWorkout ? (
-        <Button
-          variant="contained"
-          color="secondary"
-          onClick={handleBeginWorkout}
-        >
-          Ready? Lets Begin!
-        </Button>
-      ) : (
-        goToNext && (
-          <Button
-            variant="contained"
-            color="secondary"
-            onClick={handleStartWorkout}
-          >
-            Ready? Lets Go!
-          </Button>
-        )
-      )}
-      <div>
-        <AutoRollSwitch autRoll={autoRoll} setAutoRoll={setAutoRoll} />{" "}
-      </div>
-      <div>
-        <UiComponent
-          exObj={exObj}
-          startEx={startEx}
-          endEx={endEx}
-          stopWatch={stopWatch}
-          handleEndEx={handleEndEx}
-          goToNext={goToNext}
-          setNum={setNum}
-          restPeriod={restPeriod}
-          setRestPeriod={setRestPeriod}
-          handleRestPeriod={handleRestPeriod}
-        />
-      </div>
-      <div>
-        <AttributeFields
-          exObj={exObj}
-          startEx={startEx}
-          setGoToNext={setGoToNext}
-          stopWatch={stopWatch}
-          setExStats={setExStats}
-          submitClicked={submitClicked}
-          handleSubmitStats={handleSubmitStats}
-          setSubmitClicked={setSubmitClicked}
-          focusAttFields={focusAttFields}
-        />
-      </div>
+    <div className="container grid ">
+      <UiComponent
+        exObj={exObj}
+        startEx={startEx}
+        endEx={endEx}
+        stopWatch={stopWatch}
+        handleEndEx={handleEndEx}
+        goToNext={goToNext}
+        setNum={setNum}
+        restPeriod={restPeriod}
+        setRestPeriod={setRestPeriod}
+        handleRestPeriod={handleRestPeriod}
+        autoRoll={autoRoll}
+        setAutoRoll={setAutoRoll}
+        startWorkout={startWorkout}
+        handleBeginWorkout={handleBeginWorkout}
+        handleStartWorkout={handleStartWorkout}
+      />
+      <AttributeFields
+        exObj={exObj}
+        startEx={startEx}
+        setGoToNext={setGoToNext}
+        stopWatch={stopWatch}
+        setExStats={setExStats}
+        submitClicked={submitClicked}
+        handleSubmitStats={handleSubmitStats}
+        setSubmitClicked={setSubmitClicked}
+        focusAttFields={focusAttFields}
+      />
     </div>
   );
 };
@@ -279,4 +258,6 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch(postStat(statData, sideEffects)),
   onFetchSession: (sessionId) => dispatch(fetchSession(sessionId)),
 });
-export default connect(mapStateToProps, mapDispatchToProps)(StartWorkout);
+export default AuthHOC(
+  connect(mapStateToProps, mapDispatchToProps)(StartWorkout)
+);

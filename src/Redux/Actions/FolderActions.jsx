@@ -10,6 +10,10 @@ export const headers = () => {
 
 // *rxaction -> action template
 
+export const clearFoldersState = () => ({
+  type: "CLEAR_FOLDERS_FROM_STATE",
+});
+
 // ------- SET SELECTED FOLDER ACTIONS--------
 export const setSelectedFolder = (folder) => ({
   type: "SET_SELECTED_FOLDER",
@@ -141,10 +145,10 @@ export const patchFolderSuccess = (folder) => ({
 
 // ------- PATCH NEW FOLDER FUNCTION--------
 
-export const patchFolder = (folderData) => {
+export const patchFolder = (folderData, sideEffects) => {
   return (dispatch) => {
     dispatch(patchFolderRequest());
-    fetch(`${API}/folders/${folderData.id}`, {
+    fetch(`${API}/folders/${folderData.folder.id}`, {
       method: "PATCH",
       headers: headers(),
       body: JSON.stringify(folderData),
@@ -155,6 +159,7 @@ export const patchFolder = (folderData) => {
           dispatch(patchFolderFailed(data.error));
         } else {
           dispatch(patchFolderSuccess(data));
+          sideEffects();
         }
       });
   };
@@ -178,7 +183,7 @@ export const deleteFolderSuccess = (folder) => ({
 
 // ------- DELETE NEW FOLDER FUNCTION--------
 
-export const deleteFolder = (folderId) => {
+export const deleteFolder = (folderId, sideEffects = null) => {
   return (dispatch) => {
     dispatch(deleteFolderRequest());
     fetch(`${API}/folders/${folderId}`, {
@@ -191,6 +196,7 @@ export const deleteFolder = (folderId) => {
           dispatch(deleteFolderFailed(data.error));
         } else {
           dispatch(deleteFolderSuccess(folderId));
+          sideEffects && sideEffects();
         }
       });
   };

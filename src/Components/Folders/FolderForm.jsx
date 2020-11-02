@@ -7,7 +7,7 @@ import Button from "@material-ui/core/Button";
 import { makeStyles } from "@material-ui/core/styles";
 
 export default function FolderForm(props) {
-  const { folder, userId, handleOnPostFolder } = props;
+  const { folder, userId, handleOnPostFolder, handleOnPatchFolder } = props;
   const [fields, setFields] = useState({ folder_name: "", user_id: null });
   const classes = useStyles();
 
@@ -23,7 +23,9 @@ export default function FolderForm(props) {
 
   function handleSubmit(e) {
     e.preventDefault();
-    handleOnPostFolder({ folder: { ...fields } });
+    folder
+      ? handleOnPatchFolder({ folder: { ...fields, id: folder.id } })
+      : handleOnPostFolder({ folder: { ...fields } });
   }
 
   return (

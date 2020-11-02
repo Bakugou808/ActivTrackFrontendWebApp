@@ -4,6 +4,18 @@ import { connect } from "react-redux";
 import { makeStyles } from "@material-ui/core/styles";
 import { Tooltip, Fab, Paper, TextField, Button } from "@material-ui/core";
 
+export const normalizeString = (str) => {
+  return (
+    str
+      // insert a space before all caps
+      .replace(/([A-Z])/g, " $1")
+      // uppercase the first character
+      .replace(/^./, function (str) {
+        return str.toUpperCase();
+      })
+  );
+};
+
 export const AttributeFields = (props) => {
   const {
     exObj,
@@ -12,6 +24,7 @@ export const AttributeFields = (props) => {
     submitClicked,
     handleSubmitStats,
     setSubmitClicked,
+    focusAttFields,
     startEx,
   } = props;
   const [exAtts, setExAtts] = useState([]);
@@ -26,25 +39,13 @@ export const AttributeFields = (props) => {
     setExAtts((prev) => ({ ...prev, ...obj }));
   };
 
-  const normalizeString = (str) => {
-    return (
-      str
-        // insert a space before all caps
-        .replace(/([A-Z])/g, " $1")
-        // uppercase the first character
-        .replace(/^./, function (str) {
-          return str.toUpperCase();
-        })
-    );
-  };
-
   const renderAtts = () => {
     const x = [];
     for (const [key, val] of Object.entries(exAtts)) {
       let key1 = normalizeString(key);
       key !== "restPeriod" &&
         x.push(
-          <div key={key}>
+          <div key={key} className={"centerDiv"}>
             <TextField
               size="small"
               color="primary"
@@ -53,6 +54,7 @@ export const AttributeFields = (props) => {
               name={key}
               value={exAtts[key]}
               onChange={handleChange}
+              className={"attFields"}
             />
           </div>
         );
@@ -64,27 +66,38 @@ export const AttributeFields = (props) => {
   };
 
   return (
-    <div className="addNewString">
+    <div className="attributes">
       {submitClicked ? (
-        <Button
-          variant="contained"
-          color="primary"
-          onClick={() => handleSubmitStats(stopWatch.time)}
-        >
-          Go To Next
-        </Button>
-      ) : (
-        <Paper className="container grid" elevation={3}>
-          <div>Attributes</div>
-          {exAtts && renderAtts()}
+        <div className="startButton">
           <Button
             variant="contained"
             color="primary"
-            onClick={() => setSubmitClicked(true)}
+            onClick={() => handleSubmitStats(stopWatch.time)}
+            className="goToNextButton"
           >
-            Submit
+            Go To Next
           </Button>
-        </Paper>
+        </div>
+      ) : (
+        focusAttFields && (
+          <div className="attFields">
+            <Paper className="container grid" elevation={3}>
+              <div className="centerDiv2 removeMarginBottom orange fsize20">
+                Attributes
+              </div>
+              <div>{exAtts && renderAtts()}</div>
+              <Button
+                variant="contained"
+                color="primary"
+                onClick={() => setSubmitClicked(true)}
+                className="centerDiv submitButton"
+              >
+                Submit
+              </Button>
+              <div></div>
+            </Paper>
+          </div>
+        )
       )}
     </div>
   );

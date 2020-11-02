@@ -9,11 +9,13 @@ import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import Link from "@material-ui/core/Link";
 import clsx from "clsx";
-import Button from "@material-ui/core/Button";
+// import Button from "@material-ui/core/Button";
 import IconButton from "@material-ui/core/IconButton";
 import MenuIcon from "@material-ui/icons/Menu";
-import AssessmentIcon from "@material-ui/icons/Assessment";
-import BorderColorIcon from "@material-ui/icons/BorderColor";
+// import AssessmentIcon from "@material-ui/icons/Assessment";
+// import BorderColorIcon from "@material-ui/icons/BorderColor";
+import FolderOpenIcon from "@material-ui/icons/FolderOpen";
+import BubbleChartIcon from "@material-ui/icons/BubbleChart";
 import FormatListBulletedIcon from "@material-ui/icons/FormatListBulleted";
 import CollectionsBookmarkIcon from "@material-ui/icons/CollectionsBookmark";
 import SearchIcon from "@material-ui/icons/Search";
@@ -25,9 +27,12 @@ import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
 
+// Action Imports
+import { clearFoldersState } from "../../Redux/Actions/FolderActions";
+
 function NavBar(props) {
   const classes = useStyles();
-  const { history, auth, onLogOut, isLoggedIn } = props;
+  const { history, auth, onLogOut, isLoggedIn, onClearFoldersState } = props;
 
   const onLogout = () => {
     const { onSignOutUser, user } = props;
@@ -54,11 +59,6 @@ function NavBar(props) {
   };
 
   const redirect = (path) => {
-    console.log(path);
-    // const clearStates = () => {
-    //!add actions to clear store on logout/or redirect if necessary
-    // }
-    // clearStates()
     history.push(`/${path}`);
   };
 
@@ -73,10 +73,10 @@ function NavBar(props) {
     >
       <List>
         {[
-          ["Search", <SearchIcon />, ""],
+          // ["Search", <SearchIcon />, ""],
           ["Home", <HomeIcon />, "home"],
-          ["Folders", <CollectionsBookmarkIcon />, "folders"],
-          ["Stats", <FormatListBulletedIcon />, "stats"],
+          ["Folders", <FolderOpenIcon />, "folders"],
+          ["Stats", <BubbleChartIcon />, "statsPage"],
         ].map((arr, index) => (
           <ListItem button key={index} onClick={() => redirect(arr[2])}>
             <ListItemIcon>{arr[1]}</ListItemIcon>
@@ -89,7 +89,7 @@ function NavBar(props) {
 
   return (
     <div className={classes.root}>
-      <AppBar position="static">
+      <AppBar position="static" className={classes.bar}>
         <Toolbar>
           <IconButton
             edge="start"
@@ -101,9 +101,15 @@ function NavBar(props) {
             {isLoggedIn && <MenuIcon />}
           </IconButton>
           <Typography component={"span"} variant="h6" className={classes.title}>
-            <Link href="/about" color="inherit">
-              ActivTrack
-            </Link>
+            {isLoggedIn ? (
+              <Link href="/home" color="inherit">
+                ActivTrack
+              </Link>
+            ) : (
+              <Link href="/about" color="inherit">
+                ActivTrack
+              </Link>
+            )}
           </Typography>
           {isLoggedIn ? (
             <Typography
@@ -128,13 +134,15 @@ function NavBar(props) {
           )}
         </Toolbar>
       </AppBar>
-      <Drawer
-        anchor={"left"}
-        open={state["left"]}
-        onClose={toggleDrawer("left", false)}
-      >
-        {list("left")}
-      </Drawer>
+      {isLoggedIn && (
+        <Drawer
+          anchor={"left"}
+          open={state["left"]}
+          onClose={toggleDrawer("left", false)}
+        >
+          {list("left")}
+        </Drawer>
+      )}
     </div>
   );
 }
@@ -149,6 +157,7 @@ const mapStateToProps = (store) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     onLogOut: () => dispatch(logOut()),
+    onClearFoldersState: () => dispatch(clearFoldersState()),
   };
 };
 
@@ -158,11 +167,20 @@ const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
   },
+  bar: {
+    height: "55px",
+    marginBottom: "30px",
+  },
   menuButton: {
     marginRight: theme.spacing(2),
   },
   title: {
     flexGrow: 1,
+    display: "flex",
+    "align-items": "center",
+    "justify-content": "center",
+    "margin-top": "15px",
+    "margin-bottom": "15px",
   },
   login: {
     "& > * + *": {

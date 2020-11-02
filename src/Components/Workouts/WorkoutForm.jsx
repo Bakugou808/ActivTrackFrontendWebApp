@@ -7,7 +7,12 @@ import Button from "@material-ui/core/Button";
 import { makeStyles } from "@material-ui/core/styles";
 
 export default function WorkoutForm(props) {
-  const { folderId, handleOnPostWorkout } = props;
+  const {
+    folderId,
+    handleOnPostWorkout,
+    handleOnPatchWorkout,
+    workout,
+  } = props;
   const [fields, setFields] = useState({
     folder_id: "",
     title: "",
@@ -17,7 +22,14 @@ export default function WorkoutForm(props) {
 
   useEffect(() => {
     folderId && setFields({ folder_id: folderId });
-  }, [folderId]);
+    workout &&
+      setFields({
+        folder_id: workout.folder_id,
+        title: workout.title,
+        description: workout.description,
+        id: workout.id,
+      });
+  }, [folderId, workout]);
 
   function handleChange(e) {
     let obj = { [e.target.name.toLowerCase()]: e.target.value };
@@ -26,7 +38,9 @@ export default function WorkoutForm(props) {
 
   function handleSubmit(e) {
     e.preventDefault();
-    handleOnPostWorkout({ workout: { ...fields } });
+    workout
+      ? handleOnPatchWorkout({ workout: { ...fields } })
+      : handleOnPostWorkout({ workout: { ...fields } });
   }
 
   return (
@@ -76,7 +90,7 @@ const useStyles = makeStyles((theme) => ({
     alignItems: "center",
   },
   form: {
-    width: "100%", // Fix IE 11 issue.
+    width: "100%",
     marginTop: theme.spacing(1),
   },
   submit: {

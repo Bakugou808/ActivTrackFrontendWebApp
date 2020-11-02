@@ -1,3 +1,261 @@
+* {
+  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+}
+
+// Text Sizes
+
+.mainText {
+  font-size: 15px;
+}
+
+// display Paper for Folders and Workouts
+
+.displayPaper {
+  padding: 2;
+  align-items: center;
+  justify-content: center;
+  color: orangered;
+  max-width: 40rem;
+  min-height: 5rem;
+  padding: 1 rem;
+  margin: auto;
+}
+
+.UiComponentContainer {
+  padding: 15px;
+}
+// workout flow
+.submitButton {
+  margin: 0 10px !important;
+}
+
+.goToNextButton {
+  width: 100%;
+  height: 2vw;
+}
+.startButton {
+  width: 100%;
+  button {
+    width: 100%;
+    margin-top: 10px;
+    min-height: 45px;
+  }
+}
+.UiComponent {
+  border-bottom: 3px solid darkblue;
+}
+.attributes {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.attFields {
+  width: 100%;
+}
+
+.removeMarginBottom {
+  margin-bottom: 0;
+}
+
+.timer {
+  position: relative;
+  width: unset;
+  height: unset;
+  display: flex;
+  justify-content: center;
+}
+
+.attPaper {
+}
+.timeAlert {
+  display: flex;
+  justify-content: center;
+  color: red;
+  font-weight: 600;
+}
+
+.horizontal1 {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.horizontal2 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.horizontal3 {
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.center2 {
+  margin: auto;
+  width: 80vw;
+  border: 1px solid green;
+  padding: 10px;
+  border-radius: 10px;
+}
+.marginLeft20 {
+  margin-left: 20px;
+}
+.saveButtonCont {
+  align-items: center;
+  justify-content: center;
+  display: flex;
+  margin: 30px;
+}
+.saveButton {
+  width: 70%;
+  height: 5vh;
+  min-height: 50px;
+}
+.repDisplay {
+}
+.finButton {
+  margin-top: 20px;
+}
+
+.removeFlexFlow {
+  flex-flow: unset;
+}
+.exHeaders {
+}
+
+.setDisplay {
+  display: flex;
+  justify-content: center;
+  flex-flow: column wrap;
+  align-items: center;
+}
+
+// workout's ui
+
+.exContainer {
+  display: flex;
+  margin: 10px;
+  align-items: center;
+  .exStack {
+    margin-left: 10px;
+    padding: 3px;
+    background: #ff5722;
+    border-radius: 0.5rem;
+    width: 100%;
+  }
+  .exCircuit {
+    display: grid;
+    margin-left: 10px;
+    grid-gap: 4px;
+    background: #ffab40;
+    border-radius: 0.25rem;
+    padding: 4px;
+    width: 100%;
+  }
+  .exPaper {
+    min-height: 26px;
+    align-items: center;
+    display: grid;
+    padding: 10px;
+    opacity: 0.99;
+  }
+}
+
+.phaseTitle {
+  font-size: 27px;
+  font-weight: 300;
+  font-family: "Roboto";
+  font-style: italic;
+  margin-bottom: 25px;
+  text-decoration: underline;
+}
+
+.phaseTitle2 {
+  font-size: 27px;
+  font-weight: 350;
+  font-family: "Roboto";
+  font-style: italic;
+  margin-bottom: 25px;
+  text-decoration: underline;
+  color: #ff5722;
+}
+.exTitle {
+  font-size: 17px;
+  margin: 0;
+  margin-bottom: 3px;
+  color: #ff5722;
+}
+
+.orange {
+  color: #ff5722;
+}
+.marginTop10 {
+  margin-top: 10px;
+}
+.fsize20 {
+  font-size: 20px;
+}
+.exPaperAtts {
+  margin: 0;
+  color: #047b6d;
+}
+
+.autoRollText {
+  color: #ff5722;
+}
+
+.exTitleWorkout {
+  font-size: 33px;
+  color: #f57c00;
+  font-weight: 400;
+  font-family: "Roboto";
+}
+
+#phaseDisp {
+  color: #26a69a;
+  font-size: 20px;
+}
+
+#typeDisp {
+  margin-left: 30px;
+  color: #26a69a;
+  font-size: 20px;
+}
+
+.cardRepRest {
+  font-size: 20px;
+  color: #26a69a;
+}
+.setNum {
+  margin: 0;
+  font-size: 23px;
+  color: #f57c00;
+  font-family: "Roboto";
+}
+
+.setGoal {
+  margin: 0;
+  font-size: 20px;
+  color: #ff5722;
+}
+.workoutPaper {
+  max-width: fit-content;
+  margin: 10px;
+}
+// buttons
+// ÷82b1ff
+.button {
+  text-size-adjust: 1 rem;
+  max-width: 30rem;
+  margin: 2 rem;
+  width: 70%;
+  height: 5vh;
+  min-height: 50px;
+}
+// Workouts exercise display
 .circuit {
   //   display: flex;
   //   align-items: center;

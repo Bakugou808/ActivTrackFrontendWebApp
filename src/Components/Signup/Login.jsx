@@ -100,7 +100,9 @@ export const Login = (props) => {
           </Grid>
         </form>
       </div>
-      {loginError && <div>{loginError}</div>}
+      {loginError && (
+        <div className="phaseTitle2 setDisplay marginTop10">{`${loginError}: Please Sign Up`}</div>
+      )}
       <Box mt={8}>
         <Copyright />
       </Box>
@@ -148,7 +150,7 @@ function Copyright() {
     >
       {"Copyright © "}
       <Link color="inherit" href="https://material-ui.com/">
-        Your Website
+        ActivTrack
       </Link>{" "}
       {new Date().getFullYear()}
       {"."}

@@ -2,12 +2,15 @@ import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
 // * Material UI Imports
 import { makeStyles } from "@material-ui/core/styles";
-import { Paper, Button } from "@material-ui/core";
+import { Paper, Button, TextField } from "@material-ui/core";
 // * Action Imports
-import { patchCircuit } from "../../Redux/Actions/CircuitActions";
+import {
+  patchCircuit,
+  clearSelectedCircuit,
+} from "../../Redux/Actions/CircuitActions";
 
 export const SetIconUi = (props) => {
-  const { setCount, circuitId, onPatchCircuit } = props;
+  const { setCount, circuitId, onPatchCircuit, onClearSelectedCircuit } = props;
   const [setVal, setSetVal] = useState(1);
   const [showForm, setShowForm] = useState(false);
 
@@ -25,7 +28,11 @@ export const SetIconUi = (props) => {
     setShowForm(false);
     const circuitData = { circuit: { id: circuitId, sets: setVal } };
     // !still need to test this
-    onPatchCircuit(circuitData);
+
+    const sideEffects = () => {
+      onClearSelectedCircuit();
+    };
+    onPatchCircuit(circuitData, sideEffects);
   };
 
   return (
@@ -37,7 +44,8 @@ export const SetIconUi = (props) => {
       >
         {showForm ? (
           <form onSubmit={handleSubmit}>
-            <input
+            <TextField
+              size="small"
               type="number"
               value={setVal}
               onChange={(e) => setSetVal(e.target.value)}
@@ -54,6 +62,8 @@ export const SetIconUi = (props) => {
 const mapStateToProps = (state) => ({});
 
 const mapDispatchToProps = (dispatch) => ({
-  onPatchCircuit: (circuitData) => dispatch(patchCircuit(circuitData)),
+  onPatchCircuit: (circuitData, circuitId) =>
+    dispatch(patchCircuit(circuitData, circuitId)),
+  onClearSelectedCircuit: () => dispatch(clearSelectedCircuit()),
 });
 export default connect(mapStateToProps, mapDispatchToProps)(SetIconUi);

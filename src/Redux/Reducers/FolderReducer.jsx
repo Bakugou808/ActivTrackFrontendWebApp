@@ -13,6 +13,9 @@ const folderReducer = (state = initialState, action) => {
     case "SET_SELECTED_FOLDER":
       return { ...state, selectedFolder: action.folder };
 
+    case "CLEAR_FOLDERS_FROM_STATE":
+      return { ...state, selectedFolder: [] };
+
     //* Fetch Folders Belonging To User
 
     case "FETCH_FOLDERS_REQUEST":
