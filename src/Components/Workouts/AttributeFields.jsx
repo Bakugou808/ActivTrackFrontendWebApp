@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { connect } from "react-redux";
 // * Material UI Imports
 import { makeStyles } from "@material-ui/core/styles";
 import { Tooltip, Fab, Paper, TextField, Button } from "@material-ui/core";
@@ -28,6 +27,7 @@ export const AttributeFields = (props) => {
     startEx,
   } = props;
   const [exAtts, setExAtts] = useState([]);
+  const classes = useStyles();
 
   useEffect(() => {
     exObj && setExAtts(exObj.circuit_exercise_attributes);
@@ -73,7 +73,7 @@ export const AttributeFields = (props) => {
             variant="contained"
             color="primary"
             onClick={() => handleSubmitStats(stopWatch.time)}
-            className="goToNextButton"
+            className={classes.btn}
           >
             Go To Next
           </Button>
@@ -81,7 +81,7 @@ export const AttributeFields = (props) => {
       ) : (
         focusAttFields && (
           <div className="attFields">
-            <Paper className="container grid" elevation={3}>
+            <Paper className={classes.paper} elevation={3}>
               <div className="centerDiv2 removeMarginBottom orange fsize20">
                 Attributes
               </div>
@@ -90,7 +90,7 @@ export const AttributeFields = (props) => {
                 variant="contained"
                 color="primary"
                 onClick={() => setSubmitClicked(true)}
-                className="centerDiv submitButton"
+                className={classes.subBtn}
               >
                 Submit
               </Button>
@@ -103,8 +103,21 @@ export const AttributeFields = (props) => {
   );
 };
 
-const mapStateToProps = (state) => ({});
+export default AttributeFields;
 
-const mapDispatchToProps = {};
-
-export default connect(mapStateToProps, mapDispatchToProps)(AttributeFields);
+const useStyles = makeStyles((theme) => ({
+  paper: {
+    width: "max-content",
+    display: "inline-block",
+    padding: "2vw 5vw",
+    margin: "20px",
+  },
+  btn: {
+    padding: "25px",
+    width: "100%",
+    margin: "15px",
+  },
+  subBtn: {
+    width: "100%",
+  },
+}));

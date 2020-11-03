@@ -13,7 +13,7 @@ export const SetIconUi = (props) => {
   const { setCount, circuitId, onPatchCircuit, onClearSelectedCircuit } = props;
   const [setVal, setSetVal] = useState(1);
   const [showForm, setShowForm] = useState(false);
-
+  const classes = useStyles();
   useEffect(() => {
     setCount && setSetVal(setCount);
   }, [setCount]);
@@ -41,6 +41,7 @@ export const SetIconUi = (props) => {
         variant="contained"
         color="secondary"
         onClick={handlePatchCircuit}
+        className={classes.setBtn}
       >
         {showForm ? (
           <form onSubmit={handleSubmit}>
@@ -51,8 +52,10 @@ export const SetIconUi = (props) => {
               onChange={(e) => setSetVal(e.target.value)}
             />
           </form>
+        ) : setVal === 1 ? (
+          <p className="setTag">{setVal} Set</p>
         ) : (
-          setVal
+          <p className="setTag">{setVal} Sets</p>
         )}
       </Button>
     </div>
@@ -67,3 +70,11 @@ const mapDispatchToProps = (dispatch) => ({
   onClearSelectedCircuit: () => dispatch(clearSelectedCircuit()),
 });
 export default connect(mapStateToProps, mapDispatchToProps)(SetIconUi);
+
+const useStyles = makeStyles((theme) => ({
+  setBtn: {
+    lineHeight: 1,
+    padding: "0px 15px",
+    minWidth: "72px",
+  },
+}));

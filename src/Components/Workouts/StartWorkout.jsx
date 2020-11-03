@@ -211,7 +211,7 @@ const StartWorkout = (props) => {
   };
 
   return (
-    <div className="container grid ">
+    <div className="runWorkoutContainer">
       <UiComponent
         exObj={exObj}
         startEx={startEx}

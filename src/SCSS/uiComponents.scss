@@ -21,8 +21,13 @@
   margin: auto;
 }
 
+.runWorkoutContainer {
+  margin: 15px;
+}
+
 .UiComponentContainer {
   padding: 15px;
+  width: auto;
 }
 // workout flow
 .submitButton {
@@ -34,12 +39,13 @@
   height: 2vw;
 }
 .startButton {
+  display: flex;
   width: 100%;
-  button {
-    width: 100%;
-    margin-top: 10px;
-    min-height: 45px;
-  }
+  margin-top: 10px;
+  min-height: 45px;
+}
+.finButton {
+  display: flex;
 }
 .UiComponent {
   border-bottom: 3px solid darkblue;
@@ -50,7 +56,9 @@
   justify-content: center;
 }
 .attFields {
-  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .removeMarginBottom {
@@ -116,9 +124,6 @@
 }
 .repDisplay {
 }
-.finButton {
-  margin-top: 20px;
-}
 
 .removeFlexFlow {
   flex-flow: unset;
@@ -161,6 +166,9 @@
     display: grid;
     padding: 10px;
     opacity: 0.99;
+  }
+  .exPaper:hover {
+    opacity: 0.9;
   }
 }
 
@@ -311,13 +319,15 @@
   font-size: 16px;
 }
 
-// .react-stopwatch-timer__element {
-//   width: 3px !important;
-//   height: 3px !important;
-//   border-radius: 5px;
-// }
+.setTag {
+  min-width: max-content;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 
-// .react-stopwatch-timer__table {
-//   width: 300px !important;
-//   height: 300px !important;
-// }
+.setBtn {
+  line-height: 1;
+  padding: 0px 15px;
+  min-width: 72px;
+}
