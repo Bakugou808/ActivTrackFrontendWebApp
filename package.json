@@ -11,6 +11,7 @@
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
+    "framer-motion": "^2.9.4",
     "moment": "^2.29.1",
     "react": "^16.13.1",
     "react-countdown-circle-timer": "^2.3.7",
@@ -24,6 +25,7 @@
     "redux-logger": "^3.0.6",
     "redux-thunk": "^2.3.0",
     "sass": "^1.27.0",
+    "use-sound": "^1.0.2",
     "use-timer": "^1.4.0"
   },
   "scripts": {

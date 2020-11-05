@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
 import { useTimer } from "use-timer";
+import useSound from "use-sound";
+
+import BellSound from "../../Sounds/BellSound.mp3";
 
 // * Component Imports
 import { AuthHOC } from "../AuthHOC";
@@ -62,11 +65,10 @@ const StartWorkout = (props) => {
   const [autoRoll, setAutoRoll] = useState(false);
   // *state and functions for timer hook --> rename the props and see if you can have more than one timer?
   const { time, start, pause, reset, isRunning } = useTimer({
-    // endTime: 10,
-    onTimeUpdate: (time) => {
-      // console.log("Time is over", time);
-    },
+    onTimeUpdate: (time) => {},
   });
+  // *sound effects
+  const [playBell] = useSound(BellSound);
 
   const stopWatch = { time, start, pause, reset, isRunning };
 
@@ -135,15 +137,16 @@ const StartWorkout = (props) => {
     deliverNextExObj();
     handleStartWorkout();
     setStartWorkout(true);
+    // playBell()
   };
 
   // 1. user starts workout
   const handleStartWorkout = () => {
-    // deliverNextExObj();
     setGoToNext(false);
     setStartEx(true);
     setEndEx(false);
     setSubmitClicked(false);
+    playBell();
     start();
   };
 
@@ -154,6 +157,7 @@ const StartWorkout = (props) => {
     setExStats((prev) => ({ ...prev, activeTime: t }));
     setFocusAttFields(true);
     reset();
+    // playBell();
     start();
   };
 
@@ -228,6 +232,7 @@ const StartWorkout = (props) => {
         startWorkout={startWorkout}
         handleBeginWorkout={handleBeginWorkout}
         handleStartWorkout={handleStartWorkout}
+        playBell={playBell}
       />
       <AttributeFields
         exObj={exObj}

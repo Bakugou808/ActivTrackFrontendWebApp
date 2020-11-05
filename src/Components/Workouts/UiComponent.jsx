@@ -1,5 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { normalizeString } from "./AttributeFields";
+
+import useSound from "use-sound";
+
+import BellSound from "../../Sounds/BellSound.mp3";
 // * Component Imports
 import { handleRestPeriod } from "./StartWorkout";
 import AutoRollSwitch from "./AutoRollSwitch";
@@ -41,6 +45,8 @@ export const UiComponent = (props) => {
   const [showRpForm, setShowRpForm] = useState(false);
   const [rp2, setRp2] = useState();
   const [timeAlert, setTimeAlert] = useState(false);
+  const [play, setPlay] = useState(false);
+  const [playTimesUp, { stop }] = useSound(BellSound);
   const classes = useStyles();
   useEffect(() => {}, [exObj, restPeriod]);
 
@@ -66,9 +72,7 @@ export const UiComponent = (props) => {
       handleExceededRest();
       return (
         <div className="timer">
-          {/* <div className="text">Remaining</div> */}
           <div className="text">Rest Time</div>
-          {/* <div className="value">{remainingTime}</div> */}
           <div className="value">{timerValue}</div>
         </div>
       );
@@ -101,6 +105,19 @@ export const UiComponent = (props) => {
     } else {
       setTimeAlert(false);
     }
+    if (restInSec == timeInSec) {
+      handleTimesUp();
+    }
+    // if (restInSec - 10 == timeInSec) {
+    //   handleTimesUp10sec();
+    // }
+  };
+
+  const handleTimesUp = () => {
+    playTimesUp() && setTimeout(stop(), 3000);
+  };
+  const handleTimesUp10sec = () => {
+    playTimesUp() && setTimeout(stop(), 1000);
   };
 
   return (
