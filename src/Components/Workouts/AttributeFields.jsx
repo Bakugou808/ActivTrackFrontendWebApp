@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 // * Material UI Imports
 import { makeStyles } from "@material-ui/core/styles";
 import { Tooltip, Fab, Paper, TextField, Button } from "@material-ui/core";
+// * Framer Motion Imports
+import { motion } from "framer-motion";
 
 export const normalizeString = (str) => {
   return (
@@ -80,7 +82,12 @@ export const AttributeFields = (props) => {
         </div>
       ) : (
         focusAttFields && (
-          <div className="attFields">
+          <motion.div
+            className="attFields"
+            initial={{ y: "200vw" }}
+            animate={{ y: -400 }}
+            transition={{ duration: 0.5 }}
+          >
             <Paper className={classes.paper} elevation={3}>
               <div className="centerDiv2 removeMarginBottom orange fsize20">
                 Attributes
@@ -96,7 +103,7 @@ export const AttributeFields = (props) => {
               </Button>
               <div></div>
             </Paper>
-          </div>
+          </motion.div>
         )
       )}
     </div>

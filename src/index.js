@@ -30,26 +30,7 @@ const theme = createMuiTheme({
   },
   typography: {
     fontSize: 16,
-    // fontFamily: [
-    //   "-apple-system",
-    //   "BlinkMacSystemFont",
-    //   '"Segoe UI"',
-    //   "Roboto",
-    //   '"Helvetica Neue"',
-    //   "Arial",
-    //   "sans-serif",
-    //   '"Apple Color Emoji"',
-    //   '"Segoe UI Emoji"',
-    //   '"Segoe UI Symbol"',
-    // ].join(","),
   },
-  // overrides: {
-  //   MuiCssBaseline: {
-  //     "@global": {
-  //       "@font-face": [arial],
-  //     },
-  //   },
-  // },
 });
 
 theme.typography.h3 = {
@@ -63,16 +44,13 @@ theme.typography.h3 = {
 };
 
 ReactDOM.render(
-  // <React.StrictMode>
   <Provider store={store}>
     <Router>
-      {/* <CssBaseline /> */}
       <ThemeProvider theme={theme}>
         <App />
       </ThemeProvider>
     </Router>
   </Provider>,
-  // </React.StrictMode>,
   document.getElementById("root")
 );
 

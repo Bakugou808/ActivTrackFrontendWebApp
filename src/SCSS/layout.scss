@@ -81,6 +81,14 @@ body {
   margin: 25px;
 }
 
+.homePageText {
+  display: flex;
+  flex-flow: column wrap;
+  align-items: center;
+  height: 80vw;
+  padding-top: 60px;
+}
+
 @media all and (min-width: $large) {
   .span-2 {
     grid-column: auto / span 2;

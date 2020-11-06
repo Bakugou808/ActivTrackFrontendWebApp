@@ -234,6 +234,7 @@ const StartWorkout = (props) => {
         handleStartWorkout={handleStartWorkout}
         playBell={playBell}
       />
+
       <AttributeFields
         exObj={exObj}
         startEx={startEx}
