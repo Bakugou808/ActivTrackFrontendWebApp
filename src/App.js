@@ -50,6 +50,10 @@ class App extends React.Component {
             render={(props) => <NewWorkout {...props} />}
           />
           <Route
+            path="/edit_workout/:folderName/:folderId/:workoutTitle/:workoutId"
+            render={(props) => <NewWorkout {...props} />}
+          />
+          <Route
             path="/workouts/:folderName/:folderId/:workoutTitle/:workoutId"
             render={(props) => <Workout {...props} />}
           />

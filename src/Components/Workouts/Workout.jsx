@@ -13,6 +13,7 @@ import {
 } from "../../Redux/Actions/WorkoutActions";
 import { fetchFolder } from "../../Redux/Actions/FolderActions";
 import { postSession } from "../../Redux/Actions/SessionsActions";
+import { setPositionCircuitToX } from "../../Redux/Actions/CircuitActions";
 
 // * Material UI Imports
 import { makeStyles } from "@material-ui/core/styles";
@@ -100,6 +101,7 @@ const Workout = (props) => {
     formattedWorkout,
     onPostSession,
     loading,
+    onSetPositionCircuitToX,
   } = props;
   const folderId = match.params.folderId;
   const workoutId = match.params.workoutId;
@@ -146,18 +148,54 @@ const Workout = (props) => {
     onPostSession(sessionData, sideEffects);
   };
 
+  const handleCircuitPositions = () => {
+    const warmUpLength = {
+      x: formattedWorkout.warmup.length,
+      phase: "Warm Up",
+    };
+    const bodyLength = { x: formattedWorkout.body.length, phase: "Body" };
+    const cDLength = {
+      x: formattedWorkout.cool_down.length,
+      phase: "Cool Down",
+    };
+
+    onSetPositionCircuitToX(warmUpLength);
+    onSetPositionCircuitToX(bodyLength);
+    onSetPositionCircuitToX(cDLength);
+  };
+
+  const handleEditWorkout = () => {
+    // "/edit_workout/:folderName/:folderId/:workoutTitle/:workoutId"
+    handleCircuitPositions();
+    history.push(
+      `/edit_workout/${folderName}/${folderId}/${workoutTitle}/${workoutId}`
+    );
+  };
+
   return (
     <div>
-      <div className={"centerDiv"}>
+      <div className={"centerDiv "}>
         <Button
           variant="contained"
           color="secondary"
+          onClick={handleEditWorkout}
+          // className={"centerDiv pointer button editWorkoutBtn"}
+          className={"button editWorkoutBtn"}
+        >
+          Add Exercise
+        </Button>
+      </div>
+      <div className={"centerDiv"}>
+        <Button
+          variant="contained"
+          color="primary"
           onClick={handleStartWorkout}
           className={"centerDiv pointer button"}
         >
           Start Workout
         </Button>
       </div>
+
       <div className="container grid">
         <div className={classes.paper}>
           <div className={"centerDiv phaseTitle"}>Warm Up</div>
@@ -217,6 +255,8 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch(fetchFormattedWorkout(workoutId)),
   onPostSession: (sessionData, sideEffects) =>
     dispatch(postSession(sessionData, sideEffects)),
+  onSetPositionCircuitToX: (payload) =>
+    dispatch(setPositionCircuitToX(payload)),
 });
 
 export default AuthHOC(connect(mapStateToProps, mapDispatchToProps)(Workout));

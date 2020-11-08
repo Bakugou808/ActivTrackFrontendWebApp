@@ -15,7 +15,10 @@ import { renderCirc, renderExercises } from "./Workout";
 
 // * Action Imports
 import { fetchFolder } from "../../Redux/Actions/FolderActions";
-import { setPhase } from "../../Redux/Actions/CircuitActions";
+import {
+  setPhase,
+  setPositionCircuitToX,
+} from "../../Redux/Actions/CircuitActions";
 import {
   postWorkout,
   patchWorkout,
@@ -39,6 +42,7 @@ export const NewWorkout = (props) => {
     warmup,
     body,
     coolDown,
+    onSetPositionCircuitToX,
   } = props;
 
   const folderId = parseInt(match.params.folderId);
@@ -63,6 +67,7 @@ export const NewWorkout = (props) => {
     !selectedFolder && onFetchFolder(folderId);
     selectedWorkout && setTitle(selectedWorkout.title);
     selectedWorkout && setDesc(selectedWorkout.description);
+    formattedWorkout && handleCircuitPositions();
   }, [selectedWorkout, formattedWorkout]);
 
   const handleTitleDescSubmit = (e) => {
@@ -78,6 +83,22 @@ export const NewWorkout = (props) => {
       },
       closeForms
     );
+  };
+
+  const handleCircuitPositions = () => {
+    const warmUpLength = {
+      x: formattedWorkout.warmup.length,
+      phase: "Warm Up",
+    };
+    const bodyLength = { x: formattedWorkout.body.length, phase: "Body" };
+    const cDLength = {
+      x: formattedWorkout.cool_down.length,
+      phase: "Cool Down",
+    };
+
+    onSetPositionCircuitToX(warmUpLength);
+    onSetPositionCircuitToX(bodyLength);
+    onSetPositionCircuitToX(cDLength);
   };
 
   const closeForms = () => {
@@ -287,6 +308,8 @@ const mapDispatchToProps = (dispatch) => ({
   onSetPhase: (phase) => dispatch(setPhase(phase)),
   onFetchFormattedWorkout: (workoutId) =>
     dispatch(fetchFormattedWorkout(workoutId)),
+  onSetPositionCircuitToX: (payload) =>
+    dispatch(setPositionCircuitToX(payload)),
 });
 export default AuthHOC(
   connect(mapStateToProps, mapDispatchToProps)(NewWorkout)

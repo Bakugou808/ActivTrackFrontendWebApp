@@ -21,6 +21,12 @@ export const setPhase = (phase) => ({
 });
 
 // ------- MODIFY CIRCUIT POSITION ACTIONS--------
+export const setPositionCircuitToX = (payload) => ({
+  type: "SET_POS_CIRCUIT_TO_X",
+  payload: payload.x,
+  phase: payload.phase,
+});
+
 export const increasePositionCircuit = () => ({
   type: "INCREASE_POS_CIRCUIT",
 });
@@ -134,7 +140,7 @@ export const postCircuit = (circuitData) => {
           dispatch(postCircuitFailed(data.error));
         } else {
           dispatch(postCircuitSuccess(data));
-          dispatch(increasePositionCircuit());
+          // dispatch(increasePositionCircuit());
         }
       });
   };
