@@ -24,7 +24,7 @@ import CircularProgress from "@material-ui/core/CircularProgress";
 
 // * create a new button -> onClick will open a form field in the button --> onSubmit will patch the Circuit and change the value -> place the button in front of the Paper tag
 
-export const renderExercises = (phase, handlePatch) => {
+export const renderExercises = (phase, handlePatch = null) => {
   return phase.map((circuit) => {
     let keyName = Object.keys(circuit)[0];
     let arr = circuit[keyName];
@@ -43,6 +43,7 @@ export const renderExercises = (phase, handlePatch) => {
                 elevation={6}
                 className={"exPaper pointer"}
                 onClick={() => handlePatch(record)}
+                id={`${record.ex_id}-${record.circuit_position}`}
               >
                 <p className="exTitle">{record.ex_name}</p>
                 <p className={"exPaperAtts"}>{renderExDetails(record)}</p>
@@ -78,6 +79,7 @@ export const renderCirc = (arr, handlePatch) => {
               elevation={6}
               className={"exPaper pointer"}
               onClick={() => handlePatch(ex)}
+              id={`${ex.ex_id}-${ex.circuit_position}`}
             >
               <p className="exTitle">{ex.ex_name}</p>
               <p className={"exPaperAtts"}>{renderExDetails(ex)}</p>

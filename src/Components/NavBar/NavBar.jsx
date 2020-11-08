@@ -1,8 +1,9 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import { makeStyles } from "@material-ui/core/styles";
 // Action Imports
 import { logOut } from "../../Redux/Actions/AuthActions";
+import { showExDrawer } from "../../Redux/Actions/WorkoutActions";
 // Material Imports
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
@@ -26,13 +27,32 @@ import Divider from "@material-ui/core/Divider";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
+import AccountTreeIcon from "@material-ui/icons/AccountTree";
 
 // Action Imports
 import { clearFoldersState } from "../../Redux/Actions/FolderActions";
 
 function NavBar(props) {
   const classes = useStyles();
-  const { history, auth, onLogOut, isLoggedIn, onClearFoldersState } = props;
+  const {
+    history,
+    match,
+    auth,
+    onLogOut,
+    isLoggedIn,
+    onClearFoldersState,
+    onShowExDrawer,
+  } = props;
+
+  useEffect(() => {
+    history.location.pathname && handleWorkoutPage();
+  }, [history.location.pathname]);
+
+  const handleWorkoutPage = () => {
+    history.location.pathname.includes("start_workouts")
+      ? setWorkoutPage(true)
+      : setWorkoutPage(false);
+  };
 
   const onLogout = () => {
     const { onSignOutUser, user } = props;
@@ -43,9 +63,11 @@ function NavBar(props) {
     props.history.push("/");
   };
 
-  const [state, setState] = React.useState({
+  const [state, setState] = useState({
     left: false,
   });
+
+  const [workoutPage, setWorkoutPage] = useState(false);
 
   const toggleDrawer = (anchor, open) => (event) => {
     if (
@@ -87,19 +109,37 @@ function NavBar(props) {
     </div>
   );
 
+  const toggleExDrawer = () => {
+    console.log("toggle exercise drawer");
+    onShowExDrawer();
+  };
+
   return (
     <div className={classes.root}>
       <AppBar position="static" className={classes.bar}>
         <Toolbar>
-          <IconButton
-            edge="start"
-            className={classes.menuButton}
-            color="inherit"
-            aria-label="menu"
-            onClick={toggleDrawer("left", true)}
-          >
-            {isLoggedIn && <MenuIcon />}
-          </IconButton>
+          {isLoggedIn && (
+            <IconButton
+              edge="start"
+              className={classes.menuButton}
+              color="inherit"
+              aria-label="menu"
+              onClick={toggleDrawer("left", true)}
+            >
+              <MenuIcon />
+            </IconButton>
+          )}
+          {workoutPage && (
+            <IconButton
+              edge="start"
+              className={classes.menuButton}
+              color="inherit"
+              aria-label="exercise_menu"
+              onClick={toggleExDrawer}
+            >
+              <AccountTreeIcon />
+            </IconButton>
+          )}
           <Typography component={"span"} variant="h6" className={classes.title}>
             {isLoggedIn ? (
               <Link href="/home" color="inherit">
@@ -158,6 +198,7 @@ const mapDispatchToProps = (dispatch) => {
   return {
     onLogOut: () => dispatch(logOut()),
     onClearFoldersState: () => dispatch(clearFoldersState()),
+    onShowExDrawer: () => dispatch(showExDrawer()),
   };
 };
 

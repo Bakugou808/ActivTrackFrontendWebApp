@@ -11,7 +11,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import QueueIcon from "@material-ui/icons/Queue";
 import { Tooltip, Fab, Button, TextField } from "@material-ui/core";
 // * Function Imports
-import { renderCirc, renderExercises } from "./Workout";
+import { renderExercises } from "./Workout";
 
 // * Action Imports
 import { fetchFolder } from "../../Redux/Actions/FolderActions";

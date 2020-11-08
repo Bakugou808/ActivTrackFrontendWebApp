@@ -95,7 +95,7 @@ export const Folders = (props) => {
 
   return (
     <div>
-      <div>
+      <div className={classes.addNewParent}>
         <span className={classes.addNew} onClick={() => setShowForm(true)}>
           + Add New Folder
         </span>
@@ -171,6 +171,11 @@ const useStyles = makeStyles((theme) => ({
   folderItemMenu: {
     flex: "0 0 10%",
     cursor: "pointer",
+  },
+  addNewParent: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
   },
   addNew: {
     display: "flex",

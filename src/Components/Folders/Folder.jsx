@@ -109,7 +109,7 @@ export const Folder = (props) => {
 
   return (
     <div>
-      <div>
+      <div className={classes.addNewParent}>
         <span className={classes.addNew} onClick={handleNewWorkout}>
           + Add New Workout
         </span>
@@ -206,6 +206,11 @@ const useStyles = makeStyles((theme) => ({
     margin: "20px",
     color: theme.palette.secondary.main,
     cursor: "pointer",
+  },
+  addNewParent: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
   },
   backdrop: {
     zIndex: theme.zIndex.drawer + 1,

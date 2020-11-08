@@ -108,9 +108,6 @@ export const UiComponent = (props) => {
     if (restInSec == timeInSec) {
       handleTimesUp();
     }
-    // if (restInSec - 10 == timeInSec) {
-    //   handleTimesUp10sec();
-    // }
   };
 
   const handleTimesUp = () => {
@@ -136,16 +133,14 @@ export const UiComponent = (props) => {
                 </div>
               )}
             </div>
-            <div>
+            <div className="autoRollSwitch">
               <AutoRollSwitch autoRoll={autoRoll} setAutoRoll={setAutoRoll} />
             </div>
           </div>
           <div className="setDisplay">
             <p className="setNum"> {exObj && `Set #: ${setNum}`} </p>
-
             <p className="setGoal">
-              {" "}
-              {exObj && `Set Total: ${exObj.circuit_sets}`}{" "}
+              {exObj && `Set Total: ${exObj.circuit_sets}`}
             </p>
           </div>
 
@@ -153,7 +148,7 @@ export const UiComponent = (props) => {
             <div className="horizontal2 cardRepRest">
               {`Rep Goal: `}
               {exObj && (
-                <span>{` ${exObj.circuit_exercise_attributes.reps}`}</span>
+                <span className="repDisplay">{` ${exObj.circuit_exercise_attributes.reps}`}</span>
               )}
             </div>
 
@@ -173,7 +168,7 @@ export const UiComponent = (props) => {
                   </form>
                 ) : (
                   <div onClick={() => setShowRpForm(true)}>
-                    {restPeriod.message}
+                    {` ${restPeriod.message}`}
                   </div>
                 )
               ) : showRpForm ? (

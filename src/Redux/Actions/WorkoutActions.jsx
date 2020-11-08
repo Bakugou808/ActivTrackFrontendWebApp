@@ -16,6 +16,12 @@ export const clearSelectedAndFormattedWorkouts = () => ({
   type: "CLEAR_SELECTED_AND_FORMATTED_WORKOUT_STATE",
 });
 
+//
+
+export const showExDrawer = () => ({
+  type: "SHOW_EX_DRAWER",
+});
+
 // ------- FETCH FOLDER WORKOUTS ACTIONS--------
 
 export const fetchWorkoutsRequest = () => ({

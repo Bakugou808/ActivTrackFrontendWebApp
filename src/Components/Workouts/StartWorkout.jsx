@@ -10,6 +10,7 @@ import { AuthHOC } from "../AuthHOC";
 import UiComponent from "./UiComponent";
 import AutoRollSwitch from "./AutoRollSwitch";
 import AttributeFields from "./AttributeFields";
+import ExListDrawer from "./ExListDrawer";
 // * Material UI Imports
 import { Tooltip, Fab, Button } from "@material-ui/core";
 
@@ -35,6 +36,7 @@ const StartWorkout = (props) => {
     onFetchFormattedWorkout,
     onPostStat,
     selectedSession,
+    showDrawer,
   } = props;
   const workoutId = match.params.workoutId;
   const sessionId = match.params.sessionId;
@@ -215,37 +217,42 @@ const StartWorkout = (props) => {
   };
 
   return (
-    <div className="runWorkoutContainer">
-      <UiComponent
-        exObj={exObj}
-        startEx={startEx}
-        endEx={endEx}
-        stopWatch={stopWatch}
-        handleEndEx={handleEndEx}
-        goToNext={goToNext}
-        setNum={setNum}
-        restPeriod={restPeriod}
-        setRestPeriod={setRestPeriod}
-        handleRestPeriod={handleRestPeriod}
-        autoRoll={autoRoll}
-        setAutoRoll={setAutoRoll}
-        startWorkout={startWorkout}
-        handleBeginWorkout={handleBeginWorkout}
-        handleStartWorkout={handleStartWorkout}
-        playBell={playBell}
-      />
+    <div className="startWorkoutContainer">
+      {showDrawer && <ExListDrawer currentEx={exObj} />}
+      <div className="runWorkoutContainer">
+        <div>
+          <UiComponent
+            exObj={exObj}
+            startEx={startEx}
+            endEx={endEx}
+            stopWatch={stopWatch}
+            handleEndEx={handleEndEx}
+            goToNext={goToNext}
+            setNum={setNum}
+            restPeriod={restPeriod}
+            setRestPeriod={setRestPeriod}
+            handleRestPeriod={handleRestPeriod}
+            autoRoll={autoRoll}
+            setAutoRoll={setAutoRoll}
+            startWorkout={startWorkout}
+            handleBeginWorkout={handleBeginWorkout}
+            handleStartWorkout={handleStartWorkout}
+            playBell={playBell}
+          />
 
-      <AttributeFields
-        exObj={exObj}
-        startEx={startEx}
-        setGoToNext={setGoToNext}
-        stopWatch={stopWatch}
-        setExStats={setExStats}
-        submitClicked={submitClicked}
-        handleSubmitStats={handleSubmitStats}
-        setSubmitClicked={setSubmitClicked}
-        focusAttFields={focusAttFields}
-      />
+          <AttributeFields
+            exObj={exObj}
+            startEx={startEx}
+            setGoToNext={setGoToNext}
+            stopWatch={stopWatch}
+            setExStats={setExStats}
+            submitClicked={submitClicked}
+            handleSubmitStats={handleSubmitStats}
+            setSubmitClicked={setSubmitClicked}
+            focusAttFields={focusAttFields}
+          />
+        </div>
+      </div>
     </div>
   );
 };
@@ -254,6 +261,7 @@ const mapStateToProps = (store) => ({
   selectedWorkout: store.workouts.selectedWorkout,
   formattedWorkout: store.workouts.formattedWorkout,
   selectedSession: store.sessions.selectedSession,
+  showDrawer: store.workouts.showDrawer,
 });
 
 const mapDispatchToProps = (dispatch) => ({

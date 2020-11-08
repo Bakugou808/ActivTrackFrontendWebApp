@@ -4,12 +4,16 @@ const initialState = {
   selectedWorkout: null,
   formattedWorkout: null,
   workouts: [],
+  showDrawer: false,
   fetching: false,
   error: false,
 };
 
 const workCircuitReducer = (state = initialState, action) => {
   switch (action.type) {
+    // * Show Exercise Drawer
+    case "SHOW_EX_DRAWER":
+      return { ...state, showDrawer: !state.showDrawer };
     //* Set Selected Workout
     case "SET_SELECTED_WORKOUT":
       return { ...state, selectedWorkout: action.workout };

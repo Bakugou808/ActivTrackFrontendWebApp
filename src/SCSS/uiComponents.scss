@@ -21,13 +21,19 @@
   margin: auto;
 }
 
+.startWorkoutContainer {
+  display: flex;
+}
+
 .runWorkoutContainer {
   margin: 15px;
+  width: 100%;
 }
 
 .UiComponentContainer {
   padding: 15px;
   width: auto;
+  height: calc(100vh - 248px);
 }
 // workout flow
 .submitButton {
@@ -122,7 +128,16 @@
   height: 5vh;
   min-height: 50px;
 }
+
+.autoRollSwitch {
+  padding-bottom: 5px;
+}
+
+.restPeriodDisplay {
+  padding: 5px;
+}
 .repDisplay {
+  padding: 5px;
 }
 
 .removeFlexFlow {
@@ -136,6 +151,7 @@
   justify-content: center;
   flex-flow: column wrap;
   align-items: center;
+  margin-top: 15px;
 }
 
 // workout's ui
@@ -245,7 +261,7 @@
 }
 
 .setGoal {
-  margin: 0;
+  margin: 10px;
   font-size: 20px;
   color: #ff5722;
 }
@@ -339,4 +355,21 @@
   line-height: 1;
   padding: 0px 15px;
   min-width: 72px;
+}
+
+// exercise Drawer
+.exSideDrawerParent {
+}
+
+.exSideDrawerHeader {
+  max-height: calc(100vh - 94px);
+  overflow-y: scroll;
+}
+::-webkit-scrollbar {
+  width: 0px; /* Remove scrollbar space */
+  background: transparent; /* Optional: just make scrollbar invisible */
+}
+/* Optional: show position indicator in red */
+::-webkit-scrollbar-thumb {
+  background: transparent;
 }
