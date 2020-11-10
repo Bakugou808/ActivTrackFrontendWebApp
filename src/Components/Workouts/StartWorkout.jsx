@@ -39,7 +39,10 @@ const StartWorkout = (props) => {
     selectedSession,
     showDrawer,
     onClearPatchedCircExAndCircuitFromState,
+    patchedCircExAtt,
+    patchedCircuitSet,
   } = props;
+
   const workoutId = match.params.workoutId;
   const sessionId = match.params.sessionId;
   const folderName = match.params.folderName;
@@ -81,7 +84,54 @@ const StartWorkout = (props) => {
   useEffect(() => {
     formattedWorkout ? formatExObjs(formattedWorkout) : fetchWorkouts();
     !selectedSession && onFetchSession(sessionId);
+    console.log("formattedWorkoutChanged");
   }, [formattedWorkout]);
+
+  function useLivePatch() {
+    useEffect(() => {
+      const data = { circEx: patchedCircExAtt, circ: patchedCircuitSet };
+      handlePatchExObj(data);
+    }, [patchedCircExAtt, patchedCircuitSet]);
+  }
+
+  const handlePatchExObj = (data) => {
+    console.log(data);
+    const circEx = data.circEx;
+    const circ = data.circ;
+    // if (circEx && circ) {
+    //   let newObjs = exObjs;
+    //   let index = newObjs.findIndex(
+    //     (exObj) => exObj.circuit_exercise_id === circEx.id
+    //   );
+    //   let newObj = exObjs.filter(
+    //     (exObj) => exObj.circuit_exercise_id === circEx.id
+    //   );
+    //   newObj.circuit_exercise_attributes = circEx.ex_attributes;
+    //   newObj.circuit_sets = circ.sets;
+    //   newObjs[`${index}`] = newObj;
+    //   setExObjs(newObjs);
+    // } else if (circEx) {
+    //   let newObjs = exObjs;
+    //   let newObj = exObjs.filter(
+    //     (exObj) => exObj.circuit_exercise_id === circEx.id
+    //   );
+    //   newObj.circuit_exercise_attributes = circEx.ex_attributes;
+    //   let index = newObjs.findIndex(
+    //     (exObj) => exObj.circuit_exercise_id === circEx.id
+    //   );
+    //   newObjs[`${index}`] = newObj;
+    //   setExObjs(newObjs);
+    // } else if (circ) {
+    //   let newObjs = exObjs;
+    //   let newObj = exObjs.filter((exObj) => exObj.circuit_id === circ.id);
+    //   newObj.circuit_sets = circ.sets;
+    //   let index = newObjs.findIndex((exObj) => exObj.circuit_id === circ.id);
+    //   newObjs[`${index}`] = newObj;
+    //   setExObjs(newObjs);
+    // } else {
+    //   return null;
+    // }
+  };
 
   const handleSetNum = (nxtObj) => {
     if (
@@ -222,6 +272,7 @@ const StartWorkout = (props) => {
 
   return (
     <div className="startWorkoutContainer">
+      {useLivePatch()}
       {showDrawer && (
         <ExListDrawer
           currentEx={exObj}
