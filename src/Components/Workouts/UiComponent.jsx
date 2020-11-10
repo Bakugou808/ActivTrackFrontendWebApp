@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { normalizeString } from "./AttributeFields";
-
+import { connect } from "react-redux";
 import useSound from "use-sound";
 
 import BellSound from "../../Sounds/BellSound.mp3";
@@ -13,6 +13,9 @@ import { CountdownCircleTimer } from "react-countdown-circle-timer";
 // * Material UI Imports
 import { makeStyles } from "@material-ui/core/styles";
 import { Button, TextField, Paper } from "@material-ui/core";
+
+// * Action Imports
+import { setCurrExRef } from "../../Redux/Actions/WorkoutActions";
 
 function toTitleCase(str) {
   str = str.toLowerCase().split(" ");
@@ -38,6 +41,8 @@ export const UiComponent = (props) => {
     handleBeginWorkout,
     handleStartWorkout,
     goToNext,
+    setExRef,
+    formattedWorkout,
   } = props;
   const [defTimerVal, setDefTimerVal] = useState(10);
   const [defRestPeriod, setDefRestPeriod] = useState(120);
@@ -48,7 +53,7 @@ export const UiComponent = (props) => {
   const [play, setPlay] = useState(false);
   const [playTimesUp, { stop }] = useSound(BellSound);
   const classes = useStyles();
-  useEffect(() => {}, [exObj, restPeriod]);
+  useEffect(() => {}, [exObj, restPeriod, formattedWorkout]);
 
   const renderTime = ({ remainingTime }) => {
     const minutes = Math.floor(stopWatch.time / 60);
@@ -126,9 +131,13 @@ export const UiComponent = (props) => {
               {exObj && (
                 <div className="horizontal1">
                   <div id="phaseDisp">{toTitleCase(exObj.circuit_phase)}</div>
-                  <div className="exTitleWorkout">
+                  <a
+                    className="exTitleWorkout"
+                    href={`#${exObj.ex_id}-${exObj.circuit_position}-${exObj.phase_position}`}
+                    ref={(input) => setExRef(input)}
+                  >
                     {toTitleCase(exObj.ex_name)}
-                  </div>
+                  </a>
                   <div id="typeDisp">{toTitleCase(exObj.circuit_type)}</div>
                 </div>
               )}
@@ -250,7 +259,15 @@ export const UiComponent = (props) => {
   );
 };
 
-export default UiComponent;
+const mapStateToProps = (store) => ({
+  formattedWorkout: store.workouts.formattedWorkout,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  onSetCurrExRef: (ref) => dispatch(setCurrExRef(ref)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(UiComponent);
 
 const useStyles = makeStyles((theme) => ({
   btn: {

@@ -121,7 +121,7 @@ export const patchCircExSuccess = (circEx) => ({
 
 // ------- PATCH NEW CIRC_EX FUNCTION--------
 
-export const patchCircEx = (circExData, handleWorkCirc = false) => {
+export const patchCircEx = (circExData, sideEffects = false) => {
   return (dispatch) => {
     dispatch(patchCircExRequest());
     fetch(`${API}/circuit_exercises/${circExData.circuit_exercise.id}`, {
@@ -135,7 +135,7 @@ export const patchCircEx = (circExData, handleWorkCirc = false) => {
           dispatch(patchCircExFailed(data.error));
         } else {
           dispatch(patchCircExSuccess(data));
-          handleWorkCirc && handleWorkCirc();
+          sideEffects && sideEffects();
         }
       });
   };

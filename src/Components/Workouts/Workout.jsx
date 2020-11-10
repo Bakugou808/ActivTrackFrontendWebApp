@@ -24,26 +24,29 @@ import CircularProgress from "@material-ui/core/CircularProgress";
 
 // * create a new button -> onClick will open a form field in the button --> onSubmit will patch the Circuit and change the value -> place the button in front of the Paper tag
 
-export const renderExercises = (phase, handlePatch = null) => {
+export const renderExercises = (phase, handlePatch = null, workoutId) => {
   return phase.map((circuit) => {
     let keyName = Object.keys(circuit)[0];
     let arr = circuit[keyName];
     if (arr[0].circuit_type === "circuit") {
-      return renderCirc(arr, handlePatch);
+      return renderCirc(arr, handlePatch, workoutId);
     } else {
       return arr.map((record) => {
         return (
-          <div className={"exContainer"}>
+          <div
+            className={"exContainer"}
+            id={`${record.ex_id}-${record.circuit_position}-${record.phase_position}`}
+          >
             <SetIconUi
               setCount={record.circuit_sets}
               circuitId={record.circuit_id}
+              workoutId={workoutId}
             />
             <div className="exStack">
               <Paper
                 elevation={6}
                 className={"exPaper pointer"}
                 onClick={() => handlePatch(record)}
-                id={`${record.ex_id}-${record.circuit_position}`}
               >
                 <p className="exTitle">{record.ex_name}</p>
                 <p className={"exPaperAtts"}>{renderExDetails(record)}</p>
@@ -66,12 +69,16 @@ const renderExDetails = (ex) => {
   return arr.join(", ");
 };
 
-export const renderCirc = (arr, handlePatch) => {
+export const renderCirc = (arr, handlePatch, workoutId) => {
   const setCount = arr[0].circuit_sets;
   const circuitId = arr[0].circuit_id;
   return (
     <div className={"exContainer"}>
-      <SetIconUi setCount={setCount} circuitId={circuitId} />
+      <SetIconUi
+        setCount={setCount}
+        circuitId={circuitId}
+        workoutId={workoutId}
+      />
       <div className="exCircuit">
         {arr.map((ex) => {
           return (
@@ -79,7 +86,7 @@ export const renderCirc = (arr, handlePatch) => {
               elevation={6}
               className={"exPaper pointer"}
               onClick={() => handlePatch(ex)}
-              id={`${ex.ex_id}-${ex.circuit_position}`}
+              id={`${ex.ex_id}-${ex.circuit_position}-${ex.phase_position}`}
             >
               <p className="exTitle">{ex.ex_name}</p>
               <p className={"exPaperAtts"}>{renderExDetails(ex)}</p>
@@ -203,7 +210,7 @@ const Workout = (props) => {
           <div className={"centerDiv phaseTitle"}>Warm Up</div>
           <div>
             {formattedWorkout &&
-              renderExercises(formattedWorkout.warmup, handlePatch)}
+              renderExercises(formattedWorkout.warmup, handlePatch, workoutId)}
           </div>
         </div>
 
@@ -212,7 +219,7 @@ const Workout = (props) => {
 
           <div>
             {formattedWorkout &&
-              renderExercises(formattedWorkout.body, handlePatch)}
+              renderExercises(formattedWorkout.body, handlePatch, workoutId)}
           </div>
         </div>
 
@@ -221,7 +228,11 @@ const Workout = (props) => {
 
           <div>
             {formattedWorkout &&
-              renderExercises(formattedWorkout.cool_down, handlePatch)}
+              renderExercises(
+                formattedWorkout.cool_down,
+                handlePatch,
+                workoutId
+              )}
           </div>
         </div>
       </div>

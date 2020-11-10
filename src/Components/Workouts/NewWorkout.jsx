@@ -224,7 +224,7 @@ export const NewWorkout = (props) => {
             </Tooltip>
           </div>
           <div className="container grid">
-            {warmup && renderExercises(warmup, handlePatch)}
+            {warmup && renderExercises(warmup, handlePatch, workoutId)}
           </div>
         </div>
 
@@ -243,7 +243,7 @@ export const NewWorkout = (props) => {
             </Tooltip>
           </div>
           <div className="container grid">
-            {body && renderExercises(body, handlePatch)}
+            {body && renderExercises(body, handlePatch, workoutId)}
           </div>
         </div>
 
@@ -262,7 +262,7 @@ export const NewWorkout = (props) => {
             </Tooltip>
           </div>
           <div className="container grid">
-            {coolDown && renderExercises(coolDown, handlePatch)}
+            {coolDown && renderExercises(coolDown, handlePatch, workoutId)}
           </div>
         </div>
       </div>

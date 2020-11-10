@@ -108,7 +108,7 @@ export const fetchCircuit = (circuitId) => {
   };
 };
 
-// ------- POST NEW CIRCUIT ACTIONS--------
+// ------- POST CIRCUIT ACTIONS--------
 
 export const postCircuitRequest = () => ({
   type: "POST_CIRCUIT_REQUEST",
@@ -124,7 +124,7 @@ export const postCircuitSuccess = (circuit) => ({
   circuit: circuit,
 });
 
-// ------- POST NEW CIRCUIT FUNCTION--------
+// ------- POST CIRCUIT FUNCTION--------
 
 export const postCircuit = (circuitData) => {
   return (dispatch) => {
@@ -146,7 +146,7 @@ export const postCircuit = (circuitData) => {
   };
 };
 
-// ------- PATCH NEW CIRCUIT ACTIONS--------
+// ------- PATCH CIRCUIT ACTIONS--------
 
 export const patchCircuitRequest = () => ({
   type: "PATCH_CIRCUIT_REQUEST",
@@ -162,7 +162,7 @@ export const patchCircuitSuccess = (circuit) => ({
   circuit: circuit,
 });
 
-// ------- PATCH NEW CIRCUIT FUNCTION--------
+// ------- PATCH CIRCUIT FUNCTION--------
 
 export const patchCircuit = (circuitData, sideEffects) => {
   return (dispatch) => {
@@ -184,7 +184,7 @@ export const patchCircuit = (circuitData, sideEffects) => {
   };
 };
 
-// ------- DELETE NEW CIRCUIT ACTIONS--------
+// ------- DELETE CIRCUIT ACTIONS--------
 
 export const deleteCircuitRequest = () => ({
   type: "DELETE_CIRCUIT_REQUEST",
@@ -200,7 +200,7 @@ export const deleteCircuitSuccess = (circuitId) => ({
   circuitId: circuitId,
 });
 
-// ------- DELETE NEW CIRCUIT FUNCTION--------
+// ------- DELETE CIRCUIT FUNCTION--------
 
 export const deleteCircuit = (circuitId, sideEffects) => {
   return (dispatch) => {

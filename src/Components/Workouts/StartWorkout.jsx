@@ -18,6 +18,7 @@ import { Tooltip, Fab, Button } from "@material-ui/core";
 import {
   fetchWorkout,
   fetchFormattedWorkout,
+  clearPatchedCircExAndCircuitFromState,
 } from "../../Redux/Actions/WorkoutActions";
 import { postStat } from "../../Redux/Actions/StatsActions";
 import { fetchSession } from "../../Redux/Actions/SessionsActions";
@@ -37,6 +38,7 @@ const StartWorkout = (props) => {
     onPostStat,
     selectedSession,
     showDrawer,
+    onClearPatchedCircExAndCircuitFromState,
   } = props;
   const workoutId = match.params.workoutId;
   const sessionId = match.params.sessionId;
@@ -71,6 +73,8 @@ const StartWorkout = (props) => {
   });
   // *sound effects
   const [playBell] = useSound(BellSound);
+  // *exDrawer Scroll
+  const [exRef, setExRef] = useState(null);
 
   const stopWatch = { time, start, pause, reset, isRunning };
 
@@ -218,7 +222,14 @@ const StartWorkout = (props) => {
 
   return (
     <div className="startWorkoutContainer">
-      {showDrawer && <ExListDrawer currentEx={exObj} />}
+      {showDrawer && (
+        <ExListDrawer
+          currentEx={exObj}
+          exRef={exRef}
+          history={history}
+          match={match}
+        />
+      )}
       <div className="runWorkoutContainer">
         <div>
           <UiComponent
@@ -238,6 +249,7 @@ const StartWorkout = (props) => {
             handleBeginWorkout={handleBeginWorkout}
             handleStartWorkout={handleStartWorkout}
             playBell={playBell}
+            setExRef={setExRef}
           />
 
           <AttributeFields
@@ -262,6 +274,8 @@ const mapStateToProps = (store) => ({
   formattedWorkout: store.workouts.formattedWorkout,
   selectedSession: store.sessions.selectedSession,
   showDrawer: store.workouts.showDrawer,
+  patchedCircExAtt: store.workouts.patchedCircExAtt,
+  patchedCircuitSet: store.workouts.patchedCircuitSet,
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -271,6 +285,8 @@ const mapDispatchToProps = (dispatch) => ({
   onPostStat: (statData, sideEffects) =>
     dispatch(postStat(statData, sideEffects)),
   onFetchSession: (sessionId) => dispatch(fetchSession(sessionId)),
+  onClearPatchedCircExAndCircuitFromState: () =>
+    dispatch(clearPatchedCircExAndCircuitFromState()),
 });
 export default AuthHOC(
   connect(mapStateToProps, mapDispatchToProps)(StartWorkout)

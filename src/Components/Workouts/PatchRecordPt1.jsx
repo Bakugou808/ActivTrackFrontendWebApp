@@ -31,8 +31,6 @@ export const PatchRecordPt1 = (props) => {
     goToNextPage,
     exFields,
     setExFields,
-    // customAttsParent,
-    // setCustomAttsParent,
     setShowModal,
     handleCustomAdd,
     onFetchFormattedWorkout,
@@ -47,10 +45,7 @@ export const PatchRecordPt1 = (props) => {
   //   * taken from circuitformpt`1
   const [showExFormName, setShowExFormName] = useState(false);
   const [showExFormDesc, setShowExFormDesc] = useState(false);
-  // const [exFields, setExFields] = useState({
-  //   exercise_name: "Add Exercise",
-  //   description: "Add Description",
-  // });
+
   // * Circuit_Exercise/Attributes Field State
   const [showCustomAttFields, setShowCustomAttFields] = useState(false);
   const [customAtts, setCustomAtts] = useState({ reps: 1 });
@@ -112,7 +107,13 @@ export const PatchRecordPt1 = (props) => {
 
   const handleExSubmit = (e) => {
     e.preventDefault();
-    onPatchExercise({ exercise: { ...exFields, id: record.ex_id } });
+    const sideEffects = () => {
+      onFetchFormattedWorkout();
+    };
+    onPatchExercise(
+      { exercise: { ...exFields, id: record.ex_id } },
+      sideEffects
+    );
     closeExForms();
   };
 
@@ -274,7 +275,8 @@ export const PatchRecordPt1 = (props) => {
 const mapStateToProps = (state) => ({});
 
 const mapDispatchToProps = (dispatch) => ({
-  onPatchExercise: (exData) => dispatch(patchExercise(exData)),
+  onPatchExercise: (exData, sideEffects) =>
+    dispatch(patchExercise(exData, sideEffects)),
   onClearSelectedCircEx: () => dispatch(clearSelectedCircEx()),
   onClearSelectedExercise: () => dispatch(clearSelectedExercise()),
   onClearPosValCircEx: (data, sideEffects) =>

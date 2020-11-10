@@ -1,26 +1,69 @@
 import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
+// * Component Imports
+import MyModal from "../Modal";
+import PatchFlowCont from "./PatchFlowCont";
 
 // * Function Imports
 import { renderExercises } from "./Workout";
 
-export const ExListDrawer = ({ warmup, body, coolDown, currentEx }) => {
-  const [id, setId] = useState(null);
+export const ExListDrawer = ({
+  warmup,
+  body,
+  coolDown,
+  currentEx,
+  exRef,
+  match,
+}) => {
+  const [showFormEdit, setShowFormEdit] = useState(false);
+  const [patchRecord, setPatchRecord] = useState(null);
+  const workoutId = match.params.workoutId;
+
+  const handlePatch = (record) => {
+    setPatchRecord(record);
+    setShowFormEdit(true);
+  };
 
   useEffect(() => {
-    setId(`${currentEx.ex_id}-${currentEx.circuit_position}`);
+    handleFalseClick();
   }, [currentEx]);
+
+  const handleFalseClick = () => {
+    exRef && exRef.click();
+  };
+
+  const handlePhantomDivs = () => {
+    return [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1].map((num) => {
+      return <div className="phantomDiv"> </div>;
+    });
+  };
 
   return (
     <div className="exSideDrawerParent">
       <div className="exSideDrawerHeader">
         <div className="container grid">
-          {warmup && renderExercises(warmup)}
+          {warmup && renderExercises(warmup, handlePatch, workoutId)}
         </div>
-        <div className="container grid">{body && renderExercises(body)}</div>
         <div className="container grid">
-          {coolDown && renderExercises(coolDown)}
+          {body && renderExercises(body, handlePatch, workoutId)}
         </div>
+        <div className="container grid">
+          {coolDown && renderExercises(coolDown, handlePatch, workoutId)}
+        </div>
+        <div>{handlePhantomDivs()}</div>
+      </div>
+      <div>
+        <MyModal
+          showModal={showFormEdit}
+          setShowModal={setShowFormEdit}
+          component={
+            <PatchFlowCont
+              setShowForm={setShowFormEdit}
+              record={patchRecord}
+              workoutId={workoutId}
+            />
+          }
+        />
       </div>
     </div>
   );

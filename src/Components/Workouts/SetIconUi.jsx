@@ -8,9 +8,17 @@ import {
   patchCircuit,
   clearSelectedCircuit,
 } from "../../Redux/Actions/CircuitActions";
+import { fetchFormattedWorkout } from "../../Redux/Actions/WorkoutActions";
 
 export const SetIconUi = (props) => {
-  const { setCount, circuitId, onPatchCircuit, onClearSelectedCircuit } = props;
+  const {
+    setCount,
+    circuitId,
+    onPatchCircuit,
+    onClearSelectedCircuit,
+    onFetchFormattedWorkout,
+    workoutId,
+  } = props;
   const [setVal, setSetVal] = useState(1);
   const [showForm, setShowForm] = useState(false);
   const classes = useStyles();
@@ -27,10 +35,10 @@ export const SetIconUi = (props) => {
     console.log("patching circuit", setVal);
     setShowForm(false);
     const circuitData = { circuit: { id: circuitId, sets: setVal } };
-    // !still need to test this
 
     const sideEffects = () => {
       onClearSelectedCircuit();
+      onFetchFormattedWorkout(workoutId);
     };
     onPatchCircuit(circuitData, sideEffects);
   };
@@ -62,12 +70,14 @@ export const SetIconUi = (props) => {
   );
 };
 
-const mapStateToProps = (state) => ({});
+const mapStateToProps = (store) => ({});
 
 const mapDispatchToProps = (dispatch) => ({
-  onPatchCircuit: (circuitData, circuitId) =>
-    dispatch(patchCircuit(circuitData, circuitId)),
+  onPatchCircuit: (circuitData, sideEffects) =>
+    dispatch(patchCircuit(circuitData, sideEffects)),
   onClearSelectedCircuit: () => dispatch(clearSelectedCircuit()),
+  onFetchFormattedWorkout: (workoutId) =>
+    dispatch(fetchFormattedWorkout(workoutId)),
 });
 export default connect(mapStateToProps, mapDispatchToProps)(SetIconUi);
 

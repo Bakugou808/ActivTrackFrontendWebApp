@@ -236,6 +236,7 @@
   color: #f57c00;
   font-weight: 400;
   font-family: "Roboto";
+  text-decoration-line: none;
 }
 
 #phaseDisp {
@@ -372,4 +373,9 @@
 /* Optional: show position indicator in red */
 ::-webkit-scrollbar-thumb {
   background: transparent;
+}
+
+.phantomDiv {
+  // display: none;
+  height: 81px;
 }
