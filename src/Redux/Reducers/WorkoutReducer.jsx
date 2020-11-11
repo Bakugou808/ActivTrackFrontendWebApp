@@ -6,6 +6,7 @@ const initialState = {
   workouts: [],
   showDrawer: false,
   currExRef: null,
+  patchedExTitle: null,
   patchedCircExAtt: null,
   patchedCircuitSet: null,
   fetching: false,
@@ -16,7 +17,15 @@ const workCircuitReducer = (state = initialState, action) => {
   switch (action.type) {
     // * Clear Patched CircEx and Circuit
     case "CLEAR_PATCHED_CIRC_&_CIRC_EX":
-      return { ...state, patchedCircExAtt: null, patchedCircuitSet: null };
+      return {
+        ...state,
+        patchedCircExAtt: null,
+        patchedCircuitSet: null,
+        patchedExTitle: null,
+      };
+    // * Set Patched Exercise for Title
+    case "PATCH_EXERCISE_SUCCESSFUL":
+      return { ...state, patchedExTitle: action.exercise };
     // * Set Patched CircuitExercise for Attributes
     case "PATCH_CIRC_EX_SUCCESSFUL":
       return { ...state, patchedCircExAtt: action.circEx };

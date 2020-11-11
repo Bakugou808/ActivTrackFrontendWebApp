@@ -41,6 +41,7 @@ const StartWorkout = (props) => {
     onClearPatchedCircExAndCircuitFromState,
     patchedCircExAtt,
     patchedCircuitSet,
+    patchedExTitle,
   } = props;
 
   const workoutId = match.params.workoutId;
@@ -85,52 +86,111 @@ const StartWorkout = (props) => {
     formattedWorkout ? formatExObjs(formattedWorkout) : fetchWorkouts();
     !selectedSession && onFetchSession(sessionId);
     console.log("formattedWorkoutChanged");
-  }, [formattedWorkout]);
+  }, []);
 
   function useLivePatch() {
     useEffect(() => {
-      const data = { circEx: patchedCircExAtt, circ: patchedCircuitSet };
+      const data = {
+        circEx: patchedCircExAtt,
+        circ: patchedCircuitSet,
+        exercise: patchedExTitle,
+      };
       handlePatchExObj(data);
-    }, [patchedCircExAtt, patchedCircuitSet]);
+    }, [patchedCircExAtt, patchedCircuitSet, patchedExTitle]);
   }
 
   const handlePatchExObj = (data) => {
-    console.log(data);
     const circEx = data.circEx;
     const circ = data.circ;
-    // if (circEx && circ) {
-    //   let newObjs = exObjs;
-    //   let index = newObjs.findIndex(
-    //     (exObj) => exObj.circuit_exercise_id === circEx.id
-    //   );
-    //   let newObj = exObjs.filter(
-    //     (exObj) => exObj.circuit_exercise_id === circEx.id
-    //   );
-    //   newObj.circuit_exercise_attributes = circEx.ex_attributes;
-    //   newObj.circuit_sets = circ.sets;
-    //   newObjs[`${index}`] = newObj;
-    //   setExObjs(newObjs);
-    // } else if (circEx) {
-    //   let newObjs = exObjs;
-    //   let newObj = exObjs.filter(
-    //     (exObj) => exObj.circuit_exercise_id === circEx.id
-    //   );
-    //   newObj.circuit_exercise_attributes = circEx.ex_attributes;
-    //   let index = newObjs.findIndex(
-    //     (exObj) => exObj.circuit_exercise_id === circEx.id
-    //   );
-    //   newObjs[`${index}`] = newObj;
-    //   setExObjs(newObjs);
-    // } else if (circ) {
-    //   let newObjs = exObjs;
-    //   let newObj = exObjs.filter((exObj) => exObj.circuit_id === circ.id);
-    //   newObj.circuit_sets = circ.sets;
-    //   let index = newObjs.findIndex((exObj) => exObj.circuit_id === circ.id);
-    //   newObjs[`${index}`] = newObj;
-    //   setExObjs(newObjs);
-    // } else {
-    //   return null;
-    // }
+    const ex = data.exercise;
+    if (circEx && circ && ex) {
+      let newObjs = exObjs;
+      let index = newObjs.findIndex(
+        (exObj) => exObj.circuit_exercise_id === circEx.id
+      );
+      let newObj = exObjs.filter(
+        (exObj) => exObj.circuit_exercise_id === circEx.id
+      )[0];
+
+      newObj.circuit_exercise_attributes = circEx.ex_attributes;
+      newObj.circuit_sets = circ.sets;
+      newObj.ex_name = ex.exercise_name;
+      newObjs[`${index}`] = newObj;
+
+      setExObjs(newObjs);
+    } else if (circEx && circ) {
+      let newObjs = exObjs;
+      let index = newObjs.findIndex(
+        (exObj) => exObj.circuit_exercise_id === circEx.id
+      );
+      let newObj = exObjs.filter(
+        (exObj) => exObj.circuit_exercise_id === circEx.id
+      )[0];
+
+      newObj.circuit_exercise_attributes = circEx.ex_attributes;
+      newObj.circuit_sets = circ.sets;
+      newObjs[`${index}`] = newObj;
+
+      setExObjs(newObjs);
+    } else if (circEx && ex) {
+      let newObjs = exObjs;
+      let index = newObjs.findIndex(
+        (exObj) => exObj.circuit_exercise_id === circEx.id
+      );
+      let newObj = exObjs.filter(
+        (exObj) => exObj.circuit_exercise_id === circEx.id
+      )[0];
+
+      newObj.circuit_exercise_attributes = circEx.ex_attributes;
+      newObj.ex_name = ex.exercise_name;
+      newObjs[`${index}`] = newObj;
+
+      setExObjs(newObjs);
+    } else if (circ && ex) {
+      let newObjs = exObjs;
+      let newObj = exObjs.filter((exObj) => exObj.circuit_id === circ.id)[0];
+
+      newObj.circuit_sets = circ.sets;
+      newObj.ex_name = ex.exercise_name;
+
+      let index = newObjs.findIndex((exObj) => exObj.circuit_id === circ.id);
+      newObjs[`${index}`] = newObj;
+
+      setExObjs(newObjs);
+    } else if (ex) {
+      let newObjs = exObjs;
+      let newObj = exObjs.filter((exObj) => exObj.ex_id === ex.id)[0];
+      newObj.ex_name = ex.exercise_name;
+
+      let index = newObjs.findIndex((exObj) => exObj.ex_id === ex.id);
+      newObjs[`${index}`] = newObj;
+
+      setExObjs(newObjs);
+    } else if (circEx) {
+      let newObjs = exObjs;
+      let newObj = exObjs.filter(
+        (exObj) => exObj.circuit_exercise_id === circEx.id
+      )[0];
+      newObj.circuit_exercise_attributes = circEx.ex_attributes;
+      let index = newObjs.findIndex(
+        (exObj) => exObj.circuit_exercise_id === circEx.id
+      );
+      newObjs[`${index}`] = newObj;
+
+      setExObjs(newObjs);
+    } else if (circ) {
+      let newObjs = exObjs;
+      let newObj = exObjs.filter((exObj) => exObj.circuit_id === circ.id)[0];
+
+      newObj.circuit_sets = circ.sets;
+      let index = newObjs.findIndex((exObj) => exObj.circuit_id === circ.id);
+      newObjs[`${index}`] = newObj;
+
+      setExObjs(newObjs);
+    } else {
+      return null;
+    }
+    onClearPatchedCircExAndCircuitFromState();
   };
 
   const handleSetNum = (nxtObj) => {
@@ -327,6 +387,7 @@ const mapStateToProps = (store) => ({
   showDrawer: store.workouts.showDrawer,
   patchedCircExAtt: store.workouts.patchedCircExAtt,
   patchedCircuitSet: store.workouts.patchedCircuitSet,
+  patchedExTitle: store.workouts.patchedExTitle,
 });
 
 const mapDispatchToProps = (dispatch) => ({

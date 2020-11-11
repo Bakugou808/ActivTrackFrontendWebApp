@@ -52,8 +52,20 @@ export const UiComponent = (props) => {
   const [timeAlert, setTimeAlert] = useState(false);
   const [play, setPlay] = useState(false);
   const [playTimesUp, { stop }] = useSound(BellSound);
+  const [phase, setPhase] = useState(null);
+  const [name, setName] = useState(null);
+  const [type, setType] = useState(null);
+
   const classes = useStyles();
-  useEffect(() => {}, [exObj, restPeriod, formattedWorkout]);
+  useEffect(() => {
+    exObj && handleTitleCase();
+  }, [exObj, restPeriod, formattedWorkout]);
+
+  const handleTitleCase = () => {
+    setPhase(toTitleCase(exObj.circuit_phase));
+    setName(toTitleCase(exObj.ex_name));
+    setType(toTitleCase(exObj.circuit_type));
+  };
 
   const renderTime = ({ remainingTime }) => {
     const minutes = Math.floor(stopWatch.time / 60);
@@ -130,15 +142,15 @@ export const UiComponent = (props) => {
             <div className="exHeaders">
               {exObj && (
                 <div className="horizontal1">
-                  <div id="phaseDisp">{toTitleCase(exObj.circuit_phase)}</div>
+                  <div id="phaseDisp">{phase}</div>
                   <a
                     className="exTitleWorkout"
                     href={`#${exObj.ex_id}-${exObj.circuit_position}-${exObj.phase_position}`}
                     ref={(input) => setExRef(input)}
                   >
-                    {toTitleCase(exObj.ex_name)}
+                    {name}
                   </a>
-                  <div id="typeDisp">{toTitleCase(exObj.circuit_type)}</div>
+                  <div id="typeDisp">{type}</div>
                 </div>
               )}
             </div>
