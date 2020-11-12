@@ -79,6 +79,7 @@ const StartWorkout = (props) => {
   const [playBell] = useSound(BellSound);
   // *exDrawer Scroll
   const [exRef, setExRef] = useState(null);
+  const [bell, setBell] = useState(true);
 
   const stopWatch = { time, start, pause, reset, isRunning };
 
@@ -262,7 +263,7 @@ const StartWorkout = (props) => {
     setStartEx(true);
     setEndEx(false);
     setSubmitClicked(false);
-    playBell();
+    bell && playBell();
     start();
   };
 
@@ -360,6 +361,8 @@ const StartWorkout = (props) => {
             handleBeginWorkout={handleBeginWorkout}
             handleStartWorkout={handleStartWorkout}
             playBell={playBell}
+            bell={bell}
+            setBell={setBell}
             setExRef={setExRef}
           />
 

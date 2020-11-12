@@ -43,6 +43,8 @@ export const UiComponent = (props) => {
     goToNext,
     setExRef,
     formattedWorkout,
+    bell,
+    setBell,
   } = props;
   const [defTimerVal, setDefTimerVal] = useState(10);
   const [defRestPeriod, setDefRestPeriod] = useState(120);
@@ -142,7 +144,7 @@ export const UiComponent = (props) => {
             <div className="exHeaders">
               {exObj && (
                 <div className="horizontal1">
-                  <div id="phaseDisp">{phase}</div>
+                  <div>{phase}</div>
                   <a
                     className="exTitleWorkout"
                     href={`#${exObj.ex_id}-${exObj.circuit_position}-${exObj.phase_position}`}
@@ -150,12 +152,25 @@ export const UiComponent = (props) => {
                   >
                     {name}
                   </a>
-                  <div id="typeDisp">{type}</div>
+                  <div>{type}</div>
                 </div>
               )}
             </div>
-            <div className="autoRollSwitch">
-              <AutoRollSwitch autoRoll={autoRoll} setAutoRoll={setAutoRoll} />
+            <div className="switches">
+              <div className="autoRollSwitch">
+                <AutoRollSwitch
+                  autoRoll={autoRoll}
+                  setAutoRoll={setAutoRoll}
+                  label={"AutoRoll"}
+                />
+              </div>
+              <div className="autoRollSwitch">
+                <AutoRollSwitch
+                  autoRoll={bell}
+                  setAutoRoll={setBell}
+                  label={"Sound"}
+                />
+              </div>
             </div>
           </div>
           <div className="setDisplay">

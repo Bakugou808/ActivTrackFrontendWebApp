@@ -95,6 +95,11 @@
   margin-bottom: 10px;
 }
 
+.horizontal1 div {
+  color: #26a69a;
+  font-size: 20px;
+}
+
 .horizontal2 {
   display: flex;
   justify-content: center;
@@ -239,15 +244,15 @@
   text-decoration-line: none;
 }
 
+.switches {
+}
+
 #phaseDisp {
-  color: #26a69a;
-  font-size: 20px;
+  margin-left: 100px;
 }
 
 #typeDisp {
-  margin-left: 30px;
-  color: #26a69a;
-  font-size: 20px;
+  margin-right: 100px;
 }
 
 .cardRepRest {

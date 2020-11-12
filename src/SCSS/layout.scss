@@ -110,3 +110,11 @@ body {
 html {
   scroll-behavior: smooth;
 }
+// x px or smaller apply this css
+// @media (max-width: )
+
+@media screen and (max-height: 750px) {
+  .UiComponentContainer {
+    min-height: 535px;
+  }
+}
