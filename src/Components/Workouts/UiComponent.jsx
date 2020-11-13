@@ -102,6 +102,14 @@ export const UiComponent = (props) => {
     startEx && (stopWatch.isRunning ? stopWatch.pause() : stopWatch.start());
   };
 
+  const renderAtts = () => {
+    let arr = Object.entries(exObj.circuit_exercise_attributes);
+
+    return arr.map((kv) => {
+      return <p>{`${kv}`}</p>;
+    });
+  };
+
   const handleRpSubmit = (e) => {
     e.preventDefault();
     let obj = { circuit_exercise_attributes: { restPeriod: `${rp2}` } };
@@ -138,55 +146,49 @@ export const UiComponent = (props) => {
 
   return (
     <>
-      <Paper elevation={6} className="UiComponentContainer">
-        <div className="UiComponentContainer">
-          <div className="UiComponent">
-            <div className="exHeaders">
-              {exObj && (
-                <div className="horizontal1">
-                  <div>{phase}</div>
-                  <a
-                    className="exTitleWorkout"
-                    href={`#${exObj.ex_id}-${exObj.circuit_position}-${exObj.phase_position}`}
-                    ref={(input) => setExRef(input)}
-                  >
-                    {name}
-                  </a>
-                  <div>{type}</div>
-                </div>
-              )}
+      <Paper elevation={6} className="UiComponentContainer UiCC2">
+        <div className="UiComponentContainer w50vw">
+          <div className="exHeaders">
+            {exObj && (
+              <a
+                className="exTitleWorkout"
+                href={`#${exObj.ex_id}-${exObj.circuit_position}-${exObj.phase_position}`}
+                ref={(input) => setExRef(input)}
+              >
+                {name}
+              </a>
+            )}
+          </div>
+          <div className="switches">
+            <div className="autoRollSwitch">
+              <AutoRollSwitch
+                autoRoll={autoRoll}
+                setAutoRoll={setAutoRoll}
+                label={"AutoRoll"}
+              />
             </div>
-            <div className="switches">
-              <div className="autoRollSwitch">
-                <AutoRollSwitch
-                  autoRoll={autoRoll}
-                  setAutoRoll={setAutoRoll}
-                  label={"AutoRoll"}
-                />
-              </div>
-              <div className="autoRollSwitch">
-                <AutoRollSwitch
-                  autoRoll={bell}
-                  setAutoRoll={setBell}
-                  label={"Sound"}
-                />
-              </div>
+            <div className="autoRollSwitch">
+              <AutoRollSwitch
+                autoRoll={bell}
+                setAutoRoll={setBell}
+                label={"Sound"}
+              />
             </div>
           </div>
-          <div className="setDisplay">
+          {/* <div className="setDisplay">
             <p className="setNum"> {exObj && `Set #: ${setNum}`} </p>
             <p className="setGoal">
               {exObj && `Set Total: ${exObj.circuit_sets}`}
             </p>
-          </div>
+          </div> */}
 
           <div className="horizontal1">
-            <div className="horizontal2 cardRepRest">
+            {/* <div className="horizontal2 cardRepRest">
               {`Rep Goal: `}
               {exObj && (
                 <span className="repDisplay">{` ${exObj.circuit_exercise_attributes.reps}`}</span>
               )}
-            </div>
+            </div> */}
 
             <div className="horizontal2 cardRepRest">
               <div>{`Rest Period: `}</div>
@@ -203,7 +205,7 @@ export const UiComponent = (props) => {
                     />
                   </form>
                 ) : (
-                  <div onClick={() => setShowRpForm(true)}>
+                  <div className="noRp" onClick={() => setShowRpForm(true)}>
                     {` ${restPeriod.message}`}
                   </div>
                 )
@@ -239,6 +241,43 @@ export const UiComponent = (props) => {
             >
               {renderTime}
             </CountdownCircleTimer>
+          </div>
+          <div className="attCards">
+            <Paper className="phaseNtype" elevation={1}>
+              <div className="pntR3">
+                <div className="horizontal2 cardRepRest">
+                  {`Rep Goal: `}
+                  {exObj && (
+                    <span className="repDisplay">{` ${exObj.circuit_exercise_attributes.reps}`}</span>
+                  )}
+                </div>
+              </div>
+              <div className="setDisplay">
+                {/* <p className="setNum"> {exObj && `Set #: ${setNum}`} </p>
+                <p className="setGoal">
+                  {exObj && `Set Total: ${exObj.circuit_sets}`}
+                </p> */}
+                {exObj && (
+                  <p className="setNum">
+                    {`Set Number ${setNum} Out Of ${exObj.circuit_sets}`}
+                  </p>
+                )}
+              </div>
+              {/* <div className="pntR1">
+                <div className="exPhaseType">{`Phase: ${phase}`}</div>
+                <div></div>
+                <div className="exPhaseType">{`Type: ${type}`} </div>
+              </div> */}
+            </Paper>
+
+            {/* <Paper className="atts" elevation={3}>
+              {exObj && renderAtts()}
+            </Paper> */}
+          </div>
+          <div className="pntR1">
+            <div className="exPhase0">{`Phase: ${phase}`}</div>
+            <div></div>
+            <div className="exType0">{`Type: ${type}`} </div>
           </div>
         </div>
       </Paper>

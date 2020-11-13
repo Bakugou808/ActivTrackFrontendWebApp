@@ -22,18 +22,58 @@
 }
 
 .startWorkoutContainer {
+  display: grid;
+  grid-template-columns: minmax(300px, 1fr) 2fr;
+}
+
+.pntR1 {
   display: flex;
+  margin-top: 10px;
+  margin: 20px 0px 10px;
+}
+
+.pntR3 {
 }
 
 .runWorkoutContainer {
   margin: 15px;
-  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.runWorkoutContainer2 {
+  margin: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100vw;
 }
 
 .UiComponentContainer {
-  padding: 15px;
+  padding: 8px 15px 5px;
   width: auto;
-  height: calc(100vh - 248px);
+  // height: calc(100vh - 248px);
+}
+
+.flexKit {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.w50vw {
+  // take the width out on mobile
+  width: 50vw;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.UiCC2 {
+  display: flex;
+  /* align-items: center; */
+  justify-content: center;
+  padding: 25px 25px 0px;
 }
 // workout flow
 .submitButton {
@@ -53,8 +93,11 @@
 .finButton {
   display: flex;
 }
-.UiComponent {
-  border-bottom: 3px solid darkblue;
+.exHeaders {
+  // border-bottom: 3px solid darkblue;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 .attributes {
   display: flex;
@@ -88,12 +131,12 @@
   font-weight: 600;
 }
 
-.horizontal1 {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 10px;
-}
+// .horizontal1 {
+//   display: flex;
+//   justify-content: space-between;
+//   align-items: center;
+//   margin-bottom: 10px;
+// }
 
 .horizontal1 div {
   color: #26a69a;
@@ -148,15 +191,13 @@
 .removeFlexFlow {
   flex-flow: unset;
 }
-.exHeaders {
-}
 
 .setDisplay {
   display: flex;
   justify-content: center;
   flex-flow: column wrap;
   align-items: center;
-  margin-top: 15px;
+  // margin-top: 15px;
 }
 
 // workout's ui
@@ -216,6 +257,7 @@
   margin: 0;
   margin-bottom: 3px;
   color: #ff5722;
+  width: 50%;
 }
 
 .orange {
@@ -242,9 +284,31 @@
   font-weight: 400;
   font-family: "Roboto";
   text-decoration-line: none;
+  margin-bottom: 15px;
+  border-bottom: 3px solid darkblue;
+  padding: 0px 10px;
+  width: 70vw;
+  align-items: center;
+  justify-content: center;
+  display: flex;
+  padding-bottom: 10px;
+}
+
+.attCards {
+  margin-top: 25px;
+}
+
+.atts {
+}
+
+.phaseNtype {
 }
 
 .switches {
+  display: flex;
+  justify-content: space-around;
+  // border-bottom: 3px solid darkblue;
+  margin: 0px 35px;
 }
 
 #phaseDisp {
@@ -261,9 +325,33 @@
 }
 .setNum {
   margin: 0;
-  font-size: 23px;
-  color: #f57c00;
+  margin-bottom: 10px;
+  color: #ff5722;
   font-family: "Roboto";
+}
+
+.exPhase0 {
+  align-items: center;
+  display: flex;
+  justify-content: flex-start;
+  font-size: 17px;
+  margin: 0;
+  margin-bottom: 3px;
+
+  color: #f57c00;
+  width: 50%;
+}
+
+.exType0 {
+  align-items: center;
+  display: flex;
+  justify-content: flex-end;
+  font-size: 17px;
+  margin: 0;
+  margin-bottom: 3px;
+
+  color: #f57c00;
+  width: 50%;
 }
 
 .setGoal {
@@ -383,4 +471,13 @@
 .phantomDiv {
   // display: none;
   height: 81px;
+}
+
+.displayBlock {
+  display: block;
+}
+
+.noRp {
+  min-height: 24px;
+  margin: 20px;
 }

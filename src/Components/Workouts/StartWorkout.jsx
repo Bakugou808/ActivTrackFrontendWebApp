@@ -342,7 +342,9 @@ const StartWorkout = (props) => {
           match={match}
         />
       )}
-      <div className="runWorkoutContainer">
+      <div
+        className={showDrawer ? "runWorkoutContainer" : "runWorkoutContainer2"}
+      >
         <div>
           <UiComponent
             exObj={exObj}

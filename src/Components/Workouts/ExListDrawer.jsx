@@ -41,13 +41,13 @@ export const ExListDrawer = ({
   return (
     <div className="exSideDrawerParent">
       <div className="exSideDrawerHeader">
-        <div className="container grid">
+        <div className="container ">
           {warmup && renderExercises(warmup, handlePatch, workoutId)}
         </div>
-        <div className="container grid">
+        <div className="container ">
           {body && renderExercises(body, handlePatch, workoutId)}
         </div>
-        <div className="container grid">
+        <div className="container ">
           {coolDown && renderExercises(coolDown, handlePatch, workoutId)}
         </div>
         <div>{handlePhantomDivs()}</div>

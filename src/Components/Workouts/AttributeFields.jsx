@@ -85,7 +85,7 @@ export const AttributeFields = (props) => {
           <motion.div
             className="attFields"
             initial={{ y: "200vw" }}
-            animate={{ y: -525 }}
+            animate={{ y: -425 }}
             transition={{ duration: 0.5 }}
           >
             <Paper className={classes.paper} elevation={3}>
