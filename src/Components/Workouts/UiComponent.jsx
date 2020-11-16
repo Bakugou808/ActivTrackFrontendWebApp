@@ -49,6 +49,9 @@ export const UiComponent = (props) => {
     bell,
     setBell,
     fullTime,
+    device,
+    handleSubmitStats,
+    submitClicked,
   } = props;
   const [defTimerVal, setDefTimerVal] = useState(10);
   const [defRestPeriod, setDefRestPeriod] = useState(120);
@@ -159,64 +162,82 @@ export const UiComponent = (props) => {
 
   return (
     <>
-      <div className="frameHeader">
-        <div className="autoRollSwitch">
-          <AutoRollSwitch
-            autoRoll={autoRoll}
-            setAutoRoll={setAutoRoll}
-            label={"AutoRoll"}
-          />
-        </div>
-
-        <div className="soundSwitch">
-          <AutoRollSwitch
-            autoRoll={bell}
-            setAutoRoll={setBell}
-            label={"Sound"}
-          />
-        </div>
-      </div>
-
-      <Paper elevation={6} className="UiComponentContainer UiCC2">
-        <div className="UiComponentContainer w50vw">
-          {exObj && (
-            <div className="setDisplay">
-              <a
-                className="exTitleWorkout"
-                href={`#${exObj.ex_id}-${exObj.circuit_position}-${exObj.phase_position}`}
-                ref={(input) => setExRef(input)}
-              >
-                {name}
-              </a>
-
-              <p className="setNum">
-                {`Set Number ${setNum} Out Of ${exObj.circuit_sets}`}
-              </p>
-            </div>
-          )}
-          <div className={"timeAlert"}>
-            {timeAlert && "RestTime Exceeded!!!"}
-          </div>
-          <div className="exHeaders">
-            <div className="timer" onClick={handleStartPause}>
-              <TotalTime stopWatch={fullTime} endEx={endEx} />
-            </div>
-            <div></div>
-            <div className="timer" onClick={handleStartPause}>
-              <Timers
-                stopWatch={stopWatch}
-                endEx={endEx}
-                setTimeAlert={setTimeAlert}
-                handleExceededRest={handleExceededRest}
-              />
-            </div>
+      {device === "computer" && (
+        <div className="frameHeader">
+          <div className="autoRollSwitch">
+            <AutoRollSwitch
+              autoRoll={autoRoll}
+              setAutoRoll={setAutoRoll}
+              label={"AutoRoll"}
+            />
           </div>
 
-          <div className="horizontal1">
-            <div className="horizontal2 cardRepRest">
-              <div>{`Rest Period: `}</div>
-              {restPeriod.message ? (
-                showRpForm ? (
+          <div className="soundSwitch">
+            <AutoRollSwitch
+              autoRoll={bell}
+              setAutoRoll={setBell}
+              label={"Sound"}
+            />
+          </div>
+        </div>
+      )}
+
+      <div className="flexKit">
+        <Paper elevation={6} className="UiComponentContainer UiCC2">
+          <div className="UiComponentContainer w50vw">
+            {exObj && (
+              <div className="setDisplay">
+                <a
+                  className="exTitleWorkout"
+                  href={`#${exObj.ex_id}-${exObj.circuit_position}-${exObj.phase_position}`}
+                  ref={(input) => setExRef(input)}
+                >
+                  {name}
+                </a>
+
+                <p className="setNum">
+                  {`Set Number ${setNum} Out Of ${exObj.circuit_sets}`}
+                </p>
+              </div>
+            )}
+            <div className={"timeAlert"}>
+              {timeAlert && "RestTime Exceeded!!!"}
+            </div>
+            <div className="exHeaders">
+              <div className="timer" onClick={handleStartPause}>
+                <TotalTime stopWatch={fullTime} endEx={endEx} />
+              </div>
+              <div></div>
+              <div className="timer" onClick={handleStartPause}>
+                <Timers
+                  stopWatch={stopWatch}
+                  endEx={endEx}
+                  setTimeAlert={setTimeAlert}
+                  handleExceededRest={handleExceededRest}
+                />
+              </div>
+            </div>
+
+            <div className="horizontal1">
+              <div className="horizontal2 cardRepRest">
+                <div>{`Rest Period: `}</div>
+                {restPeriod.message ? (
+                  showRpForm ? (
+                    <form onSubmit={handleRpSubmit}>
+                      <TextField
+                        type="text"
+                        margin="dense"
+                        placeholder={`${restPeriod.num} ${restPeriod.unit}`}
+                        onChange={(e) => setRp2(e.target.value)}
+                        value={rp2}
+                      />
+                    </form>
+                  ) : (
+                    <div className="noRp" onClick={() => setShowRpForm(true)}>
+                      {` ${restPeriod.message}`}
+                    </div>
+                  )
+                ) : showRpForm ? (
                   <form onSubmit={handleRpSubmit}>
                     <TextField
                       type="text"
@@ -227,43 +248,29 @@ export const UiComponent = (props) => {
                     />
                   </form>
                 ) : (
-                  <div className="noRp" onClick={() => setShowRpForm(true)}>
-                    {` ${restPeriod.message}`}
-                  </div>
-                )
-              ) : showRpForm ? (
-                <form onSubmit={handleRpSubmit}>
-                  <TextField
-                    type="text"
-                    margin="dense"
-                    placeholder={`${restPeriod.num} ${restPeriod.unit}`}
-                    onChange={(e) => setRp2(e.target.value)}
-                    value={rp2}
-                  />
-                </form>
-              ) : (
-                <span
-                  className="restPeriodDisplay pointer"
-                  onClick={() => setShowRpForm(true)}
-                >
-                  <p>{` ${restPeriod.num} ${restPeriod.unit}`}</p>
-                </span>
-              )}
+                  <span
+                    className="restPeriodDisplay pointer"
+                    onClick={() => setShowRpForm(true)}
+                  >
+                    <p>{` ${restPeriod.num} ${restPeriod.unit}`}</p>
+                  </span>
+                )}
+              </div>
+            </div>
+
+            <div className="attCards">
+              <Paper className="phaseNtype" elevation={1}>
+                <AttsCard exObj={exObj} />
+              </Paper>
+            </div>
+            <div className="pntR1">
+              <div className="exPhase0">{`Phase: ${phase}`}</div>
+              <div></div>
+              <div className="exType0">{`Type: ${type}`} </div>
             </div>
           </div>
-
-          <div className="attCards">
-            <Paper className="phaseNtype" elevation={1}>
-              <AttsCard exObj={exObj} />
-            </Paper>
-          </div>
-          <div className="pntR1">
-            <div className="exPhase0">{`Phase: ${phase}`}</div>
-            <div></div>
-            <div className="exType0">{`Type: ${type}`} </div>
-          </div>
-        </div>
-      </Paper>
+        </Paper>
+      </div>
 
       {!startWorkout ? (
         <div className="startButton">
@@ -303,7 +310,38 @@ export const UiComponent = (props) => {
             </Button>
           </div>
         )}
+        {submitClicked && (
+          <div className="startButton">
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={() => handleSubmitStats(stopWatch.time)}
+              className={classes.btn}
+            >
+              Go To Next
+            </Button>
+          </div>
+        )}
       </div>
+      {device === "mobile" && (
+        <div className="frameHeader">
+          <div className="autoRollSwitch">
+            <AutoRollSwitch
+              autoRoll={autoRoll}
+              setAutoRoll={setAutoRoll}
+              label={"AutoRoll"}
+            />
+          </div>
+
+          <div className="soundSwitch">
+            <AutoRollSwitch
+              autoRoll={bell}
+              setAutoRoll={setBell}
+              label={"Sound"}
+            />
+          </div>
+        </div>
+      )}
       {/* </Paper> */}
     </>
   );

@@ -13,12 +13,11 @@ export const AttsCard = ({ exObj }) => {
     const x = [];
     for (const [key, val] of Object.entries(exAtts)) {
       let key1 = normalizeString(key);
+      let att = normalizeString(exAtts[key]);
       key !== "restPeriod" &&
         x.push(
           <div key={key} className="attCardDiv">
-            <p className="attCardP">
-              {`${normalizeString(key)}: ${normalizeString(exAtts[key])}`}{" "}
-            </p>
+            <p className="attCardP">{`${key1}: ${att}`}</p>
           </div>
         );
     }

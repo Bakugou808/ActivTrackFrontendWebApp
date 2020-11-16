@@ -11,6 +11,7 @@ import UiComponent from "./UiComponent";
 import AutoRollSwitch from "./AutoRollSwitch";
 import AttributeFields from "./AttributeFields";
 import ExListDrawer from "./ExListDrawer";
+import ExListDrawerMobPortrait from "./ExListDrawerMobPortrait";
 // * Material UI Imports
 import { Tooltip, Fab, Button } from "@material-ui/core";
 
@@ -42,6 +43,8 @@ const StartWorkout = (props) => {
     patchedCircExAtt,
     patchedCircuitSet,
     patchedExTitle,
+    device,
+    orientation,
   } = props;
 
   const workoutId = match.params.workoutId;
@@ -270,7 +273,7 @@ const StartWorkout = (props) => {
     fullTime.start();
   };
 
-  // 2. when the user finshes executing ex. stop timer and restart for rest period
+  // 2. when the user finishes executing ex. stop timer and restart for rest period
   const handleEndEx = (t) => {
     setStartEx(false);
     setEndEx(true);
@@ -353,20 +356,45 @@ const StartWorkout = (props) => {
   };
 
   return (
-    <div className="startWorkoutContainer">
+    <div
+      className={
+        device === "computer"
+          ? "startWorkoutContainer"
+          : orientation === "portrait"
+          ? showDrawer
+            ? "startWorkoutContainerMobPortraitGrid"
+            : "startWorkoutContainerMobPortraitFlex"
+          : "startWorkoutContainerMobPortraitLandscape"
+      }
+    >
       {useLivePatch()}
-      {showDrawer && (
-        <ExListDrawer
-          currentEx={exObj}
-          exRef={exRef}
-          history={history}
-          match={match}
-        />
-      )}
+      {showDrawer &&
+        (device === "computer" ? (
+          <ExListDrawer
+            currentEx={exObj}
+            exRef={exRef}
+            history={history}
+            match={match}
+          />
+        ) : orientation === "portrait" ? (
+          <ExListDrawerMobPortrait
+            currentEx={exObj}
+            exRef={exRef}
+            history={history}
+            match={match}
+          />
+        ) : (
+          <ExListDrawer
+            currentEx={exObj}
+            exRef={exRef}
+            history={history}
+            match={match}
+          />
+        ))}
       <div
         className={showDrawer ? "runWorkoutContainer" : "runWorkoutContainer2"}
       >
-        <div>
+        <div className="UiCompAttFieldsCont">
           <UiComponent
             exObj={exObj}
             startEx={startEx}
@@ -389,6 +417,8 @@ const StartWorkout = (props) => {
             setExRef={setExRef}
             fullTime={fullTime}
             attributesComponent={Attributes}
+            handleSubmitStats={handleSubmitStats}
+            submitClicked={submitClicked}
           />
 
           <AttributeFields
@@ -398,7 +428,7 @@ const StartWorkout = (props) => {
             stopWatch={stopWatch}
             setExStats={setExStats}
             submitClicked={submitClicked}
-            handleSubmitStats={handleSubmitStats}
+            // handleSubmitStats={handleSubmitStats}
             setSubmitClicked={setSubmitClicked}
             focusAttFields={focusAttFields}
           />

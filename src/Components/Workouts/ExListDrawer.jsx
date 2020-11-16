@@ -14,6 +14,8 @@ export const ExListDrawer = ({
   currentEx,
   exRef,
   match,
+  device,
+  orientation,
 }) => {
   const [showFormEdit, setShowFormEdit] = useState(false);
   const [patchRecord, setPatchRecord] = useState(null);
@@ -77,6 +79,8 @@ const mapStateToProps = (store) => ({
   coolDown:
     store.workouts.formattedWorkout &&
     store.workouts.formattedWorkout.cool_down,
+  device: store.device.device,
+  orientation: store.device.orientation,
 });
 
 const mapDispatchToProps = {};

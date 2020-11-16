@@ -20,13 +20,11 @@ export const normalizeString = (str) => {
 export const AttributeFields = (props) => {
   const {
     exObj,
-    stopWatch,
     setExStats,
-    submitClicked,
     handleSubmitStats,
     setSubmitClicked,
+    submitClicked,
     focusAttFields,
-    startEx,
   } = props;
   const [exAtts, setExAtts] = useState([]);
   const classes = useStyles();
@@ -45,6 +43,7 @@ export const AttributeFields = (props) => {
     const x = [];
     for (const [key, val] of Object.entries(exAtts)) {
       let key1 = normalizeString(key);
+      let att = normalizeString(exAtts[key]);
       key !== "restPeriod" &&
         x.push(
           <div key={key} className={"centerDiv"}>
@@ -54,7 +53,7 @@ export const AttributeFields = (props) => {
               variant="outlined"
               label={key1}
               name={key}
-              value={exAtts[key]}
+              value={att}
               onChange={handleChange}
               className={"attFields"}
             />
@@ -69,7 +68,7 @@ export const AttributeFields = (props) => {
 
   return (
     <div className="attributes">
-      {submitClicked ? (
+      {/* {submitClicked ? (
         <div className="startButton">
           <Button
             variant="contained"
@@ -80,31 +79,30 @@ export const AttributeFields = (props) => {
             Go To Next
           </Button>
         </div>
-      ) : (
-        focusAttFields && (
-          <motion.div
-            className="attFields"
-            initial={{ y: "200vw" }}
-            animate={{ y: -425 }}
-            transition={{ duration: 0.5 }}
-          >
-            <Paper className={classes.paper} elevation={3}>
-              <div className="centerDiv2 removeMarginBottom orange fsize20">
-                Attributes
-              </div>
-              <div>{exAtts && renderAtts()}</div>
-              <Button
-                variant="contained"
-                color="primary"
-                onClick={() => setSubmitClicked(true)}
-                className={classes.subBtn}
-              >
-                Submit
-              </Button>
-              <div></div>
-            </Paper>
-          </motion.div>
-        )
+      ) : ( */}
+      {focusAttFields && !submitClicked && (
+        <motion.div
+          className="attFields"
+          initial={{ y: "200vw" }}
+          animate={{ y: -315 }}
+          transition={{ duration: 0.5 }}
+        >
+          <Paper className={classes.paper} elevation={3}>
+            <div className="centerDiv2 removeMarginBottom orange fsize20">
+              Attributes
+            </div>
+            <div>{exAtts && renderAtts()}</div>
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={() => setSubmitClicked(true)}
+              className={classes.subBtn}
+            >
+              Submit
+            </Button>
+            <div></div>
+          </Paper>
+        </motion.div>
       )}
     </div>
   );
