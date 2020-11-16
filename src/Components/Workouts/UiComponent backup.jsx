@@ -8,8 +8,6 @@ import BellSound from "../../Sounds/BellSound.mp3";
 import { handleRestPeriod } from "./StartWorkout";
 import AutoRollSwitch from "./AutoRollSwitch";
 import Timers from "./Timers";
-import TotalTime from "./TotalTime";
-import AttsCard from "./AttsCard";
 // * Package Imports
 import { CountdownCircleTimer } from "react-countdown-circle-timer";
 
@@ -48,7 +46,6 @@ export const UiComponent = (props) => {
     formattedWorkout,
     bell,
     setBell,
-    fullTime,
   } = props;
   const [defTimerVal, setDefTimerVal] = useState(10);
   const [defRestPeriod, setDefRestPeriod] = useState(120);
@@ -111,6 +108,55 @@ export const UiComponent = (props) => {
     }
   };
 
+  // const renderTheTime = (stopWatch) => {
+  //   const minutes = Math.floor(stopWatch.time / 60);
+  //   const seconds = stopWatch.time - minutes * 60;
+
+  //   function str_pad_left(string, pad, length) {
+  //     return (new Array(length + 1).join(pad) + string).slice(-length);
+  //   }
+  //   const timerValue =
+  //     str_pad_left(minutes, "0", 2) + ":" + str_pad_left(seconds, "0", 2);
+
+  //   if (!endEx) {
+  //     setTimeAlert(false);
+  //     return (
+  //       <div className="timer">
+  //         <div className="text">Active Time</div>
+  //         <div className="value">{timerValue}</div>
+  //       </div>
+  //     );
+  //   } else if (endEx) {
+  //     handleExceededRest();
+  //     return (
+  //       <div className="timer">
+  //         <div className="text">Rest Time</div>
+  //         <div className="value">{timerValue}</div>
+  //       </div>
+  //     );
+  //   }
+  // };
+
+  const renderActiveTime = () => {
+    setTimeAlert(false);
+    return (
+      <div className="timer">
+        <div className="text">Active Time</div>
+        <div className="value">{timerValue}</div>
+      </div>
+    );
+  };
+
+  const renderRestTime = () => {
+    handleExceededRest();
+    return (
+      <div className="timer">
+        <div className="text">Rest Time</div>
+        <div className="value">{timerValue}</div>
+      </div>
+    );
+  };
+
   const handleStartPause = () => {
     startEx && (stopWatch.isRunning ? stopWatch.pause() : stopWatch.start());
   };
@@ -159,28 +205,18 @@ export const UiComponent = (props) => {
 
   return (
     <>
-      <div className="frameHeader">
-        <div className="autoRollSwitch">
-          <AutoRollSwitch
-            autoRoll={autoRoll}
-            setAutoRoll={setAutoRoll}
-            label={"AutoRoll"}
-          />
-        </div>
-
-        <div className="soundSwitch">
-          <AutoRollSwitch
-            autoRoll={bell}
-            setAutoRoll={setBell}
-            label={"Sound"}
-          />
-        </div>
-      </div>
-
       <Paper elevation={6} className="UiComponentContainer UiCC2">
         <div className="UiComponentContainer w50vw">
-          {exObj && (
-            <div className="setDisplay">
+          <div className="exHeaders">
+            <div className="timer" onClick={handleStartPause}>
+              <Timers
+                stopWatch={stopWatch}
+                endEx={endEx}
+                setTimeAlert={setTimeAlert}
+                handleExceededRest={handleExceededRest}
+              />
+            </div>
+            {exObj && (
               <a
                 className="exTitleWorkout"
                 href={`#${exObj.ex_id}-${exObj.circuit_position}-${exObj.phase_position}`}
@@ -188,26 +224,29 @@ export const UiComponent = (props) => {
               >
                 {name}
               </a>
-
-              <p className="setNum">
-                {`Set Number ${setNum} Out Of ${exObj.circuit_sets}`}
-              </p>
-            </div>
-          )}
-          <div className={"timeAlert"}>
-            {timeAlert && "RestTime Exceeded!!!"}
-          </div>
-          <div className="exHeaders">
-            <div className="timer" onClick={handleStartPause}>
-              <TotalTime stopWatch={fullTime} endEx={endEx} />
-            </div>
-            <div></div>
+            )}
             <div className="timer" onClick={handleStartPause}>
               <Timers
                 stopWatch={stopWatch}
                 endEx={endEx}
                 setTimeAlert={setTimeAlert}
                 handleExceededRest={handleExceededRest}
+              />
+            </div>
+          </div>
+          <div className="switches">
+            <div className="autoRollSwitch">
+              <AutoRollSwitch
+                autoRoll={autoRoll}
+                setAutoRoll={setAutoRoll}
+                label={"AutoRoll"}
+              />
+            </div>
+            <div className="autoRollSwitch">
+              <AutoRollSwitch
+                autoRoll={bell}
+                setAutoRoll={setBell}
+                label={"Sound"}
               />
             </div>
           </div>
@@ -251,10 +290,27 @@ export const UiComponent = (props) => {
               )}
             </div>
           </div>
+          <div className={"timeAlert"}>
+            {timeAlert && "RestTime Exceeded!!!"}
+          </div>
 
           <div className="attCards">
             <Paper className="phaseNtype" elevation={1}>
-              <AttsCard exObj={exObj} />
+              <div className="pntR3">
+                <div className="horizontal2 cardRepRest">
+                  {`Rep Goal: `}
+                  {exObj && (
+                    <span className="repDisplay">{` ${exObj.circuit_exercise_attributes.reps}`}</span>
+                  )}
+                </div>
+              </div>
+              <div className="setDisplay">
+                {exObj && (
+                  <p className="setNum">
+                    {`Set Number ${setNum} Out Of ${exObj.circuit_sets}`}
+                  </p>
+                )}
+              </div>
             </Paper>
           </div>
           <div className="pntR1">
@@ -304,15 +360,12 @@ export const UiComponent = (props) => {
           </div>
         )}
       </div>
-      {/* </Paper> */}
     </>
   );
 };
 
 const mapStateToProps = (store) => ({
   formattedWorkout: store.workouts.formattedWorkout,
-  device: store.device.device,
-  orientation: store.device.orientation,
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -326,11 +379,5 @@ const useStyles = makeStyles((theme) => ({
     padding: "25px",
     width: "100%",
     margin: "15px",
-  },
-  UiFrame: {
-    backgroundColor: "revert",
-  },
-  ExTitlePaper: {
-    margin: "10px",
   },
 }));

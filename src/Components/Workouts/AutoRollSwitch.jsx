@@ -70,6 +70,8 @@ export default function AutoRollSwitch(props) {
             name="checkedA"
           />
         }
+        size="Small"
+        labelPlacement="Top"
         label={label}
         className={"autoRollText"}
       />

@@ -1,5 +1,6 @@
 import React from "react";
 import { Route, Switch } from "react-router-dom";
+import { connect } from "react-redux";
 // Component Imports
 import NavBar from "./Components/NavBar/NavBar";
 import Home from "./Components/Home/Home";

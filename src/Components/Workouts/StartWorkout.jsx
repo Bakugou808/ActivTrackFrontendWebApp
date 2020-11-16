@@ -75,6 +75,9 @@ const StartWorkout = (props) => {
   const { time, start, pause, reset, isRunning } = useTimer({
     onTimeUpdate: (time) => {},
   });
+
+  const fullTime = useTimer();
+
   // *sound effects
   const [playBell] = useSound(BellSound);
   // *exDrawer Scroll
@@ -82,7 +85,6 @@ const StartWorkout = (props) => {
   const [bell, setBell] = useState(true);
 
   const stopWatch = { time, start, pause, reset, isRunning };
-
   useEffect(() => {
     formattedWorkout ? formatExObjs(formattedWorkout) : fetchWorkouts();
     !selectedSession && onFetchSession(sessionId);
@@ -265,6 +267,7 @@ const StartWorkout = (props) => {
     setSubmitClicked(false);
     bell && playBell();
     start();
+    fullTime.start();
   };
 
   // 2. when the user finshes executing ex. stop timer and restart for rest period
@@ -318,6 +321,8 @@ const StartWorkout = (props) => {
     history.push(
       `/workout_finished/${folderName}/${folderId}/${workoutTitle}/${workoutId}/${sessionId}`
     );
+    fullTime.pause();
+
     // !clear states where necessary
   };
 
@@ -329,6 +334,22 @@ const StartWorkout = (props) => {
     exObjs.length > 0
       ? setExObjs((prev) => prev.slice(1))
       : handleFinishWorkout();
+  };
+
+  const Attributes = () => {
+    return (
+      <AttributeFields
+        exObj={exObj}
+        startEx={startEx}
+        setGoToNext={setGoToNext}
+        stopWatch={stopWatch}
+        setExStats={setExStats}
+        submitClicked={submitClicked}
+        handleSubmitStats={handleSubmitStats}
+        setSubmitClicked={setSubmitClicked}
+        focusAttFields={focusAttFields}
+      />
+    );
   };
 
   return (
@@ -366,6 +387,8 @@ const StartWorkout = (props) => {
             bell={bell}
             setBell={setBell}
             setExRef={setExRef}
+            fullTime={fullTime}
+            attributesComponent={Attributes}
           />
 
           <AttributeFields
@@ -393,6 +416,8 @@ const mapStateToProps = (store) => ({
   patchedCircExAtt: store.workouts.patchedCircExAtt,
   patchedCircuitSet: store.workouts.patchedCircuitSet,
   patchedExTitle: store.workouts.patchedExTitle,
+  device: store.device.device,
+  orientation: store.device.orientation,
 });
 
 const mapDispatchToProps = (dispatch) => ({

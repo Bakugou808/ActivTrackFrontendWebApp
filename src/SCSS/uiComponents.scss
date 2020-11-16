@@ -35,10 +35,17 @@
 .pntR3 {
 }
 
+.frameHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  padding: 10px 10px;
+}
+
 .runWorkoutContainer {
   margin: 15px;
   display: flex;
-  align-items: center;
+  // align-items: center;
   justify-content: center;
 }
 .runWorkoutContainer2 {
@@ -50,7 +57,7 @@
 }
 
 .UiComponentContainer {
-  padding: 8px 15px 5px;
+  // padding: 8px 15px 5px;
   width: auto;
   // height: calc(100vh - 248px);
 }
@@ -73,7 +80,7 @@
   display: flex;
   /* align-items: center; */
   justify-content: center;
-  padding: 25px 25px 0px;
+  padding: 0px 25px 0px;
 }
 // workout flow
 .submitButton {
@@ -97,7 +104,7 @@
   // border-bottom: 3px solid darkblue;
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: space-evenly;
 }
 .attributes {
   display: flex;
@@ -120,6 +127,10 @@
   height: unset;
   display: flex;
   justify-content: center;
+  border: orange;
+  border-style: double;
+  border-width: thin;
+  padding: 10px;
 }
 
 .attPaper {
@@ -129,6 +140,7 @@
   justify-content: center;
   color: red;
   font-weight: 600;
+  margin-bottom: 10px;
 }
 
 // .horizontal1 {
@@ -178,7 +190,10 @@
 }
 
 .autoRollSwitch {
-  padding-bottom: 5px;
+  margin-left: 0px;
+}
+
+.soundSwitch {
 }
 
 .restPeriodDisplay {
@@ -284,18 +299,18 @@
   font-weight: 400;
   font-family: "Roboto";
   text-decoration-line: none;
-  margin-bottom: 15px;
-  border-bottom: 3px solid darkblue;
-  padding: 0px 10px;
-  width: 70vw;
+  // margin-bottom: 15px;
+  // border-bottom: 3px solid darkblue;
+  // padding: 0px 10px;
+  // width: 70vw;
+  padding: 10px 15px;
   align-items: center;
   justify-content: center;
   display: flex;
-  padding-bottom: 10px;
+  // padding-bottom: 10px;
 }
 
 .attCards {
-  margin-top: 25px;
 }
 
 .atts {
@@ -480,4 +495,20 @@
 .noRp {
   min-height: 24px;
   margin: 20px;
+}
+
+.attCardCont {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  padding: 10px;
+}
+
+.attCardDiv {
+}
+
+.attCardP {
+  color: #f57c00;
+  font-size: 20px;
+  margin: 0px;
 }
