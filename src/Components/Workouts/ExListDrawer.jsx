@@ -3,9 +3,7 @@ import { connect } from "react-redux";
 // * Component Imports
 import MyModal from "../Modal";
 import PatchFlowCont from "./PatchFlowCont";
-
-// * Function Imports
-import { renderExercises } from "./Workout";
+import RenderExercises from "./RenderExercises";
 
 export const ExListDrawer = ({
   warmup,
@@ -16,6 +14,7 @@ export const ExListDrawer = ({
   match,
   device,
   orientation,
+  workoutStarted,
 }) => {
   const [showFormEdit, setShowFormEdit] = useState(false);
   const [patchRecord, setPatchRecord] = useState(null);
@@ -44,13 +43,31 @@ export const ExListDrawer = ({
     <div className="exSideDrawerParent">
       <div className="exSideDrawerHeader">
         <div className="container ">
-          {warmup && renderExercises(warmup, handlePatch, workoutId)}
+          {warmup && (
+            <RenderExercises
+              phase={warmup}
+              handlePatch={handlePatch}
+              workoutId={workoutId}
+            />
+          )}
         </div>
         <div className="container ">
-          {body && renderExercises(body, handlePatch, workoutId)}
+          {body && (
+            <RenderExercises
+              phase={body}
+              handlePatch={handlePatch}
+              workoutId={workoutId}
+            />
+          )}
         </div>
         <div className="container ">
-          {coolDown && renderExercises(coolDown, handlePatch, workoutId)}
+          {coolDown && (
+            <RenderExercises
+              phase={coolDown}
+              handlePatch={handlePatch}
+              workoutId={workoutId}
+            />
+          )}
         </div>
         <div>{handlePhantomDivs()}</div>
       </div>
@@ -63,6 +80,7 @@ export const ExListDrawer = ({
               setShowForm={setShowFormEdit}
               record={patchRecord}
               workoutId={workoutId}
+              workoutStarted={workoutStarted}
             />
           }
         />

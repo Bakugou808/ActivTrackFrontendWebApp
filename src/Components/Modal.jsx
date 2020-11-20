@@ -39,11 +39,11 @@ function getModalStyle() {
 const useStyles = makeStyles((theme) => ({
   paperModal: {
     position: "absolute",
-    width: "70vw",
+    width: "88vw",
     backgroundColor: theme.palette.background.paper,
     borderRadius: "5px",
     boxShadow: theme.shadows[5],
     padding: theme.spacing(2, 2, 3),
-    margin: "5px",
+    // margin: "5px",
   },
 }));

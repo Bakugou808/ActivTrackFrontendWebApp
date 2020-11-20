@@ -1,44 +1,30 @@
 import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
-// * Component Imports
-import MyModal from "../Modal";
-import PatchFlowCont from "./PatchFlowCont";
-import SetIconUi from "./SetIconUi";
-// * Material Imports
-import { Paper } from "@material-ui/core";
-// * Action Imports
-import { patchCircuit } from "../../Redux/Actions/CircuitActions";
-// * Function Imports
 import { normalizeString } from "./AttributeFields";
 
-export const ExListDrawerMobPortrait = ({
-  warmup,
-  body,
-  coolDown,
-  currentEx,
-  exRef,
-  match,
-  device,
-  orientation,
-  onPatchCircuit,
-}) => {
-  const [showFormEdit, setShowFormEdit] = useState(false);
-  const [patchRecord, setPatchRecord] = useState(null);
-  const [exs, setExs] = useState(null);
-  const workoutId = match.params.workoutId;
+// * Action Imports
+import { patchCircuit } from "../../Redux/Actions/CircuitActions";
+// * Component Imports
+import SetIconUi from "./SetIconUi";
 
+// * Material UI Imports
+import { makeStyles } from "@material-ui/core/styles";
+import { Paper, Button } from "@material-ui/core";
+
+export const RenderExercises = (props) => {
+  const { phase, handlePatch = null, workoutId, onPatchCircuit } = props;
   const patchCircToStack = (record) => {
     const circData = {
       circuit: { id: record.circuit_id, circuit_type: "stack" },
     };
     onPatchCircuit(circData);
   };
-
-  const renderExercises = (phase, handlePatch = null, workoutId) => {
+  const renderExercises = () => {
     return phase.map((circuit) => {
       let keyName = Object.keys(circuit)[0];
       let arr = circuit[keyName];
-      if (arr[0].circuit_type === "circuit") {
+
+      if (arr[0].circuit_type === "circuit" && arr.length > 1) {
         return renderCirc(arr, handlePatch, workoutId);
       } else {
         if (arr[0].circuit_type === "circuit" && arr.length === 1) {
@@ -54,12 +40,11 @@ export const ExListDrawerMobPortrait = ({
                 setCount={record.circuit_sets}
                 circuitId={record.circuit_id}
                 workoutId={workoutId}
-                size="small"
               />
-              <div className="exStackMobP ">
+              <div className="exStack">
                 <Paper
                   elevation={6}
-                  className={"exPaper pointer exStackPort"}
+                  className={"exPaper pointer"}
                   onClick={() => handlePatch(record)}
                 >
                   <p className="exTitle">{record.ex_name}</p>
@@ -112,74 +97,14 @@ export const ExListDrawerMobPortrait = ({
     );
   };
 
-  const handlePatch = (record) => {
-    setPatchRecord(record);
-    setShowFormEdit(true);
-  };
-
-  useEffect(() => {
-    handleFalseClick();
-    handleExs();
-  }, [currentEx]);
-
-  const handleFalseClick = () => {
-    exRef && exRef.click();
-  };
-
-  const handleExs = () => {
-    const exArr = [...warmup, ...body, ...coolDown];
-    setExs(exArr);
-  };
-
-  const handlePhantomDivs = () => {
-    return [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1].map((num) => {
-      return <div className="phantomDiv"> </div>;
-    });
-  };
-
-  return (
-    <div className="exSideDrawerParent">
-      <div className="exSideDrawerHeader">
-        <div className="exCardCont ">
-          {exs && renderExercises(exs, handlePatch, workoutId)}
-        </div>
-      </div>
-      <div>
-        <MyModal
-          showModal={showFormEdit}
-          setShowModal={setShowFormEdit}
-          component={
-            <PatchFlowCont
-              setShowForm={setShowFormEdit}
-              record={patchRecord}
-              workoutId={workoutId}
-              workoutStarted={true}
-            />
-          }
-        />
-      </div>
-    </div>
-  );
+  return <div>{phase && renderExercises()}</div>;
 };
 
-const mapStateToProps = (store) => ({
-  formattedWorkout: store.workouts.formattedWorkout,
-  warmup:
-    store.workouts.formattedWorkout && store.workouts.formattedWorkout.warmup,
-  body: store.workouts.formattedWorkout && store.workouts.formattedWorkout.body,
-  coolDown:
-    store.workouts.formattedWorkout &&
-    store.workouts.formattedWorkout.cool_down,
-  device: store.device.device,
-  orientation: store.device.orientation,
-});
+const mapStateToProps = (state) => ({});
 
 const mapDispatchToProps = (dispatch) => ({
   onPatchCircuit: (circData, sideEffects) =>
     dispatch(patchCircuit(circData, sideEffects)),
 });
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(ExListDrawerMobPortrait);
+export default connect(mapStateToProps, mapDispatchToProps)(RenderExercises);

@@ -21,7 +21,10 @@
   margin: auto;
 }
 
-.startWorkoutContainer {
+.startWorkoutContainerFlex {
+  display: flex;
+}
+.startWorkoutContainerGrid {
   display: grid;
   grid-template-columns: minmax(300px, 1fr) 2fr;
 }
@@ -238,6 +241,13 @@
     border-radius: 0.5rem;
     width: 100%;
   }
+  .exStackMobP {
+    // margin-left: 10px;
+    // padding: 3px;
+    background: #ff5722;
+    border-radius: 0.5rem;
+    width: 100%;
+  }
   .exCircuit {
     display: grid;
     margin-left: 10px;
@@ -282,7 +292,6 @@
   margin: 0;
   margin-bottom: 3px;
   color: #ff5722;
-  width: 50%;
 }
 
 .orange {

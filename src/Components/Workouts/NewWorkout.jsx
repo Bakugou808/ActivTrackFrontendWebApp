@@ -5,19 +5,19 @@ import { AuthHOC } from "../AuthHOC";
 import MyModal from "../Modal";
 import TabBar from "../Circuits/TabBar";
 import PatchFlowCont from "./PatchFlowCont";
-
+import RenderExercises from "./RenderExercises";
 // * Material UI Imports
 import { makeStyles } from "@material-ui/core/styles";
 import QueueIcon from "@material-ui/icons/Queue";
 import { Tooltip, Fab, Button, TextField } from "@material-ui/core";
-// * Function Imports
-import { renderExercises } from "./Workout";
 
 // * Action Imports
 import { fetchFolder } from "../../Redux/Actions/FolderActions";
+import { clearPosValCircEx } from "../../Redux/Actions/CircExActions";
 import {
   setPhase,
   setPositionCircuitToX,
+  clearCircuitPhasePositions,
 } from "../../Redux/Actions/CircuitActions";
 import {
   postWorkout,
@@ -38,11 +38,13 @@ export const NewWorkout = (props) => {
     onFetchFormattedWorkout,
     onFetchFolder,
     onSetPhase,
+    onClearPosValCircEx,
     formattedWorkout,
     warmup,
     body,
     coolDown,
     onSetPositionCircuitToX,
+    onClearCircuitPhasePositions,
   } = props;
 
   const folderId = parseInt(match.params.folderId);
@@ -117,6 +119,9 @@ export const NewWorkout = (props) => {
   };
 
   const handleSave = () => {
+    // clear circuit positions and clear circExs position to 1
+    onClearPosValCircEx();
+    onClearCircuitPhasePositions();
     history.push(
       `/workouts/${folderName}/${folderId}/${workoutTitle}/${workoutId}`
     );
@@ -207,7 +212,7 @@ export const NewWorkout = (props) => {
         </Button>
       </div>
 
-      <div className="container grid marginLeft20">
+      <div className="container grid margin30px">
         <div>
           {" "}
           <div className="phaseTitle2"> Warm up</div>
@@ -224,7 +229,13 @@ export const NewWorkout = (props) => {
             </Tooltip>
           </div>
           <div className="container grid">
-            {warmup && renderExercises(warmup, handlePatch, workoutId)}
+            {warmup && (
+              <RenderExercises
+                phase={warmup}
+                handlePatch={handlePatch}
+                workoutId={workoutId}
+              />
+            )}
           </div>
         </div>
 
@@ -243,7 +254,13 @@ export const NewWorkout = (props) => {
             </Tooltip>
           </div>
           <div className="container grid">
-            {body && renderExercises(body, handlePatch, workoutId)}
+            {body && (
+              <RenderExercises
+                phase={body}
+                handlePatch={handlePatch}
+                workoutId={workoutId}
+              />
+            )}
           </div>
         </div>
 
@@ -262,7 +279,13 @@ export const NewWorkout = (props) => {
             </Tooltip>
           </div>
           <div className="container grid">
-            {coolDown && renderExercises(coolDown, handlePatch, workoutId)}
+            {coolDown && (
+              <RenderExercises
+                phase={coolDown}
+                handlePatch={handlePatch}
+                workoutId={workoutId}
+              />
+            )}
           </div>
         </div>
       </div>
@@ -310,6 +333,8 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch(fetchFormattedWorkout(workoutId)),
   onSetPositionCircuitToX: (payload) =>
     dispatch(setPositionCircuitToX(payload)),
+  onClearPosValCircEx: () => dispatch(clearPosValCircEx()),
+  onClearCircuitPhasePositions: () => dispatch(clearCircuitPhasePositions()),
 });
 export default AuthHOC(
   connect(mapStateToProps, mapDispatchToProps)(NewWorkout)

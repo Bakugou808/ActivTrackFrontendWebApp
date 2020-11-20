@@ -21,6 +21,10 @@ export const setPhase = (phase) => ({
 });
 
 // ------- MODIFY CIRCUIT POSITION ACTIONS--------
+export const clearCircuitPhasePositions = () => ({
+  type: "SET_PHASE_POS_TO_1",
+});
+
 export const setPositionCircuitToX = (payload) => ({
   type: "SET_POS_CIRCUIT_TO_X",
   payload: payload.x,
@@ -164,7 +168,7 @@ export const patchCircuitSuccess = (circuit) => ({
 
 // ------- PATCH CIRCUIT FUNCTION--------
 
-export const patchCircuit = (circuitData, sideEffects) => {
+export const patchCircuit = (circuitData, sideEffects = false) => {
   return (dispatch) => {
     dispatch(patchCircuitRequest());
     fetch(`${API}/circuits/${circuitData.circuit.id}`, {
@@ -178,7 +182,7 @@ export const patchCircuit = (circuitData, sideEffects) => {
           dispatch(patchCircuitFailed(data.error));
         } else {
           dispatch(patchCircuitSuccess(data));
-          sideEffects();
+          sideEffects && sideEffects();
         }
       });
   };
@@ -215,7 +219,7 @@ export const deleteCircuit = (circuitId, sideEffects) => {
           dispatch(deleteCircuitFailed(data.error));
         } else {
           dispatch(deleteCircuitSuccess(circuitId));
-          sideEffects();
+          sideEffects && sideEffects();
         }
       });
   };

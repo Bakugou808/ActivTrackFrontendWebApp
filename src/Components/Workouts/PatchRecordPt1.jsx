@@ -10,6 +10,7 @@ import { fetchFormattedWorkout } from "../../Redux/Actions/WorkoutActions";
 import {
   clearSelectedCircEx,
   clearPosValCircEx,
+  deleteCircEx,
 } from "../../Redux/Actions/CircExActions";
 import { clearSelectedExercise } from "../../Redux/Actions/ExerciseActions";
 import { deleteCircuit } from "../../Redux/Actions/CircuitActions";
@@ -39,6 +40,8 @@ export const PatchRecordPt1 = (props) => {
     onClearPosValCircEx,
     workoutId,
     onDeleteCircuit,
+    onDeleteCircEx,
+    workoutStarted,
   } = props;
   const classes = useStyles();
 
@@ -146,7 +149,9 @@ export const PatchRecordPt1 = (props) => {
       onClearSelectedExercise();
       onClearPosValCircEx();
     };
-    onDeleteCircuit(record.circuit_id, sideEffects);
+    record.circuit_type === "circuit"
+      ? onDeleteCircEx(record.circuit_exercise_id, sideEffects)
+      : onDeleteCircuit(record.circuit_id, sideEffects);
   };
 
   return (
@@ -224,14 +229,16 @@ export const PatchRecordPt1 = (props) => {
             </Paper>
           </Grid>
           <Grid item xs={12}>
-            <Button
-              variant="outlined"
-              className={classes.paper}
-              onClick={handleDelete}
-              color="secondary"
-            >
-              Delete
-            </Button>
+            {!workoutStarted && (
+              <Button
+                variant="outlined"
+                className={classes.paper}
+                onClick={handleDelete}
+                color="secondary"
+              >
+                Delete
+              </Button>
+            )}
             <Button
               variant="outlined"
               className={classes.paper}
@@ -285,6 +292,8 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch(fetchFormattedWorkout(workoutId)),
   onDeleteCircuit: (circuitId, sideEffects) =>
     dispatch(deleteCircuit(circuitId, sideEffects)),
+  onDeleteCircEx: (circExId, sideEffects) =>
+    dispatch(deleteCircEx(circExId, sideEffects)),
 });
 export default connect(mapStateToProps, mapDispatchToProps)(PatchRecordPt1);
 

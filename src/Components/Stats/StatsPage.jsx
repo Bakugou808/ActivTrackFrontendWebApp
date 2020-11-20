@@ -77,7 +77,7 @@ export default AuthHOC(connect(mapStateToProps, mapDispatchToProps)(StatsPage));
 const useStyles = makeStyles((theme) => ({
   paperModal: {
     position: "absolute",
-    width: "70vw",
+    width: "88vw",
     backgroundColor: theme.palette.background.paper,
     border: "2px solid #000",
     borderRadius: "5px",

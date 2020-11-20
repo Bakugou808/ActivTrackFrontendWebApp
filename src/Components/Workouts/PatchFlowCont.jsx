@@ -5,7 +5,7 @@ import PatchRecordPt1 from "./PatchRecordPt1";
 import PatchRecordPt2 from "./PatchRecordPt2";
 
 export const PatchFlowCont = (props) => {
-  const { record, setShowForm, workoutId } = props;
+  const { record, setShowForm, workoutId, workoutStarted } = props;
   const [customAttsParent, setCustomAttsParent] = useState({ reps: 1 });
   const [exFields, setExFields] = useState({
     exercise_name: "Add Exercise",
@@ -30,6 +30,7 @@ export const PatchFlowCont = (props) => {
           handleCustomAdd={handleCustomAdd}
           setShowModal={setShowForm}
           workoutId={workoutId}
+          workoutStarted={workoutStarted}
         />
       ) : (
         <PatchRecordPt2

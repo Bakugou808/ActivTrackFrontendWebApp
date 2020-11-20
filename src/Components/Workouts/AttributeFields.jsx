@@ -6,15 +6,20 @@ import { Tooltip, Fab, Paper, TextField, Button } from "@material-ui/core";
 import { motion } from "framer-motion";
 
 export const normalizeString = (str) => {
-  return (
-    str
-      // insert a space before all caps
-      .replace(/([A-Z])/g, " $1")
-      // uppercase the first character
-      .replace(/^./, function (str) {
-        return str.toUpperCase();
-      })
-  );
+  console.log(str);
+  if (typeof str == "string") {
+    return (
+      str
+        // insert a space before all caps
+        .replace(/([A-Z])/g, " $1")
+        // uppercase the first character
+        .replace(/^./, function (str) {
+          return str.toUpperCase();
+        })
+    );
+  } else {
+    return str;
+  }
 };
 
 export const AttributeFields = (props) => {

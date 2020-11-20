@@ -14,6 +14,7 @@ import {
   deleteWorkout,
   clearSelectedAndFormattedWorkouts,
 } from "../../Redux/Actions/WorkoutActions";
+import { clearCircuitPhasePositions } from "../../Redux/Actions/CircuitActions";
 // Material UI Imports
 import { makeStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
@@ -33,6 +34,7 @@ export const Folder = (props) => {
     onFetchWorkout,
     onClearSelectedAndFormattedWorkouts,
     loading,
+    onClearCircuitPhasePositions,
   } = props;
 
   const folderId = parseInt(match.params.folderId);
@@ -104,6 +106,7 @@ export const Folder = (props) => {
 
   const handleNewWorkout = () => {
     onClearSelectedAndFormattedWorkouts();
+    onClearCircuitPhasePositions();
     setShowForm(true);
   };
 
@@ -163,6 +166,7 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch(patchWorkout(workoutData, sideEffects)),
   onDeleteWorkout: (workoutId, sideEffects) =>
     dispatch(deleteWorkout(workoutId, sideEffects)),
+  onClearCircuitPhasePositions: () => dispatch(clearCircuitPhasePositions()),
 });
 
 export default AuthHOC(connect(mapStateToProps, mapDispatchToProps)(Folder));
@@ -170,7 +174,7 @@ export default AuthHOC(connect(mapStateToProps, mapDispatchToProps)(Folder));
 const useStyles = makeStyles((theme) => ({
   paperModal: {
     position: "absolute",
-    width: "70vw",
+    width: "88vw",
     backgroundColor: theme.palette.background.paper,
     border: "2px solid #000",
     borderRadius: "5px",

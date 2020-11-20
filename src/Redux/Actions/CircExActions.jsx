@@ -159,7 +159,7 @@ export const deleteCircExSuccess = (circExId) => ({
 
 // ------- DELETE NEW CIRC_EX FUNCTION--------
 
-export const deleteCircEx = (circExId) => {
+export const deleteCircEx = (circExId, sideEffects) => {
   return (dispatch) => {
     dispatch(deleteCircExRequest());
     fetch(`${API}/circuit_exercises/${circExId}`, {
@@ -172,6 +172,7 @@ export const deleteCircEx = (circExId) => {
           dispatch(deleteCircExFailed(data.error));
         } else {
           dispatch(deleteCircExSuccess(circExId));
+          sideEffects && sideEffects();
         }
       });
   };

@@ -359,7 +359,9 @@ const StartWorkout = (props) => {
     <div
       className={
         device === "computer"
-          ? "startWorkoutContainer"
+          ? showDrawer
+            ? "startWorkoutContainerGrid"
+            : "startWorkoutContainerFlex"
           : orientation === "portrait"
           ? showDrawer
             ? "startWorkoutContainerMobPortraitGrid"
@@ -375,6 +377,7 @@ const StartWorkout = (props) => {
             exRef={exRef}
             history={history}
             match={match}
+            workoutStarted={true}
           />
         ) : orientation === "portrait" ? (
           <ExListDrawerMobPortrait
