@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
 import { normalizeString } from "./AttributeFields";
 
-export const AttsCard = ({ exObj }) => {
+export const AttsCard = ({ exObj, device, orientation }) => {
   const [exAtts, setExAtts] = useState([]);
 
   useEffect(() => {
@@ -17,7 +17,9 @@ export const AttsCard = ({ exObj }) => {
       key !== "restPeriod" &&
         x.push(
           <div key={key} className="attCardDiv">
-            <p className="attCardP">{`${key1}: ${att}`}</p>
+            <p
+              className={device === "mobile" ? "attCardPMobPort" : "attCardP"}
+            >{`${key1}: ${att}`}</p>
           </div>
         );
     }
@@ -26,10 +28,13 @@ export const AttsCard = ({ exObj }) => {
       return div;
     });
   };
-  return <div className="attCardCont">{exObj && renderAtts()}</div>;
+  return <div className="attCardCont2">{exObj && renderAtts()}</div>;
 };
 
-const mapStateToProps = (state) => ({});
+const mapStateToProps = (store) => ({
+  device: store.device.device,
+  orientation: store.device.orientation,
+});
 
 const mapDispatchToProps = {};
 

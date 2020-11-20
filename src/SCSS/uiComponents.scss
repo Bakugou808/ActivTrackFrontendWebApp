@@ -30,7 +30,7 @@
 }
 .startWorkoutContainerMobPortraitGrid {
   display: grid;
-  // grid-template-rows: minmax(300px, 1fr) 2fr;
+  grid-template-rows: 130px;
 }
 .startWorkoutContainerMobPortraitFlex {
   display: flex;
@@ -242,7 +242,7 @@
     width: 100%;
   }
   .exStackMobP {
-    // margin-left: 10px;
+    margin-left: 10px;
     // padding: 3px;
     background: #ff5722;
     border-radius: 0.5rem;
@@ -257,6 +257,20 @@
     padding: 4px;
     width: 100%;
   }
+
+  .exCircuitMobPort {
+    display: inline-flex;
+    justify-content: space-between;
+    align-items: center;
+    grid-template-rows: 1fr 1fr;
+    margin-left: 10px;
+    grid-gap: 15px;
+    background: #ffab40;
+    border-radius: 0.5rem;
+    padding: 10px;
+    width: 100%;
+  }
+
   .exPaper {
     min-height: 26px;
     align-items: center;
@@ -529,7 +543,15 @@
   padding: 10px;
 }
 
+.attCardCont2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  padding: 10px;
+}
+
 .attCardDiv {
+  margin: 5px;
+  // padding: 7px;
 }
 
 .attCardP {
@@ -538,16 +560,32 @@
   margin: 0px;
 }
 
+.attCardPMobPort {
+  color: #f57c00;
+  font-size: 16px;
+  margin: 0px;
+}
+
 .exCardCont {
   display: flex;
   width: 100vw;
 }
 
+.exCardContMobPort {
+  display: flex;
+  width: 100vw;
+  height: 130px;
+}
+
 .exStackPort {
   width: 65vw;
-  margin: 20px;
+  margin: 10px;
 }
 
 .UiCompAttFieldsCont {
   width: 100%;
+}
+
+.circPaperMobPort {
+  width: 240px;
 }

@@ -20,14 +20,14 @@ export const ExListDrawer = ({
   const [patchRecord, setPatchRecord] = useState(null);
   const workoutId = match.params.workoutId;
 
+  useEffect(() => {
+    handleFalseClick();
+  }, [currentEx]);
+
   const handlePatch = (record) => {
     setPatchRecord(record);
     setShowFormEdit(true);
   };
-
-  useEffect(() => {
-    handleFalseClick();
-  }, [currentEx]);
 
   const handleFalseClick = () => {
     exRef && exRef.click();
@@ -71,20 +71,24 @@ export const ExListDrawer = ({
         </div>
         <div>{handlePhantomDivs()}</div>
       </div>
-      <div>
-        <MyModal
-          showModal={showFormEdit}
-          setShowModal={setShowFormEdit}
-          component={
-            <PatchFlowCont
-              setShowForm={setShowFormEdit}
-              record={patchRecord}
-              workoutId={workoutId}
-              workoutStarted={workoutStarted}
-            />
-          }
-        />
-      </div>
+      {currentEx != patchRecord ? (
+        <div>
+          <MyModal
+            showModal={showFormEdit}
+            setShowModal={setShowFormEdit}
+            component={
+              <PatchFlowCont
+                setShowForm={setShowFormEdit}
+                record={patchRecord}
+                workoutId={workoutId}
+                workoutStarted={workoutStarted}
+              />
+            }
+          />
+        </div>
+      ) : (
+        () => setShowFormEdit(false)
+      )}
     </div>
   );
 };

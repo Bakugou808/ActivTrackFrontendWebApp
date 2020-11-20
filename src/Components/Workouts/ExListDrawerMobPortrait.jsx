@@ -93,12 +93,12 @@ export const ExListDrawerMobPortrait = ({
           circuitId={circuitId}
           workoutId={workoutId}
         />
-        <div className="exCircuit">
+        <div className="exCircuitMobPort">
           {arr.map((ex) => {
             return (
               <Paper
                 elevation={6}
-                className={"exPaper pointer"}
+                className={"exPaper pointer circPaperMobPort"}
                 onClick={() => handlePatch(ex)}
                 id={`${ex.ex_id}-${ex.circuit_position}-${ex.phase_position}`}
               >
@@ -140,24 +140,28 @@ export const ExListDrawerMobPortrait = ({
   return (
     <div className="exSideDrawerParent">
       <div className="exSideDrawerHeader">
-        <div className="exCardCont ">
+        <div className="exCardContMobPort ">
           {exs && renderExercises(exs, handlePatch, workoutId)}
         </div>
       </div>
-      <div>
-        <MyModal
-          showModal={showFormEdit}
-          setShowModal={setShowFormEdit}
-          component={
-            <PatchFlowCont
-              setShowForm={setShowFormEdit}
-              record={patchRecord}
-              workoutId={workoutId}
-              workoutStarted={true}
-            />
-          }
-        />
-      </div>
+      {currentEx != patchRecord ? (
+        <div>
+          <MyModal
+            showModal={showFormEdit}
+            setShowModal={setShowFormEdit}
+            component={
+              <PatchFlowCont
+                setShowForm={setShowFormEdit}
+                record={patchRecord}
+                workoutId={workoutId}
+                workoutStarted={true}
+              />
+            }
+          />
+        </div>
+      ) : (
+        () => setShowFormEdit(false)
+      )}
     </div>
   );
 };

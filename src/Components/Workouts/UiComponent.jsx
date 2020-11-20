@@ -154,7 +154,7 @@ export const UiComponent = (props) => {
   };
 
   const handleTimesUp = () => {
-    playTimesUp() && setTimeout(stop(), 3000);
+    bell && playTimesUp() && setTimeout(stop(), 1500);
   };
   const handleTimesUp10sec = () => {
     playTimesUp() && setTimeout(stop(), 1000);
