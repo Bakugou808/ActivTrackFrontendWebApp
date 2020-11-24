@@ -22,7 +22,10 @@ import {
   clearPatchedCircExAndCircuitFromState,
 } from "../../Redux/Actions/WorkoutActions";
 import { postStat } from "../../Redux/Actions/StatsActions";
-import { fetchSession } from "../../Redux/Actions/SessionsActions";
+import {
+  fetchSession,
+  patchSession,
+} from "../../Redux/Actions/SessionsActions";
 
 // *for LATER
 //*! add the session id to the url path to have access for refresh, maybe add the circ_ex id as well and keep the route open... that way on refresh during a session you can fetch the exercise the user was on and slice the exObjs from indexOf(circ_ex) to the end*/
@@ -45,6 +48,7 @@ const StartWorkout = (props) => {
     patchedExTitle,
     device,
     orientation,
+    onPatchSession,
   } = props;
 
   const workoutId = match.params.workoutId;
@@ -80,6 +84,8 @@ const StartWorkout = (props) => {
   });
 
   const fullTime = useTimer();
+  const fullActiveTime = useTimer();
+  const fullRestTime = useTimer();
 
   // *sound effects
   const [playBell] = useSound(BellSound);
@@ -91,7 +97,6 @@ const StartWorkout = (props) => {
   useEffect(() => {
     formattedWorkout ? formatExObjs(formattedWorkout) : fetchWorkouts();
     !selectedSession && onFetchSession(sessionId);
-    console.log("formattedWorkoutChanged");
   }, []);
 
   function useLivePatch() {
@@ -271,16 +276,20 @@ const StartWorkout = (props) => {
     bell && playBell();
     start();
     fullTime.start();
+    fullActiveTime.start();
+    fullRestTime.isRunning && fullRestTime.pause();
   };
 
   // 2. when the user finishes executing ex. stop timer and restart for rest period
   const handleEndEx = (t) => {
     setStartEx(false);
+    fullActiveTime.pause();
     setEndEx(true);
     setExStats((prev) => ({ ...prev, activeTime: t }));
     setFocusAttFields(true);
     reset();
     // playBell();
+    fullRestTime.start();
     start();
   };
 
@@ -321,12 +330,34 @@ const StartWorkout = (props) => {
   };
 
   const handleFinishWorkout = () => {
-    history.push(
-      `/workout_finished/${folderName}/${folderId}/${workoutTitle}/${workoutId}/${sessionId}`
-    );
-    fullTime.pause();
+    let fullRT = fullRestTime.time;
+    let fullAT = fullActiveTime.time;
+    let totalTime = fullTime.time;
+    let sessionData = {
+      session: {
+        id: selectedSession.id,
+        active_time: fullAT,
+        rest_time: fullRT,
+        total_time: totalTime,
+      },
+    };
+
+    const sideEffects = () => {
+      history.push(
+        `/workout_finished/${folderName}/${folderId}/${workoutTitle}/${workoutId}/${sessionId}`
+      );
+    };
+
+    // patchSession
+    onPatchSession(sessionData, sideEffects);
 
     // !clear states where necessary
+  };
+
+  const pauseTimers = () => {
+    fullRestTime.pause();
+    fullActiveTime.pause();
+    fullTime.pause();
   };
 
   const deliverNextExObj = () => {
@@ -334,9 +365,12 @@ const StartWorkout = (props) => {
     exObjs[0] && handleSetNum(exObjs[0]);
     exObjs[0] && handleRestPeriod(exObjs[0]);
 
-    exObjs.length > 0
-      ? setExObjs((prev) => prev.slice(1))
-      : handleFinishWorkout();
+    if (exObjs.length > 0) {
+      setExObjs((prev) => prev.slice(1));
+    } else {
+      pauseTimers();
+      handleFinishWorkout();
+    }
   };
 
   const Attributes = () => {
@@ -462,6 +496,8 @@ const mapDispatchToProps = (dispatch) => ({
   onFetchSession: (sessionId) => dispatch(fetchSession(sessionId)),
   onClearPatchedCircExAndCircuitFromState: () =>
     dispatch(clearPatchedCircExAndCircuitFromState()),
+  onPatchSession: (sessionData, sideEffects) =>
+    dispatch(patchSession(sessionData, sideEffects)),
 });
 export default AuthHOC(
   connect(mapStateToProps, mapDispatchToProps)(StartWorkout)

@@ -110,7 +110,6 @@ function NavBar(props) {
   );
 
   const toggleExDrawer = () => {
-    console.log("toggle exercise drawer");
     onShowExDrawer();
   };
 

@@ -37,12 +37,12 @@ export const StatsPage = (props) => {
     return workouts.data.map((workoutHash) => {
       let title = Object.keys(workoutHash)[0];
       let subHash = workoutHash[`${title}`];
-      let key = Object.keys(subHash)[0];
-      let id = subHash[`${key}`][0].workout_id;
+      // let key = Object.keys(subHash)[0];
+      let id = subHash.workout_id;
       let workInfo = { title: title, id: id };
       return (
         <Paper
-          //   key={workout.id}
+          key={id}
           onClick={() => redirectToWorkoutStats(workInfo, workoutHash)}
           className={classes.workout}
           elevation={6}

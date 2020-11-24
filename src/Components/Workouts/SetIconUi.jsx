@@ -32,7 +32,6 @@ export const SetIconUi = (props) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("patching circuit", setVal);
     setShowForm(false);
     const circuitData = { circuit: { id: circuitId, sets: setVal } };
 

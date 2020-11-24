@@ -6,7 +6,6 @@ import { Tooltip, Fab, Paper, TextField, Button } from "@material-ui/core";
 import { motion } from "framer-motion";
 
 export const normalizeString = (str) => {
-  console.log(str);
   if (typeof str == "string") {
     return (
       str
