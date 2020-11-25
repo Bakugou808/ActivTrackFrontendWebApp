@@ -2,8 +2,9 @@
 
 const initialState = {
   selectedStat: null,
-  // * may not need this. formattedStat: null,
-  workoutsStats: [],
+  statsByEx: null,
+  statsByTotalReps: null,
+  statsByActiveTime: null,
   allWorkoutsWithStats: [],
   stats: [],
   fetching: false,
@@ -21,16 +22,41 @@ const statReducer = (state = initialState, action) => {
 
     // * Clear Selected Stat and Formatted Stat State
     case "CLEAR_SELECTED_AND_FORMATTED_STAT_STATE":
-      return { ...state, selectedStat: null, formattedStat: null };
+      return {
+        ...state,
+        selectedStat: null,
+        formattedStat: null,
+        statsByEx: null,
+        statsByTotalReps: null,
+        statsByActiveTime: null,
+      };
 
-    //* Fetch Workouts Stats Belonging to Workout
+    //* Fetch Workouts Stats By Ex Belonging to Workout
 
-    case "FETCH_WORKOUTS_STATS_REQUEST":
+    case "FETCH_WORKOUTS_STATS_BY_EX_REQUEST":
       return { ...state, fetching: true };
-    case "FETCH_WORKOUTS_STATS_FAILED":
+    case "FETCH_WORKOUTS_STATS_BY_EX_FAILED":
       return { ...state, fetching: false, error: action.error };
-    case "FETCH_WORKOUTS_STATS_SUCCESSFUL":
-      return { ...state, fetching: false, workoutsStats: action.stats };
+    case "FETCH_WORKOUTS_STATS_BY_EX_SUCCESSFUL":
+      return { ...state, fetching: false, statsByEx: action.stats };
+
+    //* Fetch Workouts Stats By Total Reps Belonging to Workout
+
+    case "FETCH_WORKOUTS_STATS_BY_TOTAL_REPS_REQUEST":
+      return { ...state, fetching: true };
+    case "FETCH_WORKOUTS_STATS_BY_TOTAL_REPS_FAILED":
+      return { ...state, fetching: false, error: action.error };
+    case "FETCH_WORKOUTS_STATS_BY_TOTAL_REPS_SUCCESSFUL":
+      return { ...state, fetching: false, statsByTotalReps: action.stats };
+
+    //* Fetch Workouts Stats By Active Time Belonging to Workout
+
+    case "FETCH_WORKOUTS_STATS_BY_ACTIVE_TIME_REQUEST":
+      return { ...state, fetching: true };
+    case "FETCH_WORKOUTS_STATS_BY_ACTIVE_TIME_FAILED":
+      return { ...state, fetching: false, error: action.error };
+    case "FETCH_WORKOUTS_STATS_BY_ACTIVE_TIME_SUCCESSFUL":
+      return { ...state, fetching: false, statsByActiveTime: action.stats };
 
     // * Fetch all Workouts with Stats Belonging to User
 

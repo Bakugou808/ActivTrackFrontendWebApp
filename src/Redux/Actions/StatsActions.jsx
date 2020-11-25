@@ -91,49 +91,135 @@ export const fetchStat = (statId) => {
       });
   };
 };
+// * --------------------------------------- ******************** -------------------------------------------- * //
+// ------- FETCH STATS BY EX ACTIONS--------
 
-// ------- FETCH FORMATTED STAT ACTIONS--------
-
-export const fetchWorkoutsStatsRequest = () => ({
-  type: "FETCH_WORKOUTS_STATS_REQUEST",
+export const fetchWorkoutsStatsByExRequest = () => ({
+  type: "FETCH_WORKOUTS_STATS_BY_EX_REQUEST",
 });
 
-export const fetchWorkoutsStatsFailed = (error) => ({
-  type: "FETCH_WORKOUTS_STATS_FAILED",
+export const fetchWorkoutsStatsByExFailed = (error) => ({
+  type: "FETCH_WORKOUTS_STATS_BY_EX_FAILED",
   error: error,
 });
 
-export const fetchWorkoutsStatsSuccess = (stats) => ({
-  type: "FETCH_WORKOUTS_STATS_SUCCESSFUL",
+export const fetchWorkoutsStatsByExSuccess = (stats) => ({
+  type: "FETCH_WORKOUTS_STATS_BY_EX_SUCCESSFUL",
   stats: stats,
 });
 
-// ------- FETCH WORKOUT'S STATS FUNCTION--------
+// ------- FETCH STATS BY EX FUNCTION--------
 
-export const fetchWorkoutsStats = (
+export const fetchWorkoutsStatsByEx = (
   workoutId,
   numOfSessions = null,
   sideEffects
 ) => {
   return (dispatch) => {
-    dispatch(fetchWorkoutsStatsRequest());
-    fetch(`${API}/workouts_stats/${workoutId}/${numOfSessions}`, {
+    dispatch(fetchWorkoutsStatsByExRequest());
+    fetch(`${API}/workouts_stats_by_ex/${workoutId}/${numOfSessions}`, {
       method: "GET",
       headers: headers(),
     })
       .then((res) => res.json())
       .then((data) => {
         if (data.error) {
-          dispatch(fetchWorkoutsStatsFailed(data.error));
+          dispatch(fetchWorkoutsStatsByExFailed(data.error));
         } else {
-          dispatch(fetchWorkoutsStatsSuccess(data));
+          dispatch(fetchWorkoutsStatsByExSuccess(data));
           sideEffects && sideEffects();
         }
       });
   };
 };
 
-// * FETCH ALL WORKOUTS WITH STATS ACTIONS
+// ------- FETCH STATS BY TOTAL REPS ACTIONS--------
+
+export const fetchWorkoutsStatsByTotalRepsRequest = () => ({
+  type: "FETCH_WORKOUTS_STATS_BY_TOTAL_REPS_REQUEST",
+});
+
+export const fetchWorkoutsStatsByTotalRepsFailed = (error) => ({
+  type: "FETCH_WORKOUTS_STATS_BY_TOTAL_REPS_FAILED",
+  error: error,
+});
+
+export const fetchWorkoutsStatsByTotalRepsSuccess = (stats) => ({
+  type: "FETCH_WORKOUTS_STATS_BY_TOTAL_REPS_SUCCESSFUL",
+  stats: stats,
+});
+
+// ------- FETCH STATS BY TOTAL REPS FUNCTION--------
+
+export const fetchWorkoutsStatsByTotalReps = (
+  workoutId,
+  numOfSessions = null,
+  sideEffects
+) => {
+  return (dispatch) => {
+    dispatch(fetchWorkoutsStatsByTotalRepsRequest());
+    fetch(`${API}/workouts_stats_by_total_reps/${workoutId}/${numOfSessions}`, {
+      method: "GET",
+      headers: headers(),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.error) {
+          dispatch(fetchWorkoutsStatsByTotalRepsFailed(data.error));
+        } else {
+          dispatch(fetchWorkoutsStatsByTotalRepsSuccess(data));
+          sideEffects && sideEffects();
+        }
+      });
+  };
+};
+
+// ------- FETCH STATS BY ACTIVE TIME ACTIONS--------
+
+export const fetchWorkoutsStatsByActiveTimeRequest = () => ({
+  type: "FETCH_WORKOUTS_STATS_BY_ACTIVE_TIME_REQUEST",
+});
+
+export const fetchWorkoutsStatsByActiveTimeFailed = (error) => ({
+  type: "FETCH_WORKOUTS_STATS_BY_ACTIVE_TIME_FAILED",
+  error: error,
+});
+
+export const fetchWorkoutsStatsByActiveTimeSuccess = (stats) => ({
+  type: "FETCH_WORKOUTS_STATS_BY_ACTIVE_TIME_SUCCESSFUL",
+  stats: stats,
+});
+
+// ------- FETCH STATS BY ACTIVE TIME FUNCTION--------
+
+export const fetchWorkoutsStatsByActiveTime = (
+  workoutId,
+  dates = null,
+  sideEffects
+) => {
+  return (dispatch) => {
+    dispatch(fetchWorkoutsStatsByActiveTimeRequest());
+    fetch(
+      `${API}/workouts_stats_by_date/${workoutId}/${dates.start}/${dates.end}`,
+      {
+        method: "GET",
+        headers: headers(),
+      }
+    )
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.error) {
+          dispatch(fetchWorkoutsStatsByActiveTimeFailed(data.error));
+        } else {
+          dispatch(fetchWorkoutsStatsByActiveTimeSuccess(data));
+          sideEffects && sideEffects();
+        }
+      });
+  };
+};
+
+// *------- FETCH ALL WORKOUTS WITH STATS ACTIONS ---------*
+
 export const fetchAllWorkoutsWithStatsRequest = () => ({
   type: "FETCH_ALL_WORKOUTS_WITH_STATS_REQUEST",
 });

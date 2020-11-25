@@ -8,7 +8,10 @@ import StatsContainerParent from "./StatsContainerParent";
 import {
   fetchAllWorkoutsWithStats,
   setWorkoutsStats,
+  fetchWorkoutsStatsByEx,
+  fetchWorkoutsStatsByTotalReps,
 } from "../../Redux/Actions/StatsActions";
+// * Material Imports
 import { makeStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
 
@@ -20,6 +23,8 @@ export const StatsPage = (props) => {
     workouts,
     user,
     onSetWorkoutsStats,
+    onFetchWorkoutsStatsByTotalReps,
+    onFetchWorkoutsStatsByEx,
   } = props;
   const classes = useStyles();
 
@@ -30,7 +35,9 @@ export const StatsPage = (props) => {
   //*   path="/displayStats/:workoutTitle/:workoutId"
   const redirectToWorkoutStats = (workInfo, workoutHash) => {
     history.push(`/displayStats/${workInfo.title}/${workInfo.id}`);
-    onSetWorkoutsStats(workoutHash);
+    // onSetWorkoutsStats(workoutHash);
+    onFetchWorkoutsStatsByTotalReps(workInfo.id, 20);
+    onFetchWorkoutsStatsByEx(workInfo.id, 20);
   };
 
   const renderWorkout = () => {
@@ -71,6 +78,12 @@ const mapDispatchToProps = (dispatch) => ({
   onFetchAllWorkoutsWithStats: (workoutId, sideEffects) =>
     dispatch(fetchAllWorkoutsWithStats(workoutId, sideEffects)),
   onSetWorkoutsStats: (stats) => dispatch(setWorkoutsStats(stats)),
+  onFetchWorkoutsStatsByTotalReps: (workoutId, numOfSessions, sideEffects) =>
+    dispatch(
+      fetchWorkoutsStatsByTotalReps(workoutId, numOfSessions, sideEffects)
+    ),
+  onFetchWorkoutsStatsByEx: (workoutId, numOfSessions, sideEffects) =>
+    dispatch(fetchWorkoutsStatsByEx(workoutId, numOfSessions, sideEffects)),
 });
 export default AuthHOC(connect(mapStateToProps, mapDispatchToProps)(StatsPage));
 

@@ -7,16 +7,22 @@ import StatsContainer from "../Stats/StatsContainer";
 import { Button } from "@material-ui/core";
 
 // * Action Imports
-import { fetchWorkoutsStats } from "../../Redux/Actions/StatsActions";
+import { fetchWorkoutsStatsByTotalReps } from "../../Redux/Actions/StatsActions";
 import { fetchWorkout } from "../../Redux/Actions/WorkoutActions";
 
 export const EndWorkout = (props) => {
-  const { history, match, onFetchWorkoutsStats, stats, onFetchWorkout } = props;
+  const {
+    history,
+    match,
+    onFetchWorkoutsStatsByTotalReps,
+    stats,
+    onFetchWorkout,
+  } = props;
   const workoutId = match.params.workoutId;
   const [showStats, setShowStats] = useState(false);
 
   useEffect(() => {
-    onFetchWorkoutsStats(workoutId, 2);
+    onFetchWorkoutsStatsByTotalReps(workoutId, 2);
     onFetchWorkout(workoutId);
   }, []);
 
@@ -45,8 +51,8 @@ const mapStateToProps = (store) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  onFetchWorkoutsStats: (workoutId, numOfSessions) =>
-    dispatch(fetchWorkoutsStats(workoutId, numOfSessions)),
+  onFetchWorkoutsStatsByTotalReps: (workoutId, numOfSessions) =>
+    dispatch(fetchWorkoutsStatsByTotalReps(workoutId, numOfSessions)),
   onFetchWorkout: (workoutId) => dispatch(fetchWorkout(workoutId)),
 });
 export default AuthHOC(

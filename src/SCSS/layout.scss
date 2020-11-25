@@ -120,3 +120,44 @@ html {
 //     min-height: 535px;
 //   }
 // }
+
+.statsParentContainer {
+  display: grid;
+  grid-template-rows: 1fr 1fr;
+  justify-content: center;
+  align-items: center;
+  grid-row-gap: 100px;
+}
+
+.statsByExRow {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+}
+
+.statsByTotalRepsRow {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+}
+
+.exList {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.sessionsList {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.statByExGraph {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.statByTotalRepsGraph {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

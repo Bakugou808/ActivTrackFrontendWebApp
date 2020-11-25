@@ -16,6 +16,7 @@ import StartWorkout from "./Components/Workouts/StartWorkout";
 import EndWorkout from "./Components/Workouts/EndWorkout";
 import AllStatsContainer from "./Components/Stats/AllStatsContainer";
 import StatsPage from "./Components/Stats/StatsPage";
+import StatsContainerParent from "./Components/Stats/StatsContainerParent";
 
 class App extends React.Component {
   render() {
@@ -40,7 +41,7 @@ class App extends React.Component {
           />
           <Route
             path="/displayStats/:workoutTitle/:workoutId"
-            render={(props) => <AllStatsContainer {...props} />}
+            render={(props) => <StatsContainerParent {...props} />}
           />
           <Route
             path={`/folders/:folderName/:folderId`}
