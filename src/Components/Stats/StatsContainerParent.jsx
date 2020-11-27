@@ -76,14 +76,14 @@ export const StatsContainerParent = (props) => {
         {exList && <SideList sourceList={exList} handleClick={handleExClick} />}
         {/* <div className="statByExGraph"> graph </div>
          */}
-        {exStats && <ExGraph data={exStats} />}
+        {exStats && <ExGraph rawData={exStats} />}
       </div>
       <div className="statsByTotalRepsRow">
         {/* sessions date/timeline list and graph */}
         {sessList && (
           <SideList sourceList={sessList} handleClick={handleSessionClick} />
         )}
-        {sessStats && <ExGraph data={sessStats} />}
+        {sessStats && <ExGraph rawData={sessStats} />}
 
         <div className="statByTotalRepsGraph"> graph</div>
       </div>

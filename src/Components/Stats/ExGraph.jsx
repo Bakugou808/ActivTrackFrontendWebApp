@@ -5,20 +5,74 @@ import { connect } from "react-redux";
 import { ResponsiveLine } from "@nivo/line";
 
 export const ExGraph = (props) => {
-  const { data } = props;
+  const { rawData } = props;
   const [lineData, setLineData] = useState([]);
 
   useEffect(() => {
-    data && formatData();
-  }, [data]);
+    rawData && formatData();
+  }, [rawData]);
 
   const formatData = () => {
-    debugger;
+    let sessTemp = {};
+    let data = { id: "", color: "", data: [] };
+    let finData = {};
+    for (const [key, value] of Object.entries(rawData)) {
+      sessTemp[key] = consolidateSessionData(value);
+    }
+
+    for (const [date, attObj] of Object.entries(sessTemp)) {
+      let attKeys = Object.keys(attObj);
+      let color = "hsl(39, 70%, 50%)";
+      for (const [att, value] of Object.entries(attObj)) {
+        data = { id: "", color: "", data: [] };
+        data.id = att;
+        data.color = "hsl(39, 70%, 50%)";
+        let x = { x: date, y: value };
+        data.data.push(x);
+        if (finData[att]) {
+          finData[att].data.push(x);
+        } else {
+          finData[att] = data;
+        }
+      }
+    }
+    setLineData(finData);
+  };
+
+  const consolidateSessionData = (sessData) => {
+    let tempAtts = {};
+    let keys = {};
+
+    sessData.map((totalSets) => {
+      let key = Object.keys(totalSets)[0];
+      // debugger;
+      totalSets[key].map((singSet) => {
+        // debugger;
+        for (const [key, value] of Object.entries(singSet)) {
+          if (tempAtts[key]) {
+            tempAtts[key] += value ? value : 0;
+          } else {
+            tempAtts[key] = value ? value : 0;
+          }
+          if (keys[key]) {
+            keys[key] += value ? 1 : 0;
+          } else {
+            keys[key] = 1;
+          }
+        }
+      });
+    });
+    // debugger;
+    for (const [key, value] of Object.entries(tempAtts)) {
+      tempAtts[key] = tempAtts[key] / keys[key];
+    }
+    // debugger;
+    return tempAtts;
   };
 
   return (
     <div className="statByExGraph">
-      <ResponsiveLine
+      {/* <ResponsiveLine
         data={lineData}
         //   onClick={(point, event) => handleClick(point, event)}
         // tooltip={handleToolTip}
@@ -86,7 +140,7 @@ export const ExGraph = (props) => {
             ],
           },
         ]}
-      />
+      /> */}
     </div>
   );
 };
