@@ -92,8 +92,12 @@ export const UiComponent = (props) => {
     function str_pad_left(string, pad, length) {
       return (new Array(length + 1).join(pad) + string).slice(-length);
     }
-    const timerValue =
-      str_pad_left(minutes, "0", 2) + ":" + str_pad_left(seconds, "0", 2);
+    // const timerValue =
+    //   str_pad_left(minutes, "0", 2) + ":" + str_pad_left(seconds, "0", 2);
+
+    const timerValue = new Date(stopWatch.time * 1000)
+      .toISOString()
+      .substr(11, 8);
 
     if (!endEx) {
       setTimeAlert(false);

@@ -3,56 +3,103 @@ import { connect } from "react-redux";
 
 // * Chart Import
 import { ResponsiveLine } from "@nivo/line";
+// * Function Import
+import { normalizeString } from "../Workouts/AttributeFields";
+// * Component Imports
+import MyResponsiveLine from "./MyResponsiveLine";
 
 export const ExGraph = (props) => {
-  const { rawData } = props;
+  const { rawData, selected, setKeys, exAttKeys, selectedExKey } = props;
   const [lineData, setLineData] = useState([]);
+  const [displayData, setDisplayData] = useState(null);
+  const [legendY, setLegendY] = useState();
+  const [legendX, setLegendX] = useState("Session Date");
 
   useEffect(() => {
     rawData && formatData();
-  }, [rawData]);
+    selectedExKey && formatDispData(selectedExKey);
+  }, [rawData, selectedExKey]);
+
+  function rand(min, max) {
+    return Math.round(min + Math.random() * (max - min));
+  }
+
+  function get_random_color() {
+    var h = rand(1, 360);
+    var s = rand(0, 100);
+    var l = rand(0, 100);
+    return "hsl(" + h + "," + s + "%," + l + "%)";
+  }
 
   const formatData = () => {
     let sessTemp = {};
     let data = { id: "", color: "", data: [] };
     let finData = {};
     for (const [key, value] of Object.entries(rawData)) {
-      sessTemp[key] = consolidateSessionData(value);
+      if (sessTemp[key]) {
+        sessTemp[key].push(consolidateSessionData(value));
+      } else {
+        sessTemp[key] = [];
+        sessTemp[key].push(consolidateSessionData(value));
+      }
     }
 
-    for (const [date, attObj] of Object.entries(sessTemp)) {
-      let attKeys = Object.keys(attObj);
-      let color = "hsl(39, 70%, 50%)";
-      for (const [att, value] of Object.entries(attObj)) {
+    for (const [date, attArr] of Object.entries(sessTemp)) {
+      for (const [att, value] of Object.entries(attArr[0])) {
         data = { id: "", color: "", data: [] };
-        data.id = att;
-        data.color = "hsl(39, 70%, 50%)";
+        data.id = normalizeString(att);
+        data.color = get_random_color();
         let x = { x: date, y: value };
         data.data.push(x);
-        if (finData[att]) {
-          finData[att].data.push(x);
+
+        let k = normalizeString(att);
+        if (finData[k]) {
+          finData[k].data.push(x);
         } else {
-          finData[att] = data;
+          finData[k] = data;
         }
       }
     }
     setLineData(finData);
   };
 
+  const formatDispData = (key) => {
+    switch (key) {
+      case "Weight":
+        setLegendY("Lbs");
+        break;
+      case "Hold Time":
+        setLegendY("Mins");
+        break;
+      case "Rest Period":
+        setLegendY("Mins");
+        break;
+      case "Active Time":
+        setLegendY("Mins");
+        break;
+      case "Reps":
+        setLegendY("Reps");
+        break;
+      default:
+        setLegendY("Level");
+        break;
+    }
+    setDisplayData([lineData[key]]);
+  };
+
   const consolidateSessionData = (sessData) => {
     let tempAtts = {};
     let keys = {};
-
+    let keys2 = [];
     sessData.map((totalSets) => {
       let key = Object.keys(totalSets)[0];
-      // debugger;
+
       totalSets[key].map((singSet) => {
-        // debugger;
         for (const [key, value] of Object.entries(singSet)) {
           if (tempAtts[key]) {
-            tempAtts[key] += value ? value : 0;
+            tempAtts[key] += value ? parseInt(value) : 0;
           } else {
-            tempAtts[key] = value ? value : 0;
+            tempAtts[key] = value ? parseInt(value) : 0;
           }
           if (keys[key]) {
             keys[key] += value ? 1 : 0;
@@ -62,85 +109,36 @@ export const ExGraph = (props) => {
         }
       });
     });
-    // debugger;
     for (const [key, value] of Object.entries(tempAtts)) {
-      tempAtts[key] = tempAtts[key] / keys[key];
+      // debugger;
+      tempAtts[key] = Math.round(tempAtts[key] / keys[key]);
+      if (key === "restPeriod" || key === "activeTime") {
+        // tempAtts[key] = new Date(tempAtts[key] * 1000)
+        //   .toISOString()
+        //   .substr(11, 8);
+        let t = tempAtts[key] % 60;
+        t = t.toFixed(2);
+
+        tempAtts[key] = t;
+      }
+      let k = normalizeString(key);
+      if (!keys2.includes(k)) {
+        keys2.push(k);
+      }
     }
-    // debugger;
+    setKeys(keys2);
     return tempAtts;
   };
 
   return (
     <div className="statByExGraph">
-      {/* <ResponsiveLine
-        data={lineData}
-        //   onClick={(point, event) => handleClick(point, event)}
-        // tooltip={handleToolTip}
-        margin={{ top: 50, right: 110, bottom: 50, left: 60 }}
-        xScale={{ type: "point" }}
-        colors="#004466"
-        yScale={{
-          type: "linear",
-          min: "auto",
-          max: "auto",
-          stacked: true,
-          reverse: false,
-        }}
-        yFormat=" >-.2f"
-        axisTop={null}
-        axisRight={null}
-        axisBottom={{
-          orient: "bottom",
-          tickSize: 5,
-          tickPadding: 5,
-          tickRotation: 0,
-          legend: "Exercise",
-          legendOffset: 36,
-          legendPosition: "middle",
-        }}
-        axisLeft={{
-          orient: "left",
-          tickSize: 5,
-          tickPadding: 5,
-          tickRotation: 0,
-          legend: "Total Reps",
-          legendOffset: -40,
-          legendPosition: "middle",
-        }}
-        pointSize={10}
-        pointColor={{ theme: "background" }}
-        pointBorderWidth={2}
-        pointBorderColor={{ from: "serieColor" }}
-        pointLabel="yFormatted"
-        pointLabelYOffset={-12}
-        useMesh={true}
-        legends={[
-          {
-            anchor: "top-left",
-            direction: "column",
-            justify: false,
-            translateX: -8,
-            translateY: -50,
-            itemsSpacing: 0,
-            itemDirection: "left-to-right",
-            itemWidth: 80,
-            itemHeight: 20,
-            itemOpacity: 0.75,
-            symbolSize: 16,
-            symbolShape: "circle",
-            symbolBorderColor: "rgba(0, 0, 0, .5)",
-            effects: [
-              {
-                on: "hover",
-                style: {
-                  itemBackground: "rgba(0, 0, 0, .03)",
-                  itemOpacity: 1,
-                },
-              },
-            ],
-          },
-        ]}
-      /> */}
+      {displayData && (
+        <MyResponsiveLine
+          data={displayData}
+          legendY={legendY}
+          legendX={legendX}
+        />
+      )}
     </div>
   );
 };

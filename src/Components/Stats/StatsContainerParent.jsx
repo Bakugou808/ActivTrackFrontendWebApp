@@ -29,9 +29,14 @@ export const StatsContainerParent = (props) => {
 
   const [exStats, setExStats] = useState(null);
   const [exList, setExList] = useState([]);
+  const [selectedEx, setSelectedEx] = useState([]);
+  const [selectedExKey, setSelectedExKey] = useState(null);
 
   const [sessStats, setSessStats] = useState(null);
   const [sessList, setSessList] = useState([]);
+  const [selectedSess, setSelectedSess] = useState([]);
+
+  const [exAttKeys, setExAttKeys] = useState([]);
 
   useEffect(() => {
     !statsByTotalReps && onFetchWorkoutsStatsByTotalReps(workoutId, 20);
@@ -41,16 +46,19 @@ export const StatsContainerParent = (props) => {
   }, [statsByEx, statsByTotalReps]);
 
   const handleExClick = (exStat) => {
-    setExStats(exStat);
+    setExStats(exStat[1]);
+    setSelectedEx(exStat[0]);
     console.log(exStat);
   };
 
   const handleSessionClick = (sessStat) => {
-    setSessStats(sessStat);
+    setSessStats(sessStat[1]);
+    setSelectedSess(sessStat[0]);
     console.log(sessStat);
   };
 
   const handleExList = () => {
+    setExAttKeys([]);
     let title = Object.keys(statsByEx.stats);
 
     for (const [key, value] of Object.entries(statsByEx.stats[title])) {
@@ -73,15 +81,35 @@ export const StatsContainerParent = (props) => {
     <div className="statsParentContainer">
       <div className="statsByExRow">
         {/* exercise list and graph */}
-        {exList && <SideList sourceList={exList} handleClick={handleExClick} />}
+        {exList && (
+          <SideList
+            sourceList={exList}
+            handleClick={handleExClick}
+            exAttKeys={exAttKeys}
+            selected={selectedEx}
+            setSelectedKey={setSelectedExKey}
+          />
+        )}
         {/* <div className="statByExGraph"> graph </div>
          */}
-        {exStats && <ExGraph rawData={exStats} />}
+        {exStats && (
+          <ExGraph
+            rawData={exStats}
+            selected={selectedEx}
+            setKeys={setExAttKeys}
+            exAttKeys={exAttKeys}
+            selectedExKey={selectedExKey}
+          />
+        )}
       </div>
       <div className="statsByTotalRepsRow">
         {/* sessions date/timeline list and graph */}
         {sessList && (
-          <SideList sourceList={sessList} handleClick={handleSessionClick} />
+          <SideList
+            sourceList={sessList}
+            handleClick={handleSessionClick}
+            selected={selectedSess}
+          />
         )}
         {sessStats && <ExGraph rawData={sessStats} />}
 
