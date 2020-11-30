@@ -1,15 +1,21 @@
 import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
 
-// * Chart Import
-import { ResponsiveLine } from "@nivo/line";
 // * Function Import
 import { normalizeString } from "../Workouts/AttributeFields";
 // * Component Imports
 import MyResponsiveLine from "./MyResponsiveLine";
 
 export const ExGraph = (props) => {
-  const { rawData, selected, setKeys, exAttKeys, selectedExKey } = props;
+  const {
+    rawData,
+    selected,
+    setKeys,
+    exAttKeys,
+    selectedExKey,
+    header,
+    caption,
+  } = props;
   const [lineData, setLineData] = useState([]);
   const [displayData, setDisplayData] = useState(null);
   const [legendY, setLegendY] = useState();
@@ -65,23 +71,23 @@ export const ExGraph = (props) => {
 
   const formatDispData = (key) => {
     switch (key) {
-      case "Weight":
-        setLegendY("Lbs");
+      case `Weight`:
+        setLegendY(`${key} (lbs)`);
         break;
-      case "Hold Time":
-        setLegendY("Mins");
+      case `Hold Time`:
+        setLegendY(`${key} (Mins)`);
         break;
-      case "Rest Period":
-        setLegendY("Mins");
+      case `Rest Period`:
+        setLegendY(`${key} (Mins)`);
         break;
-      case "Active Time":
-        setLegendY("Mins");
+      case `Active Time`:
+        setLegendY(`${key} (Mins)`);
         break;
-      case "Reps":
-        setLegendY("Reps");
+      case `Reps`:
+        setLegendY(`Reps`);
         break;
       default:
-        setLegendY("Level");
+        setLegendY(`Level`);
         break;
     }
     setDisplayData([lineData[key]]);
@@ -110,7 +116,6 @@ export const ExGraph = (props) => {
       });
     });
     for (const [key, value] of Object.entries(tempAtts)) {
-      // debugger;
       tempAtts[key] = Math.round(tempAtts[key] / keys[key]);
       if (key === "restPeriod" || key === "activeTime") {
         // tempAtts[key] = new Date(tempAtts[key] * 1000)
@@ -132,6 +137,11 @@ export const ExGraph = (props) => {
 
   return (
     <div className="statByExGraph">
+      <div className="graphHeader">
+        <div className="graphHeaderExTitle">{selected}</div>
+        <div className="graphHeaderTitle">{header}</div>
+        {caption && <div className="graphCaption">{caption}</div>}
+      </div>
       {displayData && (
         <MyResponsiveLine
           data={displayData}

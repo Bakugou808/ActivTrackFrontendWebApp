@@ -123,7 +123,7 @@ html {
 
 .statsParentContainer {
   display: grid;
-  grid-template-rows: 1fr 1fr;
+  // grid-template-rows: 1fr 1fr;
   justify-content: center;
   align-items: center;
   grid-row-gap: 100px;
@@ -151,12 +151,18 @@ html {
 }
 
 .statByExGraph {
+  margin: 15px;
+  background-color: ivory;
+  padding: 30px;
+}
+
+.statByTotalRepsGraph {
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-.statByTotalRepsGraph {
+.sideListCol {
   display: flex;
   justify-content: center;
   align-items: center;

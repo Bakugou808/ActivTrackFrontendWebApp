@@ -14,7 +14,7 @@ export const SideList = (props) => {
 
   useEffect(() => {
     exAttKeys ? setExOrSess("ExerciseGraph") : setExOrSess("SessionGraph");
-  }, [exAttKeys]);
+  }, []);
 
   const renderRows = () => {
     return sourceList.map((data) => {
@@ -23,7 +23,9 @@ export const SideList = (props) => {
           <p className="sideListItem" onClick={() => handleClick(data)}>
             {data[0]}
           </p>
-          {selected === data[0] && <div> {renderExAtts(exAttKeys)} </div>}
+          {selected === data[0] && exOrSess === "ExerciseGraph" && (
+            <div> {renderExAtts(exAttKeys)} </div>
+          )}
         </div>
       );
     });

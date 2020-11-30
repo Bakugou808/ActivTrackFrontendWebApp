@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
 import { ResponsiveLine } from "@nivo/line";
 // * Material UI Imports
@@ -6,8 +6,10 @@ import { makeStyles } from "@material-ui/core/styles";
 import { Paper } from "@material-ui/core";
 
 export const LineChart = (props) => {
-  const { data, lineData, session } = props;
+  const { data, lineData, session, legendX, legendY, sessStats } = props;
   const classes = useStyles();
+  const [showDetails, setShowDetails] = useState(false);
+  const [point, setPoint] = useState([]);
 
   function titleCase(string) {
     let sentence = string.toLowerCase().split("_");
@@ -81,14 +83,16 @@ export const LineChart = (props) => {
     return timeValue;
   };
 
-  const handleToolTip = (point, event) => {
-    let name = point.point.data.x;
+  const handleToolTip = (point) => {
+    let name = point.data.x;
+    // debugger;
     let obj = "";
-    if (data) {
-      obj = data.filter((obj) => obj.exercise_name === name)[0];
-    } else if (session) {
-      obj = session.filter((obj) => obj.exercise_name === name)[0];
+    if (sessStats) {
+      obj = sessStats.filter((obj) => obj.exercise_name === name)[0];
     }
+    // else if (session) {
+    //   obj = session.filter((obj) => obj.exercise_name === name)[0];
+    // }
     if (name) {
       return (
         <Paper className={[classes.paper, classes.root]}>
@@ -98,13 +102,21 @@ export const LineChart = (props) => {
     }
   };
 
+  const handleClick = (point, event) => {
+    setPoint(handleToolTip(point));
+    console.log("clicked");
+    setShowDetails(true);
+  };
+
   return (
     <>
       <div className="lineChart">
         <ResponsiveLine
-          data={lineData}
-          //   onClick={(point, event) => handleClick(point, event)}
-          // tooltip={handleToolTip}
+          data={data}
+          onClick={(point, event) => handleClick(point, event)}
+          // tooltip={(point, event) => handleToolTip(point, event)}
+          height={500}
+          width={800}
           margin={{ top: 50, right: 110, bottom: 50, left: 60 }}
           xScale={{ type: "point" }}
           colors="#004466"
@@ -145,7 +157,7 @@ export const LineChart = (props) => {
           useMesh={true}
           legends={[
             {
-              anchor: "top-left",
+              anchor: "bottom-right",
               direction: "column",
               justify: false,
               translateX: -8,
@@ -170,13 +182,14 @@ export const LineChart = (props) => {
             },
           ]}
         />
+        {showDetails && point}
       </div>
     </>
   );
 };
 
 const mapStateToProps = (store) => ({
-  data: store.stats.workoutsStats.stats,
+  // data: store.stats.workoutsStats.stats,
 });
 
 const mapDispatchToProps = {};
