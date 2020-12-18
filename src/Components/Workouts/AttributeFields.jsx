@@ -29,6 +29,7 @@ export const AttributeFields = (props) => {
     setSubmitClicked,
     submitClicked,
     focusAttFields,
+    setShowRPCard,
   } = props;
   const [exAtts, setExAtts] = useState([]);
   const classes = useStyles();
@@ -70,20 +71,13 @@ export const AttributeFields = (props) => {
     });
   };
 
+  const handleSubmit = () => {
+    setSubmitClicked(true);
+    setShowRPCard(true);
+  };
+
   return (
     <div className="attributes">
-      {/* {submitClicked ? (
-        <div className="startButton">
-          <Button
-            variant="contained"
-            color="primary"
-            onClick={() => handleSubmitStats(stopWatch.time)}
-            className={classes.btn}
-          >
-            Go To Next
-          </Button>
-        </div>
-      ) : ( */}
       {focusAttFields && !submitClicked && (
         <motion.div
           className="attFields"
@@ -99,7 +93,7 @@ export const AttributeFields = (props) => {
             <Button
               variant="contained"
               color="primary"
-              onClick={() => setSubmitClicked(true)}
+              onClick={handleSubmit}
               className={classes.subBtn}
             >
               Submit

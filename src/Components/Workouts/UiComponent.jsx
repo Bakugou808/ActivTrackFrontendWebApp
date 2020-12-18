@@ -204,9 +204,7 @@ export const UiComponent = (props) => {
                 </p>
               </div>
             )}
-            <div className={"timeAlert"}>
-              {timeAlert && "RestTime Exceeded!!!"}
-            </div>
+
             <div className="exHeaders">
               <div className="timer" onClick={handleStartPause}>
                 <TotalTime stopWatch={fullTime} endEx={endEx} />
@@ -314,7 +312,7 @@ export const UiComponent = (props) => {
             </Button>
           </div>
         )}
-        {submitClicked && (
+        {/* {submitClicked && (
           <div className="startButton">
             <Button
               variant="contained"
@@ -325,7 +323,7 @@ export const UiComponent = (props) => {
               Go To Next
             </Button>
           </div>
-        )}
+        )} */}
       </div>
       {device === "mobile" && (
         <div className="frameHeader">

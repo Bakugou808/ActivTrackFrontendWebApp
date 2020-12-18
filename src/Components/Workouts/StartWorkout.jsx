@@ -12,6 +12,7 @@ import AutoRollSwitch from "./AutoRollSwitch";
 import AttributeFields from "./AttributeFields";
 import ExListDrawer from "./ExListDrawer";
 import ExListDrawerMobPortrait from "./ExListDrawerMobPortrait";
+import RestPeriodCard from "./RestPeriodCard";
 // * Material UI Imports
 import { Tooltip, Fab, Button } from "@material-ui/core";
 
@@ -26,6 +27,7 @@ import {
   fetchSession,
   patchSession,
 } from "../../Redux/Actions/SessionsActions";
+import { FormatListNumberedOutlined } from "@material-ui/icons";
 
 // *for LATER
 //*! add the session id to the url path to have access for refresh, maybe add the circ_ex id as well and keep the route open... that way on refresh during a session you can fetch the exercise the user was on and slice the exObjs from indexOf(circ_ex) to the end*/
@@ -58,6 +60,7 @@ const StartWorkout = (props) => {
   const workoutTitle = match.params.workoutTitle;
 
   const [exObj, setExObj] = useState(false);
+  const [nextExObj, setNextExObj] = useState(false);
   const [exObjs, setExObjs] = useState([]);
   const [goToNext, setGoToNext] = useState(false);
   // *for determining set values
@@ -74,6 +77,7 @@ const StartWorkout = (props) => {
   // *store stats (att + active/rest times + note?)
   const [exStats, setExStats] = useState({ activeTime: 0 });
   const [submitClicked, setSubmitClicked] = useState(false);
+  const [showRPCard, setShowRPCard] = useState(false);
   //  *expand att fields once exercise is completed
   const [focusAttFields, setFocusAttFields] = useState(false);
   // * autoroll to the next exercise as soon as you click go to next, or start on click let's go
@@ -327,6 +331,7 @@ const StartWorkout = (props) => {
 
     onPostStat(statData, sideEffects);
     setFocusAttFields(false);
+    setShowRPCard(false);
   };
 
   const handleFinishWorkout = () => {
@@ -362,6 +367,9 @@ const StartWorkout = (props) => {
 
   const deliverNextExObj = () => {
     setExObj(exObjs[0]);
+    exObjs[1]
+      ? setNextExObj(exObjs[1].ex_name)
+      : setNextExObj("End of Workout. Way to go!");
     exObjs[0] && handleSetNum(exObjs[0]);
     exObjs[0] && handleRestPeriod(exObjs[0]);
 
@@ -466,8 +474,21 @@ const StartWorkout = (props) => {
             setExStats={setExStats}
             submitClicked={submitClicked}
             // handleSubmitStats={handleSubmitStats}
+            setShowRPCard={setShowRPCard}
             setSubmitClicked={setSubmitClicked}
             focusAttFields={focusAttFields}
+          />
+
+          <RestPeriodCard
+            showRPCard={showRPCard}
+            stopWatch={stopWatch}
+            handleSubmitStats={handleSubmitStats}
+            endEx={endEx}
+            restPeriod={restPeriod}
+            bell={bell}
+            startEx={startEx}
+            nextExObj={nextExObj}
+            handleRestPeriod={handleRestPeriod}
           />
         </div>
       </div>
