@@ -153,7 +153,16 @@
   justify-content: center;
   color: red;
   font-weight: 600;
-  margin-bottom: 10px;
+  margin: 10px;
+  border-color: orangered;
+  border-width: thin;
+  border-style: double;
+}
+
+.timerContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 // .horizontal1 {
@@ -210,7 +219,7 @@
 }
 
 .restPeriodDisplay {
-  padding: 5px;
+  padding-left: 5px;
 }
 .repDisplay {
   padding: 5px;
@@ -657,4 +666,43 @@
 .graphHeaderExTitle {
   color: #f57c00;
   font-size: 35px;
+}
+
+.restPeriodCard2 {
+  background-color: #f9e79f;
+}
+
+.restPeriodDisplay2 {
+}
+
+.blueGreen {
+  color: #26a69a;
+}
+
+.nextEx {
+  display: grid;
+  align-content: center;
+  justify-items: center;
+  grid-row-gap: 5px;
+}
+.blueGreen h4 {
+  margin: 0px;
+  font-size: 15px;
+  border-bottom-style: dashed;
+  border-width: thin;
+  width: fit-content;
+}
+
+.blueGreen p {
+  margin: 0px;
+}
+
+.rpInput {
+  height: 15px;
+  /* padding: 0px; */
+  margin-top: 15px;
+}
+
+.breakTitle {
+  border: double;
 }

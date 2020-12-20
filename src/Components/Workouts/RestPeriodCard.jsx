@@ -73,17 +73,17 @@ export const RestPeriodCard = (props) => {
           animate={{ y: -400 }}
           transition={{ duration: 0.5 }}
         >
-          <Paper className={classes.paper} elevation={3}>
-            <div className="centerDiv2 removeMarginBottom orange fsize20">
+          <Paper className={classes.card} elevation={3}>
+            <div className="centerDiv2 removeMarginBottom blueGreen breakTitle fsize20">
               Take A Break
             </div>
-            <div className="centerDiv2 removeMarginBottom orange fsize20">
-              Up Next {nextExObj}
+            <div className="centerDiv2 removeMarginBottom blueGreen fsize20 nextEx">
+              <h4>Up Next</h4> <p>{nextExObj}</p>
             </div>
             <div className={"timeAlert"}>
               {timeAlert && "RestTime Exceeded!!!"}
             </div>
-            <div className="timer" onClick={handleStartPause}>
+            <div className="" onClick={handleStartPause}>
               <Timers
                 stopWatch={stopWatch}
                 endEx={endEx}
@@ -91,7 +91,7 @@ export const RestPeriodCard = (props) => {
                 handleExceededRest={handleExceededRest}
               />
             </div>
-            <div className="horizontal2 cardRepRest">
+            <div className="horizontal2 cardRepRest rpInput">
               <div>{`Rest Period: `}</div>
               {restPeriod.message ? (
                 showRpForm ? (
@@ -121,7 +121,7 @@ export const RestPeriodCard = (props) => {
                 </form>
               ) : (
                 <span
-                  className="restPeriodDisplay pointer"
+                  className="restPeriodDisplay restPeriodDisplay2 pointer "
                   onClick={() => setShowRpForm(true)}
                 >
                   <p>{` ${restPeriod.num} ${restPeriod.unit}`}</p>
@@ -165,5 +165,9 @@ const useStyles = makeStyles((theme) => ({
   },
   ExTitlePaper: {
     margin: "10px",
+  },
+  card: {
+    backgroundColor: "#f9e79f",
+    padding: "15px",
   },
 }));

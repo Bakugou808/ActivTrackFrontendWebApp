@@ -40,7 +40,7 @@ export const Timers = (props) => {
     }
   };
 
-  return <div>{renderTheTime()}</div>;
+  return <div className="timerContainer">{renderTheTime()}</div>;
 };
 
 const mapStateToProps = (state) => ({});
