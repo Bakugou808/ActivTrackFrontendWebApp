@@ -137,7 +137,7 @@ html {
 
 .statsByTotalRepsRow {
   display: grid;
-  grid-template-columns: 1fr 2fr;
+  grid-template-columns: 0.5fr 2fr;
 }
 
 .exList {
@@ -160,9 +160,11 @@ html {
 }
 
 .statByTotalRepsGraph {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  margin: 15px;
+  background-color: ivory;
+  padding: 10px 0px 30px 30px;
+  height: 50vh;
+  width: 70vw;
 }
 
 .sideListCol {

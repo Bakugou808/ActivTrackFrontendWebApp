@@ -92,7 +92,7 @@ export const StatsContainerParent = (props) => {
         <div className="statsParentContainer">
           <div className="graphHeader">
             <div className="graphHeaderExTitle">{selectedEx}</div>
-            <div className="graphHeaderTitle">"Performance By Exercise"</div>
+            <div className="graphHeaderTitle">Performance By Exercise</div>
             {exCaption && <div className="graphCaption">{exCaption}</div>}
           </div>
           <div className="statsByExRow">
@@ -120,9 +120,11 @@ export const StatsContainerParent = (props) => {
               />
             )}
           </div>
+
+          {/* ---------------- */}
           <div className="graphHeader">
             <div className="graphHeaderExTitle">{selectedSess}</div>
-            <div className="graphHeaderTitle">"Performance By Session"</div>
+            <div className="graphHeaderTitle">Performance By Session</div>
             {sessCaption && <div className="graphCaption">{sessCaption}</div>}
           </div>
           <div className="statsByTotalRepsRow">
@@ -135,18 +137,15 @@ export const StatsContainerParent = (props) => {
                 />
               </div>
             )}
-            <div className="statByTotalRepsGraph">
-              {" "}
-              {sessStats && (
-                <SessGraph
-                  rawData={sessStats}
-                  selected={selectedSess}
-                  header={"Performance By Session"}
-                  caption={sessCaption}
-                  sessStats={sessStats}
-                />
-              )}
-            </div>
+            {sessStats && (
+              <SessGraph
+                rawData={sessStats}
+                selected={selectedSess}
+                header={"Performance By Session"}
+                caption={sessCaption}
+                sessStats={sessStats}
+              />
+            )}
           </div>
         </div>
       </div>

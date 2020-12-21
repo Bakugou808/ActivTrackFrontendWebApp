@@ -131,11 +131,6 @@ export const ExGraph = (props) => {
 
   return (
     <div className="statByExGraph">
-      {/* <div className="graphHeader">
-        <div className="graphHeaderExTitle">{selected}</div>
-        <div className="graphHeaderTitle">{header}</div>
-        {caption && <div className="graphCaption">{caption}</div>}
-      </div> */}
       {displayData && (
         <AutoSizer>
           {({ height, width }) => (

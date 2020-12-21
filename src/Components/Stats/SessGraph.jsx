@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
 
+// * Graph AutoSizer Imports
+import { AutoSizer } from "react-virtualized";
+
 // * Function Import
 import { normalizeString } from "../Workouts/AttributeFields";
 // * Component Imports
@@ -58,19 +61,20 @@ export const SessGraph = (props) => {
   };
 
   return (
-    <div className="statByExGraph">
-      {/* <div className="graphHeader">
-        <div className="graphHeaderExTitle">{selected}</div>
-        <div className="graphHeaderTitle">{header}</div>
-        {caption && <div className="graphCaption">{caption}</div>}
-      </div> */}
+    <div className="statByTotalRepsGraph">
       {displayData && (
-        <LineChart
-          data={displayData}
-          legendY={legendY}
-          legendX={legendX}
-          sessStats={sessStats}
-        />
+        <AutoSizer>
+          {({ height, width }) => (
+            <LineChart
+              data={displayData}
+              legendY={legendY}
+              legendX={legendX}
+              sessStats={sessStats}
+              height={height}
+              width={width}
+            />
+          )}
+        </AutoSizer>
       )}
     </div>
   );
