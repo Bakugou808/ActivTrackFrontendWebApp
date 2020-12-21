@@ -130,7 +130,7 @@ export const LineChart = (props) => {
         // tooltip={(point, event) => handleToolTip(point, event)}
         height={height}
         width={width}
-        margin={{ top: 80, right: 60, bottom: 150, left: 90 }}
+        margin={{ top: 80, right: 60, bottom: 125, left: 90 }}
         xScale={{ type: "point" }}
         colors="#004466"
         yScale={{
@@ -148,8 +148,8 @@ export const LineChart = (props) => {
           tickSize: 10,
           tickPadding: 5,
           tickRotation: -45,
-          legend: "Exercise Title",
-          legendOffset: 130,
+          legend: "",
+          legendOffset: 0,
           legendPosition: "middle",
         }}
         axisLeft={{
@@ -173,15 +173,15 @@ export const LineChart = (props) => {
             anchor: "top",
             direction: "row",
             justify: false,
-            translateX: -8,
+            translateX: -50,
             translateY: -60,
             itemsSpacing: 0,
             itemDirection: "left-to-right",
             itemWidth: 80,
             itemHeight: 20,
             itemOpacity: 0.75,
-            symbolSize: 16,
-            symbolShape: "circle",
+            symbolSize: 22,
+            symbolShape: "diamond",
             symbolBorderColor: "rgba(0, 0, 0, .5)",
             effects: [
               {

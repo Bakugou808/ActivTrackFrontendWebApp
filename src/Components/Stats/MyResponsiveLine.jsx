@@ -11,7 +11,7 @@ const MyResponsiveLine = ({ data, legendY, legendX, height, width }) => (
     data={data}
     height={height}
     width={width}
-    margin={{ top: 80, right: 60, bottom: 150, left: 80 }}
+    margin={{ top: 80, right: 60, bottom: 100, left: 80 }}
     xScale={{ type: "point" }}
     yScale={{
       type: "linear",
@@ -28,8 +28,8 @@ const MyResponsiveLine = ({ data, legendY, legendX, height, width }) => (
       tickSize: 10,
       tickPadding: 5,
       tickRotation: -45,
-      legend: legendX,
-      legendOffset: 136,
+      legend: "",
+      legendOffset: 0,
       legendPosition: "middle",
     }}
     axisLeft={{
@@ -52,14 +52,14 @@ const MyResponsiveLine = ({ data, legendY, legendX, height, width }) => (
         anchor: "top",
         direction: "row",
         justify: false,
-        translateX: -8,
+        translateX: -50,
         translateY: -60,
         itemsSpacing: 0,
         itemDirection: "left-to-right",
         itemWidth: 80,
         itemHeight: 20,
         itemOpacity: 0.75,
-        symbolSize: 12,
+        symbolSize: 22,
         symbolShape: "circle",
         symbolBorderColor: "rgba(0, 0, 0, .5)",
         effects: [

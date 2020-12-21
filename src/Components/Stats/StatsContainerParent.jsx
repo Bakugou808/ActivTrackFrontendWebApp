@@ -54,6 +54,7 @@ export const StatsContainerParent = (props) => {
   const handleExClick = (exStat) => {
     setExStats(exStat[1]);
     setSelectedEx(exStat[0]);
+    setSelectedExKey(null);
     console.log(exStat);
   };
 
@@ -91,7 +92,7 @@ export const StatsContainerParent = (props) => {
       <div className="statsParentFlexCont">
         <div className="statsParentContainer">
           <div className="graphHeader">
-            <div className="graphHeaderExTitle">{selectedEx}</div>
+            {/* <div className="graphHeaderExTitle">{selectedEx}</div> */}
             <div className="graphHeaderTitle">Performance By Exercise</div>
             {exCaption && <div className="graphCaption">{exCaption}</div>}
           </div>
@@ -123,7 +124,7 @@ export const StatsContainerParent = (props) => {
 
           {/* ---------------- */}
           <div className="graphHeader">
-            <div className="graphHeaderExTitle">{selectedSess}</div>
+            {/* <div className="graphHeaderExTitle">{selectedSess}</div> */}
             <div className="graphHeaderTitle">Performance By Session</div>
             {sessCaption && <div className="graphCaption">{sessCaption}</div>}
           </div>
