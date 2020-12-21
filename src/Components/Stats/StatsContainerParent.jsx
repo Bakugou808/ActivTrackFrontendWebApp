@@ -88,56 +88,66 @@ export const StatsContainerParent = (props) => {
   return (
     <div>
       <div className="statsHeader">{workoutTitle} Stats</div>
-      <div className="statsParentContainer">
-        <div className="statsByExRow">
-          {/* exercise list and graph */}
-          {exList && (
-            <div className="sideListCol">
-              <SideList
-                sourceList={exList}
-                handleClick={handleExClick}
-                exAttKeys={exAttKeys}
-                selected={selectedEx}
-                setSelectedKey={setSelectedExKey}
-              />
-            </div>
-          )}
-          {/* <div className="statByExGraph"> graph </div>
-           */}
-          {exStats && (
-            <ExGraph
-              rawData={exStats}
-              selected={selectedEx}
-              setKeys={setExAttKeys}
-              exAttKeys={exAttKeys}
-              selectedExKey={selectedExKey}
-              header={"Performance By Exercise"}
-              caption={exCaption}
-            />
-          )}
-        </div>
-        <div className="statsByTotalRepsRow">
-          {/* sessions date/timeline list and graph */}
-          {sessList && (
-            <div className="sideListCol">
-              <SideList
-                sourceList={sessList}
-                handleClick={handleSessionClick}
-                selected={selectedSess}
-              />
-            </div>
-          )}
-          {sessStats && (
-            <SessGraph
-              rawData={sessStats}
-              selected={selectedSess}
-              header={"Performance By Session"}
-              caption={sessCaption}
-              sessStats={sessStats}
-            />
-          )}
+      <div className="statsParentFlexCont">
+        <div className="statsParentContainer">
+          <div className="graphHeader">
+            <div className="graphHeaderExTitle">{selectedEx}</div>
+            <div className="graphHeaderTitle">"Performance By Exercise"</div>
+            {exCaption && <div className="graphCaption">{exCaption}</div>}
+          </div>
+          <div className="statsByExRow">
+            {/* exercise list and graph */}
+            {exList && (
+              <div className="sideListCol">
+                <SideList
+                  sourceList={exList}
+                  handleClick={handleExClick}
+                  exAttKeys={exAttKeys}
+                  selected={selectedEx}
+                  setSelectedKey={setSelectedExKey}
+                />
+              </div>
+            )}
 
-          <div className="statByTotalRepsGraph"> graph</div>
+            {exStats && (
+              <ExGraph
+                rawData={exStats}
+                selected={selectedEx}
+                setKeys={setExAttKeys}
+                exAttKeys={exAttKeys}
+                selectedExKey={selectedExKey}
+                caption={exCaption}
+              />
+            )}
+          </div>
+          <div className="graphHeader">
+            <div className="graphHeaderExTitle">{selectedSess}</div>
+            <div className="graphHeaderTitle">"Performance By Session"</div>
+            {sessCaption && <div className="graphCaption">{sessCaption}</div>}
+          </div>
+          <div className="statsByTotalRepsRow">
+            {sessList && (
+              <div className="sideListCol">
+                <SideList
+                  sourceList={sessList}
+                  handleClick={handleSessionClick}
+                  selected={selectedSess}
+                />
+              </div>
+            )}
+            <div className="statByTotalRepsGraph">
+              {" "}
+              {sessStats && (
+                <SessGraph
+                  rawData={sessStats}
+                  selected={selectedSess}
+                  header={"Performance By Session"}
+                  caption={sessCaption}
+                  sessStats={sessStats}
+                />
+              )}
+            </div>
+          </div>
         </div>
       </div>
     </div>

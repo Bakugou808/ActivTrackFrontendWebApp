@@ -22,6 +22,8 @@ export const RestPeriodCard = (props) => {
     restPeriod,
     nextExObj,
     handleRestPeriod,
+    device,
+    orientation,
   } = props;
   const classes = useStyles();
   const [playTimesUp, { stop }] = useSound(BellSound);
@@ -70,7 +72,7 @@ export const RestPeriodCard = (props) => {
         <motion.div
           className="attFields"
           initial={{ y: "200vw" }}
-          animate={{ y: -400 }}
+          animate={device === "mobile" ? { y: -450 } : { y: -400 }}
           transition={{ duration: 0.5 }}
         >
           <Paper className={classes.card} elevation={3}>
@@ -148,7 +150,10 @@ export const RestPeriodCard = (props) => {
   );
 };
 
-const mapStateToProps = (state) => ({});
+const mapStateToProps = (store) => ({
+  device: store.device.device,
+  orientation: store.device.orientation,
+});
 
 const mapDispatchToProps = {};
 

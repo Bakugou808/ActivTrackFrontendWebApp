@@ -603,11 +603,12 @@
   display: grid;
   align-items: center;
   justify-content: center;
-  width: 200px;
-  height: 737px;
+  width: 15vw;
+  min-width: 130px;
+  height: 50vh;
   overflow-y: auto;
   padding: 15px;
-  margin: 15px;
+  margin-left: 15px;
   & p:last-child {
     padding-bottom: 25px;
   }
@@ -705,4 +706,22 @@
 
 .breakTitle {
   border: double;
+}
+
+.lineChart {
+  align-items: center;
+  justify-content: center;
+  display: flex;
+}
+
+.exLineChart {
+  align-items: center;
+  justify-content: center;
+  display: flex;
+}
+
+.statsParentFlexCont {
+  align-items: center;
+  justify-content: center;
+  display: flex;
 }

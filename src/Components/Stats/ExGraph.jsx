@@ -1,21 +1,15 @@
 import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
 
+// * Graph AutoSizer Imports
+import { AutoSizer } from "react-virtualized";
 // * Function Import
 import { normalizeString } from "../Workouts/AttributeFields";
 // * Component Imports
 import MyResponsiveLine from "./MyResponsiveLine";
 
 export const ExGraph = (props) => {
-  const {
-    rawData,
-    selected,
-    setKeys,
-    exAttKeys,
-    selectedExKey,
-    header,
-    caption,
-  } = props;
+  const { rawData, setKeys, exAttKeys, selectedExKey } = props;
   const [lineData, setLineData] = useState([]);
   const [displayData, setDisplayData] = useState(null);
   const [legendY, setLegendY] = useState();
@@ -137,17 +131,23 @@ export const ExGraph = (props) => {
 
   return (
     <div className="statByExGraph">
-      <div className="graphHeader">
+      {/* <div className="graphHeader">
         <div className="graphHeaderExTitle">{selected}</div>
         <div className="graphHeaderTitle">{header}</div>
         {caption && <div className="graphCaption">{caption}</div>}
-      </div>
+      </div> */}
       {displayData && (
-        <MyResponsiveLine
-          data={displayData}
-          legendY={legendY}
-          legendX={legendX}
-        />
+        <AutoSizer>
+          {({ height, width }) => (
+            <MyResponsiveLine
+              data={displayData}
+              legendY={legendY}
+              legendX={legendX}
+              height={height}
+              width={width}
+            />
+          )}
+        </AutoSizer>
       )}
     </div>
   );

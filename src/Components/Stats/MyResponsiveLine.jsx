@@ -1,15 +1,16 @@
 import React, { useState, useEffect } from "react";
-import { ResponsiveLine } from "@nivo/line";
+import { ResponsiveLine, Line } from "@nivo/line";
 // make sure parent container have a defined height when using
 // responsive component, otherwise height will be 0 and
 // no chart will be rendered.
 // website examples showcase many properties,
 // you'll often use just a few of them.
-const MyResponsiveLine = ({ data, legendY, legendX }) => (
-  <ResponsiveLine
+const MyResponsiveLine = ({ data, legendY, legendX, height, width }) => (
+  <Line
+    className="exLineChart"
     data={data}
-    height={500}
-    width={800}
+    height={height}
+    width={width}
     margin={{ top: 50, right: 110, bottom: 50, left: 60 }}
     xScale={{ type: "point" }}
     yScale={{

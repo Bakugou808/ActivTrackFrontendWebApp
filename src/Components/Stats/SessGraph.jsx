@@ -59,11 +59,11 @@ export const SessGraph = (props) => {
 
   return (
     <div className="statByExGraph">
-      <div className="graphHeader">
+      {/* <div className="graphHeader">
         <div className="graphHeaderExTitle">{selected}</div>
         <div className="graphHeaderTitle">{header}</div>
         {caption && <div className="graphCaption">{caption}</div>}
-      </div>
+      </div> */}
       {displayData && (
         <LineChart
           data={displayData}
