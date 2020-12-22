@@ -48,7 +48,7 @@ export const StatsContainerParent = (props) => {
     !statsByTotalReps && onFetchWorkoutsStatsByTotalReps(workoutId, 20);
     !statsByEx && onFetchWorkoutsStatsByEx(workoutId, 20);
     statsByEx && handleExList();
-    statsByTotalReps && handleSessList();
+    statsByTotalReps && sessList.length === 0 && handleSessList();
   }, [statsByEx, statsByTotalReps]);
 
   const handleExClick = (exStat) => {
@@ -82,7 +82,8 @@ export const StatsContainerParent = (props) => {
     statsByTotalReps.stats.map((sessObj) => {
       let key = Object.keys(sessObj);
       let statArr = sessObj[key];
-      setSessList((prev) => [...prev, [key, statArr]]);
+      let date = key[0].split(" - ")[1];
+      setSessList((prev) => [...prev, [date, statArr]]);
     });
   };
 

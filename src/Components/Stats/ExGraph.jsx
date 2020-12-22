@@ -13,7 +13,6 @@ export const ExGraph = (props) => {
   const [lineData, setLineData] = useState([]);
   const [displayData, setDisplayData] = useState(null);
   const [legendY, setLegendY] = useState();
-  const [legendX, setLegendX] = useState("Session Date");
 
   useEffect(() => {
     rawData && formatData();
@@ -115,7 +114,8 @@ export const ExGraph = (props) => {
         // tempAtts[key] = new Date(tempAtts[key] * 1000)
         //   .toISOString()
         //   .substr(11, 8);
-        let t = tempAtts[key] % 60;
+        // debugger;
+        let t = tempAtts[key] / 60;
         t = t.toFixed(2);
 
         tempAtts[key] = t;
@@ -137,7 +137,6 @@ export const ExGraph = (props) => {
             <MyResponsiveLine
               data={displayData}
               legendY={legendY}
-              legendX={legendX}
               height={height}
               width={width}
             />

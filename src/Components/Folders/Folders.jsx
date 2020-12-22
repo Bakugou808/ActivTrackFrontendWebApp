@@ -47,6 +47,24 @@ export const Folders = (props) => {
 
   const handleFolderClick = (folder) => {
     history.push(`${match.url}/${folder.folder_name}/${folder.id}`);
+    handleRecentLS();
+  };
+
+  const handleRecentLS = () => {
+    console.log("modified local storage");
+    let path = `/folders/${folder.folder_name}/${folder.id}`;
+    if (localStorage.getItem("recentFolders")) {
+      let recentFolders = JSON.parse(localStorage.getItem("recentFolders"));
+      if (recentFolders.includes(path)) {
+        recentFolders.filter((val) => val != path);
+        recentFolders.unshift(path);
+      } else if (!(recentFolders.length > 5)) {
+        recentFolders = recentFolders.unshift(path);
+      } else {
+        recentFolders = recentFolders.pop().unshift(path);
+      }
+      localStorage.setItem("recentFolders", recentFolders);
+    }
   };
 
   const handleOnPostFolder = (folderData) => {

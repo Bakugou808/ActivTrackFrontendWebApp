@@ -138,6 +138,7 @@ html {
 .statsByTotalRepsRow {
   display: grid;
   grid-template-columns: 0.5fr 2fr;
+  margin-bottom: 50px;
 }
 
 .exList {
@@ -176,3 +177,31 @@ html {
 // .restPeriodCard {
 
 // }
+.endWorkout {
+  display: grid;
+  grid-template-rows: 1fr 1fr;
+  align-items: center;
+  justify-content: center;
+  grid-row-gap: 30px;
+}
+
+.congratsMsg {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  grid-template-rows: 1fr 1fr;
+  height: 20vh;
+  font-size: 70px;
+  color: orange;
+  font-weight: 900;
+}
+
+.goToStatBtnCon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.goToStatBtn {
+  width: 50vw;
+}

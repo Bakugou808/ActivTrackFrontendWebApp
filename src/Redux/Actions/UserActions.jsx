@@ -92,6 +92,9 @@ export const signUpUser = (userData, history) => {
           dispatch(signUpUserFailure(user.error));
         } else {
           localStorage.setItem("token", user.jwt);
+          localStorage.setItem("recentFolders", "[]");
+          localStorage.setItem("recentWorkout", "[]");
+          localStorage.setItem("recentStats", "[]");
           dispatch(signUpUserSuccess(user));
           history.push("/home");
         }

@@ -5,12 +5,13 @@ import { ResponsiveLine, Line } from "@nivo/line";
 // no chart will be rendered.
 // website examples showcase many properties,
 // you'll often use just a few of them.
-const MyResponsiveLine = ({ data, legendY, legendX, height, width }) => (
+const MyResponsiveLine = ({ data, legendY, height, width }) => (
   <Line
     className="exLineChart"
     data={data}
     height={height}
     width={width}
+    // enableSlices="x"
     margin={{ top: 80, right: 60, bottom: 100, left: 80 }}
     xScale={{ type: "point" }}
     yScale={{

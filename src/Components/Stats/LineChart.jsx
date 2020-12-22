@@ -126,8 +126,9 @@ export const LineChart = (props) => {
       {/* <div className="lineChart"> */}
       <Line
         data={data}
-        onClick={(point, event) => handleClick(point, event)}
+        // onClick={(point, event) => handleClick(point, event)}
         // tooltip={(point, event) => handleToolTip(point, event)}
+        enableSlices="x"
         height={height}
         width={width}
         margin={{ top: 80, right: 60, bottom: 125, left: 90 }}
