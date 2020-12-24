@@ -49,7 +49,27 @@ export const StatsContainerParent = (props) => {
     !statsByEx && onFetchWorkoutsStatsByEx(workoutId, 20);
     statsByEx && handleExList();
     statsByTotalReps && sessList.length === 0 && handleSessList();
+    handleRecentLS();
   }, [statsByEx, statsByTotalReps]);
+
+  const handleRecentLS = () => {
+    let path = `/displayStats/${workoutTitle}/${workoutId}`;
+    console.log("modified local storage Recent Stats");
+
+    if (localStorage.getItem("recentStats")) {
+      let recentStats = JSON.parse(localStorage.getItem("recentStats"));
+      if (recentStats.includes(path)) {
+        recentStats = recentStats.filter((val) => val != path);
+        recentStats.unshift(path);
+      } else if (!(recentStats.length > 5)) {
+        recentStats.unshift(path);
+      } else {
+        recentStats.pop().unshift(path);
+      }
+      recentStats = JSON.stringify(recentStats);
+      localStorage.setItem("recentStats", recentStats);
+    }
+  };
 
   const handleExClick = (exStat) => {
     setExStats(exStat[1]);

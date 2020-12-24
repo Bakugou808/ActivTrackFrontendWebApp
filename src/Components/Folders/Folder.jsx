@@ -47,7 +47,26 @@ export const Folder = (props) => {
 
   useEffect(() => {
     folderId && onFetchFolder(folderId);
+    handleRecentLS();
   }, [folderId]);
+
+  const handleRecentLS = () => {
+    console.log("modified local storage Recent Folders");
+    let path = `/folders/${folderName}/${folderId}`;
+    if (localStorage.getItem("recentFolders")) {
+      let recentFolders = JSON.parse(localStorage.getItem("recentFolders"));
+      if (recentFolders.includes(path)) {
+        recentFolders = recentFolders.filter((val) => val != path);
+        recentFolders.unshift(path);
+      } else if (!(recentFolders.length > 5)) {
+        recentFolders.unshift(path);
+      } else {
+        recentFolders.pop().unshift(path);
+      }
+      recentFolders = JSON.stringify(recentFolders);
+      localStorage.setItem("recentFolders", recentFolders);
+    }
+  };
 
   const redirectNewWorkout = (path) => {
     setShowForm(false);
