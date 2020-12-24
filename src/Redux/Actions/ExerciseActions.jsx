@@ -139,7 +139,7 @@ export const patchExerciseSuccess = (exercise) => ({
 
 // ------- PATCH NEW EXERCISE FUNCTION--------
 
-export const patchExercise = (exerciseData) => {
+export const patchExercise = (exerciseData, sideEffects = null) => {
   return (dispatch) => {
     dispatch(patchExerciseRequest());
     fetch(`${API}/exercises/${exerciseData.exercise.id}`, {
@@ -153,6 +153,7 @@ export const patchExercise = (exerciseData) => {
           dispatch(patchExerciseFailed(data.error));
         } else {
           dispatch(patchExerciseSuccess(data));
+          sideEffects && sideEffects();
         }
       });
   };

@@ -178,7 +178,7 @@ export const patchSessionSuccess = (session) => ({
 
 // ------- PATCH NEW SESSION FUNCTION--------
 
-export const patchSession = (sessionData, setShowForm) => {
+export const patchSession = (sessionData, sideEffects = false) => {
   return (dispatch) => {
     dispatch(patchSessionRequest());
     fetch(`${API}/sessions/${sessionData.session.id}`, {
@@ -192,7 +192,7 @@ export const patchSession = (sessionData, setShowForm) => {
           dispatch(patchSessionFailed(data.error));
         } else {
           dispatch(patchSessionSuccess(data));
-          setShowForm();
+          sideEffects && sideEffects();
         }
       });
   };

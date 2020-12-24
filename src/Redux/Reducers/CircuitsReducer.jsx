@@ -35,6 +35,21 @@ const circuitReducer = (state = initialState, action) => {
 
     // * Modify Position
 
+    case "SET_PHASE_POS_TO_1":
+      return { ...state, posWarmUp: 1, posBody: 1, posCoolDown: 1 };
+
+    case "SET_POS_CIRCUIT_TO_X":
+      switch (action.phase) {
+        case "Warm Up":
+          return { ...state, posWarmUp: action.payload + 1 };
+        case "Body":
+          return { ...state, posBody: action.payload + 1 };
+        case "Cool Down":
+          return { ...state, posCoolDown: action.payload + 1 };
+        default:
+          return { ...state };
+      }
+
     case "INCREASE_POS_CIRCUIT":
       switch (state.phase) {
         case "Warm Up":

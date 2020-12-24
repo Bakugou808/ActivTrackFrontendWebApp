@@ -100,7 +100,7 @@ const circExReducer = (state = initialState, action) => {
       return { ...state, fetching: false, error: action.error };
     case "DELETE_CIRC_EX_SUCCESSFUL":
       const newCircExsDESTROY = [
-        ...state.circExs.filter((circEx) => circEx.id != action.circEx.id),
+        ...state.circExs.filter((circEx) => circEx.id != action.circExId),
       ];
       return { ...state, fetching: false, circExs: newCircExsDESTROY };
     default:

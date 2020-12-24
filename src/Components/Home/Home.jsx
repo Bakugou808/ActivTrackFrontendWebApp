@@ -1,5 +1,8 @@
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
+
+// * Framer Motion Imports
+import { motion } from "framer-motion";
 // action imports
 import { logOut } from "../../Redux/Actions/AuthActions";
 
@@ -16,13 +19,30 @@ export const Home = (props) => {
   };
 
   return (
-    <div className="setDisplay exTitle fsize20">
-      <div></div>
+    <div className="homePageText exTitle fsize20">
       <h1>Welcome {user.username}</h1>
-      <div></div>
-      <h2 className="pointer" onClick={handleRedirect}>
-        Lets Get Busy
-      </h2>
+      <motion.h2
+        initial={{ y: "250vw" }}
+        animate={{ y: 0 }}
+        transition={{
+          delay: 0.6,
+          // duration: 1.5, doesn't work with spring type
+          type: "spring",
+          stiffness: 30,
+        }}
+        className="pointer"
+        onClick={handleRedirect}
+      >
+        <motion.p
+          whileHover={{
+            scale: 1.8,
+            color: "#ffea00",
+          }}
+          transition={{ type: "spring", stiffness: 150 }}
+        >
+          Lets Get Busy
+        </motion.p>
+      </motion.h2>
     </div>
   );
 };

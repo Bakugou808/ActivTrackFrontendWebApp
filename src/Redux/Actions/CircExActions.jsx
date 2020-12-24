@@ -121,7 +121,7 @@ export const patchCircExSuccess = (circEx) => ({
 
 // ------- PATCH NEW CIRC_EX FUNCTION--------
 
-export const patchCircEx = (circExData, handleWorkCirc = false) => {
+export const patchCircEx = (circExData, sideEffects = false) => {
   return (dispatch) => {
     dispatch(patchCircExRequest());
     fetch(`${API}/circuit_exercises/${circExData.circuit_exercise.id}`, {
@@ -135,7 +135,7 @@ export const patchCircEx = (circExData, handleWorkCirc = false) => {
           dispatch(patchCircExFailed(data.error));
         } else {
           dispatch(patchCircExSuccess(data));
-          handleWorkCirc && handleWorkCirc();
+          sideEffects && sideEffects();
         }
       });
   };
@@ -159,7 +159,7 @@ export const deleteCircExSuccess = (circExId) => ({
 
 // ------- DELETE NEW CIRC_EX FUNCTION--------
 
-export const deleteCircEx = (circExId) => {
+export const deleteCircEx = (circExId, sideEffects) => {
   return (dispatch) => {
     dispatch(deleteCircExRequest());
     fetch(`${API}/circuit_exercises/${circExId}`, {
@@ -172,6 +172,7 @@ export const deleteCircEx = (circExId) => {
           dispatch(deleteCircExFailed(data.error));
         } else {
           dispatch(deleteCircExSuccess(circExId));
+          sideEffects && sideEffects();
         }
       });
   };

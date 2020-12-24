@@ -7,35 +7,61 @@ import StatsContainer from "../Stats/StatsContainer";
 import { Button } from "@material-ui/core";
 
 // * Action Imports
-import { fetchWorkoutsStats } from "../../Redux/Actions/StatsActions";
+import { fetchWorkoutsStatsByTotalReps } from "../../Redux/Actions/StatsActions";
 import { fetchWorkout } from "../../Redux/Actions/WorkoutActions";
 
 export const EndWorkout = (props) => {
-  const { history, match, onFetchWorkoutsStats, stats, onFetchWorkout } = props;
+  const {
+    history,
+    match,
+    onFetchWorkoutsStatsByTotalReps,
+    stats,
+    onFetchWorkout,
+  } = props;
   const workoutId = match.params.workoutId;
-  const [showStats, setShowStats] = useState(false);
+  const workoutTitle = match.params.workoutTitle;
+  const folderId = match.params.folderId;
+  const folderName = match.params.folderName;
 
   useEffect(() => {
-    onFetchWorkoutsStats(workoutId, 2);
+    onFetchWorkoutsStatsByTotalReps(workoutId, 2);
     onFetchWorkout(workoutId);
+    handleRecentLS();
   }, []);
 
+  const handleRecentLS = () => {
+    let path = `/workouts/${folderName}/${folderId}/${workoutTitle}/${workoutId}`;
+    if (localStorage.getItem("recentWorkouts")) {
+      let recentWorkouts = JSON.parse(localStorage.getItem("recentWorkouts"));
+      if (recentWorkouts.includes(path)) {
+        recentWorkouts.filter((val) => val != path);
+        recentWorkouts.unshift(path);
+      } else if (!(recentWorkouts.length > 5)) {
+        recentWorkouts = recentWorkouts.unshift(path);
+      } else {
+        recentWorkouts = recentWorkouts.pop().unshift(path);
+      }
+      localStorage.setItem("recentWorkouts", recentWorkouts);
+    }
+  };
+
+  const redirectToStats = () => {
+    history.push(`/displayStats/${workoutTitle}/${workoutId}`);
+  };
+
   return (
-    <div className="container grid">
-      {showStats ? (
-        <StatsContainer />
-      ) : (
-        <div>
-          <div>Congrats on finishing!</div>
-          <Button
-            variant="contained"
-            color="primary"
-            onClick={() => setShowStats(true)}
-          >
-            View Stats
-          </Button>
-        </div>
-      )}
+    <div className="endWorkout">
+      <div className="congratsMsg">Congrats on finishing!</div>
+      <div className="goToStatBtnCon">
+        <Button
+          className="goToStatBtn"
+          variant="contained"
+          color="primary"
+          onClick={() => redirectToStats()}
+        >
+          View Stats
+        </Button>
+      </div>
     </div>
   );
 };
@@ -45,8 +71,8 @@ const mapStateToProps = (store) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  onFetchWorkoutsStats: (workoutId, numOfSessions) =>
-    dispatch(fetchWorkoutsStats(workoutId, numOfSessions)),
+  onFetchWorkoutsStatsByTotalReps: (workoutId, numOfSessions) =>
+    dispatch(fetchWorkoutsStatsByTotalReps(workoutId, numOfSessions)),
   onFetchWorkout: (workoutId) => dispatch(fetchWorkout(workoutId)),
 });
 export default AuthHOC(

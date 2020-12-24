@@ -10,6 +10,7 @@ import { fetchFormattedWorkout } from "../../Redux/Actions/WorkoutActions";
 import {
   clearSelectedCircEx,
   clearPosValCircEx,
+  deleteCircEx,
 } from "../../Redux/Actions/CircExActions";
 import { clearSelectedExercise } from "../../Redux/Actions/ExerciseActions";
 import { deleteCircuit } from "../../Redux/Actions/CircuitActions";
@@ -31,8 +32,6 @@ export const PatchRecordPt1 = (props) => {
     goToNextPage,
     exFields,
     setExFields,
-    // customAttsParent,
-    // setCustomAttsParent,
     setShowModal,
     handleCustomAdd,
     onFetchFormattedWorkout,
@@ -41,16 +40,15 @@ export const PatchRecordPt1 = (props) => {
     onClearPosValCircEx,
     workoutId,
     onDeleteCircuit,
+    onDeleteCircEx,
+    workoutStarted,
   } = props;
   const classes = useStyles();
 
   //   * taken from circuitformpt`1
   const [showExFormName, setShowExFormName] = useState(false);
   const [showExFormDesc, setShowExFormDesc] = useState(false);
-  // const [exFields, setExFields] = useState({
-  //   exercise_name: "Add Exercise",
-  //   description: "Add Description",
-  // });
+
   // * Circuit_Exercise/Attributes Field State
   const [showCustomAttFields, setShowCustomAttFields] = useState(false);
   const [customAtts, setCustomAtts] = useState({ reps: 1 });
@@ -112,7 +110,13 @@ export const PatchRecordPt1 = (props) => {
 
   const handleExSubmit = (e) => {
     e.preventDefault();
-    onPatchExercise({ exercise: { ...exFields, id: record.ex_id } });
+    const sideEffects = () => {
+      onFetchFormattedWorkout();
+    };
+    onPatchExercise(
+      { exercise: { ...exFields, id: record.ex_id } },
+      sideEffects
+    );
     closeExForms();
   };
 
@@ -145,7 +149,9 @@ export const PatchRecordPt1 = (props) => {
       onClearSelectedExercise();
       onClearPosValCircEx();
     };
-    onDeleteCircuit(record.circuit_id, sideEffects);
+    record.circuit_type === "circuit"
+      ? onDeleteCircEx(record.circuit_exercise_id, sideEffects)
+      : onDeleteCircuit(record.circuit_id, sideEffects);
   };
 
   return (
@@ -223,14 +229,16 @@ export const PatchRecordPt1 = (props) => {
             </Paper>
           </Grid>
           <Grid item xs={12}>
-            <Button
-              variant="outlined"
-              className={classes.paper}
-              onClick={handleDelete}
-              color="secondary"
-            >
-              Delete
-            </Button>
+            {!workoutStarted && (
+              <Button
+                variant="outlined"
+                className={classes.paper}
+                onClick={handleDelete}
+                color="secondary"
+              >
+                Delete
+              </Button>
+            )}
             <Button
               variant="outlined"
               className={classes.paper}
@@ -274,7 +282,8 @@ export const PatchRecordPt1 = (props) => {
 const mapStateToProps = (state) => ({});
 
 const mapDispatchToProps = (dispatch) => ({
-  onPatchExercise: (exData) => dispatch(patchExercise(exData)),
+  onPatchExercise: (exData, sideEffects) =>
+    dispatch(patchExercise(exData, sideEffects)),
   onClearSelectedCircEx: () => dispatch(clearSelectedCircEx()),
   onClearSelectedExercise: () => dispatch(clearSelectedExercise()),
   onClearPosValCircEx: (data, sideEffects) =>
@@ -283,6 +292,8 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch(fetchFormattedWorkout(workoutId)),
   onDeleteCircuit: (circuitId, sideEffects) =>
     dispatch(deleteCircuit(circuitId, sideEffects)),
+  onDeleteCircEx: (circExId, sideEffects) =>
+    dispatch(deleteCircEx(circExId, sideEffects)),
 });
 export default connect(mapStateToProps, mapDispatchToProps)(PatchRecordPt1);
 

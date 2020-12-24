@@ -10,10 +10,28 @@ export const headers = () => {
 
 // *rxaction -> action template
 
+// ------- CLEAR PATCHED CIRC-EX AND CIRCUIT
+
+export const clearPatchedCircExAndCircuitFromState = () => ({
+  type: "CLEAR_PATCHED_CIRC_&_CIRC_EX",
+});
+
 // ------- CLEAR SELECTED WORKOUT AND FORMATTED WORKOUT FROM STATE ACTIONS--------
 
 export const clearSelectedAndFormattedWorkouts = () => ({
   type: "CLEAR_SELECTED_AND_FORMATTED_WORKOUT_STATE",
+});
+
+// --------- SET REF FOR CURRENT EXERCISE ------------
+export const setCurrExRef = (ref) => ({
+  type: "SET_CURRENT_EXERCISE_REF",
+  ref: ref,
+});
+
+// --------- SHOW EXERCISE DRAWER ------------
+
+export const showExDrawer = () => ({
+  type: "SHOW_EX_DRAWER",
 });
 
 // ------- FETCH FOLDER WORKOUTS ACTIONS--------

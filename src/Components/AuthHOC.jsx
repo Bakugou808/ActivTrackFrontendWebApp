@@ -7,6 +7,11 @@ import {
   fetchAuthorizeUserSuccess,
   fetchAuthorizeUserFailure,
 } from "../Redux/Actions/AuthActions";
+import {
+  setDisplayOrientation,
+  setDevice,
+} from "../Redux/Actions/DeviceActions";
+
 // Redux free Fetch
 const token = () => localStorage.getItem("token");
 
@@ -20,12 +25,19 @@ const headers = () => {
 };
 
 export const AuthHOC = (WrappedComponent) => {
-  console.log(WrappedComponent);
-
   class AuthHOC extends React.Component {
     state = {
       authorized: false,
       pending: true,
+    };
+
+    detectListener = () => {
+      window.addEventListener("resize", this.detect);
+    };
+
+    detect = () => {
+      this.props.onSetDevice();
+      this.props.onSetOrientation();
     };
 
     renderAuth = () => {
@@ -65,7 +77,12 @@ export const AuthHOC = (WrappedComponent) => {
     };
 
     render() {
-      return <div>{this.renderAuth()}</div>;
+      return (
+        <div>
+          <div>{this.detectListener()}</div>
+          {this.renderAuth()}
+        </div>
+      );
     }
   }
 
@@ -76,6 +93,8 @@ export const AuthHOC = (WrappedComponent) => {
       dispatch(fetchAuthorizeUserSuccess(user)),
     onFetchAuthorizeUserFailure: (error) =>
       dispatch(fetchAuthorizeUserFailure(error)),
+    onSetDevice: () => dispatch(setDevice()),
+    onSetOrientation: () => dispatch(setDisplayOrientation()),
   });
 
   return connect(mapStateToProps, mapDispatchToProps)(AuthHOC);

@@ -1,13 +1,28 @@
-import React, { Component } from "react";
+import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
-import { ResponsiveLine } from "@nivo/line";
+import { ResponsiveLine, Line } from "@nivo/line";
 // * Material UI Imports
 import { makeStyles } from "@material-ui/core/styles";
 import { Paper } from "@material-ui/core";
 
 export const LineChart = (props) => {
-  const { data, lineData, session } = props;
+  const {
+    data,
+    lineData,
+    session,
+    legendX,
+    legendY,
+    sessStats,
+    height,
+    width,
+  } = props;
   const classes = useStyles();
+  const [showDetails, setShowDetails] = useState(false);
+  const [point, setPoint] = useState([]);
+
+  useEffect(() => {
+    console.log("height", height, "width", width);
+  }, [height, width]);
 
   function titleCase(string) {
     let sentence = string.toLowerCase().split("_");
@@ -81,14 +96,16 @@ export const LineChart = (props) => {
     return timeValue;
   };
 
-  const handleToolTip = (point, event) => {
-    let name = point.point.data.x;
+  const handleToolTip = (point) => {
+    let name = point.data.x;
+    // debugger;
     let obj = "";
-    if (data) {
-      obj = data.filter((obj) => obj.exercise_name === name)[0];
-    } else if (session) {
-      obj = session.filter((obj) => obj.exercise_name === name)[0];
+    if (sessStats) {
+      obj = sessStats.filter((obj) => obj.exercise_name === name)[0];
     }
+    // else if (session) {
+    //   obj = session.filter((obj) => obj.exercise_name === name)[0];
+    // }
     if (name) {
       return (
         <Paper className={[classes.paper, classes.root]}>
@@ -98,85 +115,95 @@ export const LineChart = (props) => {
     }
   };
 
+  const handleClick = (point, event) => {
+    setPoint(handleToolTip(point));
+    console.log("clicked");
+    setShowDetails(true);
+  };
+
   return (
     <>
-      <div className="lineChart">
-        <ResponsiveLine
-          data={lineData}
-          //   onClick={(point, event) => handleClick(point, event)}
-          // tooltip={handleToolTip}
-          margin={{ top: 50, right: 110, bottom: 50, left: 60 }}
-          xScale={{ type: "point" }}
-          colors="#004466"
-          yScale={{
-            type: "linear",
-            min: "auto",
-            max: "auto",
-            stacked: true,
-            reverse: false,
-          }}
-          yFormat=" >-.2f"
-          axisTop={null}
-          axisRight={null}
-          axisBottom={{
-            orient: "bottom",
-            tickSize: 5,
-            tickPadding: 5,
-            tickRotation: 0,
-            legend: "Exercise",
-            legendOffset: 36,
-            legendPosition: "middle",
-          }}
-          axisLeft={{
-            orient: "left",
-            tickSize: 5,
-            tickPadding: 5,
-            tickRotation: 0,
-            legend: "Total Reps",
-            legendOffset: -40,
-            legendPosition: "middle",
-          }}
-          pointSize={10}
-          pointColor={{ theme: "background" }}
-          pointBorderWidth={2}
-          pointBorderColor={{ from: "serieColor" }}
-          pointLabel="yFormatted"
-          pointLabelYOffset={-12}
-          useMesh={true}
-          legends={[
-            {
-              anchor: "top-left",
-              direction: "column",
-              justify: false,
-              translateX: -8,
-              translateY: -50,
-              itemsSpacing: 0,
-              itemDirection: "left-to-right",
-              itemWidth: 80,
-              itemHeight: 20,
-              itemOpacity: 0.75,
-              symbolSize: 16,
-              symbolShape: "circle",
-              symbolBorderColor: "rgba(0, 0, 0, .5)",
-              effects: [
-                {
-                  on: "hover",
-                  style: {
-                    itemBackground: "rgba(0, 0, 0, .03)",
-                    itemOpacity: 1,
-                  },
+      {/* <div className="lineChart"> */}
+      <Line
+        data={data}
+        // onClick={(point, event) => handleClick(point, event)}
+        // tooltip={(point, event) => handleToolTip(point, event)}
+        enableSlices="x"
+        height={height}
+        width={width}
+        margin={{ top: 80, right: 60, bottom: 125, left: 90 }}
+        xScale={{ type: "point" }}
+        colors="#004466"
+        yScale={{
+          type: "linear",
+          min: "auto",
+          max: "auto",
+          stacked: true,
+          reverse: false,
+        }}
+        yFormat=" >-.2f"
+        axisTop={null}
+        axisRight={null}
+        axisBottom={{
+          orient: "bottom",
+          tickSize: 10,
+          tickPadding: 5,
+          tickRotation: -45,
+          legend: "",
+          legendOffset: 0,
+          legendPosition: "middle",
+        }}
+        axisLeft={{
+          orient: "left",
+          tickSize: 5,
+          tickPadding: 5,
+          tickRotation: 0,
+          legend: "Total Reps",
+          legendOffset: -40,
+          legendPosition: "middle",
+        }}
+        pointSize={10}
+        pointColor={{ theme: "background" }}
+        pointBorderWidth={2}
+        pointBorderColor={{ from: "serieColor" }}
+        pointLabel="yFormatted"
+        pointLabelYOffset={-12}
+        useMesh={true}
+        legends={[
+          {
+            anchor: "top",
+            direction: "row",
+            justify: false,
+            translateX: -50,
+            translateY: -60,
+            itemsSpacing: 0,
+            itemDirection: "left-to-right",
+            itemWidth: 80,
+            itemHeight: 20,
+            itemOpacity: 0.75,
+            symbolSize: 22,
+            symbolShape: "diamond",
+            symbolBorderColor: "rgba(0, 0, 0, .5)",
+            effects: [
+              {
+                on: "hover",
+                style: {
+                  itemBackground: "rgba(0, 0, 0, .03)",
+                  itemOpacity: 1,
                 },
-              ],
-            },
-          ]}
-        />
-      </div>
+              },
+            ],
+          },
+        ]}
+      />
+      {showDetails && point}
+      {/* </div> */}
     </>
   );
 };
 
 const mapStateToProps = (store) => ({
-  data: store.stats.workoutsStats.stats,
+  // data: store.stats.workoutsStats.stats,
 });
 
 const mapDispatchToProps = {};

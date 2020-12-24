@@ -54,7 +54,7 @@ const AntSwitch = withStyles((theme) => ({
 }))(Switch);
 
 export default function AutoRollSwitch(props) {
-  const { autoRoll, setAutoRoll } = props;
+  const { autoRoll, setAutoRoll, label } = props;
 
   const handleChange = () => {
     setAutoRoll((prev) => !prev);
@@ -70,7 +70,9 @@ export default function AutoRollSwitch(props) {
             name="checkedA"
           />
         }
-        label="AutoRoll"
+        size="Small"
+        labelPlacement="Top"
+        label={label}
         className={"autoRollText"}
       />
     </FormGroup>

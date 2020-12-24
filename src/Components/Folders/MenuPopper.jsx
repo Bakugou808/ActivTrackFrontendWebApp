@@ -16,7 +16,7 @@ function MenuPopper(props) {
   const anchorRef = React.useRef(null);
 
   useEffect(() => {
-    item && setItem(item) && console.log("set item to", item);
+    item && setItem(item);
   }, [item]);
 
   const handleToggle = () => {

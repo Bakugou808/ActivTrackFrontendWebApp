@@ -158,8 +158,8 @@ const mapStateToProps = (store) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  onPatchCircEx: (circExData, handleWorkCirc) =>
-    dispatch(patchCircEx(circExData, handleWorkCirc)),
+  onPatchCircEx: (circExData, sideEffects) =>
+    dispatch(patchCircEx(circExData, sideEffects)),
   onClearSelectedCircEx: () => dispatch(clearSelectedCircEx()),
   onClearSelectedExercise: () => dispatch(clearSelectedExercise()),
   onClearPosValCircEx: (data, sideEffects) =>

@@ -9,8 +9,10 @@ import circExReducer from "./CircExReducer";
 import workCircuitReducer from "./WorkCircuitReducer";
 import statReducer from "./StatReducer";
 import sessionReducer from "./SessionReducer";
+import deviceReducer from "./DeviceReducer";
 
 const rootReducer = combineReducers({
+  device: deviceReducer,
   user: userReducer,
   authorized: authReducer,
   folders: folderReducer,

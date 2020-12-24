@@ -1,5 +1,6 @@
 import React from "react";
 import { Route, Switch } from "react-router-dom";
+import { connect } from "react-redux";
 // Component Imports
 import NavBar from "./Components/NavBar/NavBar";
 import Home from "./Components/Home/Home";
@@ -15,6 +16,7 @@ import StartWorkout from "./Components/Workouts/StartWorkout";
 import EndWorkout from "./Components/Workouts/EndWorkout";
 import AllStatsContainer from "./Components/Stats/AllStatsContainer";
 import StatsPage from "./Components/Stats/StatsPage";
+import StatsContainerParent from "./Components/Stats/StatsContainerParent";
 
 class App extends React.Component {
   render() {
@@ -39,7 +41,7 @@ class App extends React.Component {
           />
           <Route
             path="/displayStats/:workoutTitle/:workoutId"
-            render={(props) => <AllStatsContainer {...props} />}
+            render={(props) => <StatsContainerParent {...props} />}
           />
           <Route
             path={`/folders/:folderName/:folderId`}
@@ -47,6 +49,10 @@ class App extends React.Component {
           />
           <Route
             path="/new_workout/:folderName/:folderId/:workoutTitle/:workoutId"
+            render={(props) => <NewWorkout {...props} />}
+          />
+          <Route
+            path="/edit_workout/:folderName/:folderId/:workoutTitle/:workoutId"
             render={(props) => <NewWorkout {...props} />}
           />
           <Route

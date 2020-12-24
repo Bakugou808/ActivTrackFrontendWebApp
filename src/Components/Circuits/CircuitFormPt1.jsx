@@ -83,7 +83,6 @@ export const CircuitFormPt1 = (props) => {
     e.preventDefault();
     const data = { [e.target.name]: e.target.value };
     setExFields((prev) => ({ ...prev, ...data }));
-    console.log(exFields);
   };
 
   const handleExSubmit = (e) => {

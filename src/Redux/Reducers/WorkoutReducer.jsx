@@ -4,12 +4,40 @@ const initialState = {
   selectedWorkout: null,
   formattedWorkout: null,
   workouts: [],
+  showDrawer: false,
+  currExRef: null,
+  patchedExTitle: null,
+  patchedCircExAtt: null,
+  patchedCircuitSet: null,
   fetching: false,
   error: false,
 };
 
 const workCircuitReducer = (state = initialState, action) => {
   switch (action.type) {
+    // * Clear Patched CircEx and Circuit
+    case "CLEAR_PATCHED_CIRC_&_CIRC_EX":
+      return {
+        ...state,
+        patchedCircExAtt: null,
+        patchedCircuitSet: null,
+        patchedExTitle: null,
+      };
+    // * Set Patched Exercise for Title
+    case "PATCH_EXERCISE_SUCCESSFUL":
+      return { ...state, patchedExTitle: action.exercise };
+    // * Set Patched CircuitExercise for Attributes
+    case "PATCH_CIRC_EX_SUCCESSFUL":
+      return { ...state, patchedCircExAtt: action.circEx };
+    // * Set Patched Circuit Set
+    case "PATCH_CIRCUIT_SUCCESSFUL":
+      return { ...state, patchedCircuitSet: action.circuit };
+    // * Set Current Exercise Ref
+    case "SET_CURRENT_EXERCISE_REF":
+      return { ...state, currExRef: action.ref };
+    // * Show Exercise Drawer
+    case "SHOW_EX_DRAWER":
+      return { ...state, showDrawer: !state.showDrawer };
     //* Set Selected Workout
     case "SET_SELECTED_WORKOUT":
       return { ...state, selectedWorkout: action.workout };

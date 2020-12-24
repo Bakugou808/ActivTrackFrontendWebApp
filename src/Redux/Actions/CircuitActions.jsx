@@ -21,6 +21,16 @@ export const setPhase = (phase) => ({
 });
 
 // ------- MODIFY CIRCUIT POSITION ACTIONS--------
+export const clearCircuitPhasePositions = () => ({
+  type: "SET_PHASE_POS_TO_1",
+});
+
+export const setPositionCircuitToX = (payload) => ({
+  type: "SET_POS_CIRCUIT_TO_X",
+  payload: payload.x,
+  phase: payload.phase,
+});
+
 export const increasePositionCircuit = () => ({
   type: "INCREASE_POS_CIRCUIT",
 });
@@ -102,7 +112,7 @@ export const fetchCircuit = (circuitId) => {
   };
 };
 
-// ------- POST NEW CIRCUIT ACTIONS--------
+// ------- POST CIRCUIT ACTIONS--------
 
 export const postCircuitRequest = () => ({
   type: "POST_CIRCUIT_REQUEST",
@@ -118,7 +128,7 @@ export const postCircuitSuccess = (circuit) => ({
   circuit: circuit,
 });
 
-// ------- POST NEW CIRCUIT FUNCTION--------
+// ------- POST CIRCUIT FUNCTION--------
 
 export const postCircuit = (circuitData) => {
   return (dispatch) => {
@@ -134,13 +144,13 @@ export const postCircuit = (circuitData) => {
           dispatch(postCircuitFailed(data.error));
         } else {
           dispatch(postCircuitSuccess(data));
-          dispatch(increasePositionCircuit());
+          // dispatch(increasePositionCircuit());
         }
       });
   };
 };
 
-// ------- PATCH NEW CIRCUIT ACTIONS--------
+// ------- PATCH CIRCUIT ACTIONS--------
 
 export const patchCircuitRequest = () => ({
   type: "PATCH_CIRCUIT_REQUEST",
@@ -156,9 +166,9 @@ export const patchCircuitSuccess = (circuit) => ({
   circuit: circuit,
 });
 
-// ------- PATCH NEW CIRCUIT FUNCTION--------
+// ------- PATCH CIRCUIT FUNCTION--------
 
-export const patchCircuit = (circuitData, sideEffects) => {
+export const patchCircuit = (circuitData, sideEffects = false) => {
   return (dispatch) => {
     dispatch(patchCircuitRequest());
     fetch(`${API}/circuits/${circuitData.circuit.id}`, {
@@ -172,13 +182,13 @@ export const patchCircuit = (circuitData, sideEffects) => {
           dispatch(patchCircuitFailed(data.error));
         } else {
           dispatch(patchCircuitSuccess(data));
-          sideEffects();
+          sideEffects && sideEffects();
         }
       });
   };
 };
 
-// ------- DELETE NEW CIRCUIT ACTIONS--------
+// ------- DELETE CIRCUIT ACTIONS--------
 
 export const deleteCircuitRequest = () => ({
   type: "DELETE_CIRCUIT_REQUEST",
@@ -194,7 +204,7 @@ export const deleteCircuitSuccess = (circuitId) => ({
   circuitId: circuitId,
 });
 
-// ------- DELETE NEW CIRCUIT FUNCTION--------
+// ------- DELETE CIRCUIT FUNCTION--------
 
 export const deleteCircuit = (circuitId, sideEffects) => {
   return (dispatch) => {
@@ -209,7 +219,7 @@ export const deleteCircuit = (circuitId, sideEffects) => {
           dispatch(deleteCircuitFailed(data.error));
         } else {
           dispatch(deleteCircuitSuccess(circuitId));
-          sideEffects();
+          sideEffects && sideEffects();
         }
       });
   };

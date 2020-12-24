@@ -105,11 +105,6 @@ export const SignUp = (props) => {
                 value={fields.email}
               />
             </Grid>
-            {/* {error && (
-              <Grid item xs={12}>
-                "Passwords Must Match"
-              </Grid>
-            )} */}
           </Grid>
           <Button
             type="submit"
@@ -176,7 +171,7 @@ function Copyright() {
     >
       {"Copyright © "}
       <Link color="inherit" href="https://material-ui.com/">
-        Your Website
+        ActivTrack
       </Link>{" "}
       {new Date().getFullYear()}
       {"."}
