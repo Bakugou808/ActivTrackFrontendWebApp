@@ -93,7 +93,7 @@ export const signUpUser = (userData, history) => {
         } else {
           localStorage.setItem("token", user.jwt);
           localStorage.setItem("recentFolders", "[]");
-          localStorage.setItem("recentWorkout", "[]");
+          localStorage.setItem("recentWorkouts", "[]");
           localStorage.setItem("recentStats", "[]");
           dispatch(signUpUserSuccess(user));
           history.push("/home");

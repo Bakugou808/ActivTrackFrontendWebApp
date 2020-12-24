@@ -205,3 +205,10 @@ html {
 .goToStatBtn {
   width: 50vw;
 }
+
+.HomeCarousel {
+  display: grid;
+  grid-template-rows: 1fr 1fr 1fr;
+  align-content: center;
+  justify-items: center;
+}

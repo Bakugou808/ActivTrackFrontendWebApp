@@ -8,6 +8,7 @@ import { logOut } from "../../Redux/Actions/AuthActions";
 
 // component imports
 import { AuthHOC } from "../AuthHOC";
+import MyCarousel from "./MyCarousel"
 
 export const Home = (props) => {
   const { user, onLogOut, match, history } = props;
@@ -43,6 +44,21 @@ export const Home = (props) => {
           Lets Get Busy
         </motion.p>
       </motion.h2>
+      <div className="HomeCarousel">
+          <div className="folderCarousel">
+            <div>Recent Folders</div>
+            {/* <MyCarousel data = {} /> */}
+          </div>
+          <div className="workoutCarousel">
+          <div>Recent Workouts</div>
+
+            {/* <MyCarousel data = {} /> */}
+          </div>
+          <div className="statCarousel">
+          <div>Recent Stats</div>
+
+            {/* <MyCarousel data = {} /> */}
+          </div>
     </div>
   );
 };
