@@ -58,7 +58,7 @@ export const Folder = (props) => {
       if (recentFolders.includes(path)) {
         recentFolders = recentFolders.filter((val) => val != path);
         recentFolders.unshift(path);
-      } else if (!(recentFolders.length > 5)) {
+      } else if (!(recentFolders.length > 9)) {
         recentFolders.unshift(path);
       } else {
         recentFolders.pop().unshift(path);

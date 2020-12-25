@@ -38,7 +38,7 @@ export const EndWorkout = (props) => {
       if (recentWorkouts.includes(path)) {
         recentWorkouts = recentWorkouts.filter((val) => val != path);
         recentWorkouts.unshift(path);
-      } else if (!(recentWorkouts.length > 5)) {
+      } else if (!(recentWorkouts.length > 9)) {
         recentWorkouts.unshift(path);
       } else {
         recentWorkouts.pop().unshift(path);

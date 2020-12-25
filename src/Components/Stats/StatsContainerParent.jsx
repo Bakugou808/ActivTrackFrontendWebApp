@@ -61,7 +61,7 @@ export const StatsContainerParent = (props) => {
       if (recentStats.includes(path)) {
         recentStats = recentStats.filter((val) => val != path);
         recentStats.unshift(path);
-      } else if (!(recentStats.length > 5)) {
+      } else if (!(recentStats.length > 9)) {
         recentStats.unshift(path);
       } else {
         recentStats.pop().unshift(path);

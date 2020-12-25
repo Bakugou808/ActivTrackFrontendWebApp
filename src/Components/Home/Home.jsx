@@ -70,17 +70,32 @@ export const Home = (props) => {
       <div className="HomeCarousel">
         <div className="folderCarousel">
           <div className="recentTitle">Recent Folders</div>
-          <MyCarousel data={recentFolders} history={history} match={match} />
+          <MyCarousel
+            data={recentFolders}
+            history={history}
+            match={match}
+            category="folders"
+          />
         </div>
         <div className="workoutCarousel">
           <div className="recentTitle">Recent Workouts</div>
 
-          <MyCarousel data={recentWorkouts} history={history} match={match} />
+          <MyCarousel
+            data={recentWorkouts}
+            history={history}
+            match={match}
+            category="workouts"
+          />
         </div>
         <div className="statCarousel">
           <div className="recentTitle">Recent Stats</div>
 
-          <MyCarousel data={recentStats} history={history} match={match} />
+          <MyCarousel
+            data={recentStats}
+            history={history}
+            match={match}
+            category="stats"
+          />
         </div>
       </div>
     </div>
