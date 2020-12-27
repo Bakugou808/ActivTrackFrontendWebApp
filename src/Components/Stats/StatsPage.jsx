@@ -38,23 +38,6 @@ export const StatsPage = (props) => {
     // onSetWorkoutsStats(workoutHash);
     onFetchWorkoutsStatsByTotalReps(workInfo.id, 20);
     onFetchWorkoutsStatsByEx(workInfo.id, 20);
-    handleRecentLS(workInfo.title, workInfo.id);
-  };
-
-  const handleRecentLS = (workoutTitle, workoutId) => {
-    let path = `/displayStats/${workoutTitle}/${workoutId}`;
-    if (localStorage.getItem("recentStats")) {
-      let recentStats = JSON.parse(localStorage.getItem("recentStats"));
-      if (recentStats.includes(path)) {
-        recentStats.filter((val) => val != path);
-        recentStats.unshift(path);
-      } else if (!(recentStats.length > 5)) {
-        recentStats = recentStats.unshift(path);
-      } else {
-        recentStats = recentStats.pop().unshift(path);
-      }
-      localStorage.setItem("recentStats", recentStats);
-    }
   };
 
   const renderWorkout = () => {

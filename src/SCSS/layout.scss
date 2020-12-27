@@ -205,3 +205,51 @@ html {
 .goToStatBtn {
   width: 50vw;
 }
+
+.HomeCarousel {
+  display: grid;
+  grid-template-rows: 1fr 1fr 1fr;
+  align-content: center;
+  justify-items: center;
+  grid-row-gap: 90px;
+  margin-bottom: 80px;
+}
+
+.folderCarousel {
+  display: grid;
+  grid-template-rows: 0.5fr 1fr;
+  grid-row-gap: 30px;
+}
+.workoutCarousel {
+  display: grid;
+  grid-template-rows: 0.5fr 1fr;
+  grid-row-gap: 30px;
+}
+.statCarousel {
+  display: grid;
+  grid-template-rows: 0.5fr 1fr;
+  grid-row-gap: 30px;
+}
+
+.myCarousel {
+  display: flex;
+  width: 80vw;
+  align-items: center;
+  justify-content: center;
+  overflow-x: auto;
+  border-style: groove;
+}
+
+.recentTitle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.carouselCard {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6vw;
+  margin: 15px;
+}

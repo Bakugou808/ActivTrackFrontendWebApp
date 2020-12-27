@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 
 // * Framer Motion Imports
@@ -8,11 +8,35 @@ import { logOut } from "../../Redux/Actions/AuthActions";
 
 // component imports
 import { AuthHOC } from "../AuthHOC";
+import MyCarousel from "./MyCarousel";
 
 export const Home = (props) => {
   const { user, onLogOut, match, history } = props;
+  const [recentFolders, setRecentFolders] = useState(null);
+  const [recentWorkouts, setRecentWorkouts] = useState(null);
+  const [recentStats, setRecentStats] = useState(null);
 
-  useEffect(() => {}, []);
+  useEffect(() => {
+    grabRecents();
+  }, []);
+
+  const grabRecents = () => {
+    let f = JSON.parse(localStorage.getItem("recentFolders"));
+    setRecentFolders(f);
+    let w = JSON.parse(localStorage.getItem("recentWorkouts"));
+    setRecentWorkouts(w);
+    let s = JSON.parse(localStorage.getItem("recentStats"));
+    setRecentStats(s);
+  };
+
+  const formatTitles = (titleArr) => {
+    let titles = titleArr.map((title) => {
+      let split = title.split("/");
+      let ind = split.length - 2;
+      return split[ind];
+    });
+    return titles;
+  };
 
   const handleRedirect = (params) => {
     history.push("/folders");
@@ -43,6 +67,37 @@ export const Home = (props) => {
           Lets Get Busy
         </motion.p>
       </motion.h2>
+      <div className="HomeCarousel">
+        <div className="folderCarousel">
+          <div className="recentTitle">Recent Folders</div>
+          <MyCarousel
+            data={recentFolders}
+            history={history}
+            match={match}
+            category="folders"
+          />
+        </div>
+        <div className="workoutCarousel">
+          <div className="recentTitle">Recent Workouts</div>
+
+          <MyCarousel
+            data={recentWorkouts}
+            history={history}
+            match={match}
+            category="workouts"
+          />
+        </div>
+        <div className="statCarousel">
+          <div className="recentTitle">Recent Stats</div>
+
+          <MyCarousel
+            data={recentStats}
+            history={history}
+            match={match}
+            category="stats"
+          />
+        </div>
+      </div>
     </div>
   );
 };

@@ -31,16 +31,19 @@ export const EndWorkout = (props) => {
 
   const handleRecentLS = () => {
     let path = `/workouts/${folderName}/${folderId}/${workoutTitle}/${workoutId}`;
+    console.log("modified local storage Recent Workouts");
+
     if (localStorage.getItem("recentWorkouts")) {
       let recentWorkouts = JSON.parse(localStorage.getItem("recentWorkouts"));
       if (recentWorkouts.includes(path)) {
-        recentWorkouts.filter((val) => val != path);
+        recentWorkouts = recentWorkouts.filter((val) => val != path);
         recentWorkouts.unshift(path);
-      } else if (!(recentWorkouts.length > 5)) {
-        recentWorkouts = recentWorkouts.unshift(path);
+      } else if (!(recentWorkouts.length > 9)) {
+        recentWorkouts.unshift(path);
       } else {
-        recentWorkouts = recentWorkouts.pop().unshift(path);
+        recentWorkouts.pop().unshift(path);
       }
+      recentWorkouts = JSON.stringify(recentWorkouts);
       localStorage.setItem("recentWorkouts", recentWorkouts);
     }
   };

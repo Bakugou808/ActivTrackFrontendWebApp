@@ -63,7 +63,27 @@ const Workout = (props) => {
     workoutId && onFetchFormattedWorkout(workoutId);
 
     !selectedFolder && onFetchFolder(folderId);
+    handleRecentLS();
   }, [workoutId]);
+
+  const handleRecentLS = () => {
+    console.log("modified local storage Recent Workouts");
+    // /workouts/:folderName/:folderId/:workoutTitle/:workoutId
+    let path = `/workouts/${folderName}/${folderId}/${workoutTitle}/${workoutId}`;
+    if (localStorage.getItem("recentWorkouts")) {
+      let recentWorkouts = JSON.parse(localStorage.getItem("recentWorkouts"));
+      if (recentWorkouts.includes(path)) {
+        recentWorkouts = recentWorkouts.filter((val) => val != path);
+        recentWorkouts.unshift(path);
+      } else if (!(recentWorkouts.length > 9)) {
+        recentWorkouts.unshift(path);
+      } else {
+        recentWorkouts.pop().unshift(path);
+      }
+      recentWorkouts = JSON.stringify(recentWorkouts);
+      localStorage.setItem("recentWorkouts", recentWorkouts);
+    }
+  };
 
   const handleStartWorkout = () => {
     onClearPatchedCircExAndCircuitFromState();
