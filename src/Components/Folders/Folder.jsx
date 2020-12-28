@@ -51,7 +51,6 @@ export const Folder = (props) => {
   }, [folderId]);
 
   const handleRecentLS = () => {
-    console.log("modified local storage Recent Folders");
     let path = `/folders/${folderName}/${folderId}`;
     if (localStorage.getItem("recentFolders")) {
       let recentFolders = JSON.parse(localStorage.getItem("recentFolders"));

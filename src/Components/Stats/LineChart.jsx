@@ -20,9 +20,7 @@ export const LineChart = (props) => {
   const [showDetails, setShowDetails] = useState(false);
   const [point, setPoint] = useState([]);
 
-  useEffect(() => {
-    console.log("height", height, "width", width);
-  }, [height, width]);
+  useEffect(() => {}, [height, width]);
 
   function titleCase(string) {
     let sentence = string.toLowerCase().split("_");
@@ -117,7 +115,6 @@ export const LineChart = (props) => {
 
   const handleClick = (point, event) => {
     setPoint(handleToolTip(point));
-    console.log("clicked");
     setShowDetails(true);
   };
 

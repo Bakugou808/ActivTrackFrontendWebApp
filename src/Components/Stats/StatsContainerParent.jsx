@@ -54,7 +54,6 @@ export const StatsContainerParent = (props) => {
 
   const handleRecentLS = () => {
     let path = `/displayStats/${workoutTitle}/${workoutId}`;
-    console.log("modified local storage Recent Stats");
 
     if (localStorage.getItem("recentStats")) {
       let recentStats = JSON.parse(localStorage.getItem("recentStats"));
@@ -75,13 +74,11 @@ export const StatsContainerParent = (props) => {
     setExStats(exStat[1]);
     setSelectedEx(exStat[0]);
     setSelectedExKey(null);
-    console.log(exStat);
   };
 
   const handleSessionClick = (sessStat) => {
     setSessStats(sessStat[1]);
     setSelectedSess(sessStat[0]);
-    console.log(sessStat);
   };
 
   const handleExList = () => {
