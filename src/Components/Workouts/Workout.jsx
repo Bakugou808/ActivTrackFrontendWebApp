@@ -67,7 +67,6 @@ const Workout = (props) => {
   }, [workoutId]);
 
   const handleRecentLS = () => {
-    console.log("modified local storage Recent Workouts");
     // /workouts/:folderName/:folderId/:workoutTitle/:workoutId
     let path = `/workouts/${folderName}/${folderId}/${workoutTitle}/${workoutId}`;
     if (localStorage.getItem("recentWorkouts")) {
