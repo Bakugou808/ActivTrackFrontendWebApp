@@ -17,7 +17,7 @@ export const MyCarousel = ({ data, history, match, category }) => {
       justifyContent: "center",
       padding: "6vw",
       margin: "15px",
-      backgroundImage: `url(${backgroundImg})`,
+      // backgroundImage: `url(${backgroundImg})`,
       backgroundSize: "cover",
       backgroundColor: "#f57c00",
       "&:hover": {

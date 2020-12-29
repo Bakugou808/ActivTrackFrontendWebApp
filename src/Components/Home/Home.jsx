@@ -44,60 +44,109 @@ export const Home = (props) => {
 
   return (
     <div className="homePageText exTitle fsize20">
-      <h1>Welcome {user.username}</h1>
-      <motion.h2
-        initial={{ y: "250vw" }}
-        animate={{ y: 0 }}
+      <motion.div
+        initial={{ y: 0 }}
+        animate={{ y: "-500vw" }}
         transition={{
-          delay: 0.6,
+          delay: 3,
+          type: "tween",
+          // stiffness: 300,
+          ease: "easeOut",
+          duration: 2,
+        }}
+      >
+        <motion.h1
+          initial={{ y: "250vw" }}
+          animate={{ y: 0 }}
+          transition={{
+            delay: 0.6,
+            type: "spring",
+            stiffness: 30,
+            // ease: "easeOut",
+            // duration: 2,
+          }}
+        >
+          Welcome {user.username}
+        </motion.h1>
+      </motion.div>
+      <motion.div
+        initial={{ y: 0 }}
+        animate={{ y: "-250vw" }}
+        transition={{
+          delay: 4.5,
           // duration: 1.5, doesn't work with spring type
           type: "spring",
           stiffness: 30,
         }}
-        className="pointer"
-        onClick={handleRedirect}
       >
-        <motion.p
-          whileHover={{
-            scale: 1.8,
-            color: "#ffea00",
+        <motion.h2
+          initial={{ y: "250vw" }}
+          animate={{ y: 0 }}
+          transition={{
+            delay: 2.5,
+            type: "spring",
+            stiffness: 30,
           }}
-          transition={{ type: "spring", stiffness: 150 }}
         >
-          Lets Get Busy
-        </motion.p>
-      </motion.h2>
-      <div className="HomeCarousel">
-        <div className="folderCarousel">
-          <div className="recentTitle">Recent Folders</div>
-          <MyCarousel
-            data={recentFolders}
-            history={history}
-            match={match}
-            category="folders"
-          />
-        </div>
-        <div className="workoutCarousel">
-          <div className="recentTitle">Recent Workouts</div>
+          <p>Lets Get Busy</p>
+        </motion.h2>
+      </motion.div>
+      <motion.div
+        initial={{ y: "250vw" }}
+        animate={{ y: -180 }}
+        transition={{
+          delay: 3,
+          type: "spring",
+          stiffness: 30,
+        }}
+      >
+        <div className="HomeCarousel">
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 4, duration: 3 }}
+            className="folderCarousel"
+          >
+            <div className="recentTitle">Recent Folders</div>
+            <MyCarousel
+              data={recentFolders}
+              history={history}
+              match={match}
+              category="folders"
+            />
+          </motion.div>
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 4.5, duration: 2 }}
+            className="workoutCarousel"
+          >
+            <div className="recentTitle">Recent Workouts</div>
 
-          <MyCarousel
-            data={recentWorkouts}
-            history={history}
-            match={match}
-            category="workouts"
-          />
-        </div>
-        <div className="statCarousel">
-          <div className="recentTitle">Recent Stats</div>
+            <MyCarousel
+              data={recentWorkouts}
+              history={history}
+              match={match}
+              category="workouts"
+            />
+          </motion.div>
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 5, duration: 2 }}
+            className="statCarousel"
+          >
+            <div className="recentTitle">Recent Stats</div>
 
-          <MyCarousel
-            data={recentStats}
-            history={history}
-            match={match}
-            category="stats"
-          />
+            <MyCarousel
+              data={recentStats}
+              history={history}
+              match={match}
+              category="stats"
+            />
+          </motion.div>
         </div>
-      </div>
+      </motion.div>
     </div>
   );
 };
