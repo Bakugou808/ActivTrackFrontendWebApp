@@ -96,14 +96,11 @@ export const LineChart = (props) => {
 
   const handleToolTip = (point) => {
     let name = point.data.x;
-    // debugger;
     let obj = "";
     if (sessStats) {
       obj = sessStats.filter((obj) => obj.exercise_name === name)[0];
     }
-    // else if (session) {
-    //   obj = session.filter((obj) => obj.exercise_name === name)[0];
-    // }
+
     if (name) {
       return (
         <Paper className={[classes.paper, classes.root]}>
