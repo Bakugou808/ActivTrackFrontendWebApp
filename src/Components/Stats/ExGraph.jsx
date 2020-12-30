@@ -42,7 +42,7 @@ export const ExGraph = (props) => {
         sessTemp[key].push(consolidateSessionData(value));
       }
     }
-
+    // debugger;
     for (const [date, attArr] of Object.entries(sessTemp)) {
       for (const [att, value] of Object.entries(attArr[0])) {
         data = { id: "", color: "", data: [] };
@@ -59,6 +59,7 @@ export const ExGraph = (props) => {
         }
       }
     }
+    // debugger;
     setLineData(finData);
   };
 
@@ -90,15 +91,28 @@ export const ExGraph = (props) => {
     let tempAtts = {};
     let keys = {};
     let keys2 = [];
+    // debugger;
     sessData.map((totalSets) => {
       let key = Object.keys(totalSets)[0];
 
       totalSets[key].map((singSet) => {
         for (const [key, value] of Object.entries(singSet)) {
           if (tempAtts[key]) {
-            tempAtts[key] += value ? parseInt(value) : 0;
+            if (key === "Strap Length") {
+              tempAtts[key] += parseInt(value.match(/\d/g)[0])
+                ? parseInt(value.match(/\d/g)[0])
+                : 0;
+            } else {
+              tempAtts[key] += value ? parseInt(value) : 0;
+            }
           } else {
-            tempAtts[key] = value ? parseInt(value) : 0;
+            if (key === "Strap Length") {
+              tempAtts[key] = parseInt(value.match(/\d/g)[0])
+                ? parseInt(value.match(/\d/g)[0])
+                : 0;
+            } else {
+              tempAtts[key] = value ? parseInt(value) : 0;
+            }
           }
           if (keys[key]) {
             keys[key] += value ? 1 : 0;
@@ -108,6 +122,7 @@ export const ExGraph = (props) => {
         }
       });
     });
+    // debugger;
     for (const [key, value] of Object.entries(tempAtts)) {
       tempAtts[key] = Math.round(tempAtts[key] / keys[key]);
       if (key === "restPeriod" || key === "activeTime") {
@@ -125,6 +140,7 @@ export const ExGraph = (props) => {
         keys2.push(k);
       }
     }
+    // debugger;
     setKeys(keys2);
     return tempAtts;
   };

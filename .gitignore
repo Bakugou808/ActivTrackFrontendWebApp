@@ -25,3 +25,4 @@ yarn-error.log*
 # lockfiles
 package-lock.json
 yarn.lock
+node_modules
