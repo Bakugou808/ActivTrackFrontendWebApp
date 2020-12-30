@@ -10,6 +10,11 @@ import stats from "../../SCSS/stats.jpg";
 export const MyCarousel = ({ data, history, match, category }) => {
   const [backgroundImg, setBackgroundImg] = useState(null);
 
+  const [data2, setData2] = useState(null);
+  useEffect(() => {
+    data && setData2(["", ...data, ""]);
+  }, [data]);
+
   const useStyles = makeStyles(() => ({
     paper: {
       display: "flex",
@@ -27,9 +32,24 @@ export const MyCarousel = ({ data, history, match, category }) => {
       opacity: ".7",
       cursor: "pointer",
       color: "palegoldenrod",
-      fontSize: "30px",
+      fontSize: "2.5vh",
       fontWeight: "initial",
+      height: "6vh",
+      width: "fit-content",
     },
+    // carousel: {
+    //   display: "inline-flex",
+    //   width: "80vw",
+    //   overflowX: "auto",
+    //   borderStyle: "groove",
+    //   overflow: "overlay",
+    //   "& div:last-child": {
+    //     marginRight: "15px",
+    //   },
+    //   "& ::-webkit-scrollbar": {
+    //     display: "none",
+    //   },
+    // },
   }));
   useEffect(() => {
     switch (category) {
@@ -56,9 +76,11 @@ export const MyCarousel = ({ data, history, match, category }) => {
       let split = path.split("/");
       let title = split[split.length - 2];
       return (
-        <Paper className={classes.paper} onClick={() => handleRedirect(path)}>
-          {title}
-        </Paper>
+        <div className="cardWrap">
+          <Paper className={classes.paper} onClick={() => handleRedirect(path)}>
+            {title}
+          </Paper>
+        </div>
       );
     });
   };

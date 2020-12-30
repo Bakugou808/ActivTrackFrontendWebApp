@@ -211,7 +211,7 @@ html {
   grid-template-rows: 1fr 1fr 1fr;
   align-content: center;
   justify-items: center;
-  grid-row-gap: 90px;
+  grid-row-gap: 40px;
   margin-bottom: 80px;
 }
 
@@ -232,16 +232,45 @@ html {
 }
 
 .myCarousel {
-  display: flex;
+  display: inline-flex;
   width: 80vw;
-  align-items: center;
-  justify-content: center;
+  // align-items: center;
+  // justify-content: center;
   overflow-x: auto;
+  overflow: overlay;
   border-style: groove;
+  & div:first-of-type {
+    margin-left: 15px;
+  }
+  & div:last-of-type {
+    margin-right: 30px;
+  }
+}
+
+.cardWrap {
 }
 
 .recentTitle {
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.carouselPaper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6vw;
+  margin: 15px;
+  background-color: #f57c00;
+  &:hover {
+    background-color: #26a69a;
+    color: darkorange;
+  }
+  opacity: 0.7;
+  cursor: pointer;
+  color: palegoldenrod;
+  font-size: 30px;
+  font-weight: initial;
+  height: 6vh;
 }

@@ -65,6 +65,7 @@ export const Home = (props) => {
             // ease: "easeOut",
             // duration: 2,
           }}
+          className="welcomeUser"
         >
           Welcome {user.username}
         </motion.h1>
@@ -88,12 +89,12 @@ export const Home = (props) => {
             stiffness: 30,
           }}
         >
-          <p>Lets Get Busy</p>
+          <h1 className="letsGetBusy">Lets Get Busy</h1>
         </motion.h2>
       </motion.div>
       <motion.div
         initial={{ y: "250vw" }}
-        animate={{ y: -180 }}
+        animate={{ y: -450 }}
         transition={{
           delay: 3,
           type: "spring",
