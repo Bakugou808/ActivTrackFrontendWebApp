@@ -11,14 +11,14 @@ import { AuthHOC } from "../AuthHOC";
 import MyCarousel from "./MyCarousel";
 
 export const Home = (props) => {
-  const { user, onLogOut, match, history } = props;
+  const { user, onLogOut, match, history, device, orientation } = props;
   const [recentFolders, setRecentFolders] = useState(null);
   const [recentWorkouts, setRecentWorkouts] = useState(null);
   const [recentStats, setRecentStats] = useState(null);
 
   useEffect(() => {
     grabRecents();
-  }, []);
+  }, [orientation, device]);
 
   const grabRecents = () => {
     let f = JSON.parse(localStorage.getItem("recentFolders"));
@@ -82,7 +82,11 @@ export const Home = (props) => {
       >
         <motion.h2
           initial={{ y: "250vw" }}
-          animate={{ y: 0 }}
+          animate={
+            device === "mobile" && orientation === "portrait"
+              ? { y: -200 }
+              : { y: -120 }
+          }
           transition={{
             delay: 2.5,
             type: "spring",
@@ -92,9 +96,14 @@ export const Home = (props) => {
           <h1 className="letsGetBusy">Lets Get Busy</h1>
         </motion.h2>
       </motion.div>
+      {/* Carousels Start Here */}
       <motion.div
         initial={{ y: "250vw" }}
-        animate={{ y: -450 }}
+        animate={
+          device === "mobile" && orientation === "portrait"
+            ? { y: -475 }
+            : { y: -380 }
+        }
         transition={{
           delay: 3,
           type: "spring",
@@ -154,6 +163,8 @@ export const Home = (props) => {
 
 const mapStateToProps = (store) => ({
   user: store.user.user,
+  device: store.device.device,
+  orientation: store.device.orientation,
 });
 
 const mapDispatchToProps = (dispatch) => ({

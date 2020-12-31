@@ -24,7 +24,10 @@ export const StatsContainerParent = (props) => {
     statsByEx,
     onFetchWorkoutsStatsByTotalReps,
     onFetchWorkoutsStatsByEx,
+    device,
+    orientation,
   } = props;
+
   const workoutId = match.params.workoutId;
   const workoutTitle = match.params.workoutTitle;
 
@@ -114,7 +117,13 @@ export const StatsContainerParent = (props) => {
             <div className="graphHeaderTitle">Performance By Exercise</div>
             {exCaption && <div className="graphCaption">{exCaption}</div>}
           </div>
-          <div className="statsByExRow">
+          <div
+            className={
+              device === "mobile" && orientation === "landscape"
+                ? "statsByExRowMobLand"
+                : "statsByExRow"
+            }
+          >
             {/* exercise list and graph */}
             {exList && (
               <div className="sideListCol">
@@ -175,6 +184,8 @@ export const StatsContainerParent = (props) => {
 const mapStateToProps = (store) => ({
   statsByEx: store.stats.statsByEx,
   statsByTotalReps: store.stats.statsByTotalReps,
+  device: store.device.device,
+  orientation: store.device.orientation,
 });
 
 const mapDispatchToProps = (dispatch) => ({

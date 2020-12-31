@@ -239,12 +239,12 @@ html {
   overflow-x: auto;
   overflow: overlay;
   border-style: groove;
-  & div:first-of-type {
-    margin-left: 15px;
-  }
-  & div:last-of-type {
-    margin-right: 30px;
-  }
+  // & div:first-of-type {
+  //   margin-left: 15px;
+  // }
+  // & div:last-of-type {
+  //   margin-right: 30px;
+  // }
 }
 
 .cardWrap {
