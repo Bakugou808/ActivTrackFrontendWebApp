@@ -155,7 +155,13 @@ export const StatsContainerParent = (props) => {
             <div className="graphHeaderTitle">Performance By Session</div>
             {sessCaption && <div className="graphCaption">{sessCaption}</div>}
           </div>
-          <div className="statsByTotalRepsRow">
+          <div
+            className={
+              device === "mobile" && orientation === "landscape"
+                ? "statsByExRowMobLand"
+                : "statsByTotalRepsRow"
+            }
+          >
             {sessList && (
               <div className="sideListCol">
                 <SideList
