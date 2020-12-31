@@ -14,9 +14,8 @@ export const SessGraph = (props) => {
   const {
     rawData,
     selected,
-    // setKeys,
-    // exAttKeys,
-    // selectedExKey,
+    device,
+    orientation,
     sessStats,
     header,
     caption,
@@ -28,7 +27,7 @@ export const SessGraph = (props) => {
   useEffect(() => {
     rawData && setLineData();
     // selectedExKey && formatDispData(selectedExKey);
-  }, [rawData]);
+  }, [rawData, device, orientation]);
 
   //   [rawData, selectedExKey]
 
@@ -61,7 +60,13 @@ export const SessGraph = (props) => {
   };
 
   return (
-    <div className="statByTotalRepsGraph">
+    <div
+      className={
+        device === "mobile" && orientation === "landscape"
+          ? "statByTotalRepsGraphMobLand"
+          : "statByTotalRepsGraph"
+      }
+    >
       {displayData && (
         <AutoSizer>
           {({ height, width }) => (
@@ -80,7 +85,10 @@ export const SessGraph = (props) => {
   );
 };
 
-const mapStateToProps = (state) => ({});
+const mapStateToProps = (store) => ({
+  device: store.device.device,
+  orientation: store.device.orientation,
+});
 
 const mapDispatchToProps = {};
 

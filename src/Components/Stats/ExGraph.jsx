@@ -9,7 +9,14 @@ import { normalizeString } from "../Workouts/AttributeFields";
 import MyResponsiveLine from "./MyResponsiveLine";
 
 export const ExGraph = (props) => {
-  const { rawData, setKeys, exAttKeys, selectedExKey } = props;
+  const {
+    rawData,
+    setKeys,
+    exAttKeys,
+    selectedExKey,
+    device,
+    orientation,
+  } = props;
   const [lineData, setLineData] = useState([]);
   const [displayData, setDisplayData] = useState(null);
   const [legendY, setLegendY] = useState();
@@ -17,7 +24,7 @@ export const ExGraph = (props) => {
   useEffect(() => {
     rawData && formatData();
     selectedExKey && formatDispData(selectedExKey);
-  }, [rawData, selectedExKey]);
+  }, [rawData, selectedExKey, device, orientation]);
 
   function rand(min, max) {
     return Math.round(min + Math.random() * (max - min));
@@ -146,7 +153,13 @@ export const ExGraph = (props) => {
   };
 
   return (
-    <div className="statByExGraph">
+    <div
+      className={
+        device === "mobile" && orientation === "landscape"
+          ? "statByExGraphMobLand"
+          : "statByExGraph"
+      }
+    >
       {displayData && (
         <AutoSizer>
           {({ height, width }) => (
@@ -163,7 +176,10 @@ export const ExGraph = (props) => {
   );
 };
 
-const mapStateToProps = (state) => ({});
+const mapStateToProps = (store) => ({
+  device: store.device.device,
+  orientation: store.device.orientation,
+});
 
 const mapDispatchToProps = {};
 

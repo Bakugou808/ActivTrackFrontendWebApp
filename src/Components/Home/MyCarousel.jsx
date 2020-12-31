@@ -7,7 +7,14 @@ import folders from "../../SCSS/folders.jpg";
 import workouts from "../../SCSS/workouts.jpg";
 import stats from "../../SCSS/stats.jpg";
 
-export const MyCarousel = ({ data, history, match, category }) => {
+export const MyCarousel = ({
+  data,
+  history,
+  match,
+  category,
+  device,
+  orientation,
+}) => {
   const [backgroundImg, setBackgroundImg] = useState(null);
 
   const [data2, setData2] = useState(null);
@@ -21,7 +28,7 @@ export const MyCarousel = ({ data, history, match, category }) => {
       alignItems: "center",
       justifyContent: "center",
       padding: "6vw",
-      margin: "15px",
+      margin: "5px",
       // backgroundImage: `url(${backgroundImg})`,
       backgroundSize: "cover",
       backgroundColor: "#f57c00",
@@ -37,19 +44,9 @@ export const MyCarousel = ({ data, history, match, category }) => {
       height: "6vh",
       width: "fit-content",
     },
-    // carousel: {
-    //   display: "inline-flex",
-    //   width: "80vw",
-    //   overflowX: "auto",
-    //   borderStyle: "groove",
-    //   overflow: "overlay",
-    //   "& div:last-child": {
-    //     marginRight: "15px",
-    //   },
-    //   "& ::-webkit-scrollbar": {
-    //     display: "none",
-    //   },
-    // },
+    mobPortFontSize: {
+      fontSize: "2.5vw",
+    },
   }));
   useEffect(() => {
     switch (category) {
@@ -77,7 +74,14 @@ export const MyCarousel = ({ data, history, match, category }) => {
       let title = split[split.length - 2];
       return (
         <div className="cardWrap">
-          <Paper className={classes.paper} onClick={() => handleRedirect(path)}>
+          <Paper
+            className={
+              device === "mobile" && orientation === "landscape"
+                ? [classes.paper, classes.mobPortFontSize]
+                : classes.paper
+            }
+            onClick={() => handleRedirect(path)}
+          >
             {title}
           </Paper>
         </div>
@@ -88,7 +92,10 @@ export const MyCarousel = ({ data, history, match, category }) => {
   return <div className="myCarousel">{data && renderData()}</div>;
 };
 
-const mapStateToProps = (state) => ({});
+const mapStateToProps = (store) => ({
+  device: store.device.device,
+  orientation: store.device.orientation,
+});
 
 const mapDispatchToProps = {};
 
