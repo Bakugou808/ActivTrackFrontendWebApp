@@ -13,6 +13,7 @@ export const ExGraph = (props) => {
     rawData,
     setKeys,
     exAttKeys,
+    selected,
     selectedExKey,
     device,
     orientation,
@@ -53,12 +54,15 @@ export const ExGraph = (props) => {
     for (const [date, attArr] of Object.entries(sessTemp)) {
       for (const [att, value] of Object.entries(attArr[0])) {
         data = { id: "", color: "", data: [] };
-        data.id = normalizeString(att);
+        let tid = normalizeString(att);
+        let nuId = `${selected}: ${tid}`;
+        data.id = nuId;
         data.color = get_random_color();
         let x = { x: date, y: value };
         data.data.push(x);
 
         let k = normalizeString(att);
+
         if (finData[k]) {
           finData[k].data.push(x);
         } else {
@@ -91,6 +95,7 @@ export const ExGraph = (props) => {
         setLegendY(`Level`);
         break;
     }
+    // let nuKey = `${selected} ${key}`;
     setDisplayData([lineData[key]]);
   };
 

@@ -122,7 +122,7 @@ export const LineChart = (props) => {
         data={data}
         // onClick={(point, event) => handleClick(point, event)}
         // tooltip={(point, event) => handleToolTip(point, event)}
-        enableSlices="x"
+        // enableSlices="x"
         height={height}
         width={width}
         margin={{ top: 80, right: 60, bottom: 125, left: 90 }}
@@ -168,7 +168,7 @@ export const LineChart = (props) => {
             anchor: "top",
             direction: "row",
             justify: false,
-            translateX: -50,
+            translateX: -60,
             translateY: -60,
             itemsSpacing: 0,
             itemDirection: "left-to-right",
