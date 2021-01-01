@@ -18,13 +18,15 @@ export const SetIconUi = (props) => {
     onClearSelectedCircuit,
     onFetchFormattedWorkout,
     workoutId,
+    device,
+    orientation,
   } = props;
   const [setVal, setSetVal] = useState(1);
   const [showForm, setShowForm] = useState(false);
   const classes = useStyles();
   useEffect(() => {
     setCount && setSetVal(setCount);
-  }, [setCount]);
+  }, [setCount, orientation, device]);
 
   const handlePatchCircuit = () => {
     setShowForm(true);
@@ -60,16 +62,35 @@ export const SetIconUi = (props) => {
             />
           </form>
         ) : setVal === 1 ? (
-          <p className="setTag">{setVal} Set</p>
+          <p
+            className={
+              device === "mobile" && orientation === "landscape"
+                ? "setTagMob"
+                : "setTag"
+            }
+          >
+            {setVal} Set
+          </p>
         ) : (
-          <p className="setTag">{setVal} Sets</p>
+          <p
+            className={
+              device === "mobile" && orientation === "landscape"
+                ? "setTagMob"
+                : "setTag"
+            }
+          >
+            {setVal} Sets
+          </p>
         )}
       </Button>
     </div>
   );
 };
 
-const mapStateToProps = (store) => ({});
+const mapStateToProps = (store) => ({
+  device: store.device.device,
+  orientation: store.device.orientation,
+});
 
 const mapDispatchToProps = (dispatch) => ({
   onPatchCircuit: (circuitData, sideEffects) =>

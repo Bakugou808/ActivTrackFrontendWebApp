@@ -50,6 +50,7 @@ export const UiComponent = (props) => {
     setBell,
     fullTime,
     device,
+    orientation,
     handleSubmitStats,
     submitClicked,
   } = props;
@@ -77,7 +78,7 @@ export const UiComponent = (props) => {
   const classes = useStyles();
   useEffect(() => {
     exObj && handleTitleCase();
-  }, [exObj, restPeriod, formattedWorkout]);
+  }, [exObj, restPeriod, formattedWorkout, orientation, device]);
 
   const handleTitleCase = () => {
     setPhase(toTitleCase(exObj.circuit_phase));
@@ -103,16 +104,48 @@ export const UiComponent = (props) => {
       setTimeAlert(false);
       return (
         <div className="timer">
-          <div className="text">Active Time</div>
-          <div className="value">{timerValue}</div>
+          <div
+            className={
+              device === "mobile" && orientation === "landscape"
+                ? "textMobLand"
+                : "text"
+            }
+          >
+            Active Time
+          </div>
+          <div
+            className={
+              device === "mobile" && orientation === "landscape"
+                ? "value valMob"
+                : "value"
+            }
+          >
+            {timerValue}
+          </div>
         </div>
       );
     } else if (endEx) {
       handleExceededRest();
       return (
         <div className="timer">
-          <div className="text">Rest Time</div>
-          <div className="value">{timerValue}</div>
+          <div
+            className={
+              device === "mobile" && orientation === "landscape"
+                ? "textMobLand "
+                : "text"
+            }
+          >
+            Rest Time
+          </div>
+          <div
+            className={
+              device === "mobile" && orientation === "landscape"
+                ? "value valMob"
+                : "value"
+            }
+          >
+            {timerValue}
+          </div>
         </div>
       );
     }
@@ -192,14 +225,22 @@ export const UiComponent = (props) => {
             {exObj && (
               <div className="setDisplay">
                 <a
-                  className="exTitleWorkout"
+                  className={
+                    device === "mobile"
+                      ? "exTitleWorkout exTitleWorkoutMob"
+                      : "exTitleWorkout"
+                  }
                   href={`#${exObj.ex_id}-${exObj.circuit_position}-${exObj.phase_position}`}
                   ref={(input) => setExRef(input)}
                 >
                   {name}
                 </a>
 
-                <p className="setNum">
+                <p
+                  className={
+                    device === "mobile" ? "setNum setNumMob" : "setNum"
+                  }
+                >
                   {`Set Number ${setNum} Out Of ${exObj.circuit_sets}`}
                 </p>
               </div>
@@ -221,8 +262,16 @@ export const UiComponent = (props) => {
             </div>
 
             <div className="horizontal1">
-              <div className="horizontal2 cardRepRest">
-                <div>{`Rest Period: `}</div>
+              <div
+                className={
+                  device === "mobile"
+                    ? "cardRepRestMob"
+                    : "horizontal2 cardRepRest"
+                }
+              >
+                <div
+                  className={device === "mobile" && "restPeriodMobile"}
+                >{`Rest Period: `}</div>
                 {restPeriod.message ? (
                   showRpForm ? (
                     <form onSubmit={handleRpSubmit}>
@@ -235,7 +284,12 @@ export const UiComponent = (props) => {
                       />
                     </form>
                   ) : (
-                    <div className="noRp" onClick={() => setShowRpForm(true)}>
+                    <div
+                      className={
+                        device === "mobile" ? "restPeriodMobile" : "noRp"
+                      }
+                      onClick={() => setShowRpForm(true)}
+                    >
                       {` ${restPeriod.message}`}
                     </div>
                   )
@@ -254,7 +308,9 @@ export const UiComponent = (props) => {
                     className="restPeriodDisplay pointer"
                     onClick={() => setShowRpForm(true)}
                   >
-                    <p>{` ${restPeriod.num} ${restPeriod.unit}`}</p>
+                    <p
+                      className={device === "mobile" && "restPeriodMobile"}
+                    >{` ${restPeriod.num} ${restPeriod.unit}`}</p>
                   </span>
                 )}
               </div>
@@ -266,9 +322,13 @@ export const UiComponent = (props) => {
               </Paper>
             </div>
             <div className="pntR1">
-              <div className="exPhase0">{`Phase: ${phase}`}</div>
+              <div
+                className={device === "mobile" ? "exPhase0Mob" : "exPhase0"}
+              >{`Phase: ${phase}`}</div>
               <div></div>
-              <div className="exType0">{`Type: ${type}`} </div>
+              <div className={device === "mobile" ? "exType0Mob" : "exType0"}>
+                {`Type: ${type}`}{" "}
+              </div>
             </div>
           </div>
         </Paper>
@@ -280,7 +340,11 @@ export const UiComponent = (props) => {
             variant="contained"
             color="secondary"
             onClick={handleBeginWorkout}
-            className={classes.btn}
+            className={
+              device === "mobile" && orientation === "landscape"
+                ? classes.btnMobLand
+                : classes.btn
+            }
           >
             Ready? Lets Begin!
           </Button>
@@ -292,7 +356,11 @@ export const UiComponent = (props) => {
               variant="contained"
               color="secondary"
               onClick={handleStartWorkout}
-              className={classes.btn}
+              className={
+                device === "mobile" && orientation === "landscape"
+                  ? classes.btnMobLand
+                  : classes.btn
+              }
             >
               Ready? Lets Go!
             </Button>
@@ -306,7 +374,11 @@ export const UiComponent = (props) => {
               variant="contained"
               color="secondary"
               onClick={() => handleEndEx(stopWatch.time)}
-              className={classes.btn}
+              className={
+                device === "mobile" && orientation === "landscape"
+                  ? classes.btnMobLand
+                  : classes.btn
+              }
             >
               Finished
             </Button>
@@ -372,5 +444,11 @@ const useStyles = makeStyles((theme) => ({
   },
   ExTitlePaper: {
     margin: "10px",
+  },
+  btnMobLand: {
+    padding: "25px",
+    width: "100%",
+    margin: "15px",
+    height: "20px",
   },
 }));

@@ -1,8 +1,17 @@
-import React, { Component } from "react";
+import React, { useEffect } from "react";
 import { connect } from "react-redux";
 
 export const Timers = (props) => {
-  const { stopWatch, endEx, setTimeAlert, handleExceededRest } = props;
+  const {
+    stopWatch,
+    endEx,
+    setTimeAlert,
+    handleExceededRest,
+    device,
+    orientation,
+  } = props;
+
+  useEffect(() => {}, [device, orientation]);
 
   const renderTheTime = () => {
     const minutes = Math.floor(stopWatch.time / 60);
@@ -17,7 +26,7 @@ export const Timers = (props) => {
     if (!endEx) {
       setTimeAlert(false);
       return (
-        <div className="timer">
+        <div className={device === "mobile" ? "timer mobTimer" : "timer"}>
           <div className="text">Active Time</div>
           <div className="value">{timerValue}</div>
         </div>
@@ -25,14 +34,14 @@ export const Timers = (props) => {
     } else if (endEx) {
       handleExceededRest();
       return (
-        <div className="timer">
+        <div className={device === "mobile" ? "timer mobTimer" : "timer"}>
           <div className="text">Rest Time</div>
           <div className="value">{timerValue}</div>
         </div>
       );
     } else {
       return (
-        <div className="timer">
+        <div className={device === "mobile" ? "timer mobTimer" : "timer"}>
           <div className="text">Active Time</div>
           <div className="value">{timerValue}</div>
         </div>
@@ -43,7 +52,10 @@ export const Timers = (props) => {
   return <div className="timerContainer">{renderTheTime()}</div>;
 };
 
-const mapStateToProps = (state) => ({});
+const mapStateToProps = (store) => ({
+  device: store.device.device,
+  orientation: store.device.orientation,
+});
 
 const mapDispatchToProps = {};
 

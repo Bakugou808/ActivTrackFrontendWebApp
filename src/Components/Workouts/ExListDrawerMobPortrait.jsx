@@ -27,6 +27,8 @@ export const ExListDrawerMobPortrait = ({
   const [exs, setExs] = useState(null);
   const workoutId = match.params.workoutId;
 
+  useEffect(() => {}, [orientation]);
+
   const patchCircToStack = (record) => {
     const circData = {
       circuit: { id: record.circuit_id, circuit_type: "stack" },
@@ -62,8 +64,22 @@ export const ExListDrawerMobPortrait = ({
                   className={"exPaper pointer exStackPort"}
                   onClick={() => handlePatch(record)}
                 >
-                  <p className="exTitle">{record.ex_name}</p>
-                  <p className={"exPaperAtts"}>{renderExDetails(record)}</p>
+                  <p
+                    className={
+                      orientation === "landscape" ? "exTitleMobLand" : "exTitle"
+                    }
+                  >
+                    {record.ex_name}
+                  </p>
+                  <p
+                    className={
+                      orientation === "landscape"
+                        ? "exPaperAttsMobLand"
+                        : "exPaperAtts"
+                    }
+                  >
+                    {renderExDetails(record)}
+                  </p>
                 </Paper>
               </div>
             </div>

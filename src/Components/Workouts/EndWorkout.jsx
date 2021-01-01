@@ -17,6 +17,8 @@ export const EndWorkout = (props) => {
     onFetchWorkoutsStatsByTotalReps,
     stats,
     onFetchWorkout,
+    device,
+    orientation,
   } = props;
   const workoutId = match.params.workoutId;
   const workoutTitle = match.params.workoutTitle;
@@ -27,7 +29,7 @@ export const EndWorkout = (props) => {
     onFetchWorkoutsStatsByTotalReps(workoutId, 2);
     onFetchWorkout(workoutId);
     handleRecentLS();
-  }, []);
+  }, [device, orientation]);
 
   const handleRecentLS = () => {
     let path = `/workouts/${folderName}/${folderId}/${workoutTitle}/${workoutId}`;
@@ -52,8 +54,12 @@ export const EndWorkout = (props) => {
   };
 
   return (
-    <div className="endWorkout">
-      <div className="congratsMsg">Congrats on finishing!</div>
+    <div className={device === "mobile" ? "endWorkoutMobLand" : "endWorkout"}>
+      <div
+        className={device === "mobile" ? "congratsMsgMobLand" : "congratsMsg"}
+      >
+        Congrats on finishing!
+      </div>
       <div className="goToStatBtnCon">
         <Button
           className="goToStatBtn"
@@ -70,6 +76,8 @@ export const EndWorkout = (props) => {
 
 const mapStateToProps = (store) => ({
   stats: store.stats.workoutsStats,
+  device: store.device.device,
+  orientation: store.device.orientation,
 });
 
 const mapDispatchToProps = (dispatch) => ({
