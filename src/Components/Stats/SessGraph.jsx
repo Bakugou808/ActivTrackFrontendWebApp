@@ -61,6 +61,7 @@ export const SessGraph = (props) => {
 
   return (
     <div
+      id="sessGraph"
       className={
         device === "mobile"
           ? orientation === "landscape"

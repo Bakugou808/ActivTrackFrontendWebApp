@@ -159,6 +159,7 @@ export const ExGraph = (props) => {
 
   return (
     <div
+      id="exGraph"
       className={
         device === "mobile"
           ? orientation === "landscape"

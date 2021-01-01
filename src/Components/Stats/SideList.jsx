@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
 import Paper from "@material-ui/core/Paper";
+// * react-scroll Imports
+import { Link } from "react-scroll";
 
 export const SideList = (props) => {
   const {
@@ -26,20 +28,47 @@ export const SideList = (props) => {
             device === "mobile" ? "sideListItemContMobLand" : "sideListItemCont"
           }
         >
-          <p
-            className={
-              device === "mobile"
-                ? orientation === "landscape"
-                  ? "sideListItemMobLand"
-                  : "sideListItemMobPort"
-                : "sideListItem"
-            }
-            onClick={() => handleClick(data)}
-          >
-            {data[0]}
-          </p>
+          {/* { device === 'mobile' ? */}
+          {exAttKeys ? (
+            <p
+              className={
+                device === "mobile"
+                  ? orientation === "landscape"
+                    ? "sideListItemMobLand"
+                    : "sideListItemMobPort"
+                  : "sideListItem"
+              }
+              onClick={() => handleClick(data)}
+            >
+              {data[0]}
+            </p>
+          ) : (
+            <Link
+              activeClass="active"
+              to="sessGraph"
+              // spy={true}
+              smooth={true}
+              duration={500}
+              className={
+                device === "mobile"
+                  ? orientation === "landscape"
+                    ? "sideListItemMobLand"
+                    : "sideListItemMobPort"
+                  : "sideListItem"
+              }
+              onClick={() => handleClick(data)}
+            >
+              {data[0]}
+            </Link>
+          )}
+
           {selected === data[0] && exOrSess === "ExerciseGraph" && (
-            <div
+            <Link
+              activeClass="active"
+              to="exGraph"
+              // spy={true}
+              smooth={true}
+              duration={300}
               className={
                 device === "mobile" && orientation === "landscape"
                   ? "sideListExAttributesMobLand"
@@ -48,7 +77,7 @@ export const SideList = (props) => {
             >
               {" "}
               {renderExAtts(exAttKeys)}{" "}
-            </div>
+            </Link>
           )}
         </div>
       );

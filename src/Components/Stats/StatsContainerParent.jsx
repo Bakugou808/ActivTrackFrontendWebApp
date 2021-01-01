@@ -15,6 +15,8 @@ import {
 // * Material Imports
 import { makeStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
+// // * react-scroll Imports
+// import {Link} from 'react-scroll'
 
 export const StatsContainerParent = (props) => {
   const {
