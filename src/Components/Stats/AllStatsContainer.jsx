@@ -26,7 +26,7 @@ export const StatsContainer = (props) => {
       },
     ];
     return lineData;
-  };
+  }; 
 
   const renderCharts = () => {
     let key = Object.keys(data)[0];

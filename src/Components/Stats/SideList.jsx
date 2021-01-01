@@ -23,15 +23,15 @@ export const SideList = (props) => {
       return (
         <div
           className={
-            device === "mobile" && orientation === "landscape"
-              ? "sideListItemContMobLand"
-              : "sideListItemCont"
+            device === "mobile" ? "sideListItemContMobLand" : "sideListItemCont"
           }
         >
           <p
             className={
-              device === "mobile" && orientation === "landscape"
-                ? "sideListItemMobLand"
+              device === "mobile"
+                ? orientation === "landscape"
+                  ? "sideListItemMobLand"
+                  : "sideListItemMobPort"
                 : "sideListItem"
             }
             onClick={() => handleClick(data)}
@@ -69,8 +69,10 @@ export const SideList = (props) => {
     <Paper
       elevation={3}
       className={
-        device === "mobile" && orientation === "landscape"
-          ? "sourceListMobLand"
+        device === "mobile"
+          ? orientation === "landscape"
+            ? "sourceListMobLand"
+            : "sourceListMobPort"
           : "sourceList"
       }
     >

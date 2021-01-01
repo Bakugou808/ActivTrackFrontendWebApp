@@ -85,10 +85,10 @@ body {
 }
 
 .homePageText {
-  display: flex;
+  // display: flex;
   flex-flow: column wrap;
   align-items: center;
-  padding-top: 60px;
+  padding-top: 40px;
 }
 
 @media all and (min-width: $large) {

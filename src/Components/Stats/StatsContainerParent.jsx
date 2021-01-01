@@ -109,19 +109,40 @@ export const StatsContainerParent = (props) => {
 
   return (
     <div>
-      <div className="statsHeader">{workoutTitle} Stats</div>
+      <div
+        className={
+          device === "mobile" && orientation === "portrait"
+            ? "statsHeader marginLeft30px"
+            : "statsHeader"
+        }
+      >
+        {workoutTitle} Stats
+      </div>
       <div className="statsParentFlexCont">
         <div className="statsParentContainer">
           <div className="graphHeader">
             {/* <div className="graphHeaderExTitle">{selectedEx}</div> */}
-            <div className="graphHeaderTitle">Performance By Exercise</div>
+            <div
+              className={
+                device === "mobile" && orientation === "portrait"
+                  ? "graphHeaderTitle marginLeft30px"
+                  : "graphHeaderTitle"
+              }
+            >
+              Performance By Exercise
+            </div>
             {exCaption && <div className="graphCaption">{exCaption}</div>}
           </div>
           <div
             className={
-              device === "mobile" && orientation === "landscape"
-                ? "statsByExRowMobLand"
+              device === "mobile"
+                ? orientation === "landscape"
+                  ? "statsByExRowMobLand"
+                  : "statsByExRowMobPort"
                 : "statsByExRow"
+              // device === "mobile" && orientation === "landscape"
+              //   ? "statsByExRowMobLand"
+              //   : "statsByExRow"
             }
           >
             {/* exercise list and graph */}
@@ -152,13 +173,23 @@ export const StatsContainerParent = (props) => {
           {/* ---------------- */}
           <div className="graphHeader">
             {/* <div className="graphHeaderExTitle">{selectedSess}</div> */}
-            <div className="graphHeaderTitle">Performance By Session</div>
+            <div
+              className={
+                device === "mobile" && orientation === "portrait"
+                  ? "graphHeaderTitle marginLeft30px"
+                  : "graphHeaderTitle"
+              }
+            >
+              Performance By Session
+            </div>
             {sessCaption && <div className="graphCaption">{sessCaption}</div>}
           </div>
           <div
             className={
-              device === "mobile" && orientation === "landscape"
-                ? "statsByExRowMobLand"
+              device === "mobile"
+                ? orientation === "landscape"
+                  ? "statsByExRowMobLand"
+                  : "statsByExRowMobPort"
                 : "statsByTotalRepsRow"
             }
           >

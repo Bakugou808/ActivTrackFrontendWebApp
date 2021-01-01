@@ -634,7 +634,7 @@
 
 .graphHeader {
   display: grid;
-  grid-template-rows: 1fr 1fr;
+  grid-template-rows: 1fr 0.5fr;
   align-content: center;
   justify-items: center;
   grid-row-gap: 10px;
@@ -644,6 +644,7 @@
 .graphCaption {
   color: #f57c00;
   font-size: 10px;
+  margin: 0px 20px 0px 20px;
 }
 
 .statsHeader {
@@ -724,10 +725,12 @@
 
 .letsGetBusy {
   font-size: 60px;
+  margin: 20px;
 }
 .welcomeUser {
-  font-size: 90px;
+  font-size: 80px;
   margin: 20px;
+  // width: 80vw;
 }
 
 .elusivDiv {
@@ -753,16 +756,10 @@
   width: 93vw;
   min-width: 130px;
   opacity: 0.75;
-  // height: 50vh;
   overflow-x: overlay;
   padding: 15px;
-  // margin-left: 15px;
-  // margin-right: 15px;
   column-gap: 15px;
   grid-template-columns: repeat(100, 150px);
-  // & p:last-child {
-  //   padding-bottom: 25px;
-  // }
 }
 
 .sideListItemMobLand {
@@ -779,8 +776,11 @@
 }
 
 .sideListItemContMobLand {
-  border-right-style: inset;
-
+  display: grid;
+  // grid-template-rows: 0.5fr 1fr;
+  // row-gap: 5px;
+  border-right: inset;
+  align-content: center;
   // width: 100%;
   // display: flex;
   // align-items: flex-start;
@@ -800,4 +800,40 @@
   padding: 10px 0px 30px 30px;
   height: 90vh;
   width: 90vw;
+}
+
+.marginLeft30px {
+  margin-left: 30px;
+}
+.homeContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.statsByExRowMobPort {
+  display: grid;
+  grid-template-rows: 0fr 2fr;
+}
+
+.sourceListMobPort {
+  display: flex;
+  width: 85vw;
+  height: inherit;
+  overflow-x: overlay;
+  padding: 15px;
+}
+
+.sideListItemMobPort {
+  cursor: pointer;
+  color: #f57c00;
+  font-size: 20px;
+  margin: 0px;
+  width: 250px;
+  margin-bottom: 10px;
+  display: flex;
+  justify-content: space-evenly;
+}
+.widthUnset {
+  width: unset;
 }

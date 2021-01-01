@@ -62,8 +62,10 @@ export const SessGraph = (props) => {
   return (
     <div
       className={
-        device === "mobile" && orientation === "landscape"
-          ? "statByTotalRepsGraphMobLand"
+        device === "mobile"
+          ? orientation === "landscape"
+            ? "statByTotalRepsGraphMobLand"
+            : "statByTotalRepsGraphMobLand widthUnset"
           : "statByTotalRepsGraph"
       }
     >
