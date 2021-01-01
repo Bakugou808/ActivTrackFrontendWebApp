@@ -42,7 +42,7 @@ export const SideList = (props) => {
             >
               {data[0]}
             </p>
-          ) : (
+          ) : device === "mobile" ? (
             <Link
               activeClass="active"
               to="sessGraph"
@@ -60,25 +60,56 @@ export const SideList = (props) => {
             >
               {data[0]}
             </Link>
+          ) : (
+            <p
+              className={
+                device === "mobile"
+                  ? orientation === "landscape"
+                    ? "sideListItemMobLand"
+                    : "sideListItemMobPort"
+                  : "sideListItem"
+              }
+              onClick={() => handleClick(data)}
+            >
+              {data[0]}
+            </p>
           )}
 
-          {selected === data[0] && exOrSess === "ExerciseGraph" && (
-            <Link
-              activeClass="active"
-              to="exGraph"
-              // spy={true}
-              smooth={true}
-              duration={300}
-              className={
-                device === "mobile" && orientation === "landscape"
-                  ? "sideListExAttributesMobLand"
-                  : "sideListExAttributes"
-              }
-            >
-              {" "}
-              {renderExAtts(exAttKeys)}{" "}
-            </Link>
-          )}
+          {selected === data[0] &&
+            exOrSess === "ExerciseGraph" &&
+            (device === "mobile" ? (
+              <Link
+                activeClass="active"
+                to="exGraph"
+                // spy={true}
+                smooth={true}
+                duration={300}
+                className={
+                  device === "mobile" && orientation === "landscape"
+                    ? "sideListExAttributesMobLand"
+                    : "sideListExAttributes"
+                }
+              >
+                {" "}
+                {renderExAtts(exAttKeys)}{" "}
+              </Link>
+            ) : (
+              <div
+                activeClass="active"
+                to="exGraph"
+                // spy={true}
+                smooth={true}
+                duration={300}
+                className={
+                  device === "mobile" && orientation === "landscape"
+                    ? "sideListExAttributesMobLand"
+                    : "sideListExAttributes"
+                }
+              >
+                {" "}
+                {renderExAtts(exAttKeys)}{" "}
+              </div>
+            ))}
         </div>
       );
     });
