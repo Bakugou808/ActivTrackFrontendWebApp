@@ -114,7 +114,7 @@ export const StatsContainerParent = (props) => {
       <div
         className={
           device === "mobile" && orientation === "portrait"
-            ? "statsHeader marginLeft30px"
+            ? "statsHeader statsHeaderMob"
             : "statsHeader"
         }
       >
@@ -127,7 +127,7 @@ export const StatsContainerParent = (props) => {
             <div
               className={
                 device === "mobile" && orientation === "portrait"
-                  ? "graphHeaderTitle marginLeft30px"
+                  ? "graphHeaderTitle graphHeaderTitleMob"
                   : "graphHeaderTitle"
               }
             >
@@ -178,7 +178,7 @@ export const StatsContainerParent = (props) => {
             <div
               className={
                 device === "mobile" && orientation === "portrait"
-                  ? "graphHeaderTitle marginLeft30px"
+                  ? "graphHeaderTitle graphHeaderTitleMob"
                   : "graphHeaderTitle"
               }
             >

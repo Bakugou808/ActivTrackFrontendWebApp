@@ -810,8 +810,12 @@
   width: 90vw;
 }
 
-.marginLeft30px {
-  margin-left: 30px;
+.statsHeaderMob {
+  font-size: 30px;
+}
+
+.graphHeaderTitleMob {
+  font-size: 25px;
 }
 .homeContainer {
   display: flex;
@@ -831,6 +835,7 @@
   overflow-x: overlay;
   padding: 15px;
   opacity: 0.75;
+  margin-top: 7px;
 }
 
 .sideListItemMobPort {

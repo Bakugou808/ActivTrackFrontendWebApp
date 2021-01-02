@@ -101,8 +101,8 @@ export const Home = (props) => {
         initial={{ y: "250vw" }}
         animate={
           device === "mobile" && orientation === "portrait"
-            ? { y: -475 }
-            : { y: -380 }
+            ? { y: -460 }
+            : { y: -295 }
         }
         transition={{
           delay: 3,
