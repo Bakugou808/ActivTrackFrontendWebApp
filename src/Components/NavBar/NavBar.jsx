@@ -42,11 +42,14 @@ function NavBar(props) {
     isLoggedIn,
     onClearFoldersState,
     onShowExDrawer,
+    device,
+    orientation,
+    location,
   } = props;
 
   useEffect(() => {
     history.location.pathname && handleWorkoutPage();
-  }, [history.location.pathname]);
+  }, [history.location.pathname, device, orientation]);
 
   const handleWorkoutPage = () => {
     history.location.pathname.includes("start_workouts")
@@ -120,7 +123,9 @@ function NavBar(props) {
           {isLoggedIn && (
             <IconButton
               edge="start"
-              className={classes.menuButton}
+              className={
+                device === "mobile" ? classes.menuBtnMob : classes.menuButton
+              }
               color="inherit"
               aria-label="menu"
               onClick={toggleDrawer("left", true)}
@@ -131,7 +136,9 @@ function NavBar(props) {
           {workoutPage && (
             <IconButton
               edge="start"
-              className={classes.menuButton}
+              className={
+                device === "mobile" ? classes.menuBtnMob : classes.menuButton
+              }
               color="inherit"
               aria-label="exercise_menu"
               onClick={toggleExDrawer}
@@ -156,20 +163,27 @@ function NavBar(props) {
               variant="subtitle1"
               className={classes.login}
             >
-              <Link className={classes.link} onClick={onLogOut} color="inherit">
+              <Link
+                className={device === "mobile" ? classes.linkMob : classes.link}
+                onClick={onLogOut}
+                color="inherit"
+              >
                 Sign Out
               </Link>
             </Typography>
           ) : (
-            <Typography
-              component={"span"}
-              variant="subtitle1"
-              className={classes.login}
-            >
-              <Link href="/signin" color="inherit">
-                Sign In
-              </Link>
-            </Typography>
+            location.pathname != "/signin" &&
+            location.pathname != "/signup" && (
+              <Typography
+                component={"span"}
+                variant="subtitle1"
+                className={classes.login}
+              >
+                <Link href="/signin" color="inherit">
+                  Sign In
+                </Link>
+              </Typography>
+            )
           )}
         </Toolbar>
       </AppBar>
@@ -190,6 +204,8 @@ const mapStateToProps = (store) => {
   return {
     user: store.user.data,
     isLoggedIn: store.authorized.isLoggedIn,
+    device: store.device.device,
+    orientation: store.device.orientation,
   };
 };
 
@@ -214,6 +230,7 @@ const useStyles = makeStyles((theme) => ({
   menuButton: {
     marginRight: theme.spacing(2),
   },
+  menuBtnMob: {},
   title: {
     flexGrow: 1,
     display: "flex",
@@ -235,5 +252,9 @@ const useStyles = makeStyles((theme) => ({
   },
   link: {
     cursor: "pointer",
+  },
+  linkMob: {
+    cursor: "pointer",
+    fontSize: "10px",
   },
 }));

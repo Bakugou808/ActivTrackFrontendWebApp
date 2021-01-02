@@ -40,8 +40,22 @@ export const ExListDrawer = ({
   };
 
   return (
-    <div className="exSideDrawerParent">
-      <div className="exSideDrawerHeader">
+    <div
+      className={
+        orientation === "portrait"
+          ? "exSideDrawerParentMobPort"
+          : "exSideDrawerParent"
+      }
+    >
+      <div
+        className={
+          device === "mobile"
+            ? orientation === "landscape"
+              ? "exSideDrawerHeaderMobLand"
+              : "exSideDrawerHeaderMobPortrait"
+            : "exSideDrawerHeader"
+        }
+      >
         <div className="container ">
           {warmup && (
             <RenderExercises

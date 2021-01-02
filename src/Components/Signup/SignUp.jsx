@@ -116,7 +116,7 @@ export const SignUp = (props) => {
           >
             Sign Up
           </Button>
-          <Grid container justify="flex-end">
+          <Grid container justify="center">
             <Grid item>
               <Link href="/signin" variant="body2">
                 Already have an account? Sign in
@@ -126,7 +126,7 @@ export const SignUp = (props) => {
         </form>
         {error.error && error.message}
       </div>
-      <Box mt={5}>
+      <Box mt={5} className="copyRight">
         <Copyright />
       </Box>
     </Container>

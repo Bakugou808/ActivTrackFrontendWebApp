@@ -164,6 +164,7 @@ const useStyles = makeStyles((theme) => ({
     padding: "25px",
     width: "100%",
     margin: "15px",
+    height: "5vh",
   },
   UiFrame: {
     backgroundColor: "revert",

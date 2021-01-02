@@ -103,7 +103,13 @@ export const UiComponent = (props) => {
     if (!endEx) {
       setTimeAlert(false);
       return (
-        <div className="timer">
+        <div
+          className={
+            device === "mobile" && orientation === "landscape"
+              ? "timer mobTimer"
+              : "timer"
+          }
+        >
           <div
             className={
               device === "mobile" && orientation === "landscape"
@@ -127,7 +133,13 @@ export const UiComponent = (props) => {
     } else if (endEx) {
       handleExceededRest();
       return (
-        <div className="timer">
+        <div
+          className={
+            device === "mobile" && orientation === "landscape"
+              ? "timer mobTimer"
+              : "timer"
+          }
+        >
           <div
             className={
               device === "mobile" && orientation === "landscape"
@@ -247,11 +259,25 @@ export const UiComponent = (props) => {
             )}
 
             <div className="exHeaders">
-              <div className="timer" onClick={handleStartPause}>
+              <div
+                className={
+                  device === "mobile" && orientation === "landscape"
+                    ? "timer mobTimer"
+                    : "timer"
+                }
+                onClick={handleStartPause}
+              >
                 <TotalTime stopWatch={fullTime} endEx={endEx} />
               </div>
               <div></div>
-              <div className="timer" onClick={handleStartPause}>
+              <div
+                className={
+                  device === "mobile" && orientation === "landscape"
+                    ? "timer mobTimer"
+                    : "timer"
+                }
+                onClick={handleStartPause}
+              >
                 <Timers
                   stopWatch={stopWatch}
                   endEx={endEx}
@@ -261,7 +287,7 @@ export const UiComponent = (props) => {
               </div>
             </div>
 
-            <div className="horizontal1">
+            <div className="">
               <div
                 className={
                   device === "mobile"
@@ -308,9 +334,11 @@ export const UiComponent = (props) => {
                     className="restPeriodDisplay pointer"
                     onClick={() => setShowRpForm(true)}
                   >
-                    <p
-                      className={device === "mobile" && "restPeriodMobile"}
-                    >{` ${restPeriod.num} ${restPeriod.unit}`}</p>
+                    <p className={device === "mobile" && "restPeriodMobile"}>
+                      {restPeriod.num
+                        ? ` ${restPeriod.num} ${restPeriod.unit}`
+                        : `Add Time`}
+                    </p>
                   </span>
                 )}
               </div>

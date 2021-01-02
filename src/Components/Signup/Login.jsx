@@ -86,12 +86,12 @@ export const Login = (props) => {
           >
             Sign In
           </Button>
-          <Grid container>
-            <Grid item xs>
+          <Grid container justify="center">
+            {/* <Grid item xs>
               <Link href="#" variant="body2">
                 Forgot password?
               </Link>
-            </Grid>
+            </Grid> */}
             <Grid item>
               <Link href="signup" variant="body2">
                 {"Don't have an account? Sign Up"}
@@ -103,7 +103,7 @@ export const Login = (props) => {
       {loginError && (
         <div className="phaseTitle2 setDisplay marginTop10">{`${loginError}: Please Sign Up`}</div>
       )}
-      <Box mt={8}>
+      <Box mt={8} className="copyRight">
         <Copyright />
       </Box>
     </Container>

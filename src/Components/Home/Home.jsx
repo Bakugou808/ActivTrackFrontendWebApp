@@ -84,7 +84,7 @@ export const Home = (props) => {
           initial={{ y: "250vw" }}
           animate={
             device === "mobile" && orientation === "portrait"
-              ? { y: -200 }
+              ? { y: -180 }
               : { y: -120 }
           }
           transition={{
@@ -100,9 +100,11 @@ export const Home = (props) => {
       <motion.div
         initial={{ y: "250vw" }}
         animate={
-          device === "mobile" && orientation === "portrait"
-            ? { y: -475 }
-            : { y: -380 }
+          device === "mobile"
+            ? orientation === "portrait"
+              ? { y: -410 }
+              : { y: -325 }
+            : { y: -325 }
         }
         transition={{
           delay: 3,
@@ -110,7 +112,11 @@ export const Home = (props) => {
           stiffness: 30,
         }}
       >
-        <div className="HomeCarousel">
+        <div
+          className={
+            orientation === "landscape" ? "HomeCarousel HCLand" : "HomeCarousel"
+          }
+        >
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
