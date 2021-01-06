@@ -179,7 +179,7 @@ function Copyright() {
       align="center"
     >
       {"Copyright © "}
-      <Link color="inherit" href="https://material-ui.com/">
+      <Link color="inherit" href="https://activtrack.com/">
         ActivTrack
       </Link>{" "}
       {new Date().getFullYear()}
