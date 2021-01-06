@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from "react";
+import { v4 as uuidv4 } from "uuid";
+
 import { connect } from "react-redux";
 import { ResponsiveLine, Line } from "@nivo/line";
 // * Material UI Imports
@@ -53,7 +55,7 @@ export const LineChart = (props) => {
           infoArr.push(str);
       }
     }
-    return infoArr.map((stat) => <ul>{stat}</ul>);
+    return infoArr.map((stat) => <ul key={uuidv4()}>{stat}</ul>);
   };
 
   const formatSets = (arr) => {

@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from "react";
+import { v4 as uuidv4 } from "uuid";
+
 import { connect } from "react-redux";
 import { AuthHOC } from "../AuthHOC";
 
@@ -26,7 +28,7 @@ export const StatsContainer = (props) => {
       },
     ];
     return lineData;
-  }; 
+  };
 
   const renderCharts = () => {
     let key = Object.keys(data)[0];
@@ -34,7 +36,7 @@ export const StatsContainer = (props) => {
     return sessions.map((sess) => {
       let data2 = formatData(sess);
       let lineData = setLineData(sess[0].workout_title, data2);
-      return <LineChart lineData={lineData} session={sess} />;
+      return <LineChart key={uuidv4()} lineData={lineData} session={sess} />;
     });
   };
 

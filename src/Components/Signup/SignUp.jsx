@@ -18,7 +18,7 @@ import { signUpUser } from "../../Redux/Actions/UserActions";
 import { TrendingUpRounded } from "@material-ui/icons";
 
 export const SignUp = (props) => {
-  const { onSignUpUser, history } = props;
+  const { onSignUpUser, history, device } = props;
   const [error, setError] = useState({
     error: false,
     message:
@@ -63,7 +63,10 @@ export const SignUp = (props) => {
         <Typography component="h1" variant="h5">
           Sign up
         </Typography>
-        <form className={classes.form} noValidate>
+        <form
+          className={device === "mobile" ? classes.formMob : classes.form}
+          noValidate
+        >
           <Grid container spacing={2}>
             <Grid item xs={12}>
               <TextField
@@ -133,7 +136,9 @@ export const SignUp = (props) => {
   );
 };
 
-const mapStateToProps = (state) => ({});
+const mapStateToProps = (store) => ({
+  device: store.device.device,
+});
 
 const mapDispatchToProps = (dispatch) => ({
   onSignUpUser: (userData, history) => dispatch(signUpUser(userData, history)),
@@ -155,6 +160,10 @@ const useStyles = makeStyles((theme) => ({
   form: {
     width: "100%", // Fix IE 11 issue.
     marginTop: theme.spacing(3),
+  },
+  formMob: {
+    width: "240px", // Fix IE 11 issue.
+    marginTop: theme.spacing(1),
   },
   submit: {
     margin: theme.spacing(3, 0, 2),

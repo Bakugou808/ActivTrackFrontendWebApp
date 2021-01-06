@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from "react";
+import { v4 as uuidv4 } from "uuid";
+
 import { connect } from "react-redux";
 // * Component Imports
 import MyModal from "../Modal";
@@ -49,6 +51,7 @@ export const ExListDrawerMobPortrait = ({
         return arr.map((record) => {
           return (
             <div
+              key={uuidv4()}
               className={"exContainer"}
               id={`${record.ex_id}-${record.circuit_position}-${record.phase_position}`}
             >
@@ -114,6 +117,7 @@ export const ExListDrawerMobPortrait = ({
           {arr.map((ex) => {
             return (
               <Paper
+                key={uuidv4()}
                 elevation={6}
                 className={"exPaper pointer circPaperMobPort"}
                 onClick={() => handlePatch(ex)}
@@ -150,7 +154,11 @@ export const ExListDrawerMobPortrait = ({
 
   const handlePhantomDivs = () => {
     return [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1].map((num) => {
-      return <div className="phantomDiv"> </div>;
+      return (
+        <div key={uuidv4()} className="phantomDiv">
+          {" "}
+        </div>
+      );
     });
   };
 

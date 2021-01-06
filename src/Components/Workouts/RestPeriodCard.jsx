@@ -72,7 +72,7 @@ export const RestPeriodCard = (props) => {
         <motion.div
           className="attFields"
           initial={{ y: "200vw" }}
-          animate={device === "mobile" ? { y: -450 } : { y: -400 }}
+          animate={orientation === "portrait" ? { y: -435 } : { y: -390 }}
           transition={{ duration: 0.5 }}
         >
           <Paper className={classes.card} elevation={3}>

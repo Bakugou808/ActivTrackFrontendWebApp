@@ -742,11 +742,14 @@
 
 .letsGetBusy {
   font-size: 50px;
-  margin: 20px;
+  // margin: 20px;
 }
 .welcomeUser {
   font-size: 60px;
-  margin: 20px;
+  align-items: center;
+  justify-content: center;
+  display: grid;
+  // margin: 20px;
   // width: 80vw;
 }
 
@@ -961,4 +964,14 @@
   justify-content: center;
   align-items: center;
   margin-bottom: 30px;
+}
+
+.exListCont2 {
+  margin-top: 64px;
+}
+
+.greetingContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }

@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from "react";
+import { v4 as uuidv4 } from "uuid";
+
 import { connect } from "react-redux";
 // * Component Imports
 import MyModal from "../Modal";
@@ -35,7 +37,11 @@ export const ExListDrawer = ({
 
   const handlePhantomDivs = () => {
     return [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1].map((num) => {
-      return <div className="phantomDiv"> </div>;
+      return (
+        <div key={uuidv4()} className="phantomDiv">
+          {" "}
+        </div>
+      );
     });
   };
 

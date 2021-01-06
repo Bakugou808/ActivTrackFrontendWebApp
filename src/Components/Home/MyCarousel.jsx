@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
+import { v4 as uuidv4 } from "uuid";
+
 // * Material UI Imports
 import { makeStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
@@ -75,6 +77,7 @@ export const MyCarousel = ({
       return (
         <div className="cardWrap">
           <Paper
+            key={uuidv4()}
             className={
               device === "mobile" && orientation === "landscape"
                 ? [classes.paper, classes.mobPortFontSize]

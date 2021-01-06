@@ -28,7 +28,8 @@
     "redux-thunk": "^2.3.0",
     "sass": "^1.27.0",
     "use-sound": "^1.0.2",
-    "use-timer": "^1.4.0"
+    "use-timer": "^1.4.0",
+    "uuid": "^8.3.2"
   },
   "scripts": {
     "start": "react-scripts start",

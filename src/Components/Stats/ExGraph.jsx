@@ -95,7 +95,6 @@ export const ExGraph = (props) => {
         setLegendY(`Level`);
         break;
     }
-    // let nuKey = `${selected} ${key}`;
     setDisplayData([lineData[key]]);
   };
 
@@ -103,7 +102,6 @@ export const ExGraph = (props) => {
     let tempAtts = {};
     let keys = {};
     let keys2 = [];
-    // debugger;
     sessData.map((totalSets) => {
       let key = Object.keys(totalSets)[0];
 
@@ -134,14 +132,9 @@ export const ExGraph = (props) => {
         }
       });
     });
-    // debugger;
     for (const [key, value] of Object.entries(tempAtts)) {
       tempAtts[key] = Math.round(tempAtts[key] / keys[key]);
       if (key === "restPeriod" || key === "activeTime") {
-        // tempAtts[key] = new Date(tempAtts[key] * 1000)
-        //   .toISOString()
-        //   .substr(11, 8);
-        // debugger;
         let t = tempAtts[key] / 60;
         t = t.toFixed(2);
 
@@ -152,7 +145,6 @@ export const ExGraph = (props) => {
         keys2.push(k);
       }
     }
-    // debugger;
     setKeys(keys2);
     return tempAtts;
   };

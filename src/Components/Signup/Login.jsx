@@ -18,7 +18,7 @@ import { loginUser } from "../../Redux/Actions/UserActions";
 // component imports
 
 export const Login = (props) => {
-  const { loginError, onLoginUser, history } = props;
+  const { loginError, onLoginUser, history, orientation, device } = props;
   const [fields, setFields] = useState({ username: "", password: "" });
 
   const classes = useStyles();
@@ -45,7 +45,7 @@ export const Login = (props) => {
         <Typography component={"span"} component="h1" variant="h5">
           Sign in
         </Typography>
-        <form className={classes.form}>
+        <form className={device === "mobile" ? classes.formMob : classes.form}>
           <TextField
             variant="outlined"
             margin="normal"
@@ -112,6 +112,8 @@ export const Login = (props) => {
 
 const mapStateToProps = (store) => ({
   loginError: store.user.error,
+  device: store.device.device,
+  orientation: store.device.orientation,
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -133,6 +135,10 @@ const useStyles = makeStyles((theme) => ({
   },
   form: {
     width: "100%", // Fix IE 11 issue.
+    marginTop: theme.spacing(1),
+  },
+  formMob: {
+    width: "240px", // Fix IE 11 issue.
     marginTop: theme.spacing(1),
   },
   submit: {

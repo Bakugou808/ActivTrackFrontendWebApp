@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from "react";
+import { v4 as uuidv4 } from "uuid";
+
 import { normalizeString } from "./AttributeFields";
 import { connect } from "react-redux";
 import useSound from "use-sound";
@@ -171,7 +173,7 @@ export const UiComponent = (props) => {
     let arr = Object.entries(exObj.circuit_exercise_attributes);
 
     return arr.map((kv) => {
-      return <p>{`${kv}`}</p>;
+      return <p key={uuidv4()}>{`${kv}`}</p>;
     });
   };
 

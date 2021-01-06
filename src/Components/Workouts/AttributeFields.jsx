@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from "react";
+import { connect } from "react-redux";
+
 // * Material UI Imports
 import { makeStyles } from "@material-ui/core/styles";
 import { Tooltip, Fab, Paper, TextField, Button } from "@material-ui/core";
@@ -30,6 +32,8 @@ export const AttributeFields = (props) => {
     submitClicked,
     focusAttFields,
     setShowRPCard,
+    device,
+    orientation,
   } = props;
   const [exAtts, setExAtts] = useState([]);
   const classes = useStyles();
@@ -82,7 +86,7 @@ export const AttributeFields = (props) => {
         <motion.div
           className="attFields"
           initial={{ y: "200vw" }}
-          animate={{ y: -315 }}
+          animate={device === "mobile" ? { y: -410 } : { y: -315 }}
           transition={{ duration: 0.5 }}
         >
           <Paper className={classes.paper} elevation={3}>
@@ -105,8 +109,13 @@ export const AttributeFields = (props) => {
     </div>
   );
 };
+const mapStateToProps = (store) => ({
+  device: store.device.device,
+  orientation: store.device.orientation,
+});
 
-export default AttributeFields;
+const mapDispatchToProps = (dispatch) => ({});
+export default connect(mapStateToProps, mapDispatchToProps)(AttributeFields);
 
 const useStyles = makeStyles((theme) => ({
   paper: {

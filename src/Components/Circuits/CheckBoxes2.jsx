@@ -8,6 +8,7 @@ import CheckBoxOutlineBlankIcon from "@material-ui/icons/CheckBoxOutlineBlank";
 import CheckBoxIcon from "@material-ui/icons/CheckBox";
 import Favorite from "@material-ui/icons/Favorite";
 import FavoriteBorder from "@material-ui/icons/FavoriteBorder";
+import { v4 as uuidv4 } from "uuid";
 
 import { normalizeString } from "../Workouts/AttributeFields";
 
@@ -37,6 +38,7 @@ export default function CheckBoxes2(props) {
       if (key != "reps") {
         arr.push(
           <FormControlLabel
+            key={uuidv4()}
             control={
               <GreenCheckbox
                 checked={value}

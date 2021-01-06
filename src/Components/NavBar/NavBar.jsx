@@ -9,6 +9,7 @@ import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import Link from "@material-ui/core/Link";
+import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import clsx from "clsx";
 // import Button from "@material-ui/core/Button";
 import IconButton from "@material-ui/core/IconButton";
@@ -163,12 +164,8 @@ function NavBar(props) {
               variant="subtitle1"
               className={classes.login}
             >
-              <Link
-                className={device === "mobile" ? classes.linkMob : classes.link}
-                onClick={onLogOut}
-                color="inherit"
-              >
-                Sign Out
+              <Link className={classes.link} onClick={onLogOut} color="inherit">
+                {device === "mobile" ? <ExitToAppIcon /> : "Sign Out"}
               </Link>
             </Typography>
           ) : (

@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from "react";
+import { v4 as uuidv4 } from "uuid";
+
 import { connect } from "react-redux";
 import { normalizeString } from "./AttributeFields";
 
@@ -12,7 +14,13 @@ import { makeStyles } from "@material-ui/core/styles";
 import { Paper, Button } from "@material-ui/core";
 
 export const RenderExercises = (props) => {
-  const { phase, handlePatch = null, workoutId, onPatchCircuit } = props;
+  const {
+    phase,
+    handlePatch = null,
+    workoutId,
+    onPatchCircuit,
+    device,
+  } = props;
   const patchCircToStack = (record) => {
     const circData = {
       circuit: { id: record.circuit_id, circuit_type: "stack" },
@@ -33,6 +41,7 @@ export const RenderExercises = (props) => {
         return arr.map((record) => {
           return (
             <div
+              key={uuidv4()}
               className={"exContainer"}
               id={`${record.ex_id}-${record.circuit_position}-${record.phase_position}`}
             >
@@ -82,6 +91,7 @@ export const RenderExercises = (props) => {
           {arr.map((ex) => {
             return (
               <Paper
+                key={uuidv4()}
                 elevation={6}
                 className={"exPaper pointer"}
                 onClick={() => handlePatch(ex)}
@@ -97,10 +107,16 @@ export const RenderExercises = (props) => {
     );
   };
 
-  return <div>{phase && renderExercises()}</div>;
+  return (
+    <div className={device === "computer" && "exListCont2"}>
+      {phase && renderExercises()}
+    </div>
+  );
 };
 
-const mapStateToProps = (state) => ({});
+const mapStateToProps = (store) => ({
+  device: store.device.device,
+});
 
 const mapDispatchToProps = (dispatch) => ({
   onPatchCircuit: (circData, sideEffects) =>
