@@ -58,7 +58,7 @@ export const Home = (props) => {
         >
           <motion.h1
             initial={{ y: "250vw" }}
-            animate={{ y: 0 }}
+            animate={orientation === "landscape" ? { y: -50 } : { y: 0 }}
             transition={{
               delay: 0.6,
               type: "spring",
@@ -89,7 +89,7 @@ export const Home = (props) => {
             animate={
               device === "mobile" && orientation === "portrait"
                 ? { y: -180 }
-                : { y: -120 }
+                : { y: -200 }
             }
             transition={{
               delay: 2.5,
@@ -109,8 +109,8 @@ export const Home = (props) => {
           device === "mobile"
             ? orientation === "portrait"
               ? { y: -410 }
-              : { y: -450 }
-            : { y: -320 }
+              : { y: -500 }
+            : { y: -380 }
         }
         transition={{
           delay: 3,
