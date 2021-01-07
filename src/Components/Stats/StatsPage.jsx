@@ -25,6 +25,7 @@ export const StatsPage = (props) => {
     onSetWorkoutsStats,
     onFetchWorkoutsStatsByTotalReps,
     onFetchWorkoutsStatsByEx,
+    device,
   } = props;
   const classes = useStyles();
 
@@ -32,10 +33,9 @@ export const StatsPage = (props) => {
     user && onFetchAllWorkoutsWithStats(user.id);
   }, [user]);
 
-  //*   path="/displayStats/:workoutTitle/:workoutId"
+
   const redirectToWorkoutStats = (workInfo, workoutHash) => {
     history.push(`/displayStats/${workInfo.title}/${workInfo.id}`);
-    // onSetWorkoutsStats(workoutHash);
     onFetchWorkoutsStatsByTotalReps(workInfo.id, 20);
     onFetchWorkoutsStatsByEx(workInfo.id, 20);
   };
@@ -44,7 +44,7 @@ export const StatsPage = (props) => {
     return workouts.data.map((workoutHash) => {
       let title = Object.keys(workoutHash)[0];
       let subHash = workoutHash[`${title}`];
-      // let key = Object.keys(subHash)[0];
+      
       let id = subHash.workout_id;
       let workInfo = { title: title, id: id };
       return (
@@ -72,6 +72,7 @@ export const StatsPage = (props) => {
 const mapStateToProps = (store) => ({
   workouts: store.stats.allWorkoutsWithStats,
   user: store.user.user,
+  device: store.device.device,
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -88,22 +89,11 @@ const mapDispatchToProps = (dispatch) => ({
 export default AuthHOC(connect(mapStateToProps, mapDispatchToProps)(StatsPage));
 
 const useStyles = makeStyles((theme) => ({
-  paperModal: {
-    position: "absolute",
-    width: "88vw",
-    backgroundColor: theme.palette.background.paper,
-    border: "2px solid #000",
-    borderRadius: "5px",
-    boxShadow: theme.shadows[5],
-    padding: theme.spacing(2, 4, 3),
-  },
   workout: {
     padding: theme.spacing(2),
     textAlign: "center",
     color: theme.palette.secondary.dark,
-    // minHeight: "3rem",
     height: "4vw",
-
     maxWidth: "20 rem",
     cursor: "pointer",
     justifyContent: "center",
@@ -111,8 +101,6 @@ const useStyles = makeStyles((theme) => ({
     alignItems: "center",
     display: "flex",
     opacity: ".8",
-    // backgroundColor: "#ffee58",
-    // backgroundColor: "#fff179",
   },
   addNew: {
     display: "flex",

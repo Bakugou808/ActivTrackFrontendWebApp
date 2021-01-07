@@ -13,8 +13,7 @@ $extra-large: 1200px;
 
 body {
   background: url("./ActivTrack Background2.jpeg") no-repeat center center fixed;
-  /* background-repeat: no-repeat; */
-  /* background-size: auto; */
+
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
@@ -85,7 +84,6 @@ body {
 }
 
 .homePageText {
-  // display: flex;
   flex-flow: column wrap;
   align-items: center;
   padding-top: 40px;
@@ -112,18 +110,8 @@ body {
 html {
   scroll-behavior: smooth;
 }
-// x px or smaller apply this css
-// @media (max-width: )
-
-// @media screen and (max-height: 750px) {
-//   .UiComponentContainer {
-//     min-height: 535px;
-//   }
-// }
 
 .statsParentContainer {
-  // display: grid;
-  // grid-template-rows: 1fr 1fr;
   width: 100%;
   justify-content: center;
   align-items: center;
@@ -174,9 +162,6 @@ html {
   align-items: center;
 }
 
-// .restPeriodCard {
-
-// }
 .endWorkout {
   display: grid;
   grid-template-rows: 1fr 1fr;
@@ -215,6 +200,9 @@ html {
   margin-bottom: 80px;
 }
 
+.HCLand {
+  margin-top: 120px;
+}
 .folderCarousel {
   display: grid;
   grid-template-rows: 0.5fr 1fr;
@@ -234,17 +222,10 @@ html {
 .myCarousel {
   display: inline-flex;
   width: 80vw;
-  // align-items: center;
-  // justify-content: center;
+
   overflow-x: auto;
   overflow: overlay;
   border-style: groove;
-  // & div:first-of-type {
-  //   margin-left: 15px;
-  // }
-  // & div:last-of-type {
-  //   margin-right: 30px;
-  // }
 }
 
 .cardWrap {
@@ -273,4 +254,81 @@ html {
   font-size: 30px;
   font-weight: initial;
   height: 6vh;
+}
+
+.aboutCont {
+  display: grid;
+  row-gap: 40px;
+}
+
+.aboutSection {
+}
+
+.aboutImg {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.aboutImg img {
+  max-width: 70%;
+  height: auto;
+  width: auto\9;
+}
+.aboutImgGraph {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.aboutImgGraph img {
+  max-width: 70%;
+  height: auto;
+  width: auto\9;
+}
+
+.aboutSection h3 {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 15px;
+  margin-bottom: 45px;
+}
+
+.aboutSection p {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  margin: 25px;
+}
+
+.aboutSection h4 {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 45px;
+}
+
+.aboutCont h2 {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 50px;
+}
+
+.loginSignupAbout {
+  display: flex;
+  justify-content: space-evenly;
+  color: orangered;
+  border: orangered;
+  border-style: double;
+  padding: 20px;
+  margin: 15px;
+}
+
+.aboutLinks {
+  cursor: pointer;
+}
+.aboutLinks:hover {
+  color: white;
 }

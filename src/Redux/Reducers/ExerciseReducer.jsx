@@ -9,11 +9,6 @@ const initialState = {
 
 const exerciseReducer = (state = initialState, action) => {
   switch (action.type) {
-    //* Set Selected Folder
-    //   case "SET_SELECTED_FOLDER":
-    //     return { ...state, selectedFolder: action.folder };
-    //   case "FETCH_FOLDER_SUCCESSFUL":
-    //     return { ...state, exercises: action.folder.exercises };
 
     // * Clear selectedCircEx from State in multi-exercise circuit on addExercise
 
@@ -50,8 +45,7 @@ const exerciseReducer = (state = initialState, action) => {
     case "POST_EXERCISE_FAILED":
       return { ...state, fetching: false, error: action.error };
     case "POST_EXERCISE_SUCCESSFUL":
-      //   const newExercisesPOST = [...state.exercises, action.exercise];
-      //   return { ...state, fetching: false, exercises: newExercisesPOST };
+      
       return {
         ...state,
         fetching: false,

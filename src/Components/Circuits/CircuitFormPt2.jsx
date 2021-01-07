@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
+import { v4 as uuidv4 } from "uuid";
+
 // *Component Imports
 import CircFlowCont from "./CircFlowCont";
 // * Action Imports
@@ -100,6 +102,7 @@ export const CircuitFormPt2 = (props) => {
         case "restPeriod":
           return (
             <TextField
+              key={uuidv4()}
               id="outlined-basic"
               label={"Rest Period"}
               name={att}
@@ -111,6 +114,7 @@ export const CircuitFormPt2 = (props) => {
         case "holdTime":
           return (
             <TextField
+              key={uuidv4()}
               id="outlined-basic"
               label={"Hold Time"}
               name={att}
@@ -122,9 +126,9 @@ export const CircuitFormPt2 = (props) => {
         case "reps":
           return (
             <TextField
+              key={uuidv4()}
               id="outlined-basic"
               type="number"
-              //! min={"1"} doesn't apply to MatUi
               defaultValue={1}
               label={"Reps"}
               name={att}
@@ -136,6 +140,7 @@ export const CircuitFormPt2 = (props) => {
         default:
           return (
             <TextField
+              key={uuidv4()}
               id="outlined-basic"
               label={toTitleCase(att)}
               name={att}

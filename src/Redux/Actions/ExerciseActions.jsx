@@ -8,7 +8,6 @@ export const headers = () => {
   };
 };
 
-// *rxaction -> action template
 
 // ------- Clear selectedExercise ACTION--------
 

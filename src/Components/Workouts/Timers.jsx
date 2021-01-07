@@ -26,24 +26,96 @@ export const Timers = (props) => {
     if (!endEx) {
       setTimeAlert(false);
       return (
-        <div className={device === "mobile" ? "timer mobTimer" : "timer"}>
-          <div className="text">Active Time</div>
-          <div className="value">{timerValue}</div>
+        <div
+          className={
+            device === "mobile"
+              ? orientation === "landscape"
+                ? "timer mobTimer"
+                : "timer mobTimerPort"
+              : "timer"
+          }
+        >
+          <div
+            className={
+              device === "mobile" && orientation === "landscape"
+                ? "textMobLand"
+                : "text"
+            }
+          >
+            Active Time
+          </div>
+          <div
+            className={
+              device === "mobile" && orientation === "landscape"
+                ? "value valMob"
+                : "value"
+            }
+          >
+            {timerValue}
+          </div>
         </div>
       );
     } else if (endEx) {
       handleExceededRest();
       return (
-        <div className={device === "mobile" ? "timer mobTimer" : "timer"}>
-          <div className="text">Rest Time</div>
-          <div className="value">{timerValue}</div>
+        <div
+          className={
+            device === "mobile"
+              ? orientation === "landscape"
+                ? "timer mobTimer"
+                : "timer mobTimerPort"
+              : "timer"
+          }
+        >
+          <div
+            className={
+              device === "mobile" && orientation === "landscape"
+                ? "textMobLand"
+                : "text"
+            }
+          >
+            Rest Time
+          </div>
+          <div
+            className={
+              device === "mobile" && orientation === "landscape"
+                ? "value valMob"
+                : "value"
+            }
+          >
+            {timerValue}
+          </div>
         </div>
       );
     } else {
       return (
-        <div className={device === "mobile" ? "timer mobTimer" : "timer"}>
-          <div className="text">Active Time</div>
-          <div className="value">{timerValue}</div>
+        <div
+          className={
+            device === "mobile"
+              ? orientation === "landscape"
+                ? "timer mobTimer"
+                : "timer mobTimerPort"
+              : "timer"
+          }
+        >
+          <div
+            className={
+              device === "mobile" && orientation === "landscape"
+                ? "textMobLand"
+                : "text"
+            }
+          >
+            Active Time
+          </div>
+          <div
+            className={
+              device === "mobile" && orientation === "landscape"
+                ? "value valMob"
+                : "value"
+            }
+          >
+            {timerValue}
+          </div>
         </div>
       );
     }

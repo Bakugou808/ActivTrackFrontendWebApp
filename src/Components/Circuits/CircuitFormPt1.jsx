@@ -115,7 +115,6 @@ export const CircuitFormPt1 = (props) => {
     showExFormName && setShowExFormName(false);
     showExFormDesc && setShowExFormDesc(false);
   };
-  // ** Need to put onPostCircEx in NewWorkout and figure out the position, circuit id and exercise id
   const handleNext = (e) => {
     if (selectedExercise) {
       const circExData = {
@@ -180,10 +179,7 @@ export const CircuitFormPt1 = (props) => {
               {showExFormDesc ? (
                 <form onSubmit={handleExSubmit}>
                   <TextField
-                    //   id="outlined-multiline-flexible"
                     label="Exercise Description"
-                    //   multiline
-                    //   rowsMax={4}
                     name="description"
                     value={exFields.description}
                     onChange={handleExChange}

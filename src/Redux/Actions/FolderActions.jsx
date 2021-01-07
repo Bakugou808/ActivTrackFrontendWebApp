@@ -8,7 +8,6 @@ export const headers = () => {
   };
 };
 
-// *rxaction -> action template
 
 export const clearFoldersState = () => ({
   type: "CLEAR_FOLDERS_FROM_STATE",

@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from "react";
+import { v4 as uuidv4 } from "uuid";
+
 import { normalizeString } from "./AttributeFields";
 import { connect } from "react-redux";
 import useSound from "use-sound";
@@ -93,8 +95,6 @@ export const UiComponent = (props) => {
     function str_pad_left(string, pad, length) {
       return (new Array(length + 1).join(pad) + string).slice(-length);
     }
-    // const timerValue =
-    //   str_pad_left(minutes, "0", 2) + ":" + str_pad_left(seconds, "0", 2);
 
     const timerValue = new Date(stopWatch.time * 1000)
       .toISOString()
@@ -103,7 +103,13 @@ export const UiComponent = (props) => {
     if (!endEx) {
       setTimeAlert(false);
       return (
-        <div className="timer">
+        <div
+          className={
+            device === "mobile" && orientation === "landscape"
+              ? "timer mobTimer"
+              : "timer"
+          }
+        >
           <div
             className={
               device === "mobile" && orientation === "landscape"
@@ -127,7 +133,13 @@ export const UiComponent = (props) => {
     } else if (endEx) {
       handleExceededRest();
       return (
-        <div className="timer">
+        <div
+          className={
+            device === "mobile" && orientation === "landscape"
+              ? "timer mobTimer"
+              : "timer"
+          }
+        >
           <div
             className={
               device === "mobile" && orientation === "landscape"
@@ -159,7 +171,7 @@ export const UiComponent = (props) => {
     let arr = Object.entries(exObj.circuit_exercise_attributes);
 
     return arr.map((kv) => {
-      return <p>{`${kv}`}</p>;
+      return <p key={uuidv4()}>{`${kv}`}</p>;
     });
   };
 
@@ -247,11 +259,25 @@ export const UiComponent = (props) => {
             )}
 
             <div className="exHeaders">
-              <div className="timer" onClick={handleStartPause}>
+              <div
+                className={
+                  device === "mobile" && orientation === "landscape"
+                    ? "timer mobTimer"
+                    : "timer"
+                }
+                onClick={handleStartPause}
+              >
                 <TotalTime stopWatch={fullTime} endEx={endEx} />
               </div>
               <div></div>
-              <div className="timer" onClick={handleStartPause}>
+              <div
+                className={
+                  device === "mobile" && orientation === "landscape"
+                    ? "timer mobTimer"
+                    : "timer"
+                }
+                onClick={handleStartPause}
+              >
                 <Timers
                   stopWatch={stopWatch}
                   endEx={endEx}
@@ -261,7 +287,7 @@ export const UiComponent = (props) => {
               </div>
             </div>
 
-            <div className="horizontal1">
+            <div className="">
               <div
                 className={
                   device === "mobile"
@@ -308,9 +334,11 @@ export const UiComponent = (props) => {
                     className="restPeriodDisplay pointer"
                     onClick={() => setShowRpForm(true)}
                   >
-                    <p
-                      className={device === "mobile" && "restPeriodMobile"}
-                    >{` ${restPeriod.num} ${restPeriod.unit}`}</p>
+                    <p className={device === "mobile" && "restPeriodMobile"}>
+                      {restPeriod.num
+                        ? ` ${restPeriod.num} ${restPeriod.unit}`
+                        : `Add Time`}
+                    </p>
                   </span>
                 )}
               </div>
@@ -384,18 +412,7 @@ export const UiComponent = (props) => {
             </Button>
           </div>
         )}
-        {/* {submitClicked && (
-          <div className="startButton">
-            <Button
-              variant="contained"
-              color="primary"
-              onClick={() => handleSubmitStats(stopWatch.time)}
-              className={classes.btn}
-            >
-              Go To Next
-            </Button>
-          </div>
-        )} */}
+
       </div>
       {device === "mobile" && (
         <div className="frameHeader">
@@ -416,7 +433,6 @@ export const UiComponent = (props) => {
           </div>
         </div>
       )}
-      {/* </Paper> */}
     </>
   );
 };

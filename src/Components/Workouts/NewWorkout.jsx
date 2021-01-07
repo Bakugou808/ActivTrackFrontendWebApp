@@ -119,7 +119,7 @@ export const NewWorkout = (props) => {
   };
 
   const handleSave = () => {
-    // clear circuit positions and clear circExs position to 1
+    
     onClearPosValCircEx();
     onClearCircuitPhasePositions();
     history.push(
@@ -174,7 +174,7 @@ export const NewWorkout = (props) => {
               >
                 <TextField
                   required
-                  // size={30}
+                  
                   type="text"
                   placeholder="Add Description"
                   value={desc}
@@ -219,7 +219,7 @@ export const NewWorkout = (props) => {
           <div>
             <Tooltip title="Add" aria-label="add">
               <Fab
-                // className={classes.fab}
+                
                 color="primary"
                 size="medium"
                 onClick={() => handleAdd("Warm Up")}
@@ -342,7 +342,7 @@ export default AuthHOC(
 
 const useStyles = makeStyles((theme) => ({
   fab: {
-    // margin: theme.spacing(20),
+    
     background: "linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)",
   },
   absolute: {

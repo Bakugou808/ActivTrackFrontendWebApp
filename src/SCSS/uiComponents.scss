@@ -2,13 +2,9 @@
   font-family: "Roboto", "Helvetica", "Arial", sans-serif;
 }
 
-// Text Sizes
-
 .mainText {
   font-size: 15px;
 }
-
-// display Paper for Folders and Workouts
 
 .displayPaper {
   padding: 2;
@@ -30,10 +26,12 @@
 }
 .startWorkoutContainerMobPortraitGrid {
   display: grid;
-  grid-template-rows: 130px;
+  justify-content: center;
 }
 .startWorkoutContainerMobPortraitFlex {
   display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .startWorkoutContainerMobPortraitLandscape {
@@ -60,11 +58,11 @@
 .runWorkoutContainer {
   margin: 15px;
   display: flex;
-  // align-items: center;
+
   justify-content: center;
 }
 .runWorkoutContainer2 {
-  margin: 15px;
+  margin: 10px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -72,9 +70,7 @@
 }
 
 .UiComponentContainer {
-  // padding: 8px 15px 5px;
   width: auto;
-  // height: calc(100vh - 248px);
 }
 
 .flexKit {
@@ -84,8 +80,6 @@
 }
 
 .w50vw {
-  // take the width out on mobile
-  // width: 50vw;
   display: flex;
   justify-content: center;
   flex-direction: column;
@@ -93,11 +87,10 @@
 
 .UiCC2 {
   display: flex;
-  /* align-items: center; */
   justify-content: center;
-  padding: 0px 25px 0px;
+  padding: 10px 15px 0px;
 }
-// workout flow
+
 .submitButton {
   margin: 0 10px !important;
 }
@@ -116,7 +109,6 @@
   display: flex;
 }
 .exHeaders {
-  // border-bottom: 3px solid darkblue;
   display: flex;
   align-items: center;
   justify-content: space-evenly;
@@ -166,13 +158,6 @@
   justify-content: center;
   align-items: center;
 }
-
-// .horizontal1 {
-//   display: flex;
-//   justify-content: space-between;
-//   align-items: center;
-//   margin-bottom: 10px;
-// }
 
 .horizontal1 div {
   color: #26a69a;
@@ -236,10 +221,7 @@
   justify-content: center;
   flex-flow: column wrap;
   align-items: center;
-  // margin-top: 15px;
 }
-
-// workout's ui
 
 .exContainer {
   display: flex;
@@ -254,10 +236,10 @@
   }
   .exStackMobP {
     margin-left: 10px;
-    // padding: 3px;
+
     background: #ff5722;
     border-radius: 0.5rem;
-    width: 100%;
+    width: 210px;
   }
   .exCircuit {
     display: grid;
@@ -343,15 +325,12 @@
   font-weight: 400;
   font-family: "Roboto";
   text-decoration-line: none;
-  // margin-bottom: 15px;
-  // border-bottom: 3px solid darkblue;
-  // padding: 0px 10px;
+
   width: max-content;
   padding: 10px 15px;
   align-items: center;
   justify-content: center;
   display: flex;
-  // padding-bottom: 10px;
 }
 
 .attCards {
@@ -366,7 +345,7 @@
 .switches {
   display: flex;
   justify-content: space-around;
-  // border-bottom: 3px solid darkblue;
+
   margin: 0px 35px;
 }
 
@@ -422,8 +401,7 @@
   max-width: fit-content;
   margin: 10px;
 }
-// buttons
-// ÷82b1ff
+
 .button {
   text-size-adjust: 1 rem;
   max-width: 30rem;
@@ -441,11 +419,8 @@
   height: 4vh;
   min-height: 50px;
 }
-// Workouts exercise display
+
 .circuit {
-  //   display: flex;
-  //   align-items: center;
-  //   justify-content: center;
   margin-top: 15px;
   margin-bottom: 15px;
   cursor: pointer;
@@ -467,8 +442,6 @@
   border-color: rgb(181, 197, 184);
   border-radius: 3px;
 }
-
-// timer styles
 
 .timer-wrapper {
   display: flex;
@@ -510,8 +483,13 @@
   min-width: 72px;
 }
 
-// exercise Drawer
 .exSideDrawerParent {
+  display: flex;
+}
+.exSideDrawerParentMobPort {
+  display: flex;
+  height: 80px;
+  align-items: center;
 }
 
 .exSideDrawerHeader {
@@ -526,9 +504,9 @@
 }
 
 .exSideDrawerHeaderMobLand {
-  display: inline-flex;
   height: 90vh;
   overflow-y: scroll;
+  margin-top: 20px;
 }
 ::-webkit-scrollbar {
   width: 0px; /* Remove scrollbar space */
@@ -540,7 +518,6 @@
 }
 
 .phantomDiv {
-  // display: none;
   height: 81px;
 }
 
@@ -568,7 +545,6 @@
 
 .attCardDiv {
   margin: 5px;
-  // padding: 7px;
 }
 
 .attCardP {
@@ -595,7 +571,7 @@
 }
 
 .exStackPort {
-  width: 65vw;
+  width: 170px;
   margin: 10px;
 }
 
@@ -604,7 +580,7 @@
 }
 
 .circPaperMobPort {
-  width: 240px;
+  width: 170px;
 }
 
 .sourceList {
@@ -704,7 +680,6 @@
 
 .rpInput {
   height: 15px;
-  /* padding: 0px; */
   margin-top: 15px;
 }
 
@@ -732,13 +707,13 @@
 }
 
 .letsGetBusy {
-  font-size: 60px;
-  margin: 20px;
+  font-size: 50px;
 }
 .welcomeUser {
-  font-size: 80px;
-  margin: 20px;
-  // width: 80vw;
+  font-size: 60px;
+  align-items: center;
+  justify-content: center;
+  display: grid;
 }
 
 .elusivDiv {
@@ -753,11 +728,6 @@
 .sideListColMobLand {
   display: grid;
 }
-// .sideListCol {
-//   display: flex;
-//   justify-content: center;
-//   align-items: center;
-// }
 
 .sourceListMobLand {
   display: grid;
@@ -785,14 +755,9 @@
 
 .sideListItemContMobLand {
   display: grid;
-  // grid-template-rows: 0.5fr 1fr;
-  // row-gap: 5px;
+
   border-right: inset;
   align-content: center;
-  // width: 100%;
-  // display: flex;
-  // align-items: flex-start;
-  // justify-content: center;
 }
 
 .statByExGraphMobLand {
@@ -859,9 +824,16 @@
 }
 .cardRepRestMob {
   margin: 5px;
+  display: flex;
+  gap: 4px;
+  justify-content: center;
 }
 .restPeriodMobile {
   font-size: 15px;
+  color: #26a69a;
+  align-items: center;
+  display: flex;
+  margin: 0px;
 }
 
 .exPhase0Mob {
@@ -940,4 +912,24 @@
   font-size: 34px;
   color: orange;
   font-weight: 900;
+}
+.mobTimerPort {
+  padding: 5px;
+}
+
+.copyRight {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 30px;
+}
+
+.exListCont2 {
+  margin-top: 64px;
+}
+
+.greetingContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }

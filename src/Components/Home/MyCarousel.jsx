@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
+import { v4 as uuidv4 } from "uuid";
+
 // * Material UI Imports
 import { makeStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
@@ -29,7 +31,6 @@ export const MyCarousel = ({
       justifyContent: "center",
       padding: "6vw",
       margin: "5px",
-      // backgroundImage: `url(${backgroundImg})`,
       backgroundSize: "cover",
       backgroundColor: "#f57c00",
       "&:hover": {
@@ -75,6 +76,7 @@ export const MyCarousel = ({
       return (
         <div className="cardWrap">
           <Paper
+            key={uuidv4()}
             className={
               device === "mobile" && orientation === "landscape"
                 ? [classes.paper, classes.mobPortFontSize]
@@ -101,19 +103,4 @@ const mapDispatchToProps = {};
 
 export default connect(mapStateToProps, mapDispatchToProps)(MyCarousel);
 
-// const useStyles = makeStyles(() => ({
-//   paper: {
-//     display: "flex",
-//     alignItems: "center",
-//     justifyContent: "center",
-//     padding: "6vw",
-//     margin: "15px",
-//     backgroundImage: `url(${backgroundImg})`,
-//     backgroundColor: "#f57c00",
-//     "&:hover": {
-//       backgroundColor: "#26a69a",
-//     },
-//     opacity: ".7",
-//     cursor: "pointer",
-//   },
-// }));
+

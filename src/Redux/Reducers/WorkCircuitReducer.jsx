@@ -9,11 +9,6 @@ const initialState = {
 
 const workCircuitReducer = (state = initialState, action) => {
   switch (action.type) {
-    //* Set Selected Folder
-    //   case "SET_SELECTED_FOLDER":
-    //     return { ...state, selectedFolder: action.folder };
-    //   case "FETCH_FOLDER_SUCCESSFUL":
-    //     return { ...state, workCircuits: action.folder.workCircuits };
 
     //* Fetch WorkCircuits Belonging To User
 
@@ -44,8 +39,6 @@ const workCircuitReducer = (state = initialState, action) => {
     case "POST_WORK_CIRCUIT_FAILED":
       return { ...state, fetching: false, error: action.error };
     case "POST_WORK_CIRCUIT_SUCCESSFUL":
-      //   const newWorkCircuitsPOST = [...state.workCircuits, action.workCircuit];
-      //   return { ...state, fetching: false, workCircuits: newWorkCircuitsPOST };
       return {
         ...state,
         fetching: false,

@@ -15,8 +15,7 @@ import {
 // * Material Imports
 import { makeStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
-// // * react-scroll Imports
-// import {Link} from 'react-scroll'
+
 
 export const StatsContainerParent = (props) => {
   const {
@@ -123,7 +122,6 @@ export const StatsContainerParent = (props) => {
       <div className="statsParentFlexCont">
         <div className="statsParentContainer">
           <div className="graphHeader">
-            {/* <div className="graphHeaderExTitle">{selectedEx}</div> */}
             <div
               className={
                 device === "mobile" && orientation === "portrait"
@@ -142,9 +140,7 @@ export const StatsContainerParent = (props) => {
                   ? "statsByExRowMobLand"
                   : "statsByExRowMobPort"
                 : "statsByExRow"
-              // device === "mobile" && orientation === "landscape"
-              //   ? "statsByExRowMobLand"
-              //   : "statsByExRow"
+     
             }
           >
             {/* exercise list and graph */}
@@ -172,9 +168,7 @@ export const StatsContainerParent = (props) => {
             )}
           </div>
 
-          {/* ---------------- */}
           <div className="graphHeader">
-            {/* <div className="graphHeaderExTitle">{selectedSess}</div> */}
             <div
               className={
                 device === "mobile" && orientation === "portrait"

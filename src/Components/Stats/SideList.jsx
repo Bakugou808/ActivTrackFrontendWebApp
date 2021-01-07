@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from "react";
+import { v4 as uuidv4 } from "uuid";
+
 import { connect } from "react-redux";
 import Paper from "@material-ui/core/Paper";
 // * react-scroll Imports
@@ -24,11 +26,11 @@ export const SideList = (props) => {
     return sourceList.map((data) => {
       return (
         <div
+          key={uuidv4()}
           className={
             device === "mobile" ? "sideListItemContMobLand" : "sideListItemCont"
           }
         >
-          {/* { device === 'mobile' ? */}
           {exAttKeys ? (
             <p
               className={
@@ -46,7 +48,6 @@ export const SideList = (props) => {
             <Link
               activeClass="active"
               to="sessGraph"
-              // spy={true}
               smooth={true}
               duration={500}
               className={
@@ -81,7 +82,6 @@ export const SideList = (props) => {
               <Link
                 activeClass="active"
                 to="exGraph"
-                // spy={true}
                 smooth={true}
                 duration={300}
                 className={
@@ -97,7 +97,6 @@ export const SideList = (props) => {
               <div
                 activeClass="active"
                 to="exGraph"
-                // spy={true}
                 smooth={true}
                 duration={300}
                 className={
@@ -118,7 +117,11 @@ export const SideList = (props) => {
   const renderExAtts = (exAttArr) => {
     return exAttArr.map((att) => {
       return (
-        <p className="sideListItemAtts" onClick={() => setSelectedKey(att)}>
+        <p
+          key={uuidv4()}
+          className="sideListItemAtts"
+          onClick={() => setSelectedKey(att)}
+        >
           {att}
         </p>
       );

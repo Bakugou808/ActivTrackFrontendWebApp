@@ -26,10 +26,8 @@ export const SessGraph = (props) => {
 
   useEffect(() => {
     rawData && setLineData();
-    // selectedExKey && formatDispData(selectedExKey);
   }, [rawData, device, orientation]);
 
-  //   [rawData, selectedExKey]
 
   function rand(min, max) {
     return Math.round(min + Math.random() * (max - min));

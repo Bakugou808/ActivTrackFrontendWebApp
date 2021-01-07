@@ -44,65 +44,75 @@ export const Home = (props) => {
 
   return (
     <div className="homePageText exTitle fsize20">
-      <motion.div
-        initial={{ y: 0 }}
-        animate={{ y: "-500vw" }}
-        transition={{
-          delay: 3,
-          type: "tween",
-          // stiffness: 300,
-          ease: "easeOut",
-          duration: 2,
-        }}
-      >
-        <motion.h1
-          initial={{ y: "250vw" }}
-          animate={{ y: 0 }}
+      <div className="greetingContainer">
+        <motion.div
+          initial={{ y: 0 }}
+          animate={{ y: "-500vw" }}
           transition={{
-            delay: 0.6,
-            type: "spring",
-            stiffness: 30,
-            // ease: "easeOut",
-            // duration: 2,
+            delay: 3,
+            type: "tween",
+            ease: "easeOut",
+            duration: 2,
           }}
-          className="welcomeUser"
         >
-          Welcome {user.username}
-        </motion.h1>
-      </motion.div>
-      <motion.div
-        initial={{ y: 0 }}
-        animate={{ y: "-250vw" }}
-        transition={{
-          delay: 4.5,
-          // duration: 1.5, doesn't work with spring type
-          type: "spring",
-          stiffness: 30,
-        }}
-      >
-        <motion.h2
-          initial={{ y: "250vw" }}
-          animate={
-            device === "mobile" && orientation === "portrait"
-              ? { y: -200 }
-              : { y: -120 }
-          }
+          <motion.h1
+            initial={{ y: "250vw" }}
+            animate={orientation === "landscape" ? { y: -50 } : { y: 0 }}
+            transition={{
+              delay: 0.6,
+              type: "spring",
+              stiffness: 30,
+            }}
+            className="welcomeUser"
+          >
+            <div className="exLineChart">Welcome</div>{" "}
+            <div className="exLineChart">{user.username}</div>
+          </motion.h1>
+        </motion.div>
+      </div>
+      <div className="greetingContainer">
+        <motion.div
+          initial={{ y: 0 }}
+          animate={{ y: "-250vw" }}
           transition={{
-            delay: 2.5,
+            delay: 4.5,
             type: "spring",
             stiffness: 30,
           }}
         >
-          <h1 className="letsGetBusy">Lets Get Busy</h1>
-        </motion.h2>
-      </motion.div>
+          <motion.h2
+            initial={{ y: "250vw" }}
+            animate={
+              device === "mobile" && orientation === "portrait"
+                ? { y: -180 }
+                : { y: -200 }
+            }
+            transition={{
+              delay: 2.5,
+              type: "spring",
+              stiffness: 30,
+            }}
+          >
+            <h1 className="letsGetBusy">Lets Get Busy</h1>
+          </motion.h2>
+        </motion.div>
+      </div>
+
       {/* Carousels Start Here */}
       <motion.div
         initial={{ y: "250vw" }}
         animate={
+<<<<<<< HEAD
           device === "mobile" && orientation === "portrait"
             ? { y: -460 }
             : { y: -295 }
+=======
+          device === "mobile"
+            ? orientation === "portrait"
+              ? { y: -410 }
+              : { y: -500 }
+            : { y: -380 }
+>>>>>>> master
         }
         transition={{
           delay: 3,
@@ -110,7 +120,11 @@ export const Home = (props) => {
           stiffness: 30,
         }}
       >
-        <div className="HomeCarousel">
+        <div
+          className={
+            orientation === "landscape" ? "HomeCarousel HCLand" : "HomeCarousel"
+          }
+        >
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}

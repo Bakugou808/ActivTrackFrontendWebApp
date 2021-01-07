@@ -1,4 +1,3 @@
-// *rxreducer
 
 const initialState = {
   selectedFolder: null,

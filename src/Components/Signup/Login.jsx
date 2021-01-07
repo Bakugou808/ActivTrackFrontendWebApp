@@ -18,7 +18,7 @@ import { loginUser } from "../../Redux/Actions/UserActions";
 // component imports
 
 export const Login = (props) => {
-  const { loginError, onLoginUser, history } = props;
+  const { loginError, onLoginUser, history, orientation, device } = props;
   const [fields, setFields] = useState({ username: "", password: "" });
 
   const classes = useStyles();
@@ -45,7 +45,7 @@ export const Login = (props) => {
         <Typography component={"span"} component="h1" variant="h5">
           Sign in
         </Typography>
-        <form className={classes.form}>
+        <form className={device === "mobile" ? classes.formMob : classes.form}>
           <TextField
             variant="outlined"
             margin="normal"
@@ -72,10 +72,7 @@ export const Login = (props) => {
             value={fields.password}
             onChange={handleChange}
           />
-          {/* <FormControlLabel
-        control={<Checkbox value="remember" color="primary" />}
-        label="Remember me"
-      /> */}
+
           <Button
             type="submit"
             fullWidth
@@ -86,12 +83,7 @@ export const Login = (props) => {
           >
             Sign In
           </Button>
-          <Grid container>
-            <Grid item xs>
-              <Link href="#" variant="body2">
-                Forgot password?
-              </Link>
-            </Grid>
+          <Grid container justify="center">
             <Grid item>
               <Link href="signup" variant="body2">
                 {"Don't have an account? Sign Up"}
@@ -103,7 +95,7 @@ export const Login = (props) => {
       {loginError && (
         <div className="phaseTitle2 setDisplay marginTop10">{`${loginError}: Please Sign Up`}</div>
       )}
-      <Box mt={8}>
+      <Box mt={8} className="copyRight">
         <Copyright />
       </Box>
     </Container>
@@ -112,6 +104,8 @@ export const Login = (props) => {
 
 const mapStateToProps = (store) => ({
   loginError: store.user.error,
+  device: store.device.device,
+  orientation: store.device.orientation,
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -132,7 +126,11 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: theme.palette.secondary.main,
   },
   form: {
-    width: "100%", // Fix IE 11 issue.
+    width: "100%", 
+    marginTop: theme.spacing(1),
+  },
+  formMob: {
+    width: "240px", 
     marginTop: theme.spacing(1),
   },
   submit: {
@@ -149,7 +147,7 @@ function Copyright() {
       align="center"
     >
       {"Copyright © "}
-      <Link color="inherit" href="https://material-ui.com/">
+      <Link color="inherit" href="https://activtrack.com/">
         ActivTrack
       </Link>{" "}
       {new Date().getFullYear()}

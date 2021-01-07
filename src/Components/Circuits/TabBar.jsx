@@ -42,7 +42,6 @@ TabPanel.propTypes = {
 const useStyles = makeStyles((theme) => ({
   root: {
     backgroundColor: theme.palette.background.paper,
-    // width: 500,
     flex: "auto",
   },
 }));
@@ -84,31 +83,11 @@ export default function TabBar(props) {
       >
         <TabPanel value={value} index={0} dir={theme.direction}>
           <CircFlowCont setShowModal={setShowModal} circuit_type="stack" />
-          {/* {!nextPage ? (
-            <CircuitFormPt1
-              circuit_type={"stack"}
-              goToNextPage={goToNextPage}
-            />
-          ) : (
-            <CircuitFormPt2
-              circuit_type={"stack"}
-              setShowModal={setShowModal}
-            />
-          )} */}
+  
         </TabPanel>
         <TabPanel value={value} index={1} dir={theme.direction}>
           <CircFlowCont setShowModal={setShowModal} circuit_type="circuit" />
-          {/* {!nextPage ? (
-            <CircuitFormPt1
-              circuit_type={"circuit"}
-              goToNextPage={goToNextPage}
-            />
-          ) : (
-            <CircuitFormPt2
-              circuit_type={"circuit"}
-              setShowModal={setShowModal}
-            />
-          )} */}
+          
         </TabPanel>
       </SwipeableViews>
     </div>
@@ -119,7 +98,6 @@ const AntTab = withStyles((theme) => ({
   root: {
     textTransform: "none",
     minWidth: 72,
-    // width: "inherit"
     display: "flex",
     fontWeight: theme.typography.fontWeightRegular,
     marginRight: theme.spacing(4),

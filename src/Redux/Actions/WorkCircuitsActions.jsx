@@ -8,41 +8,6 @@ export const headers = () => {
   };
 };
 
-// *rxaction -> action template
-
-// ------- FETCH WORKOUTS WORK_CIRCUITs ACTIONS--------
-
-// export const fetchWorkCircuitsRequest = () => ({
-//   type: "FETCH_WORK_CIRCUITS_REQUEST",
-// });
-
-// export const fetchWorkCircuitsFailed = (error) => ({
-//   type: "FETCH_WORK_CIRCUITS_FAILED",
-//   error: error,
-// });
-
-// export const fetchWorkCircuitsSuccess = (WorkCircuits) => ({
-//   type: "FETCH_WORK_CIRCUITS_SUCCESSFUL",
-//   WorkCircuits: WorkCircuits,
-// });
-
-// // ------- FETCH WORKOUTS WORK_CIRCUITS FUNCTION--------
-
-// export const fetchWorkCircuits = (workCircuitId) => {
-//   return (dispatch) => {
-//     dispatch(fetchWorkCircuitsRequest());
-//     fetch(`${API}/workouts_workout_circuits/${workCircuitId}`) //!make sure to check this route
-//       .then((res) => res.json())
-//       .then((data) => {
-//         if (data.error) {
-//           dispatch(fetchWorkCircuitsFailed(data.error));
-//         } else {
-//           dispatch(fetchWorkCircuitsSuccess(data));
-//         }
-//       });
-//   };
-// };
-
 // ------- FETCH SHOW WORK_CIRCUIT ACTIONS--------
 
 export const fetchWorkCircuitRequest = () => ({
