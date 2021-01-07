@@ -51,7 +51,6 @@ export const Home = (props) => {
           transition={{
             delay: 3,
             type: "tween",
-            // stiffness: 300,
             ease: "easeOut",
             duration: 2,
           }}
@@ -63,8 +62,6 @@ export const Home = (props) => {
               delay: 0.6,
               type: "spring",
               stiffness: 30,
-              // ease: "easeOut",
-              // duration: 2,
             }}
             className="welcomeUser"
           >
@@ -79,7 +76,6 @@ export const Home = (props) => {
           animate={{ y: "-250vw" }}
           transition={{
             delay: 4.5,
-            // duration: 1.5, doesn't work with spring type
             type: "spring",
             stiffness: 30,
           }}

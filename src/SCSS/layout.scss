@@ -13,8 +13,7 @@ $extra-large: 1200px;
 
 body {
   background: url("./ActivTrack Background2.jpeg") no-repeat center center fixed;
-  /* background-repeat: no-repeat; */
-  /* background-size: auto; */
+
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
@@ -85,7 +84,6 @@ body {
 }
 
 .homePageText {
-  // display: flex;
   flex-flow: column wrap;
   align-items: center;
   padding-top: 40px;
@@ -112,18 +110,8 @@ body {
 html {
   scroll-behavior: smooth;
 }
-// x px or smaller apply this css
-// @media (max-width: )
-
-// @media screen and (max-height: 750px) {
-//   .UiComponentContainer {
-//     min-height: 535px;
-//   }
-// }
 
 .statsParentContainer {
-  // display: grid;
-  // grid-template-rows: 1fr 1fr;
   width: 100%;
   justify-content: center;
   align-items: center;
@@ -174,9 +162,6 @@ html {
   align-items: center;
 }
 
-// .restPeriodCard {
-
-// }
 .endWorkout {
   display: grid;
   grid-template-rows: 1fr 1fr;
@@ -213,7 +198,6 @@ html {
   justify-items: center;
   grid-row-gap: 40px;
   margin-bottom: 80px;
-  // margin-top: 50px;
 }
 
 .HCLand {
@@ -238,17 +222,10 @@ html {
 .myCarousel {
   display: inline-flex;
   width: 80vw;
-  // align-items: center;
-  // justify-content: center;
+
   overflow-x: auto;
   overflow: overlay;
   border-style: groove;
-  // & div:first-of-type {
-  //   margin-left: 15px;
-  // }
-  // & div:last-of-type {
-  //   margin-right: 30px;
-  // }
 }
 
 .cardWrap {
@@ -285,9 +262,6 @@ html {
 }
 
 .aboutSection {
-  // display: flex;
-  // align-items: center;
-  // justify-content: center;
 }
 
 .aboutImg {
@@ -309,7 +283,7 @@ html {
 .aboutImgGraph img {
   max-width: 70%;
   height: auto;
-  width: auto\9; /* ie8 */
+  width: auto\9;
 }
 
 .aboutSection h3 {

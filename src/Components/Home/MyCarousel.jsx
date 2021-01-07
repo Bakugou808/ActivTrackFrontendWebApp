@@ -31,7 +31,6 @@ export const MyCarousel = ({
       justifyContent: "center",
       padding: "6vw",
       margin: "5px",
-      // backgroundImage: `url(${backgroundImg})`,
       backgroundSize: "cover",
       backgroundColor: "#f57c00",
       "&:hover": {
@@ -104,19 +103,4 @@ const mapDispatchToProps = {};
 
 export default connect(mapStateToProps, mapDispatchToProps)(MyCarousel);
 
-// const useStyles = makeStyles(() => ({
-//   paper: {
-//     display: "flex",
-//     alignItems: "center",
-//     justifyContent: "center",
-//     padding: "6vw",
-//     margin: "15px",
-//     backgroundImage: `url(${backgroundImg})`,
-//     backgroundColor: "#f57c00",
-//     "&:hover": {
-//       backgroundColor: "#26a69a",
-//     },
-//     opacity: ".7",
-//     cursor: "pointer",
-//   },
-// }));
+

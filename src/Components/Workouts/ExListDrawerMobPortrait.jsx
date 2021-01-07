@@ -63,7 +63,6 @@ export const ExListDrawerMobPortrait = ({
               />
               <div className="exStackMobP ">
                 <Paper
-                  // id={`${record.ex_id}-${record.circuit_position}-${record.phase_position}`}
                   elevation={6}
                   className={"exPaper pointer exStackPort"}
                   onClick={() => handlePatch(record)}

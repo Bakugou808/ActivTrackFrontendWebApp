@@ -119,7 +119,6 @@ export const LineChart = (props) => {
 
   return (
     <>
-      {/* <div className="lineChart"> */}
       <Line
         data={data}
         // onClick={(point, event) => handleClick(point, event)}
@@ -193,13 +192,11 @@ export const LineChart = (props) => {
         ]}
       />
       {showDetails && point}
-      {/* </div> */}
     </>
   );
 };
 
 const mapStateToProps = (store) => ({
-  // data: store.stats.workoutsStats.stats,
 });
 
 const mapDispatchToProps = {};

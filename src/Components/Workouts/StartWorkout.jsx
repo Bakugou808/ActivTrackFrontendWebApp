@@ -29,9 +29,7 @@ import {
 } from "../../Redux/Actions/SessionsActions";
 import { FormatListNumberedOutlined } from "@material-ui/icons";
 
-// *for LATER
-//*! add the session id to the url path to have access for refresh, maybe add the circ_ex id as well and keep the route open... that way on refresh during a session you can fetch the exercise the user was on and slice the exObjs from indexOf(circ_ex) to the end*/
-// * TO-DO: incorporate default rest time, sound effects on start and end and finished workout (add that to EndWorkout Component)
+
 const StartWorkout = (props) => {
   const {
     history,
@@ -353,10 +351,8 @@ const StartWorkout = (props) => {
       );
     };
 
-    // patchSession
     onPatchSession(sessionData, sideEffects);
 
-    // !clear states where necessary
   };
 
   const pauseTimers = () => {
@@ -473,7 +469,6 @@ const StartWorkout = (props) => {
             stopWatch={stopWatch}
             setExStats={setExStats}
             submitClicked={submitClicked}
-            // handleSubmitStats={handleSubmitStats}
             setShowRPCard={setShowRPCard}
             setSubmitClicked={setSubmitClicked}
             focusAttFields={focusAttFields}

@@ -33,10 +33,9 @@ export const StatsPage = (props) => {
     user && onFetchAllWorkoutsWithStats(user.id);
   }, [user]);
 
-  //*   path="/displayStats/:workoutTitle/:workoutId"
+
   const redirectToWorkoutStats = (workInfo, workoutHash) => {
     history.push(`/displayStats/${workInfo.title}/${workInfo.id}`);
-    // onSetWorkoutsStats(workoutHash);
     onFetchWorkoutsStatsByTotalReps(workInfo.id, 20);
     onFetchWorkoutsStatsByEx(workInfo.id, 20);
   };
@@ -45,7 +44,7 @@ export const StatsPage = (props) => {
     return workouts.data.map((workoutHash) => {
       let title = Object.keys(workoutHash)[0];
       let subHash = workoutHash[`${title}`];
-      // let key = Object.keys(subHash)[0];
+      
       let id = subHash.workout_id;
       let workInfo = { title: title, id: id };
       return (
@@ -94,9 +93,7 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(2),
     textAlign: "center",
     color: theme.palette.secondary.dark,
-    // minHeight: "3rem",
     height: "4vw",
-
     maxWidth: "20 rem",
     cursor: "pointer",
     justifyContent: "center",
@@ -104,8 +101,6 @@ const useStyles = makeStyles((theme) => ({
     alignItems: "center",
     display: "flex",
     opacity: ".8",
-    // backgroundColor: "#ffee58",
-    // backgroundColor: "#fff179",
   },
   addNew: {
     display: "flex",

@@ -72,16 +72,7 @@ export default function CheckBoxes(props) {
         }
         label="Rest Period"
       />
-      {/* <FormControlLabel
-        control={
-          <Checkbox
-            icon={<FavoriteBorder />}
-            checkedIcon={<Favorite />}
-            name="checkedH"
-          />
-        }
-        label="Custom icon"
-      /> */}
+
     </FormGroup>
   );
 }

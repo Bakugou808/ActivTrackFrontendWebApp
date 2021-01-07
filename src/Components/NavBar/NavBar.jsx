@@ -11,11 +11,8 @@ import Typography from "@material-ui/core/Typography";
 import Link from "@material-ui/core/Link";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import clsx from "clsx";
-// import Button from "@material-ui/core/Button";
 import IconButton from "@material-ui/core/IconButton";
 import MenuIcon from "@material-ui/icons/Menu";
-// import AssessmentIcon from "@material-ui/icons/Assessment";
-// import BorderColorIcon from "@material-ui/icons/BorderColor";
 import FolderOpenIcon from "@material-ui/icons/FolderOpen";
 import BubbleChartIcon from "@material-ui/icons/BubbleChart";
 import FormatListBulletedIcon from "@material-ui/icons/FormatListBulleted";
@@ -99,7 +96,6 @@ function NavBar(props) {
     >
       <List>
         {[
-          // ["Search", <SearchIcon />, ""],
           ["Home", <HomeIcon />, "home"],
           ["Folders", <FolderOpenIcon />, "folders"],
           ["Stats", <BubbleChartIcon />, "statsPage"],
@@ -134,7 +130,7 @@ function NavBar(props) {
               <MenuIcon />
             </IconButton>
           )}
-          {workoutPage && (
+          {/* {workoutPage && (
             <IconButton
               edge="start"
               className={
@@ -146,7 +142,7 @@ function NavBar(props) {
             >
               <AccountTreeIcon />
             </IconButton>
-          )}
+          )} */}
           <Typography component={"span"} variant="h6" className={classes.title}>
             {isLoggedIn ? (
               <Link href="/home" color="inherit">
@@ -159,17 +155,36 @@ function NavBar(props) {
             )}
           </Typography>
           {isLoggedIn ? (
-            <Typography
-              component={"span"}
-              variant="subtitle1"
-              className={classes.login}
-            >
-              <Link className={classes.link} onClick={onLogOut} color="inherit">
-                {device === "mobile" ? <ExitToAppIcon /> : "Sign Out"}
-              </Link>
-            </Typography>
+            workoutPage ? (
+              <IconButton
+                edge="start"
+                className={
+                  device === "mobile" ? classes.menuBtnMob : classes.menuButton
+                }
+                color="inherit"
+                aria-label="exercise_menu"
+                onClick={toggleExDrawer}
+              >
+                <AccountTreeIcon />
+              </IconButton>
+            ) : (
+              <Typography
+                component={"span"}
+                variant="subtitle1"
+                className={classes.login}
+              >
+                <Link
+                  className={classes.link}
+                  onClick={onLogOut}
+                  color="inherit"
+                >
+                  {device === "mobile" ? <ExitToAppIcon /> : "Sign Out"}
+                </Link>
+              </Typography>
+            )
           ) : (
             location.pathname != "/signin" &&
+            !workoutPage &&
             location.pathname != "/about" &&
             location.pathname != "/signup" && (
               <Typography

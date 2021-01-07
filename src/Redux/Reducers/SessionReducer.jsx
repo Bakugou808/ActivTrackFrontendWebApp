@@ -56,8 +56,7 @@ const sessionReducer = (state = initialState, action) => {
     case "POST_SESSION_FAILED":
       return { ...state, fetching: false, error: action.error };
     case "POST_SESSION_SUCCESSFUL":
-      //   const newSessionsPOST = [...state.sessions, action.session];
-      //   return { ...state, fetching: false, sessions: newSessionsPOST };
+     
       if (state.sessions) {
         return {
           ...state,

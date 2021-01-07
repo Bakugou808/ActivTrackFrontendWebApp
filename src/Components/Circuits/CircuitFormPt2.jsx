@@ -129,7 +129,6 @@ export const CircuitFormPt2 = (props) => {
               key={uuidv4()}
               id="outlined-basic"
               type="number"
-              //! min={"1"} doesn't apply to MatUi
               defaultValue={1}
               label={"Reps"}
               name={att}

@@ -95,8 +95,6 @@ export const UiComponent = (props) => {
     function str_pad_left(string, pad, length) {
       return (new Array(length + 1).join(pad) + string).slice(-length);
     }
-    // const timerValue =
-    //   str_pad_left(minutes, "0", 2) + ":" + str_pad_left(seconds, "0", 2);
 
     const timerValue = new Date(stopWatch.time * 1000)
       .toISOString()
@@ -414,18 +412,7 @@ export const UiComponent = (props) => {
             </Button>
           </div>
         )}
-        {/* {submitClicked && (
-          <div className="startButton">
-            <Button
-              variant="contained"
-              color="primary"
-              onClick={() => handleSubmitStats(stopWatch.time)}
-              className={classes.btn}
-            >
-              Go To Next
-            </Button>
-          </div>
-        )} */}
+
       </div>
       {device === "mobile" && (
         <div className="frameHeader">
@@ -446,7 +433,6 @@ export const UiComponent = (props) => {
           </div>
         </div>
       )}
-      {/* </Paper> */}
     </>
   );
 };

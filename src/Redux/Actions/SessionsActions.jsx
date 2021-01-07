@@ -8,13 +8,6 @@ export const headers = () => {
   };
 };
 
-// *rxaction -> action template
-
-// ------- CLEAR SELECTED SESSION AND FORMATTED SESSION FROM STATE ACTIONS--------
-
-// export const clearSelectedAndFormattedSessions = () => ({
-//   type: "CLEAR_SELECTED_AND_FORMATTED_SESSION_STATE",
-// });
 
 // ------- FETCH FOLDER SESSIONS ACTIONS--------
 

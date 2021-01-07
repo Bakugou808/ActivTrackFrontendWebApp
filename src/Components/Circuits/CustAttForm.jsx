@@ -5,18 +5,12 @@ import { connect } from "react-redux";
 import TextField from "@material-ui/core/TextField";
 
 export const CustAttForm = (props) => {
-  const {
-    customAtts,
-    handleCustomAttAdd,
-    setShowCustomAttFields,
-    // setOpenSnackBar,
-  } = props;
+  const { customAtts, handleCustomAttAdd, setShowCustomAttFields } = props;
   const [customAtt, setCustomAtt] = useState("");
 
   const handleAddAtt = (e) => {
     e.preventDefault();
     handleCustomAttAdd(customAtt);
-    // setOpenSnackBar(true);
     setShowCustomAttFields(false);
     setCustomAtt("");
   };

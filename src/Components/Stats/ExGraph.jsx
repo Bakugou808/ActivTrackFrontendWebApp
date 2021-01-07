@@ -50,7 +50,6 @@ export const ExGraph = (props) => {
         sessTemp[key].push(consolidateSessionData(value));
       }
     }
-    // debugger;
     for (const [date, attArr] of Object.entries(sessTemp)) {
       for (const [att, value] of Object.entries(attArr[0])) {
         data = { id: "", color: "", data: [] };
@@ -70,7 +69,6 @@ export const ExGraph = (props) => {
         }
       }
     }
-    // debugger;
     setLineData(finData);
   };
 

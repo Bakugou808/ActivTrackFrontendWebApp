@@ -8,7 +8,6 @@ export const headers = () => {
   };
 };
 
-// *rxaction -> action template
 
 // ------- Clear selectedCircEx ACTION--------
 
@@ -177,36 +176,3 @@ export const deleteCircEx = (circExId, sideEffects) => {
       });
   };
 };
-
-// ------- FETCH WORKOUTS CIRC_EXs ACTIONS--------
-
-// export const fetchCircExsRequest = () => ({
-//   type: "FETCH_CIRC_EXS_REQUEST",
-// });
-
-// export const fetchCircExsFailed = (error) => ({
-//   type: "FETCH_CIRC_EXS_FAILED",
-//   error: error,
-// });
-
-// export const fetchCircExsSuccess = (CircExs) => ({
-//   type: "FETCH_CIRC_EXS_SUCCESSFUL",
-//   CircExs: CircExs,
-// });
-
-// // ------- FETCH WORKOUTS CIRC_EXS FUNCTION--------
-
-// export const fetchCircExs = (circExId) => {
-//   return (dispatch) => {
-//     dispatch(fetchCircExsRequest());
-//     fetch(`${API}/workouts_circuit_exercises/${circExId}`) //!make sure to check this route
-//       .then((res) => res.json())
-//       .then((data) => {
-//         if (data.error) {
-//           dispatch(fetchCircExsFailed(data.error));
-//         } else {
-//           dispatch(fetchCircExsSuccess(data));
-//         }
-//       });
-//   };
-// };

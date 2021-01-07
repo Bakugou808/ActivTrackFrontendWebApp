@@ -31,7 +31,6 @@ export const SideList = (props) => {
             device === "mobile" ? "sideListItemContMobLand" : "sideListItemCont"
           }
         >
-          {/* { device === 'mobile' ? */}
           {exAttKeys ? (
             <p
               className={
@@ -49,7 +48,6 @@ export const SideList = (props) => {
             <Link
               activeClass="active"
               to="sessGraph"
-              // spy={true}
               smooth={true}
               duration={500}
               className={
@@ -84,7 +82,6 @@ export const SideList = (props) => {
               <Link
                 activeClass="active"
                 to="exGraph"
-                // spy={true}
                 smooth={true}
                 duration={300}
                 className={
@@ -100,7 +97,6 @@ export const SideList = (props) => {
               <div
                 activeClass="active"
                 to="exGraph"
-                // spy={true}
                 smooth={true}
                 duration={300}
                 className={

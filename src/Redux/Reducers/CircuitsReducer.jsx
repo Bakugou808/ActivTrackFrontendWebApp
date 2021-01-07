@@ -13,11 +13,6 @@ const initialState = {
 
 const circuitReducer = (state = initialState, action) => {
   switch (action.type) {
-    //* Set Selected Folder
-    //   case "SET_SELECTED_FOLDER":
-    //     return { ...state, selectedFolder: action.folder };
-    //   case "FETCH_FOLDER_SUCCESSFUL":
-    //     return { ...state, circuits: action.folder.circuits };
 
     //* Set SelectedCircuit
     case "CLEAR_SELECTED_CIRCUIT":
@@ -109,8 +104,6 @@ const circuitReducer = (state = initialState, action) => {
     case "POST_CIRCUIT_FAILED":
       return { ...state, fetching: false, error: action.error };
     case "POST_CIRCUIT_SUCCESSFUL":
-      //   const newCircuitsPOST = [...state.circuits, action.circuit];
-      //   return { ...state, fetching: false, circuits: newCircuitsPOST };
       const newPos = state.position + 1;
       return {
         ...state,

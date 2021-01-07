@@ -10,12 +10,6 @@ const initialState = {
 
 const circExReducer = (state = initialState, action) => {
   switch (action.type) {
-    //* Set Selected Folder
-    //   case "SET_SELECTED_FOLDER":
-    //     return { ...state, selectedFolder: action.folder };
-    //   case "FETCH_FOLDER_SUCCESSFUL":
-    //     return { ...state, circExs: action.folder.circExs };
-
     // * Clear selectedCircEx from State
 
     case "CLEAR_SELECTED_CIRC_EX":
@@ -62,8 +56,6 @@ const circExReducer = (state = initialState, action) => {
     case "POST_CIRC_EX_FAILED":
       return { ...state, fetching: false, error: action.error };
     case "POST_CIRC_EX_SUCCESSFUL":
-      //   const newCircExsPOST = [...state.circExs, action.circEx];
-      //   return { ...state, fetching: false, circExs: newCircExsPOST };
       return {
         ...state,
         fetching: false,

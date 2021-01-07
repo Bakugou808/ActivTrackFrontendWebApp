@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 // * Component Imports
 import CustAttForm from "../Circuits/CustAttForm";
 import CheckBoxes2 from "../Circuits/CheckBoxes2";
-// import CircFlowCont from '../Circuits/CircFlowCont'
+
 // * Action Imports
 import { patchExercise } from "../../Redux/Actions/ExerciseActions";
 import { fetchFormattedWorkout } from "../../Redux/Actions/WorkoutActions";
@@ -124,7 +124,7 @@ export const PatchRecordPt1 = (props) => {
     showExFormName && setShowExFormName(false);
     showExFormDesc && setShowExFormDesc(false);
   };
-  // ** Need to put onPostCircEx in NewWorkout and figure out the position, circuit id and exercise id
+  
   const handleNext = (e) => {
     handleCustomAdd(customAtts, goToNextPage);
   };
@@ -183,10 +183,7 @@ export const PatchRecordPt1 = (props) => {
               {showExFormDesc ? (
                 <form onSubmit={handleExSubmit}>
                   <TextField
-                    //   id="outlined-multiline-flexible"
                     label="Exercise Description"
-                    //   multiline
-                    //   rowsMax={4}
                     name="description"
                     value={exFields.description}
                     onChange={handleExChange}

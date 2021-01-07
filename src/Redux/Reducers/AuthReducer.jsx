@@ -13,7 +13,6 @@ const authReducer = (state = initialState, action) => {
       return {
         ...state,
         token: action.token,
-        // isLoggedIn: true,
         isLoading: false,
       };
 
@@ -24,9 +23,6 @@ const authReducer = (state = initialState, action) => {
         isLoggedIn: true,
         isLoading: false,
         token: action.user.jwt,
-
-        // fetching: false,
-        // error: false,
       };
     // SIGNUP
     case "SIGN_UP_USER_SUCCESS":
@@ -35,9 +31,6 @@ const authReducer = (state = initialState, action) => {
         isLoggedIn: true,
         isLoading: false,
         token: action.user.jwt,
-
-        // fetching: false,
-        // error: false,
       };
     // LOGOUT
     case "LOGGING_OUT":
@@ -70,7 +63,6 @@ const authReducer = (state = initialState, action) => {
         isLoggedIn: true,
         isLoading: false,
         token: action.user.jwt,
-
         fetching: false,
         error: false,
       };

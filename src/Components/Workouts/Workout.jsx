@@ -67,7 +67,6 @@ const Workout = (props) => {
   }, [workoutId]);
 
   const handleRecentLS = () => {
-    // /workouts/:folderName/:folderId/:workoutTitle/:workoutId
     let path = `/workouts/${folderName}/${folderId}/${workoutTitle}/${workoutId}`;
     if (localStorage.getItem("recentWorkouts")) {
       let recentWorkouts = JSON.parse(localStorage.getItem("recentWorkouts"));
@@ -92,7 +91,6 @@ const Workout = (props) => {
       );
     };
 
-    // post session here then patch at the end of workout
     const count =
       selectedWorkout.sessions.length > 0
         ? selectedWorkout.sessions.length + 1
@@ -126,7 +124,6 @@ const Workout = (props) => {
   };
 
   const handleEditWorkout = () => {
-    // "/edit_workout/:folderName/:folderId/:workoutTitle/:workoutId"
     handleCircuitPositions();
     history.push(
       `/edit_workout/${folderName}/${folderId}/${workoutTitle}/${workoutId}`
@@ -140,7 +137,6 @@ const Workout = (props) => {
           variant="contained"
           color="secondary"
           onClick={handleEditWorkout}
-          // className={"centerDiv pointer button editWorkoutBtn"}
           className={"button editWorkoutBtn"}
         >
           Add Exercise
