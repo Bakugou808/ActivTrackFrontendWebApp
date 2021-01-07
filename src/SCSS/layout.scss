@@ -278,3 +278,32 @@ html {
   font-weight: initial;
   height: 6vh;
 }
+
+.aboutCont {
+  display: grid;
+  row-gap: 40px;
+}
+
+.aboutSection {
+  // display: flex;
+  // align-items: center;
+  // justify-content: center;
+}
+
+.aboutImg {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.aboutImgGraph {
+  max-width: 60vw;
+  max-height: 60vh;
+}
+
+.aboutSection h3 {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 15px;
+}

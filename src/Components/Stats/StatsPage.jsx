@@ -25,6 +25,7 @@ export const StatsPage = (props) => {
     onSetWorkoutsStats,
     onFetchWorkoutsStatsByTotalReps,
     onFetchWorkoutsStatsByEx,
+    device,
   } = props;
   const classes = useStyles();
 
@@ -72,6 +73,7 @@ export const StatsPage = (props) => {
 const mapStateToProps = (store) => ({
   workouts: store.stats.allWorkoutsWithStats,
   user: store.user.user,
+  device: store.device.device,
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -88,16 +90,6 @@ const mapDispatchToProps = (dispatch) => ({
 export default AuthHOC(connect(mapStateToProps, mapDispatchToProps)(StatsPage));
 
 const useStyles = makeStyles((theme) => ({
-  paperModal: {
-    position: "absolute",
-    width: "88vw",
-    backgroundColor: theme.palette.background.paper,
-    border: "2px solid #000",
-    borderRadius: "5px",
-    boxShadow: theme.shadows[5],
-    padding: theme.spacing(2, 4, 3),
-    overflow: "auto",
-  },
   workout: {
     padding: theme.spacing(2),
     textAlign: "center",
