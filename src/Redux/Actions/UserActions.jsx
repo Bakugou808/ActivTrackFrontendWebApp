@@ -1,6 +1,6 @@
 const token = () => localStorage.getItem("token");
 
-export const URL = `http://activtrack-api.herokuapp.com`;
+export const URL = `https://activtrack-api.herokuapp.com`;
 
 export const headers = () => {
   return {
