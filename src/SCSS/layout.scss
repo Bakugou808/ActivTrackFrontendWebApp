@@ -296,14 +296,65 @@ html {
   justify-content: center;
 }
 
+.aboutImg img {
+  max-width: 70%;
+  height: auto;
+  width: auto\9;
+}
 .aboutImgGraph {
-  max-width: 60vw;
-  max-height: 60vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.aboutImgGraph img {
+  max-width: 70%;
+  height: auto;
+  width: auto\9; /* ie8 */
 }
 
 .aboutSection h3 {
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-bottom: 15px;
+  margin: 15px;
+  margin-bottom: 45px;
+}
+
+.aboutSection p {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  margin: 25px;
+}
+
+.aboutSection h4 {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 45px;
+}
+
+.aboutCont h2 {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 50px;
+}
+
+.loginSignupAbout {
+  display: flex;
+  justify-content: space-evenly;
+  color: orangered;
+  border: orangered;
+  border-style: double;
+  padding: 20px;
+  margin: 15px;
+}
+
+.aboutLinks {
+  cursor: pointer;
+}
+.aboutLinks:hover {
+  color: white;
 }
