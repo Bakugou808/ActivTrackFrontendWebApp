@@ -1,10 +1,24 @@
 import React from "react";
 import { connect } from "react-redux";
 
-export const SplashScreen = () => {
+export const SplashScreen = (props) => {
+  const { history } = props;
+  const handleRedirect = (path) => {
+    history.push(`/${path}`);
+  };
   return (
     <div>
-      <h3>SPLASH PAGE... THINGS ARE LOADING...</h3>
+      <div className="loginSignupAbout">
+        <div className="aboutLinks" onClick={() => handleRedirect("signin")}>
+          Sign in
+        </div>
+        <div className="aboutLinks" onClick={() => handleRedirect("about")}>
+          About
+        </div>
+        <div className="aboutLinks" onClick={() => handleRedirect("signup")}>
+          Signup
+        </div>
+      </div>
     </div>
   );
 };
