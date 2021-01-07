@@ -24,7 +24,7 @@ class App extends React.Component {
       <div className="App overflowYHidden">
         <Route path="/" render={(props) => <NavBar {...props} />} />
         <Switch>
-          <Route path="/about" render={(props) => <About {...props} />} />
+          <Route path="/" render={(props) => <About {...props} />} />
           <Route path="/signup" render={(props) => <SignUp {...props} />} />
           <Route path="/signin" render={(props) => <LogIn {...props} />} />
           {/* left drawer paths */}
