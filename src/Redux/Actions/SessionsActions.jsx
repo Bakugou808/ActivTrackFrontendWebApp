@@ -1,4 +1,4 @@
-const API = "http://localhost:3000/api/v1";
+const API = "http://activtrack-api.herokuapp.com/api/v1";
 const token = () => localStorage.getItem("token");
 export const headers = () => {
   return {
@@ -7,7 +7,6 @@ export const headers = () => {
     Authorization: token(),
   };
 };
-
 
 // ------- FETCH FOLDER SESSIONS ACTIONS--------
 
