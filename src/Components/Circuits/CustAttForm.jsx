@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 
 // * Material UI Imports
 import TextField from "@material-ui/core/TextField";
+import Button from "@material-ui/core/Button";
 
 export const CustAttForm = (props) => {
   const { customAtts, handleCustomAttAdd, setShowCustomAttFields } = props;
@@ -16,7 +17,7 @@ export const CustAttForm = (props) => {
   };
 
   return (
-    <div>
+    <div className="exFormInputBoxCont">
       <form onSubmit={handleAddAtt}>
         <TextField
           id="outlined-basic"
@@ -27,6 +28,9 @@ export const CustAttForm = (props) => {
           variant="outlined"
         />
       </form>
+      <Button variant="outlined" className={"exFormBtn"} onClick={handleAddAtt}>
+        Add
+      </Button>
     </div>
   );
 };
