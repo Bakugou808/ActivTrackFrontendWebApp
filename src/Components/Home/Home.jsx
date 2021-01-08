@@ -104,7 +104,7 @@ export const Home = (props) => {
         animate={
           device === "mobile"
             ? orientation === "portrait"
-              ? { y: -410 }
+              ? { y: -400 }
               : { y: -500 }
             : { y: -380 }
         }
