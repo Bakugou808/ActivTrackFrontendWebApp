@@ -157,16 +157,25 @@ export const CircuitFormPt1 = (props) => {
           <Grid item xs={12}>
             <Paper className={classes.paper}>
               {showExFormName ? (
-                <form onSubmit={handleExSubmit}>
-                  <TextField
-                    id="outlined-basic"
-                    label="Exercise Name"
-                    name="exercise_name"
-                    value={exFields.exercise_name}
-                    onChange={handleExChange}
+                <div className="exFormInputBoxCont">
+                  <form onSubmit={handleExSubmit}>
+                    <TextField
+                      id="outlined-basic"
+                      label="Exercise Name"
+                      name="exercise_name"
+                      value={exFields.exercise_name}
+                      onChange={handleExChange}
+                      variant="outlined"
+                    />
+                  </form>
+                  <Button
                     variant="outlined"
-                  />
-                </form>
+                    className={"exFormBtn"}
+                    onClick={handleExSubmit}
+                  >
+                    Save
+                  </Button>
+                </div>
               ) : (
                 <div onClick={() => setShowExFormName((prev) => !prev)}>
                   {exFields.exercise_name}
@@ -177,15 +186,24 @@ export const CircuitFormPt1 = (props) => {
           <Grid item xs={12}>
             <Paper className={classes.paper}>
               {showExFormDesc ? (
-                <form onSubmit={handleExSubmit}>
-                  <TextField
-                    label="Exercise Description"
-                    name="description"
-                    value={exFields.description}
-                    onChange={handleExChange}
+                <div className="exFormInputBoxCont">
+                  <form onSubmit={handleExSubmit}>
+                    <TextField
+                      label="Exercise Description"
+                      name="description"
+                      value={exFields.description}
+                      onChange={handleExChange}
+                      variant="outlined"
+                    />
+                  </form>
+                  <Button
                     variant="outlined"
-                  />
-                </form>
+                    className={"exFormBtn"}
+                    onClick={handleExSubmit}
+                  >
+                    Save
+                  </Button>
+                </div>
               ) : (
                 <div onClick={() => setShowExFormDesc((prev) => !prev)}>
                   {exFields.description}
