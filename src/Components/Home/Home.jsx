@@ -21,11 +21,11 @@ export const Home = (props) => {
   }, [orientation, device]);
 
   const grabRecents = () => {
-    let f = JSON.parse(localStorage.getItem("recentFolders"));
+    let f = JSON.parse(localStorage.getItem(`${user.username}RecentFolders`));
     setRecentFolders(f);
-    let w = JSON.parse(localStorage.getItem("recentWorkouts"));
+    let w = JSON.parse(localStorage.getItem(`${user.username}RecentWorkouts`));
     setRecentWorkouts(w);
-    let s = JSON.parse(localStorage.getItem("recentStats"));
+    let s = JSON.parse(localStorage.getItem(`${user.username}RecentStats`));
     setRecentStats(s);
   };
 

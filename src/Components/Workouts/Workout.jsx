@@ -38,6 +38,7 @@ const Workout = (props) => {
     onSetPositionCircuitToX,
     onPatchCircEx,
     onClearPatchedCircExAndCircuitFromState,
+    username,
   } = props;
   const folderId = match.params.folderId;
   const workoutId = match.params.workoutId;
@@ -68,8 +69,10 @@ const Workout = (props) => {
 
   const handleRecentLS = () => {
     let path = `/workouts/${folderName}/${folderId}/${workoutTitle}/${workoutId}`;
-    if (localStorage.getItem("recentWorkouts")) {
-      let recentWorkouts = JSON.parse(localStorage.getItem("recentWorkouts"));
+    if (localStorage.getItem(`${username}RecentWorkouts`)) {
+      let recentWorkouts = JSON.parse(
+        localStorage.getItem(`${username}RecentWorkouts`)
+      );
       if (recentWorkouts.includes(path)) {
         recentWorkouts = recentWorkouts.filter((val) => val != path);
         recentWorkouts.unshift(path);
@@ -79,7 +82,7 @@ const Workout = (props) => {
         recentWorkouts.pop().unshift(path);
       }
       recentWorkouts = JSON.stringify(recentWorkouts);
-      localStorage.setItem("recentWorkouts", recentWorkouts);
+      localStorage.setItem(`${username}RecentWorkouts`, recentWorkouts);
     }
   };
 
@@ -212,6 +215,7 @@ const mapStateToProps = (store) => ({
   selectedWorkout: store.workouts.selectedWorkout,
   formattedWorkout: store.workouts.formattedWorkout,
   loading: store.workouts.fetching,
+  username: store.user.user.username,
 });
 
 const mapDispatchToProps = (dispatch) => ({

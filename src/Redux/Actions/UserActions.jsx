@@ -47,13 +47,13 @@ export const loginUser = (userData, history) => {
           dispatch(loginUserFailure(user.error));
         } else {
           localStorage.setItem("token", user.jwt);
-
-          !localStorage.getItem("recentFolders") &&
-            localStorage.setItem("recentFolders", "[]");
-          !localStorage.getItem("recentWorkouts") &&
-            localStorage.setItem("recentWorkouts", "[]");
-          !localStorage.getItem("recentStats") &&
-            localStorage.setItem("recentStats", "[]");
+          let name = user.user.username;
+          !localStorage.getItem(`${name}RecentFolders`) &&
+            localStorage.setItem(`${name}RecentFolders`, "[]");
+          !localStorage.getItem(`${name}RecentWorkouts`) &&
+            localStorage.setItem(`${name}RecentWorkouts`, "[]");
+          !localStorage.getItem(`${name}RecentStats`) &&
+            localStorage.setItem(`${name}RecentStats`, "[]");
 
           dispatch(loginUserSuccess(user));
           history.push("/home");
@@ -99,10 +99,11 @@ export const signUpUser = (userData, history) => {
         if (user.error) {
           dispatch(signUpUserFailure(user.error));
         } else {
-          localStorage.setItem("token", user.jwt);
-          localStorage.setItem("recentFolders", "[]");
-          localStorage.setItem("recentWorkouts", "[]");
-          localStorage.setItem("recentStats", "[]");
+          let name = user.user.username;
+          localStorage.setItem(`token`, user.jwt);
+          localStorage.setItem(`${name}RecentFolders`, `[]`);
+          localStorage.setItem(`${name}RecentWorkouts`, `[]`);
+          localStorage.setItem(`${name}RecentStats`, `[]`);
           dispatch(signUpUserSuccess(user));
           history.push("/home");
         }
