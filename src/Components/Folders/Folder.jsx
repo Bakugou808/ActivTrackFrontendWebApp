@@ -35,6 +35,7 @@ export const Folder = (props) => {
     onClearSelectedAndFormattedWorkouts,
     loading,
     onClearCircuitPhasePositions,
+    username,
   } = props;
 
   const folderId = parseInt(match.params.folderId);
@@ -52,8 +53,10 @@ export const Folder = (props) => {
 
   const handleRecentLS = () => {
     let path = `/folders/${folderName}/${folderId}`;
-    if (localStorage.getItem("recentFolders")) {
-      let recentFolders = JSON.parse(localStorage.getItem("recentFolders"));
+    if (localStorage.getItem(`${username}RecentFolders`)) {
+      let recentFolders = JSON.parse(
+        localStorage.getItem(`${username}RecentFolders`)
+      );
       if (recentFolders.includes(path)) {
         recentFolders = recentFolders.filter((val) => val != path);
         recentFolders.unshift(path);
@@ -63,7 +66,7 @@ export const Folder = (props) => {
         recentFolders.pop().unshift(path);
       }
       recentFolders = JSON.stringify(recentFolders);
-      localStorage.setItem("recentFolders", recentFolders);
+      localStorage.setItem(`${username}RecentFolders`, recentFolders);
     }
   };
 
@@ -171,6 +174,7 @@ export const Folder = (props) => {
 const mapStateToProps = (store) => ({
   workouts: store.workouts.workouts,
   loading: store.folders.fetching,
+  username: store.user.user.username,
 });
 
 const mapDispatchToProps = (dispatch) => ({
