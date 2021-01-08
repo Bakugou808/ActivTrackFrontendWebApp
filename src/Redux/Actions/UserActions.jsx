@@ -47,6 +47,14 @@ export const loginUser = (userData, history) => {
           dispatch(loginUserFailure(user.error));
         } else {
           localStorage.setItem("token", user.jwt);
+
+          !localStorage.getItem("recentFolders") &&
+            localStorage.setItem("recentFolders", "[]");
+          !localStorage.getItem("recentWorkouts") &&
+            localStorage.setItem("recentWorkouts", "[]");
+          !localStorage.getItem("recentStats") &&
+            localStorage.setItem("recentStats", "[]");
+
           dispatch(loginUserSuccess(user));
           history.push("/home");
         }

@@ -170,7 +170,7 @@ export const CircuitFormPt1 = (props) => {
                   </form>
                   <Button
                     variant="outlined"
-                    className={"exFormBtn"}
+                    className={classes.btn}
                     onClick={handleExSubmit}
                   >
                     Save
@@ -198,7 +198,7 @@ export const CircuitFormPt1 = (props) => {
                   </form>
                   <Button
                     variant="outlined"
-                    className={"exFormBtn"}
+                    className={classes.btn}
                     onClick={handleExSubmit}
                   >
                     Save
@@ -315,6 +315,12 @@ const useStyles = makeStyles((theme) => ({
   },
   paper: {
     padding: theme.spacing(2),
+    textAlign: "center",
+    color: theme.palette.text.secondary,
+  },
+  btn: {
+    // padding: theme.spacing(2),
+    marginLeft: "20px",
     textAlign: "center",
     color: theme.palette.text.secondary,
   },
