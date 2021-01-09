@@ -17,8 +17,8 @@ export const Home = (props) => {
   const [recentStats, setRecentStats] = useState(null);
 
   useEffect(() => {
-    grabRecents();
-  }, [orientation, device]);
+    user && grabRecents();
+  }, [orientation, device, user]);
 
   const grabRecents = () => {
     let f = JSON.parse(localStorage.getItem(`${user.username}RecentFolders`));
