@@ -130,9 +130,9 @@ export const SignUp = (props) => {
         {error.error && error.message}
         {error2 && (
           <div className="errorMsg">
-            {error2.username && `username ${error2.username}`}
-            {error2.email && `email ${error2.email}`}
-            {error2.password && `password ${error2.password}`}
+            <p>{error2.username && `username ${error2.username}`}</p>
+            <p>{error2.email && `email ${error2.email}`}</p>
+            <p>{error2.password && `password ${error2.password}`}</p>
           </div>
         )}
       </div>
