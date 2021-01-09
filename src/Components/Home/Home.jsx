@@ -17,17 +17,19 @@ export const Home = (props) => {
   const [recentStats, setRecentStats] = useState(null);
 
   useEffect(() => {
-    grabRecents();
+    user.username && grabRecents();
   }, [orientation, device, user]);
 
   const grabRecents = () => {
     let username = user.username;
+    console.log(username);
     let f = JSON.parse(localStorage.getItem(`${username}RecentFolders`));
     setRecentFolders(f);
     let w = JSON.parse(localStorage.getItem(`${username}RecentWorkouts`));
     setRecentWorkouts(w);
     let s = JSON.parse(localStorage.getItem(`${username}RecentStats`));
     setRecentStats(s);
+    console.log(recentWorkouts, recentFolders, recentStats);
   };
 
   const formatTitles = (titleArr) => {
