@@ -18,7 +18,7 @@ import { signUpUser } from "../../Redux/Actions/UserActions";
 import { TrendingUpRounded } from "@material-ui/icons";
 
 export const SignUp = (props) => {
-  const { onSignUpUser, history, device } = props;
+  const { onSignUpUser, history, device, error2 } = props;
   const [error, setError] = useState({
     error: false,
     message:
@@ -128,6 +128,13 @@ export const SignUp = (props) => {
           </Grid>
         </form>
         {error.error && error.message}
+        {error2 && (
+          <div className="errorMsg">
+            {error2.username && `username ${error2.username}`}
+            {error2.email && `email ${error2.email}`}
+            {error2.password && `password ${error2.password}`}
+          </div>
+        )}
       </div>
       <Box mt={5} className="copyRight">
         <Copyright />
@@ -138,6 +145,7 @@ export const SignUp = (props) => {
 
 const mapStateToProps = (store) => ({
   device: store.device.device,
+  error2: store.user.error,
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -158,11 +166,11 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: theme.palette.secondary.main,
   },
   form: {
-    width: "100%", 
+    width: "100%",
     marginTop: theme.spacing(3),
   },
   formMob: {
-    width: "240px", 
+    width: "240px",
     marginTop: theme.spacing(1),
   },
   submit: {
