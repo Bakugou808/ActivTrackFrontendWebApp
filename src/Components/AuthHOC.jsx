@@ -16,6 +16,7 @@ import {
 const token = () => localStorage.getItem("token");
 
 const URL = `https://activtrack-api.herokuapp.com`;
+
 const headers = () => {
   return {
     "Content-Type": "application/json",

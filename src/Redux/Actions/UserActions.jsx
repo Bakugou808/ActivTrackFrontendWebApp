@@ -99,7 +99,6 @@ export const signUpUser = (userData, history) => {
         if (user.error) {
           dispatch(signUpUserFailure(user.error));
         } else {
-          debugger;
           let name = user.username;
           localStorage.setItem(`token`, user.jwt);
           localStorage.setItem(`${name}RecentFolders`, `[]`);
