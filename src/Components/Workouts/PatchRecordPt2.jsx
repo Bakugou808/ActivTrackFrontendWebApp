@@ -73,7 +73,6 @@ export const PatchRecordPt2 = (props) => {
         case "restPeriod":
           return (
             <TextField
-              key={uuidv4()}
               id="outlined-basic"
               label={"Rest Period"}
               name={att}
@@ -85,7 +84,6 @@ export const PatchRecordPt2 = (props) => {
         case "holdTime":
           return (
             <TextField
-              key={uuidv4()}
               id="outlined-basic"
               label={"Hold Time"}
               name={att}
@@ -97,7 +95,6 @@ export const PatchRecordPt2 = (props) => {
         case "reps":
           return (
             <TextField
-              key={uuidv4()}
               id="outlined-basic"
               type="number"
               defaultValue={1}
@@ -111,7 +108,6 @@ export const PatchRecordPt2 = (props) => {
         default:
           return (
             <TextField
-              key={uuidv4()}
               id="outlined-basic"
               label={toTitleCase(att)}
               name={att}

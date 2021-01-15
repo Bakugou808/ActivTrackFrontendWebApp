@@ -15,7 +15,7 @@ import {
 // Redux free Fetch
 const token = () => localStorage.getItem("token");
 
-const URL = `https://activtrack-api.herokuapp.com`;
+const URL = `http://localhost:3000`;
 
 const headers = () => {
   return {
