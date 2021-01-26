@@ -16,7 +16,6 @@ import {
 import { makeStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
 
-
 export const StatsContainerParent = (props) => {
   const {
     match,
@@ -27,6 +26,7 @@ export const StatsContainerParent = (props) => {
     onFetchWorkoutsStatsByEx,
     device,
     orientation,
+    username,
   } = props;
 
   const workoutId = match.params.workoutId;
@@ -59,8 +59,10 @@ export const StatsContainerParent = (props) => {
   const handleRecentLS = () => {
     let path = `/displayStats/${workoutTitle}/${workoutId}`;
 
-    if (localStorage.getItem("recentStats")) {
-      let recentStats = JSON.parse(localStorage.getItem("recentStats"));
+    if (localStorage.getItem(`${username}RecentStats`)) {
+      let recentStats = JSON.parse(
+        localStorage.getItem(`${username}RecentStats`)
+      );
       if (recentStats.includes(path)) {
         recentStats = recentStats.filter((val) => val != path);
         recentStats.unshift(path);
@@ -70,7 +72,7 @@ export const StatsContainerParent = (props) => {
         recentStats.pop().unshift(path);
       }
       recentStats = JSON.stringify(recentStats);
-      localStorage.setItem("recentStats", recentStats);
+      localStorage.setItem(`${username}RecentStats`, recentStats);
     }
   };
 
@@ -140,7 +142,6 @@ export const StatsContainerParent = (props) => {
                   ? "statsByExRowMobLand"
                   : "statsByExRowMobPort"
                 : "statsByExRow"
-     
             }
           >
             {/* exercise list and graph */}
@@ -219,6 +220,7 @@ const mapStateToProps = (store) => ({
   statsByTotalReps: store.stats.statsByTotalReps,
   device: store.device.device,
   orientation: store.device.orientation,
+  username: store.user.user.username,
 });
 
 const mapDispatchToProps = (dispatch) => ({

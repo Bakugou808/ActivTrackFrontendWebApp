@@ -8,7 +8,6 @@ export const headers = () => {
   };
 };
 
-
 // ------- Clear selectedExercise ACTION--------
 
 export const clearSelectedExercise = () => ({

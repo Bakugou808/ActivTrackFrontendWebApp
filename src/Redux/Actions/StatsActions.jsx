@@ -8,7 +8,6 @@ export const headers = () => {
   };
 };
 
-
 // ------- SET WORKOUTS STATS ACTIONS--------
 
 export const setWorkoutsStats = (stats) => ({

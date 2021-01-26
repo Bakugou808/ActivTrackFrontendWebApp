@@ -17,15 +17,16 @@ export const Home = (props) => {
   const [recentStats, setRecentStats] = useState(null);
 
   useEffect(() => {
-    grabRecents();
-  }, [orientation, device]);
+    user.username && grabRecents();
+  }, [orientation, device, user]);
 
   const grabRecents = () => {
-    let f = JSON.parse(localStorage.getItem("recentFolders"));
+    let username = user.username;
+    let f = JSON.parse(localStorage.getItem(`${username}RecentFolders`));
     setRecentFolders(f);
-    let w = JSON.parse(localStorage.getItem("recentWorkouts"));
+    let w = JSON.parse(localStorage.getItem(`${username}RecentWorkouts`));
     setRecentWorkouts(w);
-    let s = JSON.parse(localStorage.getItem("recentStats"));
+    let s = JSON.parse(localStorage.getItem(`${username}RecentStats`));
     setRecentStats(s);
   };
 
@@ -104,7 +105,7 @@ export const Home = (props) => {
         animate={
           device === "mobile"
             ? orientation === "portrait"
-              ? { y: -410 }
+              ? { y: -400 }
               : { y: -500 }
             : { y: -380 }
         }

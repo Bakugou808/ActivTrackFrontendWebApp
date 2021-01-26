@@ -186,6 +186,7 @@ function NavBar(props) {
             location.pathname != "/signin" &&
             !workoutPage &&
             location.pathname != "/about" &&
+            location.pathname != "/" &&
             location.pathname != "/signup" && (
               <Typography
                 component={"span"}

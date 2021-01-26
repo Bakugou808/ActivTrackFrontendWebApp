@@ -8,7 +8,6 @@ export const headers = () => {
   };
 };
 
-
 // ------- Clear selectedCircEx ACTION--------
 
 export const clearSelectedCircEx = () => ({

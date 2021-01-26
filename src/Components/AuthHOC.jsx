@@ -16,6 +16,7 @@ import {
 const token = () => localStorage.getItem("token");
 
 const URL = `http://localhost:3000`;
+
 const headers = () => {
   return {
     "Content-Type": "application/json",

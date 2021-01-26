@@ -8,7 +8,6 @@ export const headers = () => {
   };
 };
 
-
 // ------- FETCH FOLDER SESSIONS ACTIONS--------
 
 export const fetchSessionsRequest = () => ({

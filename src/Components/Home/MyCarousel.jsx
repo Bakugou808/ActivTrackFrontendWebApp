@@ -50,19 +50,19 @@ export const MyCarousel = ({
     },
   }));
   useEffect(() => {
-    switch (category) {
-      case "folders":
-        setBackgroundImg(folders);
-        break;
-      case "workouts":
-        setBackgroundImg(workouts);
-        break;
-      case "stats":
-        setBackgroundImg(stats);
-        break;
-      default:
-        break;
-    }
+    // switch (category) {
+    //   case "folders":
+    //     setBackgroundImg(folders);
+    //     break;
+    //   case "workouts":
+    //     setBackgroundImg(workouts);
+    //     break;
+    //   case "stats":
+    //     setBackgroundImg(stats);
+    //     break;
+    //   default:
+    //     break;
+    // }
   }, []);
 
   const handleRedirect = (path) => {
@@ -102,5 +102,3 @@ const mapStateToProps = (store) => ({
 const mapDispatchToProps = {};
 
 export default connect(mapStateToProps, mapDispatchToProps)(MyCarousel);
-
-

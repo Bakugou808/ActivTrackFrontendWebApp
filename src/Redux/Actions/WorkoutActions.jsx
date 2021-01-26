@@ -8,8 +8,6 @@ export const headers = () => {
   };
 };
 
-
-
 // ------- CLEAR PATCHED CIRC-EX AND CIRCUIT
 
 export const clearPatchedCircExAndCircuitFromState = () => ({

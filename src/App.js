@@ -17,6 +17,7 @@ import EndWorkout from "./Components/Workouts/EndWorkout";
 import AllStatsContainer from "./Components/Stats/AllStatsContainer";
 import StatsPage from "./Components/Stats/StatsPage";
 import StatsContainerParent from "./Components/Stats/StatsContainerParent";
+import SplashScreen from "./Components/Home/SplashScreen";
 
 class App extends React.Component {
   render() {
@@ -24,6 +25,11 @@ class App extends React.Component {
       <div className="App overflowYHidden">
         <Route path="/" render={(props) => <NavBar {...props} />} />
         <Switch>
+          <Route
+            exact
+            path="/"
+            render={(props) => <SplashScreen {...props} />}
+          />
           <Route path="/about" render={(props) => <About {...props} />} />
           <Route path="/signup" render={(props) => <SignUp {...props} />} />
           <Route path="/signin" render={(props) => <LogIn {...props} />} />
