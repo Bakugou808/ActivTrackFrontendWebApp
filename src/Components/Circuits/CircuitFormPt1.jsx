@@ -20,6 +20,7 @@ import TextField from "@material-ui/core/TextField";
 import Snackbar from "@material-ui/core/Snackbar";
 import MuiAlert from "@material-ui/lab/Alert";
 import Button from "@material-ui/core/Button";
+import { TrendingUpOutlined } from "@material-ui/icons";
 
 function Alert(props) {
   return <MuiAlert elevation={2} variant="filled" {...props} />;
@@ -43,11 +44,11 @@ export const CircuitFormPt1 = (props) => {
   const classes = useStyles();
   //   *Exercise Field State
   const [exFields, setExFields] = useState({
-    exercise_name: "Add Exercise",
-    description: "Add Description",
+    exercise_name: "",
+    description: "",
   });
-  const [showExFormName, setShowExFormName] = useState(false);
-  const [showExFormDesc, setShowExFormDesc] = useState(false);
+  const [showExFormName, setShowExFormName] = useState(true);
+  const [showExFormDesc, setShowExFormDesc] = useState(TrendingUpOutlined);
   // * Circuit_Exercise/Attributes Field State
   const [showCustomAttFields, setShowCustomAttFields] = useState(false);
   const [customAtts, setCustomAtts] = useState({ reps: 1 });

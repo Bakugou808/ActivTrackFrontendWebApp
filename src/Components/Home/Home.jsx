@@ -102,17 +102,11 @@ export const Home = (props) => {
       <motion.div
         initial={{ y: "250vw" }}
         animate={
-<<<<<<< HEAD
-          device === "mobile" && orientation === "portrait"
-            ? { y: -460 }
-            : { y: -295 }
-=======
           device === "mobile"
             ? orientation === "portrait"
               ? { y: -410 }
               : { y: -500 }
             : { y: -380 }
->>>>>>> master
         }
         transition={{
           delay: 3,
