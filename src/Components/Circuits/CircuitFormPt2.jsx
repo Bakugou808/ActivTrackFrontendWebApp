@@ -164,7 +164,7 @@ export const CircuitFormPt2 = (props) => {
             </Grid>
           )}
           <Grid item xs={12}>
-            <Paper className={classes.paper}>
+            <Paper className={classes.paper} data-tour="es7">
               <div className="container grid">
                 Set Default Values For Attributes
                 {atts && renderAttFields()}
@@ -173,6 +173,7 @@ export const CircuitFormPt2 = (props) => {
           </Grid>
           <Grid item xs={12} sm={6}>
             <Button
+              data-tour="es8"
               variant="outlined"
               className={classes.paper}
               onClick={handleSubmit}

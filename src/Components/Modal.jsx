@@ -9,7 +9,15 @@ import Paper from "@material-ui/core/Paper";
 const MyModal = (props) => {
   const [modalStyle] = React.useState(getModalStyle);
   const classes = useStyles();
-  const { component, showModal, setShowModal, device, orientation } = props;
+  const {
+    component,
+    showModal,
+    setShowModal,
+    device,
+    orientation,
+    isShowingMore,
+    setIsShowingMore,
+  } = props;
   return (
     <Modal
       open={showModal}

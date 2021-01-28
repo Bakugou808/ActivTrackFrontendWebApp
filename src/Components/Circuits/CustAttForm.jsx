@@ -30,6 +30,13 @@ export const CustAttForm = (props) => {
           variant="outlined"
         />
       </form>
+      <Button
+        variant="outlined"
+        className={classes.btn}
+        onClick={() => setShowCustomAttFields(false)}
+      >
+        Cancel
+      </Button>
       <Button variant="outlined" className={classes.btn} onClick={handleAddAtt}>
         Add
       </Button>

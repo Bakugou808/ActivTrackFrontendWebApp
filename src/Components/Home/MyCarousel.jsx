@@ -74,9 +74,8 @@ export const MyCarousel = ({
       let split = path.split("/");
       let title = split[split.length - 2];
       return (
-        <div className="cardWrap">
+        <div key={uuidv4()} className="cardWrap">
           <Paper
-            key={uuidv4()}
             className={
               device === "mobile" && orientation === "landscape"
                 ? [classes.paper, classes.mobPortFontSize]

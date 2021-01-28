@@ -127,7 +127,7 @@ function NavBar(props) {
               aria-label="menu"
               onClick={toggleDrawer("left", true)}
             >
-              <MenuIcon />
+              <MenuIcon data-tour="hs5" />
             </IconButton>
           )}
           {/* {workoutPage && (

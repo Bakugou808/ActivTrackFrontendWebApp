@@ -44,11 +44,11 @@ export const CircuitFormPt1 = (props) => {
   const classes = useStyles();
   //   *Exercise Field State
   const [exFields, setExFields] = useState({
-    exercise_name: "",
-    description: "",
+    exercise_name: null,
+    description: null,
   });
   const [showExFormName, setShowExFormName] = useState(true);
-  const [showExFormDesc, setShowExFormDesc] = useState(TrendingUpOutlined);
+  const [showExFormDesc, setShowExFormDesc] = useState(false);
   // * Circuit_Exercise/Attributes Field State
   const [showCustomAttFields, setShowCustomAttFields] = useState(false);
   const [customAtts, setCustomAtts] = useState({ reps: 1 });
@@ -113,8 +113,10 @@ export const CircuitFormPt1 = (props) => {
   };
 
   const closeExForms = () => {
-    showExFormName && setShowExFormName(false);
-    showExFormDesc && setShowExFormDesc(false);
+    // showExFormName
+    exFields.exercise_name && setShowExFormName(false);
+    // showExFormDesc
+    exFields.description && setShowExFormDesc(false);
   };
   const handleNext = (e) => {
     if (selectedExercise) {
@@ -158,7 +160,7 @@ export const CircuitFormPt1 = (props) => {
           <Grid item xs={12}>
             <Paper className={classes.paper}>
               {showExFormName ? (
-                <div className="exFormInputBoxCont">
+                <div className="exFormInputBoxCont" data-tour="es2">
                   <form onSubmit={handleExSubmit}>
                     <TextField
                       id="outlined-basic"
@@ -178,7 +180,10 @@ export const CircuitFormPt1 = (props) => {
                   </Button>
                 </div>
               ) : (
-                <div onClick={() => setShowExFormName((prev) => !prev)}>
+                <div
+                  data-tour="es2"
+                  onClick={() => setShowExFormName((prev) => !prev)}
+                >
                   {exFields.exercise_name}
                 </div>
               )}
@@ -187,7 +192,7 @@ export const CircuitFormPt1 = (props) => {
           <Grid item xs={12}>
             <Paper className={classes.paper}>
               {showExFormDesc ? (
-                <div className="exFormInputBoxCont">
+                <div className="exFormInputBoxCont" data-tour="es3">
                   <form onSubmit={handleExSubmit}>
                     <TextField
                       label="Exercise Description"
@@ -200,20 +205,32 @@ export const CircuitFormPt1 = (props) => {
                   <Button
                     variant="outlined"
                     className={classes.btn}
+                    onClick={() => setShowExFormDesc(false)}
+                  >
+                    Cancel
+                  </Button>
+                  <Button
+                    variant="outlined"
+                    className={classes.btn}
                     onClick={handleExSubmit}
                   >
                     Save
                   </Button>
                 </div>
               ) : (
-                <div onClick={() => setShowExFormDesc((prev) => !prev)}>
-                  {exFields.description}
+                <div
+                  data-tour="es3"
+                  onClick={() => setShowExFormDesc((prev) => !prev)}
+                >
+                  {exFields.description
+                    ? exFields.description
+                    : "Add Description"}
                 </div>
               )}
             </Paper>
           </Grid>
           <Grid item xs={12}>
-            <Paper className={classes.paper}>
+            <Paper className={classes.paper} data-tour="es4">
               <CheckBoxes
                 checked={checked}
                 setChecked={setChecked}
@@ -223,7 +240,7 @@ export const CircuitFormPt1 = (props) => {
             </Paper>
           </Grid>
           <Grid item xs={12}>
-            <Paper className={classes.paper}>
+            <Paper className={classes.paper} data-tour="es5">
               <div>
                 {showCustomAttFields ? (
                   <CustAttForm
@@ -242,6 +259,7 @@ export const CircuitFormPt1 = (props) => {
           </Grid>
           <Grid item xs={12}>
             <Button
+              data-tour="es6"
               variant="outlined"
               className={classes.paper}
               onClick={handleNext}

@@ -1,0 +1,69 @@
+// const [steps, setSteps] = [
+//     {target: '.home1', content: ''},
+//     {target: '.home2', content: ''},
+//     {target: '.home3', content: ''},
+//     {target: '.home4', content: ''},
+//     {target: '.home5', content: ''},
+//     {target: '.home6', content: ''},
+//     {target: '.home7', content: ''}
+// ]
+
+.tour {
+  position: absolute;
+  top: 0;
+  left: 50%;
+}
+
+.tourNotification {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+// const STEPS = [
+//     {
+//         'selector': '[data-tour = "hs1"]',
+//         'content': ,
+//         'position':,
+//         'action': ,
+//         'style': ,
+//         'stepInteraction': ,
+//         'navDotAriaLabel': ,
+//       },
+//       {
+//         'selector': '[data-tour = "hs1"]',
+//         'content': ,
+//         'position':,
+//         'action': ,
+//         'style': ,
+//         'stepInteraction': ,
+//         'navDotAriaLabel': ,
+//       },
+//       {
+//         'selector': '[data-tour = "hs1"]',
+//         'content': ,
+//         'position':,
+//         'action': ,
+//         'style': ,
+//         'stepInteraction': ,
+//         'navDotAriaLabel': ,
+//       },
+//       {
+//         'selector': '[data-tour = "hs1"]',
+//         'content': ,
+//         'position':,
+//         'action': ,
+//         'style': ,
+//         'stepInteraction': ,
+//         'navDotAriaLabel': ,
+//       },
+//       {
+//         'selector': '[data-tour = "hs1"]',
+//         'content': ,
+//         'position':,
+//         'action': ,
+//         'style': ,
+//         'stepInteraction': ,
+//         'navDotAriaLabel': ,
+//       },
+// ]

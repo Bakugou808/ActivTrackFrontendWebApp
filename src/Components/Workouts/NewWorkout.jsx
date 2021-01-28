@@ -6,6 +6,9 @@ import MyModal from "../Modal";
 import TabBar from "../Circuits/TabBar";
 import PatchFlowCont from "./PatchFlowCont";
 import RenderExercises from "./RenderExercises";
+import NewWorkoutRide from "../JoyRide/NewWorkoutRide";
+// * ReactTour Imports
+import Tour from "reactour";
 // * Material UI Imports
 import { makeStyles } from "@material-ui/core/styles";
 import QueueIcon from "@material-ui/icons/Queue";
@@ -112,14 +115,18 @@ export const NewWorkout = (props) => {
     setPatchRecord(record);
     setShowFormEdit(true);
   };
+  const [takeTour, setTakeTour] = useState(true);
 
+  const [isTourOpen, setIsTourOpen] = useState(false);
+  const [isShowingMore, setIsShowingMore] = useState(false);
   const handleAdd = (phase) => {
+    isTourOpen && setIsTourOpen(false);
+    isTourOpen && setIsShowingMore(true);
     onSetPhase(phase);
     setShowForm(true);
   };
 
   const handleSave = () => {
-    
     onClearPosValCircEx();
     onClearCircuitPhasePositions();
     history.push(
@@ -127,11 +134,27 @@ export const NewWorkout = (props) => {
     );
   };
 
+  const toggleShowMore = () => {
+    setIsShowingMore((prev) => !prev);
+  };
+
+  const openTour = () => {
+    setIsTourOpen(true);
+  };
+
   return (
     <div>
+      {/* <NewWorkoutRide /> */}
+      {takeTour && (
+        <div className="tourNotification">
+          <div>Take a Tour?</div>
+          <Button onClick={openTour}>Yes</Button>
+          <Button onClick={() => setTakeTour(false)}>No Thanks</Button>
+        </div>
+      )}
       <div className="center2 container horizontal3">
         {/* Title Input */}
-        <div>
+        <div data-tour="nws1">
           {showTitleForm ? (
             <>
               <form
@@ -148,7 +171,7 @@ export const NewWorkout = (props) => {
                 />
               </form>
               <div
-                className="exTitle fsize20 horizontal2"
+                className="exTitle fsize20 horizontal2 cursorPointer "
                 onClick={() => setShowTitleForm(false)}
               >
                 Cancel
@@ -156,11 +179,10 @@ export const NewWorkout = (props) => {
             </>
           ) : (
             <div
-              className="exTitle fsize20 horizontal2"
+              className="exTitle fsize20 horizontal2 cursorPointer "
               onClick={() => setShowTitleForm(true)}
             >
-              {" "}
-              {title}{" "}
+              {title}
             </div>
           )}
         </div>
@@ -174,7 +196,6 @@ export const NewWorkout = (props) => {
               >
                 <TextField
                   required
-                  
                   type="text"
                   placeholder="Add Description"
                   value={desc}
@@ -212,19 +233,18 @@ export const NewWorkout = (props) => {
         </Button>
       </div>
 
-      <div className="container grid margin30px">
+      <div className="container grid margin30px " data-tour="nws2">
         <div>
           {" "}
           <div className="phaseTitle2"> Warm up</div>
           <div>
             <Tooltip title="Add" aria-label="add">
               <Fab
-                
                 color="primary"
                 size="medium"
                 onClick={() => handleAdd("Warm Up")}
               >
-                <QueueIcon />
+                <QueueIcon data-tour="nws3" />
               </Fab>
             </Tooltip>
           </div>
@@ -292,7 +312,15 @@ export const NewWorkout = (props) => {
       <MyModal
         showModal={showForm}
         setShowModal={setShowForm}
-        component={<TabBar setShowModal={setShowForm} />}
+        isShowingMore={isShowingMore}
+        setIsShowingMore={setIsShowingMore}
+        component={
+          <TabBar
+            setShowModal={setShowForm}
+            isShowingMore={isShowingMore}
+            setIsShowingMore={setIsShowingMore}
+          />
+        }
       />
       <MyModal
         showModal={showFormEdit}
@@ -304,6 +332,15 @@ export const NewWorkout = (props) => {
             workoutId={workoutId}
           />
         }
+      />
+      <Tour
+        onRequestClose={() => setIsTourOpen(false)}
+        steps={NEW_WORKOUT_STEPS}
+        isOpen={isTourOpen}
+        maskClassName="mask"
+        className="helper"
+        rounded={5}
+        accentColor={accentColor}
       />
     </div>
   );
@@ -342,7 +379,6 @@ export default AuthHOC(
 
 const useStyles = makeStyles((theme) => ({
   fab: {
-    
     background: "linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)",
   },
   absolute: {
@@ -351,3 +387,51 @@ const useStyles = makeStyles((theme) => ({
     right: theme.spacing(3),
   },
 }));
+
+const accentColor = "#ff5722";
+
+const NEW_WORKOUT_STEPS = [
+  {
+    selector: '[data-tour = "nws1"]',
+    content: () => (
+      <div>
+        This is your header. It displays your Workout's title and description
+        (if available). Click on the title to rename it.
+      </div>
+    ),
+    position: "top",
+  },
+  {
+    selector: '[data-tour = "nws2"]',
+    content: () => (
+      <div>
+        All Workouts are divided into 3 phases: 'Warm up', 'Body', and 'Cool
+        Down'. You don't need to add exercises to each section if you don't feel
+        like it. But its here for you if you decide to use them.
+        <br />
+      </div>
+    ),
+    position: "top",
+  },
+  {
+    selector: '[data-tour = "nws3"]',
+    content: () => (
+      <div>
+        This icon will let open a form to add an exercise to the respective
+        phase. Give it a click.
+      </div>
+    ),
+    position: "center",
+  },
+  // {
+  //   selector: '[data-tour = "nws3"]',
+  //   content: () => (
+  //     <div>
+  //       This is your navigation icon. Click here to get to the Folders page to
+  //       start building your folders and workouts. You can also click on the
+  //       Stats tab to view your progress as you complete more and more workouts.
+  //     </div>
+  //   ),
+  //   position: "top",
+  // },
+];
