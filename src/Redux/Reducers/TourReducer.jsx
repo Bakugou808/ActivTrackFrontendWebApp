@@ -9,6 +9,8 @@ const initialState = {
   sW2B: false,
   sW3: false,
   sW4: false,
+  dS1: false,
+  dS2: false,
 };
 
 const tourReducer = (state = initialState, action) => {

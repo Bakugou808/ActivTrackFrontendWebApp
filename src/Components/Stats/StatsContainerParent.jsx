@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
 import { AuthHOC } from "../AuthHOC";
-
+// * ReactTour Imports
+import Tour from "reactour";
 // * Component Imports
 import StatsContainer from "./StatsContainer";
 import SideList from "./SideList";
@@ -12,9 +13,15 @@ import {
   fetchWorkoutsStatsByEx,
   fetchWorkoutsStatsByTotalReps,
 } from "../../Redux/Actions/StatsActions";
+import {
+  activateTour,
+  deactivateTour,
+  endTour,
+} from "../../Redux/Actions/TourActions";
+
 // * Material Imports
 import { makeStyles } from "@material-ui/core/styles";
-import Paper from "@material-ui/core/Paper";
+import { Paper, Button } from "@material-ui/core";
 
 export const StatsContainerParent = (props) => {
   const {
@@ -27,6 +34,10 @@ export const StatsContainerParent = (props) => {
     device,
     orientation,
     username,
+    onActivateTour,
+    onDeactivateTour,
+    onEndTour,
+    tourOn,
   } = props;
 
   const workoutId = match.params.workoutId;
@@ -40,6 +51,8 @@ export const StatsContainerParent = (props) => {
   const [sessStats, setSessStats] = useState(null);
   const [sessList, setSessList] = useState([]);
   const [selectedSess, setSelectedSess] = useState([]);
+  // *tour state
+  const [takeTour, setTakeTour] = useState(true);
 
   const [exAttKeys, setExAttKeys] = useState([]);
 
@@ -110,8 +123,28 @@ export const StatsContainerParent = (props) => {
     });
   };
 
+  const openTour = () => {
+    onActivateTour("dS1");
+  };
+
   return (
-    <div>
+    <div data-tour="st3">
+      {takeTour && (
+        <div className="tourNotification">
+          <div>Take a Tour?</div>
+          <Button onClick={openTour}>Yes</Button>
+          <Button onClick={() => setTakeTour(false)}>No Thanks</Button>
+        </div>
+      )}
+      <Tour
+        onRequestClose={() => onEndTour()}
+        steps={STAT_STEPS}
+        isOpen={tourOn}
+        maskClassName="mask"
+        className="helper"
+        rounded={5}
+        accentColor={accentColor}
+      />
       <div
         className={
           device === "mobile" && orientation === "portrait"
@@ -136,6 +169,7 @@ export const StatsContainerParent = (props) => {
             {exCaption && <div className="graphCaption">{exCaption}</div>}
           </div>
           <div
+            data-tour="st1"
             className={
               device === "mobile"
                 ? orientation === "landscape"
@@ -169,7 +203,7 @@ export const StatsContainerParent = (props) => {
             )}
           </div>
 
-          <div className="graphHeader">
+          <div data-tour="st2" className="graphHeader">
             <div
               className={
                 device === "mobile" && orientation === "portrait"
@@ -221,6 +255,7 @@ const mapStateToProps = (store) => ({
   device: store.device.device,
   orientation: store.device.orientation,
   username: store.user.user.username,
+  tourOn: store.tour.dS1,
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -230,7 +265,38 @@ const mapDispatchToProps = (dispatch) => ({
     ),
   onFetchWorkoutsStatsByEx: (workoutId, numOfSessions, sideEffects) =>
     dispatch(fetchWorkoutsStatsByEx(workoutId, numOfSessions, sideEffects)),
+  onActivateTour: (tourId) => dispatch(activateTour(tourId)),
+  onDeactivateTour: (tourId) => dispatch(deactivateTour(tourId)),
+  onEndTour: () => dispatch(endTour()),
 });
 export default AuthHOC(
   connect(mapStateToProps, mapDispatchToProps)(StatsContainerParent)
 );
+
+const accentColor = "#ff5722";
+
+const STAT_STEPS = [
+  {
+    selector: '[data-tour = "st1"]',
+    content: () => (
+      <div>{`This is your Exercise List.
+    
+    It displays all the exercises you have within the workout. Click on the Exercise Name and its attributes will appear beneath. Click on the attribute to see the average value you performed that day.  `}</div>
+    ),
+    position: "right",
+  },
+  {
+    selector: '[data-tour = "st2"]',
+    content: () => (
+      <div>{`This section shows you stats by Session Date.
+    
+    Click on the Session Date and the total reps for each exercise will be displayed in the graph.  `}</div>
+    ),
+    position: "right",
+  },
+  {
+    selector: '[data-tour = "st3"]',
+    content: () => <div>{`Great. Thats it! Enjoy!`}</div>,
+    position: "center",
+  },
+];

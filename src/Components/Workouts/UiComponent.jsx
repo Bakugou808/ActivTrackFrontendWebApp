@@ -134,15 +134,9 @@ export const UiComponent = (props) => {
       setTimeAlert(false);
     }
     if (restInSec == timeInSec) {
-      // handleTimesUp();
-      bell && !isPlaying && playBell() && console.log("inUiCompYesPlay");
-      console.log("inUiCompNoPlay");
+      bell && !isPlaying && playBell() && console.log("made a sound");
     }
   };
-
-  // const handleTimesUp = () => {
-  //   bell && playBell();
-  // };
 
   const handleBeginWorkoutPre = () => {
     handleBeginWorkout();
