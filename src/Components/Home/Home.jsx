@@ -13,7 +13,6 @@ import { logOut } from "../../Redux/Actions/AuthActions";
 // component imports
 import { AuthHOC } from "../AuthHOC";
 import MyCarousel from "./MyCarousel";
-import HomeRide from "../JoyRide/HomeRide";
 
 export const Home = (props) => {
   const { user, onLogOut, match, history, device, orientation } = props;
@@ -82,7 +81,6 @@ export const Home = (props) => {
         animate={{ opacity: 1 }}
         transition={{ delay: 4, duration: 3 }}
       >
-        {/* <HomeRide /> */}
         {takeTour && (
           <div className="tourNotification">
             <div>Take a Tour?</div>

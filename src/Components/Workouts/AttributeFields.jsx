@@ -9,13 +9,9 @@ import { motion } from "framer-motion";
 
 export const normalizeString = (str) => {
   if (typeof str == "string") {
-    return (
-      str
-        .replace(/([A-Z])/g, " $1")
-        .replace(/^./, function (str) {
-          return str.toUpperCase();
-        })
-    );
+    return str.replace(/([A-Z])/g, " $1").replace(/^./, function (str) {
+      return str.toUpperCase();
+    });
   } else {
     return str;
   }
@@ -79,7 +75,7 @@ export const AttributeFields = (props) => {
   };
 
   return (
-    <div className="attributes">
+    <div data-tour="sw13" className="attributes">
       {focusAttFields && !submitClicked && (
         <motion.div
           className="attFields"

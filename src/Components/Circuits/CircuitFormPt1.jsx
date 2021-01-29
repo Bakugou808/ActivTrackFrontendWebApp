@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
-
+// * ReactTour Imports
+import Tour from "reactour";
 // * Action Imports
 import {
   postExercise,
@@ -8,7 +9,11 @@ import {
 } from "../../Redux/Actions/ExerciseActions";
 import { postCircEx } from "../../Redux/Actions/CircExActions";
 import { postCircuit } from "../../Redux/Actions/CircuitActions";
-
+import {
+  activateTour,
+  deactivateTour,
+  endTour,
+} from "../../Redux/Actions/TourActions";
 // * Component Imports
 import CheckBoxes from "./CheckBoxes";
 import CustAttForm from "./CustAttForm";
@@ -39,6 +44,10 @@ export const CircuitFormPt1 = (props) => {
     positionCircEx,
     positionCircuit,
     onPostCircuit,
+    onActivateTour,
+    onDeactivateTour,
+    onEndTour,
+    tourOn,
   } = props;
 
   const classes = useStyles();
@@ -129,6 +138,7 @@ export const CircuitFormPt1 = (props) => {
         },
       };
       onPostCircEx(circExData, goToNextPage);
+      handleTourSwitch();
     } else {
       setError(true);
     }
@@ -146,9 +156,24 @@ export const CircuitFormPt1 = (props) => {
     }
   };
 
+  const handleTourSwitch = () => {
+    onDeactivateTour("nWS2");
+    onActivateTour("nWS3");
+  };
+
   return (
     <>
       <div className={classes.root}>
+        <Tour
+          onRequestClose={() => onEndTour()}
+          steps={EX1STEPS}
+          isOpen={tourOn}
+          maskClassName="mask"
+          className="helper"
+          rounded={5}
+          disableFocusLock={true}
+          accentColor={accentColor}
+        />
         <Grid container spacing={1}>
           {circuit_type === "circuit" && (
             <Grid item xs={12}>
@@ -316,6 +341,7 @@ const mapStateToProps = (store) => ({
     }
   },
   phase: store.circuits.phase,
+  tourOn: store.tour.nWS2,
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -324,8 +350,141 @@ const mapDispatchToProps = (dispatch) => ({
   onPostCircEx: (circExData, goToNextPage) =>
     dispatch(postCircEx(circExData, goToNextPage)),
   onPostCircuit: (circuitData) => dispatch(postCircuit(circuitData)),
+  onActivateTour: (tourId) => dispatch(activateTour(tourId)),
+  onDeactivateTour: (tourId) => dispatch(deactivateTour(tourId)),
+  onEndTour: () => dispatch(endTour()),
 });
 export default connect(mapStateToProps, mapDispatchToProps)(CircuitFormPt1);
+
+const accentColor = "#ff5722";
+
+const EX1STEPS = [
+  {
+    selector: '[data-tour = "es1"]',
+    content: () => (
+      <div>
+        This is the Tab bar. You can choose to add a single exercise or chain a
+        series of exercises in a circuit. 
+        <br/>Click on the tab to change the form
+        then come back to Exercise tab and continue by pressing the next arrow.
+      </div>
+    ),
+    position: "top",
+  },
+  {
+    selector: '[data-tour = "es2"]',
+    content: () => (
+      <div>
+        Go ahead and enter the name of the exercise. <br/> <br/>Make sure to hit 'Enter' or
+        click 'Save' afterwards. If you want to change it, just click on the
+        text and the form will appear again!
+      </div>
+    ),
+    position: "top",
+  },
+  {
+    selector: '[data-tour = "es3"]',
+    content: () => (
+      <div>
+        If you'd like, you can add a description. <br/> <br/>Click the text to add one, then hit 'Enter' or click 'Save'
+        once you're done. <br/><br/>If you'd like to change the description, just click on
+        the text!
+      </div>
+    ),
+    position: "top",
+  },
+  {
+    selector: '[data-tour = "es4"]',
+    content: () => (
+      <div>
+        Here are some pre-defined attributes you can add to this exercise. <br/><br/>When
+        you add an attribute, it will become part of your stats. Reps will
+        always have a minimum of 1 so it will always be checked!
+        <br/><br/>
+        If you want to add weight, simply click on the checkbox, to remove it,
+        simply uncheck the box.
+      </div>
+    ),
+    position: "top",
+  },
+  {
+    selector: '[data-tour = "es5"]',
+    content: () => (
+      <div>
+        If you'd like to add a custom attribute, <br/><br/>ex. 'jumping height for box
+        jumps' or 'strap length for gymnastic rings' <br/><br/> simply click the text and
+        type in the attribute. It could be anything! So feel free to get
+        creative about with it. Whatever it is, it can be added to the exercise.
+      </div>
+    ),
+    position: "bottom",
+  },
+  {
+    selector: '[data-tour = "es6"]',
+    content: () => (
+      <div>
+        Now, if everything looks good go ahead and hit this button to get to the
+        next page.
+      </div>
+    ),
+    position: "right",
+  },
+  // {
+  //   selector: '[data-tour = "es7"]',
+  //   content: () => (
+  //     <div>
+  //       Here you can set your target values for each of the attributes. They
+  //       will be saved for every session, and you can change them as you level
+  //       up.
+  //       <br></br>
+  //       ex. 'Reps: 12, Weight: 50 lbs, Hold Time: 20 sec, Rest Period: 2 min '
+  //     </div>
+  //   ),
+  //   position: "right",
+  // },
+  // {
+  //   selector: '[data-tour = "es8"]',
+  //   content: () => (
+  //     <div>Sweet. If it looks good, lets go ahead and save it!</div>
+  //   ),
+  //   position: "right",
+  // },
+  // {
+  //   selector: '[data-tour = "es9"]',
+  //   content: () => <div>Nice job. You just added an exercise!</div>,
+  //   position: "right",
+  // },
+  // {
+  //   selector: '[data-tour = "es10"]',
+  //   content: () => (
+  //     <div>
+  //       Now, if everything looks good go ahead and hit this button to get to the
+  //       next page.
+  //     </div>
+  //   ),
+  //   position: "right",
+  // },
+  // {
+  //   selector: '[data-tour = "es11"]',
+  //   content: () => (
+  //     <div>
+  //       Now, if everything looks good go ahead and hit this button to get to the
+  //       next page.
+  //     </div>
+  //   ),
+  //   position: "right",
+  // },
+  // {
+  //   selector: '[data-tour = "es12"]',
+  //   content: () => (
+  //     <div>
+  //       Now, if everything looks good go ahead and hit this button to get to the
+  //       next page.
+  //     </div>
+  //   ),
+  //   position: "right",
+  // },
+];
 
 const useStyles = makeStyles((theme) => ({
   root: {

@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
 import { v4 as uuidv4 } from "uuid";
-
+// * ReactTour Imports
+import Tour from "reactour";
 // *Component Imports
 import CircFlowCont from "./CircFlowCont";
 // * Action Imports
@@ -17,6 +18,11 @@ import {
   fetchFormattedWorkout,
   clearPatchedCircExAndCircuitFromState,
 } from "../../Redux/Actions/WorkoutActions";
+import {
+  activateTour,
+  deactivateTour,
+  endTour,
+} from "../../Redux/Actions/TourActions";
 // * Material UI Imports
 import { makeStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
@@ -41,6 +47,10 @@ export const CircuitFormPt2 = (props) => {
     onFetchFormattedWorkout,
     setShowModal,
     onClearPatchedCircExAndCircuitFromState,
+    onActivateTour,
+    onDeactivateTour,
+    onEndTour,
+    tourOn,
   } = props;
   const classes = useStyles();
   const [atts, setAtts] = useState({});
@@ -62,6 +72,12 @@ export const CircuitFormPt2 = (props) => {
       circuit_exercise: { id: selectedCircEx.id, ex_attributes: { ...atts } },
     };
     onPatchCircEx(circExData, handlePostWorkCircuit);
+    tourOn && handleTourSwitch();
+  };
+
+  const handleTourSwitch = () => {
+    onDeactivateTour("nWS3");
+    onActivateTour("nWS4");
   };
 
   const handlePostWorkCircuit = () => {
@@ -152,6 +168,16 @@ export const CircuitFormPt2 = (props) => {
 
   return (
     <div className={classes.root}>
+      <Tour
+        onRequestClose={() => onEndTour()}
+        steps={EX2STEPS}
+        isOpen={tourOn}
+        maskClassName="mask"
+        className="helper"
+        rounded={5}
+        disableFocusLock={true}
+        accentColor={accentColor}
+      />
       {!addEx ? (
         <Grid container spacing={3}>
           {circuit_type === "circuit" && (
@@ -205,6 +231,7 @@ const mapStateToProps = (store) => ({
   selectedCircuit: store.circuits.selectedCircuit,
   positionCircEx: store.circExs.position,
   phase: store.circuits.phase,
+  tourOn: store.tour.nWS3,
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -221,8 +248,35 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch(fetchFormattedWorkout(workoutId)),
   onClearPatchedCircExAndCircuitFromState: () =>
     dispatch(clearPatchedCircExAndCircuitFromState()),
+  onActivateTour: (tourId) => dispatch(activateTour(tourId)),
+  onDeactivateTour: (tourId) => dispatch(deactivateTour(tourId)),
+  onEndTour: () => dispatch(endTour()),
 });
 export default connect(mapStateToProps, mapDispatchToProps)(CircuitFormPt2);
+
+const EX2STEPS = [
+  {
+    selector: '[data-tour = "es7"]',
+    content: () => (
+      <div>
+        Here you can set your target values for each of the attributes. They
+        will be saved for every session, and you can change them as you level
+        up.
+        <br></br>
+        ex. 'Reps: 12, Weight: 50 lbs, Hold Time: 20 sec, Rest Period: 2 min '
+      </div>
+    ),
+    position: "right",
+  },
+  {
+    selector: '[data-tour = "es8"]',
+    content: () => (
+      <div>Sweet. If it looks good, lets go ahead and save it!</div>
+    ),
+    position: "bottom",
+  },
+];
+const accentColor = "#ff5722";
 
 const useStyles = makeStyles((theme) => ({
   root: {

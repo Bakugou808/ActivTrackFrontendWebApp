@@ -67,7 +67,7 @@ export const RestPeriodCard = (props) => {
   };
 
   return (
-    <div className="restPeriodCard">
+    <div data-tour="sw14" className="restPeriodCard">
       {showRPCard && (
         <motion.div
           className="attFields"
@@ -131,7 +131,7 @@ export const RestPeriodCard = (props) => {
               )}
             </div>
 
-            <div className="startButton">
+            <div data-tour="sw15" className="startButton">
               <Button
                 variant="contained"
                 color="primary"

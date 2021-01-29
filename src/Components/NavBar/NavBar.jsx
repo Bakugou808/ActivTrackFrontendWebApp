@@ -157,6 +157,7 @@ function NavBar(props) {
           {isLoggedIn ? (
             workoutPage ? (
               <IconButton
+                data-tour="sw16"
                 edge="start"
                 className={
                   device === "mobile" ? classes.menuBtnMob : classes.menuButton

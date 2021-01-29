@@ -4,7 +4,8 @@ import { useTimer } from "use-timer";
 import useSound from "use-sound";
 
 import BellSound from "../../Sounds/BellSound.mp3";
-
+// * ReactTour Imports
+import Tour from "reactour";
 // * Component Imports
 import { AuthHOC } from "../AuthHOC";
 import UiComponent from "./UiComponent";
@@ -28,7 +29,11 @@ import {
   patchSession,
 } from "../../Redux/Actions/SessionsActions";
 import { FormatListNumberedOutlined } from "@material-ui/icons";
-
+import {
+  activateTour,
+  deactivateTour,
+  endTour,
+} from "../../Redux/Actions/TourActions";
 
 const StartWorkout = (props) => {
   const {
@@ -49,6 +54,11 @@ const StartWorkout = (props) => {
     device,
     orientation,
     onPatchSession,
+    onActivateTour,
+    onDeactivateTour,
+    onEndTour,
+    tourOn1,
+    tourOn2,
   } = props;
 
   const workoutId = match.params.workoutId;
@@ -94,6 +104,8 @@ const StartWorkout = (props) => {
   // *exDrawer Scroll
   const [exRef, setExRef] = useState(null);
   const [bell, setBell] = useState(true);
+  // *tour state
+  const [takeTour, setTakeTour] = useState(true);
 
   const stopWatch = { time, start, pause, reset, isRunning };
   useEffect(() => {
@@ -352,13 +364,12 @@ const StartWorkout = (props) => {
     };
 
     onPatchSession(sessionData, sideEffects);
-
   };
 
   const pauseTimers = () => {
-    fullRestTime.pause();
-    fullActiveTime.pause();
-    fullTime.pause();
+    // fullRestTime.pause();
+    // fullActiveTime.pause();
+    // fullTime.pause();
   };
 
   const deliverNextExObj = () => {
@@ -393,98 +404,138 @@ const StartWorkout = (props) => {
     );
   };
 
+  // const handleTourSwitch = () => {
+  //   onDeactivateTour("sW1");
+  //   onActivateTour("sS2");
+  // };
+
+  const openTour = () => {
+    onActivateTour("sW1");
+  };
+
   return (
-    <div
-      className={
-        device === "computer"
-          ? showDrawer
-            ? "startWorkoutContainerGrid"
-            : "startWorkoutContainerFlex"
-          : orientation === "portrait"
-          ? showDrawer
-            ? "startWorkoutContainerMobPortraitGrid"
-            : "startWorkoutContainerMobPortraitFlex"
-          : "startWorkoutContainerMobPortraitLandscape"
-      }
-    >
-      {useLivePatch()}
-      {showDrawer &&
-        (device === "computer" ? (
-          <ExListDrawer
-            currentEx={exObj}
-            exRef={exRef}
-            history={history}
-            match={match}
-            workoutStarted={true}
-          />
-        ) : orientation === "portrait" ? (
-          <ExListDrawerMobPortrait
-            currentEx={exObj}
-            exRef={exRef}
-            history={history}
-            match={match}
-          />
-        ) : (
-          <ExListDrawer
-            currentEx={exObj}
-            exRef={exRef}
-            history={history}
-            match={match}
-          />
-        ))}
+    <div>
+      {takeTour && (
+        <div className="tourNotification">
+          <div>Take a Tour?</div>
+          <Button onClick={openTour}>Yes</Button>
+          <Button onClick={() => setTakeTour(false)}>No Thanks</Button>
+        </div>
+      )}
+      <Tour
+        onRequestClose={() => onEndTour()}
+        steps={START_WORKOUT_STEPS1}
+        isOpen={tourOn1}
+        maskClassName="mask"
+        className="helper"
+        rounded={5}
+        accentColor={accentColor}
+      />
+      <Tour
+        onRequestClose={() => onEndTour()}
+        steps={START_WORKOUT_STEPS2}
+        isOpen={tourOn2}
+        maskClassName="mask"
+        className="helper"
+        rounded={5}
+        accentColor={accentColor}
+      />
+
       <div
-        className={showDrawer ? "runWorkoutContainer" : "runWorkoutContainer2"}
+        data-tour="sw1"
+        className={
+          device === "computer"
+            ? showDrawer
+              ? "startWorkoutContainerGrid"
+              : "startWorkoutContainerFlex"
+            : orientation === "portrait"
+            ? showDrawer
+              ? "startWorkoutContainerMobPortraitGrid"
+              : "startWorkoutContainerMobPortraitFlex"
+            : "startWorkoutContainerMobPortraitLandscape"
+        }
       >
-        <div className="UiCompAttFieldsCont">
-          <UiComponent
-            exObj={exObj}
-            startEx={startEx}
-            endEx={endEx}
-            stopWatch={stopWatch}
-            handleEndEx={handleEndEx}
-            goToNext={goToNext}
-            setNum={setNum}
-            restPeriod={restPeriod}
-            setRestPeriod={setRestPeriod}
-            handleRestPeriod={handleRestPeriod}
-            autoRoll={autoRoll}
-            setAutoRoll={setAutoRoll}
-            startWorkout={startWorkout}
-            handleBeginWorkout={handleBeginWorkout}
-            handleStartWorkout={handleStartWorkout}
-            playBell={playBell}
-            bell={bell}
-            setBell={setBell}
-            setExRef={setExRef}
-            fullTime={fullTime}
-            attributesComponent={Attributes}
-            handleSubmitStats={handleSubmitStats}
-            submitClicked={submitClicked}
-          />
+        {useLivePatch()}{" "}
+        {showDrawer &&
+          (device === "computer" ? (
+            <ExListDrawer
+              currentEx={exObj}
+              exRef={exRef}
+              history={history}
+              match={match}
+              workoutStarted={true}
+            />
+          ) : orientation === "portrait" ? (
+            <ExListDrawerMobPortrait
+              currentEx={exObj}
+              exRef={exRef}
+              history={history}
+              match={match}
+            />
+          ) : (
+            <ExListDrawer
+              currentEx={exObj}
+              exRef={exRef}
+              history={history}
+              match={match}
+            />
+          ))}
+        <div
+          className={
+            showDrawer ? "runWorkoutContainer" : "runWorkoutContainer2"
+          }
+        >
+          <div className="UiCompAttFieldsCont">
+            <UiComponent
+              exObj={exObj}
+              startEx={startEx}
+              endEx={endEx}
+              stopWatch={stopWatch}
+              handleEndEx={handleEndEx}
+              goToNext={goToNext}
+              setNum={setNum}
+              restPeriod={restPeriod}
+              setRestPeriod={setRestPeriod}
+              handleRestPeriod={handleRestPeriod}
+              autoRoll={autoRoll}
+              setAutoRoll={setAutoRoll}
+              startWorkout={startWorkout}
+              handleBeginWorkout={handleBeginWorkout}
+              handleStartWorkout={handleStartWorkout}
+              playBell={playBell}
+              bell={bell}
+              setBell={setBell}
+              setExRef={setExRef}
+              fullTime={fullTime}
+              attributesComponent={Attributes}
+              handleSubmitStats={handleSubmitStats}
+              submitClicked={submitClicked}
+            />
 
-          <AttributeFields
-            exObj={exObj}
-            startEx={startEx}
-            setGoToNext={setGoToNext}
-            stopWatch={stopWatch}
-            setExStats={setExStats}
-            submitClicked={submitClicked}
-            setShowRPCard={setShowRPCard}
-            setSubmitClicked={setSubmitClicked}
-            focusAttFields={focusAttFields}
-          />
+            <AttributeFields
+              exObj={exObj}
+              startEx={startEx}
+              setGoToNext={setGoToNext}
+              stopWatch={stopWatch}
+              setExStats={setExStats}
+              submitClicked={submitClicked}
+              setShowRPCard={setShowRPCard}
+              setSubmitClicked={setSubmitClicked}
+              focusAttFields={focusAttFields}
+            />
 
-          <RestPeriodCard
-            showRPCard={showRPCard}
-            stopWatch={stopWatch}
-            handleSubmitStats={handleSubmitStats}
-            endEx={endEx}
-            restPeriod={restPeriod}
-            bell={bell}
-            startEx={startEx}
-            nextExObj={nextExObj}
-            handleRestPeriod={handleRestPeriod}
-          />
+            <RestPeriodCard
+              showRPCard={showRPCard}
+              stopWatch={stopWatch}
+              handleSubmitStats={handleSubmitStats}
+              endEx={endEx}
+              restPeriod={restPeriod}
+              bell={bell}
+              startEx={startEx}
+              nextExObj={nextExObj}
+              handleRestPeriod={handleRestPeriod}
+            />
+          </div>
         </div>
       </div>
     </div>
@@ -501,6 +552,8 @@ const mapStateToProps = (store) => ({
   patchedExTitle: store.workouts.patchedExTitle,
   device: store.device.device,
   orientation: store.device.orientation,
+  tourOn1: store.tour.sW1,
+  tourOn2: store.tour.sW2,
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -514,7 +567,192 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch(clearPatchedCircExAndCircuitFromState()),
   onPatchSession: (sessionData, sideEffects) =>
     dispatch(patchSession(sessionData, sideEffects)),
+  onActivateTour: (tourId) => dispatch(activateTour(tourId)),
+  onDeactivateTour: (tourId) => dispatch(deactivateTour(tourId)),
+  onEndTour: () => dispatch(endTour()),
 });
 export default AuthHOC(
   connect(mapStateToProps, mapDispatchToProps)(StartWorkout)
 );
+
+const accentColor = "#ff5722";
+
+const START_WORKOUT_STEPS1 = [
+  {
+    selector: '[data-tour = "sw1"]',
+    content: () => (
+      <div>
+        This is where you can run your workout and track your progress. Lets
+        take a look at whats available.
+      </div>
+    ),
+    position: "top",
+  },
+  {
+    selector: '[data-tour = "sw2"]',
+    content: () => (
+      <div>
+        This is the Sound Switch. It will turn off the bell sound you hear at
+        the beginning and end of an exercise. It is set to "On" by default.
+      </div>
+    ),
+    position: "top",
+  },
+  {
+    selector: '[data-tour = "sw3"]',
+    content: () => (
+      <div>
+        This is the AutoRoll Switch. It will skip a section at the end of an
+        exercise so you "roll" into the next exercise without a delay. It is set
+        to "Off" by default.
+      </div>
+    ),
+    position: "right",
+  },
+  {
+    selector: '[data-tour = "sw4"]',
+    content: () => (
+      <div>
+        This is your Info Card. It displays all the info you'll want during your
+        workout. It seems a bit empty at the moment. Lets move on.
+      </div>
+    ),
+    position: "top",
+  },
+  {
+    selector: '[data-tour = "sw5"]',
+    content: () => <div>Click the button, there's more to see!</div>,
+    position: "top",
+  },
+];
+
+const START_WORKOUT_STEPS2 = [
+  {
+    selector: '[data-tour = "sw4"]',
+    content: () => (
+      <div>Nice. Now that the card is filled. Lets do a quick breakdown.</div>
+    ),
+    position: "right",
+  },
+  {
+    selector: '[data-tour = "sw6"]',
+    content: () => (
+      <div>
+        This is your header. It has the name of the exercise and what Set Number
+        you are out of the Total Number of Sets.
+      </div>
+    ),
+    position: "top",
+  },
+  {
+    selector: '[data-tour = "sw7"]',
+    content: () => (
+      <div>
+        These are your Timers. The one on the left tracks the entire time since
+        the start of the workout. The one on the right tracks the time it takes
+        to finish the exercise you're on.
+      </div>
+    ),
+    position: "top",
+  },
+  {
+    selector: '[data-tour = "sw8"]',
+    content: () => (
+      <div>
+        {`This is the Rest Period section. Often times you'll want a to rest for a short time between exercises. If you didn't set one earlier when building an exercise, you can still add one. 
+        
+        Click on the text and a form will appear. You can set the unit to 'sec' or 'min'. If you don't want a Rest Period just leave it blank.
+
+        And as always, press 'Enter' to save. 
+        `}
+      </div>
+    ),
+    position: "right",
+  },
+  {
+    selector: '[data-tour = "sw9"]',
+    content: () => (
+      <div>
+        This is your Attributes Card. It displays all the attributes you added
+        when you created the exercise. The preset values are displayed so you
+        know what your target values are as you workout.
+      </div>
+    ),
+    position: "top",
+  },
+  {
+    selector: '[data-tour = "sw10"]',
+    content: () => (
+      <div>{`This is your footer. It tells you what Phase you are in as well as the type of exercise you're doing. 
+    
+    Stack: an exercise with X number of Sets you repeat
+    Circuit: a series of exercises in an order with X number of Sets you repeat
+    `}</div>
+    ),
+    position: "top",
+  },
+  {
+    selector: '[data-tour = "sw16"]',
+    content: () => (
+      <div>{`Nice. Thats it for the Info Card.
+    
+    But it be really nice to know what was next in the workout... 
+    
+    If you feel the same way, click this button here!
+    `}</div>
+    ),
+    position: "right",
+  },
+  {
+    selector: '[data-tour = "sw11"]',
+    content: () => (
+      <div>{`This is your Exercise List.
+    
+    It displays all the exercises you have within the workout. If you ever lose track of where you are on the list. Simply click on the Exercise Name and the list will jump to your current exercise. 
+    
+    * You can modify the set number and attributes of the exercise by clicking the Set Button or Card Number. 
+    
+    Note: modifying sets and attributes only applies to exercises that are not currently displayed within the Info Card. If you try it, you'll break it and need to go back to the workout page... (-_-)
+
+    `}</div>
+    ),
+    position: "right",
+  },
+  {
+    selector: '[data-tour = "sw12"]',
+    content: () => (
+      <div>{`Great. Now lets go on to the next section.
+    
+    Click "FINISHED".`}</div>
+    ),
+    position: "right",
+  },
+  {
+    selector: '[data-tour = "sw13"]',
+    content: () => (
+      <div>{`This is where you can log your performance for each Attribute you added to the exercise. It will be auto-filled with your preset values. If you hit your target(s) for the attribute(s) you can simply click "SUBMIT". 
+    
+    If you need to modify the values, just click to change the value and then click "SUBMIT" to save them.`}</div>
+    ),
+    position: "right",
+  },
+  {
+    selector: '[data-tour = "sw14"]',
+    content: () => (
+      <div>{`Now you get a short break. This card will keep you informed on how much time has gone by. If you set a Rest Period, you will get a notification when the timer has hit the given value of time (if "Sound" is "On" you will also be alerted with an alarm bell). If you didn't and would like to, simply add a time as you would in the Info Card.
+        
+    Note: If "AutoRoll" is set to "On" the next card will go directly to the next exercise in the workout. Otherwise, you will be prompted to start the next exercise.`}</div>
+    ),
+    position: "right",
+  },
+  {
+    selector: '[data-tour = "sw15"]',
+    content: () => (
+      <div>{`And thats the end of that folx.     
+    
+    When you're ready to move on to the next exercise click the button and get active!
+    `}</div>
+    ),
+    position: "right",
+  },
+];

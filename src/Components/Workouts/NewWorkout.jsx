@@ -6,7 +6,6 @@ import MyModal from "../Modal";
 import TabBar from "../Circuits/TabBar";
 import PatchFlowCont from "./PatchFlowCont";
 import RenderExercises from "./RenderExercises";
-import NewWorkoutRide from "../JoyRide/NewWorkoutRide";
 // * ReactTour Imports
 import Tour from "reactour";
 // * Material UI Imports
@@ -28,6 +27,11 @@ import {
   fetchWorkout,
   fetchFormattedWorkout,
 } from "../../Redux/Actions/WorkoutActions";
+import {
+  activateTour,
+  deactivateTour,
+  endTour,
+} from "../../Redux/Actions/TourActions";
 
 export const NewWorkout = (props) => {
   const {
@@ -48,6 +52,11 @@ export const NewWorkout = (props) => {
     coolDown,
     onSetPositionCircuitToX,
     onClearCircuitPhasePositions,
+    onActivateTour,
+    onDeactivateTour,
+    onEndTour,
+    tourOn,
+    tourOn2,
   } = props;
 
   const folderId = parseInt(match.params.folderId);
@@ -63,6 +72,8 @@ export const NewWorkout = (props) => {
   const [showForm, setShowForm] = useState(false);
   const [showFormEdit, setShowFormEdit] = useState(false);
   const [patchRecord, setPatchRecord] = useState(null);
+
+  const [takeTour, setTakeTour] = useState(true);
 
   const classes = useStyles();
 
@@ -115,13 +126,9 @@ export const NewWorkout = (props) => {
     setPatchRecord(record);
     setShowFormEdit(true);
   };
-  const [takeTour, setTakeTour] = useState(true);
 
-  const [isTourOpen, setIsTourOpen] = useState(false);
-  const [isShowingMore, setIsShowingMore] = useState(false);
   const handleAdd = (phase) => {
-    isTourOpen && setIsTourOpen(false);
-    isTourOpen && setIsShowingMore(true);
+    tourOn && handleTourSwitch();
     onSetPhase(phase);
     setShowForm(true);
   };
@@ -134,17 +141,17 @@ export const NewWorkout = (props) => {
     );
   };
 
-  const toggleShowMore = () => {
-    setIsShowingMore((prev) => !prev);
+  const handleTourSwitch = () => {
+    onDeactivateTour("nWS1");
+    onActivateTour("nWS2");
   };
 
   const openTour = () => {
-    setIsTourOpen(true);
+    onActivateTour("nWS1");
   };
 
   return (
     <div>
-      {/* <NewWorkoutRide /> */}
       {takeTour && (
         <div className="tourNotification">
           <div>Take a Tour?</div>
@@ -222,7 +229,7 @@ export const NewWorkout = (props) => {
           )}
         </div>
       </div>
-      <div className="saveButtonCont">
+      <div className="saveButtonCont" data-tour="nws6">
         <Button
           variant="contained"
           color="secondary"
@@ -233,7 +240,12 @@ export const NewWorkout = (props) => {
         </Button>
       </div>
 
-      <div className="container grid margin30px " data-tour="nws2">
+      <div
+        className="container grid margin30px "
+        data-tour="nws2"
+        data-tour="nws4"
+        data-tour="nws5"
+      >
         <div>
           {" "}
           <div className="phaseTitle2"> Warm up</div>
@@ -312,15 +324,7 @@ export const NewWorkout = (props) => {
       <MyModal
         showModal={showForm}
         setShowModal={setShowForm}
-        isShowingMore={isShowingMore}
-        setIsShowingMore={setIsShowingMore}
-        component={
-          <TabBar
-            setShowModal={setShowForm}
-            isShowingMore={isShowingMore}
-            setIsShowingMore={setIsShowingMore}
-          />
-        }
+        component={<TabBar setShowModal={setShowForm} />}
       />
       <MyModal
         showModal={showFormEdit}
@@ -334,9 +338,18 @@ export const NewWorkout = (props) => {
         }
       />
       <Tour
-        onRequestClose={() => setIsTourOpen(false)}
-        steps={NEW_WORKOUT_STEPS}
-        isOpen={isTourOpen}
+        onRequestClose={() => onEndTour()}
+        steps={NEW_WORKOUT_STEPS1}
+        isOpen={tourOn}
+        maskClassName="mask"
+        className="helper"
+        rounded={5}
+        accentColor={accentColor}
+      />
+      <Tour
+        onRequestClose={() => onEndTour()}
+        steps={NEW_WORKOUT_STEPS2}
+        isOpen={tourOn2}
         maskClassName="mask"
         className="helper"
         rounded={5}
@@ -356,6 +369,8 @@ const mapStateToProps = (store) => ({
   coolDown:
     store.workouts.formattedWorkout &&
     store.workouts.formattedWorkout.cool_down,
+  tourOn: store.tour.nWS1,
+  tourOn2: store.tour.nWS4,
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -372,6 +387,9 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch(setPositionCircuitToX(payload)),
   onClearPosValCircEx: () => dispatch(clearPosValCircEx()),
   onClearCircuitPhasePositions: () => dispatch(clearCircuitPhasePositions()),
+  onActivateTour: (tourId) => dispatch(activateTour(tourId)),
+  onDeactivateTour: (tourId) => dispatch(deactivateTour(tourId)),
+  onEndTour: () => dispatch(endTour()),
 });
 export default AuthHOC(
   connect(mapStateToProps, mapDispatchToProps)(NewWorkout)
@@ -390,7 +408,7 @@ const useStyles = makeStyles((theme) => ({
 
 const accentColor = "#ff5722";
 
-const NEW_WORKOUT_STEPS = [
+const NEW_WORKOUT_STEPS1 = [
   {
     selector: '[data-tour = "nws1"]',
     content: () => (
@@ -406,9 +424,10 @@ const NEW_WORKOUT_STEPS = [
     content: () => (
       <div>
         All Workouts are divided into 3 phases: 'Warm up', 'Body', and 'Cool
-        Down'. You don't need to add exercises to each section if you don't feel
-        like it. But its here for you if you decide to use them.
+        Down'. <br />
         <br />
+        You don't need to add exercises to each section if you don't feel like
+        it. But its here for you if you decide to use them.
       </div>
     ),
     position: "top",
@@ -418,20 +437,42 @@ const NEW_WORKOUT_STEPS = [
     content: () => (
       <div>
         This icon will let open a form to add an exercise to the respective
-        phase. Give it a click.
+        phase. <br />
+        <br /> Give it a click.
+      </div>
+    ),
+    position: "right",
+  },
+];
+
+const NEW_WORKOUT_STEPS2 = [
+  {
+    selector: '[data-tour = "nws4"]',
+    content: () => (
+      <div>Sweet! You just added your first exercise. Congrats!</div>
+    ),
+    position: "top",
+  },
+  {
+    selector: '[data-tour = "nws5"]',
+    content: () => (
+      <div>
+        You can edit the Set number and exercise at any point throughout the
+        app. Simply click on the Exercise Card or the Set Button to change the
+        details. And make sure to save your changes!
+        <br />
+      </div>
+    ),
+    position: "top",
+  },
+  {
+    selector: '[data-tour = "nws6"]',
+    content: () => (
+      <div>
+        Once you've finished adding your exercises to the workouts click this
+        button to save it! That's all for this one. Lets get active!
       </div>
     ),
     position: "center",
   },
-  // {
-  //   selector: '[data-tour = "nws3"]',
-  //   content: () => (
-  //     <div>
-  //       This is your navigation icon. Click here to get to the Folders page to
-  //       start building your folders and workouts. You can also click on the
-  //       Stats tab to view your progress as you complete more and more workouts.
-  //     </div>
-  //   ),
-  //   position: "top",
-  // },
 ];
