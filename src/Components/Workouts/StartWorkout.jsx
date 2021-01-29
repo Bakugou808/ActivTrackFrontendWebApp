@@ -59,6 +59,8 @@ const StartWorkout = (props) => {
     onEndTour,
     tourOn1,
     tourOn2,
+    tourOn3,
+    tourOn4,
   } = props;
 
   const workoutId = match.params.workoutId;
@@ -305,6 +307,7 @@ const StartWorkout = (props) => {
     // playBell();
     fullRestTime.start();
     start();
+    tourOn2 && handleTourSwitch();
   };
 
   // 3. user is prompted to fill att values and submit -> autoRoll ? run handleSubmitState : set submitClicked(true)
@@ -404,10 +407,10 @@ const StartWorkout = (props) => {
     );
   };
 
-  // const handleTourSwitch = () => {
-  //   onDeactivateTour("sW1");
-  //   onActivateTour("sS2");
-  // };
+  const handleTourSwitch = () => {
+    onDeactivateTour("sW2");
+    onActivateTour("sW3");
+  };
 
   const openTour = () => {
     onActivateTour("sW1");
@@ -435,6 +438,24 @@ const StartWorkout = (props) => {
         onRequestClose={() => onEndTour()}
         steps={START_WORKOUT_STEPS2}
         isOpen={tourOn2}
+        maskClassName="mask"
+        className="helper"
+        rounded={5}
+        accentColor={accentColor}
+      />
+      <Tour
+        onRequestClose={() => onEndTour()}
+        steps={ATT_STEPS}
+        isOpen={tourOn3}
+        maskClassName="mask"
+        className="helper"
+        rounded={5}
+        accentColor={accentColor}
+      />
+      <Tour
+        onRequestClose={() => onEndTour()}
+        steps={REST_STEPS}
+        isOpen={tourOn4}
         maskClassName="mask"
         className="helper"
         rounded={5}
@@ -554,6 +575,8 @@ const mapStateToProps = (store) => ({
   orientation: store.device.orientation,
   tourOn1: store.tour.sW1,
   tourOn2: store.tour.sW2,
+  tourOn3: store.tour.sW3,
+  tourOn4: store.tour.sW4,
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -659,11 +682,11 @@ const START_WORKOUT_STEPS2 = [
     selector: '[data-tour = "sw8"]',
     content: () => (
       <div>
-        {`This is the Rest Period section. Often times you'll want a to rest for a short time between exercises. If you didn't set one earlier when building an exercise, you can still add one. 
+        {`This is the Rest Period section.
         
-        Click on the text and a form will appear. You can set the unit to 'sec' or 'min'. If you don't want a Rest Period just leave it blank.
+        Click on the text to add time. You can set the unit to 'sec' or 'min'. 
 
-        And as always, press 'Enter' to save. 
+        Press 'Enter' to save. 
         `}
       </div>
     ),
@@ -673,9 +696,8 @@ const START_WORKOUT_STEPS2 = [
     selector: '[data-tour = "sw9"]',
     content: () => (
       <div>
-        This is your Attributes Card. It displays all the attributes you added
-        when you created the exercise. The preset values are displayed so you
-        know what your target values are as you workout.
+        This is your Attributes Section. It displays all the attributes and
+        their target values.
       </div>
     ),
     position: "top",
@@ -683,11 +705,7 @@ const START_WORKOUT_STEPS2 = [
   {
     selector: '[data-tour = "sw10"]',
     content: () => (
-      <div>{`This is your footer. It tells you what Phase you are in as well as the type of exercise you're doing. 
-    
-    Stack: an exercise with X number of Sets you repeat
-    Circuit: a series of exercises in an order with X number of Sets you repeat
-    `}</div>
+      <div>{`Here you can see what Phase you are in as well as the Type of exercise you're doing.`}</div>
     ),
     position: "top",
   },
@@ -708,13 +726,9 @@ const START_WORKOUT_STEPS2 = [
     content: () => (
       <div>{`This is your Exercise List.
     
-    It displays all the exercises you have within the workout. If you ever lose track of where you are on the list. Simply click on the Exercise Name and the list will jump to your current exercise. 
+    It displays all the exercises you have within the workout. Click on the Exercise Name in the Info Card and the list will jump to your current exercise. 
     
-    * You can modify the set number and attributes of the exercise by clicking the Set Button or Card Number. 
-    
-    Note: modifying sets and attributes only applies to exercises that are not currently displayed within the Info Card. If you try it, you'll break it and need to go back to the workout page... (-_-)
-
-    `}</div>
+    * You can modify any exercise by clicking the Set Button or Card Number except the current exercise. `}</div>
     ),
     position: "right",
   },
@@ -727,15 +741,19 @@ const START_WORKOUT_STEPS2 = [
     ),
     position: "right",
   },
+];
+
+const ATT_STEPS = [
   {
     selector: '[data-tour = "sw13"]',
     content: () => (
-      <div>{`This is where you can log your performance for each Attribute you added to the exercise. It will be auto-filled with your preset values. If you hit your target(s) for the attribute(s) you can simply click "SUBMIT". 
-    
-    If you need to modify the values, just click to change the value and then click "SUBMIT" to save them.`}</div>
+      <div>{`This is your Attributes Card. If you hit your target(s) for the attribute(s) you can simply click "SUBMIT". Or adjust the values and continue.`}</div>
     ),
     position: "right",
   },
+];
+
+const REST_STEPS = [
   {
     selector: '[data-tour = "sw14"]',
     content: () => (

@@ -6,6 +6,8 @@ const initialState = {
   nWS4: false,
   sW1: false,
   sW2: false,
+  sW3: false,
+  sW4: false,
 };
 
 const tourReducer = (state = initialState, action) => {

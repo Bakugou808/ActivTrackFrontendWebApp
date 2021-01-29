@@ -67,7 +67,7 @@ export const RestPeriodCard = (props) => {
   };
 
   return (
-    <div data-tour="sw14" className="restPeriodCard">
+    <div className="restPeriodCard">
       {showRPCard && (
         <motion.div
           className="attFields"
@@ -75,7 +75,7 @@ export const RestPeriodCard = (props) => {
           animate={orientation === "portrait" ? { y: -435 } : { y: -390 }}
           transition={{ duration: 0.5 }}
         >
-          <Paper className={classes.card} elevation={3}>
+          <Paper data-tour="sw14" className={classes.card} elevation={3}>
             <div className="centerDiv2 removeMarginBottom blueGreen breakTitle fsize20">
               Take A Break
             </div>
