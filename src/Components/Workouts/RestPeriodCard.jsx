@@ -19,6 +19,7 @@ export const RestPeriodCard = (props) => {
     endEx,
     startEx,
     bell,
+    // playBell,
     restPeriod,
     nextExObj,
     handleRestPeriod,
@@ -26,7 +27,7 @@ export const RestPeriodCard = (props) => {
     orientation,
   } = props;
   const classes = useStyles();
-  const [playTimesUp, { stop }] = useSound(BellSound);
+  // const [playTimesUp, { stop }] = useSound(BellSound);
   const [timeAlert, setTimeAlert] = useState(false);
   const [showRpForm, setShowRpForm] = useState(false);
   const [rp2, setRp2] = useState();
@@ -58,13 +59,14 @@ export const RestPeriodCard = (props) => {
       setTimeAlert(false);
     }
     if (restInSec == timeInSec) {
-      handleTimesUp();
+      bell && console.log("in rp card");
     }
   };
 
-  const handleTimesUp = () => {
-    bell && playTimesUp() && setTimeout(stop(), 1500);
-  };
+  // const handleTimesUp = () => {
+  //   playTimesUp();
+  //   // stop();
+  // };
 
   return (
     <div className="restPeriodCard">
@@ -91,6 +93,7 @@ export const RestPeriodCard = (props) => {
                 endEx={endEx}
                 setTimeAlert={setTimeAlert}
                 handleExceededRest={handleExceededRest}
+                showRPCard={showRPCard}
               />
             </div>
             <div className="horizontal2 cardRepRest rpInput">

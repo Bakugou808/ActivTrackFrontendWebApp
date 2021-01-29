@@ -9,6 +9,7 @@ export const Timers = (props) => {
     handleExceededRest,
     device,
     orientation,
+    showRPCard,
   } = props;
 
   useEffect(() => {}, [device, orientation]);
@@ -55,7 +56,7 @@ export const Timers = (props) => {
           </div>
         </div>
       );
-    } else if (endEx) {
+    } else if (endEx && showRPCard) {
       handleExceededRest();
       return (
         <div

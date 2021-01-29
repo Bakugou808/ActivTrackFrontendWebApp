@@ -59,6 +59,7 @@ const StartWorkout = (props) => {
     onEndTour,
     tourOn1,
     tourOn2,
+    tourOn2B,
     tourOn3,
     tourOn4,
   } = props;
@@ -102,7 +103,7 @@ const StartWorkout = (props) => {
   const fullRestTime = useTimer();
 
   // *sound effects
-  const [playBell] = useSound(BellSound);
+  const [playBell, { stop }] = useSound(BellSound);
   // *exDrawer Scroll
   const [exRef, setExRef] = useState(null);
   const [bell, setBell] = useState(true);
@@ -290,6 +291,7 @@ const StartWorkout = (props) => {
     setEndEx(false);
     setSubmitClicked(false);
     bell && playBell();
+    console.log("inStart Workout");
     start();
     fullTime.start();
     fullActiveTime.start();
@@ -307,7 +309,7 @@ const StartWorkout = (props) => {
     // playBell();
     fullRestTime.start();
     start();
-    tourOn2 && handleTourSwitch();
+    tourOn2B && handleTourSwitch();
   };
 
   // 3. user is prompted to fill att values and submit -> autoRoll ? run handleSubmitState : set submitClicked(true)
@@ -341,7 +343,7 @@ const StartWorkout = (props) => {
         setGoToNext(true);
       }
     };
-
+    tourOn4 && onEndTour();
     onPostStat(statData, sideEffects);
     setFocusAttFields(false);
     setShowRPCard(false);
@@ -408,7 +410,7 @@ const StartWorkout = (props) => {
   };
 
   const handleTourSwitch = () => {
-    onDeactivateTour("sW2");
+    onDeactivateTour("sW2B");
     onActivateTour("sW3");
   };
 
@@ -438,6 +440,15 @@ const StartWorkout = (props) => {
         onRequestClose={() => onEndTour()}
         steps={START_WORKOUT_STEPS2}
         isOpen={tourOn2}
+        maskClassName="mask"
+        className="helper"
+        rounded={5}
+        accentColor={accentColor}
+      />
+      <Tour
+        onRequestClose={() => onEndTour()}
+        steps={START_WORKOUT_STEPS2B}
+        isOpen={tourOn2B}
         maskClassName="mask"
         className="helper"
         rounded={5}
@@ -523,7 +534,7 @@ const StartWorkout = (props) => {
               startWorkout={startWorkout}
               handleBeginWorkout={handleBeginWorkout}
               handleStartWorkout={handleStartWorkout}
-              playBell={playBell}
+              // playBell={playBell}
               bell={bell}
               setBell={setBell}
               setExRef={setExRef}
@@ -531,6 +542,7 @@ const StartWorkout = (props) => {
               attributesComponent={Attributes}
               handleSubmitStats={handleSubmitStats}
               submitClicked={submitClicked}
+              showRPCard={showRPCard}
             />
 
             <AttributeFields
@@ -552,6 +564,7 @@ const StartWorkout = (props) => {
               endEx={endEx}
               restPeriod={restPeriod}
               bell={bell}
+              // playBell={playBell}
               startEx={startEx}
               nextExObj={nextExObj}
               handleRestPeriod={handleRestPeriod}
@@ -575,6 +588,7 @@ const mapStateToProps = (store) => ({
   orientation: store.device.orientation,
   tourOn1: store.tour.sW1,
   tourOn2: store.tour.sW2,
+  tourOn2B: store.tour.sW2B,
   tourOn3: store.tour.sW3,
   tourOn4: store.tour.sW4,
 });
@@ -721,6 +735,8 @@ const START_WORKOUT_STEPS2 = [
     ),
     position: "right",
   },
+];
+const START_WORKOUT_STEPS2B = [
   {
     selector: '[data-tour = "sw11"]',
     content: () => (

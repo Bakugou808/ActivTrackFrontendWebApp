@@ -6,6 +6,7 @@ const initialState = {
   nWS4: false,
   sW1: false,
   sW2: false,
+  sW2B: false,
   sW3: false,
   sW4: false,
 };

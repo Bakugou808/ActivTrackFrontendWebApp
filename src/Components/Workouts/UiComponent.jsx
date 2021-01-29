@@ -54,6 +54,7 @@ export const UiComponent = (props) => {
     setExRef,
     formattedWorkout,
     bell,
+    // playBell,
     setBell,
     fullTime,
     device,
@@ -64,6 +65,7 @@ export const UiComponent = (props) => {
     onDeactivateTour,
     onEndTour,
     tourSW1,
+    showRPCard,
   } = props;
   const [defTimerVal, setDefTimerVal] = useState(10);
   const [defRestPeriod, setDefRestPeriod] = useState(120);
@@ -72,7 +74,7 @@ export const UiComponent = (props) => {
   const [rp2, setRp2] = useState();
   const [timeAlert, setTimeAlert] = useState(false);
   const [play, setPlay] = useState(false);
-  const [playTimesUp, { stop }] = useSound(BellSound);
+  const [playBell, { stop, isPlaying }] = useSound(BellSound);
   const [phase, setPhase] = useState(null);
   const [name, setName] = useState(null);
   const [type, setType] = useState(null);
@@ -95,81 +97,6 @@ export const UiComponent = (props) => {
     setPhase(toTitleCase(exObj.circuit_phase));
     setName(toTitleCase(exObj.ex_name));
     setType(toTitleCase(exObj.circuit_type));
-  };
-
-  const renderTime = ({ remainingTime }) => {
-    const minutes = Math.floor(stopWatch.time / 60);
-    const seconds = stopWatch.time - minutes * 60;
-
-    function str_pad_left(string, pad, length) {
-      return (new Array(length + 1).join(pad) + string).slice(-length);
-    }
-
-    const timerValue = new Date(stopWatch.time * 1000)
-      .toISOString()
-      .substr(11, 8);
-
-    if (!endEx) {
-      setTimeAlert(false);
-      return (
-        <div
-          className={
-            device === "mobile" && orientation === "landscape"
-              ? "timer mobTimer"
-              : "timer"
-          }
-        >
-          <div
-            className={
-              device === "mobile" && orientation === "landscape"
-                ? "textMobLand"
-                : "text"
-            }
-          >
-            Active Time
-          </div>
-          <div
-            className={
-              device === "mobile" && orientation === "landscape"
-                ? "value valMob"
-                : "value"
-            }
-          >
-            {timerValue}
-          </div>
-        </div>
-      );
-    } else if (endEx) {
-      handleExceededRest();
-      return (
-        <div
-          className={
-            device === "mobile" && orientation === "landscape"
-              ? "timer mobTimer"
-              : "timer"
-          }
-        >
-          <div
-            className={
-              device === "mobile" && orientation === "landscape"
-                ? "textMobLand "
-                : "text"
-            }
-          >
-            Rest Time
-          </div>
-          <div
-            className={
-              device === "mobile" && orientation === "landscape"
-                ? "value valMob"
-                : "value"
-            }
-          >
-            {timerValue}
-          </div>
-        </div>
-      );
-    }
   };
 
   const handleStartPause = () => {
@@ -207,16 +134,15 @@ export const UiComponent = (props) => {
       setTimeAlert(false);
     }
     if (restInSec == timeInSec) {
-      handleTimesUp();
+      // handleTimesUp();
+      bell && !isPlaying && playBell() && console.log("inUiCompYesPlay");
+      console.log("inUiCompNoPlay");
     }
   };
 
-  const handleTimesUp = () => {
-    bell && playTimesUp() && setTimeout(stop(), 1500);
-  };
-  const handleTimesUp10sec = () => {
-    playTimesUp() && setTimeout(stop(), 1000);
-  };
+  // const handleTimesUp = () => {
+  //   bell && playBell();
+  // };
 
   const handleBeginWorkoutPre = () => {
     handleBeginWorkout();
@@ -304,6 +230,7 @@ export const UiComponent = (props) => {
                   endEx={endEx}
                   setTimeAlert={setTimeAlert}
                   handleExceededRest={handleExceededRest}
+                  showRPCard={showRPCard}
                 />
               </div>
             </div>
