@@ -26,10 +26,10 @@ export const RestPeriodCard = (props) => {
     orientation,
   } = props;
   const classes = useStyles();
-  const [playTimesUp, { stop }] = useSound(BellSound);
   const [timeAlert, setTimeAlert] = useState(false);
   const [showRpForm, setShowRpForm] = useState(false);
   const [rp2, setRp2] = useState();
+  const [playBell, { stop, isPlaying }] = useSound(BellSound);
 
   const handleStartPause = () => {
     startEx && (stopWatch.isRunning ? stopWatch.pause() : stopWatch.start());
@@ -58,12 +58,8 @@ export const RestPeriodCard = (props) => {
       setTimeAlert(false);
     }
     if (restInSec == timeInSec) {
-      handleTimesUp();
+      bell && !isPlaying && playBell();
     }
-  };
-
-  const handleTimesUp = () => {
-    bell && playTimesUp() && setTimeout(stop(), 1500);
   };
 
   return (
@@ -75,7 +71,7 @@ export const RestPeriodCard = (props) => {
           animate={orientation === "portrait" ? { y: -435 } : { y: -390 }}
           transition={{ duration: 0.5 }}
         >
-          <Paper className={classes.card} elevation={3}>
+          <Paper data-tour="sw14" className={classes.card} elevation={3}>
             <div className="centerDiv2 removeMarginBottom blueGreen breakTitle fsize20">
               Take A Break
             </div>
@@ -91,6 +87,7 @@ export const RestPeriodCard = (props) => {
                 endEx={endEx}
                 setTimeAlert={setTimeAlert}
                 handleExceededRest={handleExceededRest}
+                showRPCard={showRPCard}
               />
             </div>
             <div className="horizontal2 cardRepRest rpInput">
@@ -131,7 +128,7 @@ export const RestPeriodCard = (props) => {
               )}
             </div>
 
-            <div className="startButton">
+            <div data-tour="sw15" className="startButton">
               <Button
                 variant="contained"
                 color="primary"

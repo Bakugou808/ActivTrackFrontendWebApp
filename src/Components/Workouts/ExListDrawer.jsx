@@ -47,6 +47,7 @@ export const ExListDrawer = ({
 
   return (
     <div
+      data-tour="sw11"
       className={
         orientation === "portrait"
           ? "exSideDrawerParentMobPort"

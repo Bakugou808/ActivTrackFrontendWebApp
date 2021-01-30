@@ -19,6 +19,7 @@ export default function WorkoutForm(props) {
     description: "",
   });
   const classes = useStyles();
+  const [showDescForm, setShowDescForm] = useState(false);
 
   useEffect(() => {
     folderId && setFields({ folder_id: folderId });
@@ -57,18 +58,28 @@ export default function WorkoutForm(props) {
         value={fields.title}
         onChange={handleChange}
       />
-      <TextField
-        variant="outlined"
-        margin="normal"
-        required
-        fullWidth
-        id="description"
-        label="Description"
-        name="description"
-        autoFocus
-        value={fields.description}
-        onChange={handleChange}
-      />
+      {showDescForm ? (
+        <TextField
+          variant="outlined"
+          margin="normal"
+          fullWidth
+          id="description"
+          label="Description"
+          name="description"
+          autoFocus
+          value={fields.description}
+          onChange={handleChange}
+        />
+      ) : fields.description ? (
+        fields.description
+      ) : (
+        <div
+          className="addDesc"
+          onClick={() => setShowDescForm((prev) => !prev)}
+        >
+          Add Description
+        </div>
+      )}
       <Button
         className={classes.submit}
         type="submit"

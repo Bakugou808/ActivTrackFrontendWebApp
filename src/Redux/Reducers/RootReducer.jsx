@@ -10,6 +10,7 @@ import workCircuitReducer from "./WorkCircuitReducer";
 import statReducer from "./StatReducer";
 import sessionReducer from "./SessionReducer";
 import deviceReducer from "./DeviceReducer";
+import tourReducer from "./TourReducer";
 
 const rootReducer = combineReducers({
   device: deviceReducer,
@@ -23,6 +24,7 @@ const rootReducer = combineReducers({
   workCircuits: workCircuitReducer,
   sessions: sessionReducer,
   stats: statReducer,
+  tour: tourReducer,
 });
 
 export default rootReducer;

@@ -23,10 +23,12 @@
     "react-scroll": "^1.8.1",
     "react-swipeable-views": "^0.13.9",
     "react-virtualized": "^9.22.3",
+    "reactour": "^1.18.0",
     "redux": "^4.0.5",
     "redux-logger": "^3.0.6",
     "redux-thunk": "^2.3.0",
     "sass": "^1.27.0",
+    "styled-components": "^4.0.0",
     "use-sound": "^1.0.2",
     "use-timer": "^1.4.0",
     "uuid": "^8.3.2"

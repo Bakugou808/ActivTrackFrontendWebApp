@@ -7,15 +7,13 @@ import { Tooltip, Fab, Paper, TextField, Button } from "@material-ui/core";
 // * Framer Motion Imports
 import { motion } from "framer-motion";
 
+import { activateTour, deactivateTour } from "../../Redux/Actions/TourActions";
+
 export const normalizeString = (str) => {
   if (typeof str == "string") {
-    return (
-      str
-        .replace(/([A-Z])/g, " $1")
-        .replace(/^./, function (str) {
-          return str.toUpperCase();
-        })
-    );
+    return str.replace(/([A-Z])/g, " $1").replace(/^./, function (str) {
+      return str.toUpperCase();
+    });
   } else {
     return str;
   }
@@ -32,6 +30,9 @@ export const AttributeFields = (props) => {
     setShowRPCard,
     device,
     orientation,
+    onActivateTour,
+    tourOn,
+    onDeactivateTour,
   } = props;
   const [exAtts, setExAtts] = useState([]);
   const classes = useStyles();
@@ -76,6 +77,12 @@ export const AttributeFields = (props) => {
   const handleSubmit = () => {
     setSubmitClicked(true);
     setShowRPCard(true);
+    tourOn && handleTourSwitch();
+  };
+
+  const handleTourSwitch = () => {
+    onDeactivateTour("sW3");
+    onActivateTour("sW4");
   };
 
   return (
@@ -87,7 +94,7 @@ export const AttributeFields = (props) => {
           animate={device === "mobile" ? { y: -410 } : { y: -315 }}
           transition={{ duration: 0.5 }}
         >
-          <Paper className={classes.paper} elevation={3}>
+          <Paper data-tour="sw13" className={classes.paper} elevation={3}>
             <div className="centerDiv2 removeMarginBottom orange fsize20">
               Attributes
             </div>
@@ -110,9 +117,13 @@ export const AttributeFields = (props) => {
 const mapStateToProps = (store) => ({
   device: store.device.device,
   orientation: store.device.orientation,
+  tourOn: store.tour.sW3,
 });
 
-const mapDispatchToProps = (dispatch) => ({});
+const mapDispatchToProps = (dispatch) => ({
+  onActivateTour: (tourId) => dispatch(activateTour(tourId)),
+  onDeactivateTour: (tourId) => dispatch(deactivateTour(tourId)),
+});
 export default connect(mapStateToProps, mapDispatchToProps)(AttributeFields);
 
 const useStyles = makeStyles((theme) => ({

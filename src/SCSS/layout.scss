@@ -4,11 +4,11 @@ $large: 939px;
 $extra-large: 1200px;
 
 #root {
-  overflow-y: hidden;
+  // overflow-y: hidden;
 }
 
 .overflowYHidden {
-  overflow-y: hidden;
+  // overflow-y: hidden;
 }
 
 body {
@@ -86,7 +86,7 @@ body {
 .homePageText {
   flex-flow: column wrap;
   align-items: center;
-  padding-top: 40px;
+  // padding-top: 40px;
 }
 
 @media all and (min-width: $large) {
@@ -342,4 +342,16 @@ html {
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.homeFloatCont {
+  display: flow-root;
+  position: relative;
+}
+
+.tourNotification {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 15px;
 }

@@ -21,6 +21,11 @@ import { Button, TextField, Paper } from "@material-ui/core";
 
 // * Action Imports
 import { setCurrExRef } from "../../Redux/Actions/WorkoutActions";
+import {
+  activateTour,
+  deactivateTour,
+  endTour,
+} from "../../Redux/Actions/TourActions";
 
 function toTitleCase(str) {
   str = str.toLowerCase().split(" ");
@@ -49,12 +54,18 @@ export const UiComponent = (props) => {
     setExRef,
     formattedWorkout,
     bell,
+    // playBell,
     setBell,
     fullTime,
     device,
     orientation,
     handleSubmitStats,
     submitClicked,
+    onActivateTour,
+    onDeactivateTour,
+    onEndTour,
+    tourSW1,
+    showRPCard,
   } = props;
   const [defTimerVal, setDefTimerVal] = useState(10);
   const [defRestPeriod, setDefRestPeriod] = useState(120);
@@ -63,7 +74,7 @@ export const UiComponent = (props) => {
   const [rp2, setRp2] = useState();
   const [timeAlert, setTimeAlert] = useState(false);
   const [play, setPlay] = useState(false);
-  const [playTimesUp, { stop }] = useSound(BellSound);
+  const [playBell, { stop, isPlaying }] = useSound(BellSound);
   const [phase, setPhase] = useState(null);
   const [name, setName] = useState(null);
   const [type, setType] = useState(null);
@@ -86,81 +97,6 @@ export const UiComponent = (props) => {
     setPhase(toTitleCase(exObj.circuit_phase));
     setName(toTitleCase(exObj.ex_name));
     setType(toTitleCase(exObj.circuit_type));
-  };
-
-  const renderTime = ({ remainingTime }) => {
-    const minutes = Math.floor(stopWatch.time / 60);
-    const seconds = stopWatch.time - minutes * 60;
-
-    function str_pad_left(string, pad, length) {
-      return (new Array(length + 1).join(pad) + string).slice(-length);
-    }
-
-    const timerValue = new Date(stopWatch.time * 1000)
-      .toISOString()
-      .substr(11, 8);
-
-    if (!endEx) {
-      setTimeAlert(false);
-      return (
-        <div
-          className={
-            device === "mobile" && orientation === "landscape"
-              ? "timer mobTimer"
-              : "timer"
-          }
-        >
-          <div
-            className={
-              device === "mobile" && orientation === "landscape"
-                ? "textMobLand"
-                : "text"
-            }
-          >
-            Active Time
-          </div>
-          <div
-            className={
-              device === "mobile" && orientation === "landscape"
-                ? "value valMob"
-                : "value"
-            }
-          >
-            {timerValue}
-          </div>
-        </div>
-      );
-    } else if (endEx) {
-      handleExceededRest();
-      return (
-        <div
-          className={
-            device === "mobile" && orientation === "landscape"
-              ? "timer mobTimer"
-              : "timer"
-          }
-        >
-          <div
-            className={
-              device === "mobile" && orientation === "landscape"
-                ? "textMobLand "
-                : "text"
-            }
-          >
-            Rest Time
-          </div>
-          <div
-            className={
-              device === "mobile" && orientation === "landscape"
-                ? "value valMob"
-                : "value"
-            }
-          >
-            {timerValue}
-          </div>
-        </div>
-      );
-    }
   };
 
   const handleStartPause = () => {
@@ -198,22 +134,25 @@ export const UiComponent = (props) => {
       setTimeAlert(false);
     }
     if (restInSec == timeInSec) {
-      handleTimesUp();
+      bell && !isPlaying && playBell() && console.log("made a sound");
     }
   };
 
-  const handleTimesUp = () => {
-    bell && playTimesUp() && setTimeout(stop(), 1500);
+  const handleBeginWorkoutPre = () => {
+    handleBeginWorkout();
+    tourSW1 && handleTourSwitch();
   };
-  const handleTimesUp10sec = () => {
-    playTimesUp() && setTimeout(stop(), 1000);
+
+  const handleTourSwitch = () => {
+    onDeactivateTour("sW1");
+    onActivateTour("sW2");
   };
 
   return (
     <>
       {device === "computer" && (
         <div className="frameHeader">
-          <div className="autoRollSwitch">
+          <div data-tour="sw3" className="autoRollSwitch">
             <AutoRollSwitch
               autoRoll={autoRoll}
               setAutoRoll={setAutoRoll}
@@ -221,7 +160,7 @@ export const UiComponent = (props) => {
             />
           </div>
 
-          <div className="soundSwitch">
+          <div data-tour="sw2" className="soundSwitch">
             <AutoRollSwitch
               autoRoll={bell}
               setAutoRoll={setBell}
@@ -232,10 +171,14 @@ export const UiComponent = (props) => {
       )}
 
       <div className="flexKit">
-        <Paper elevation={6} className="UiComponentContainer UiCC2">
+        <Paper
+          data-tour="sw4"
+          elevation={6}
+          className="UiComponentContainer UiCC2"
+        >
           <div className="UiComponentContainer w50vw">
             {exObj && (
-              <div className="setDisplay">
+              <div className="setDisplay" data-tour="sw6">
                 <a
                   className={
                     device === "mobile"
@@ -258,14 +201,13 @@ export const UiComponent = (props) => {
               </div>
             )}
 
-            <div className="exHeaders">
+            <div className="exHeaders" data-tour="sw7">
               <div
                 className={
                   device === "mobile" && orientation === "landscape"
                     ? "timer mobTimer"
                     : "timer"
                 }
-                onClick={handleStartPause}
               >
                 <TotalTime stopWatch={fullTime} endEx={endEx} />
               </div>
@@ -276,18 +218,18 @@ export const UiComponent = (props) => {
                     ? "timer mobTimer"
                     : "timer"
                 }
-                onClick={handleStartPause}
               >
                 <Timers
                   stopWatch={stopWatch}
                   endEx={endEx}
                   setTimeAlert={setTimeAlert}
                   handleExceededRest={handleExceededRest}
+                  showRPCard={showRPCard}
                 />
               </div>
             </div>
 
-            <div className="">
+            <div data-tour="sw8" className="">
               <div
                 className={
                   device === "mobile"
@@ -344,12 +286,12 @@ export const UiComponent = (props) => {
               </div>
             </div>
 
-            <div className="attCards">
+            <div data-tour="sw9" className="attCards">
               <Paper className="phaseNtype" elevation={1}>
                 <AttsCard exObj={exObj} />
               </Paper>
             </div>
-            <div className="pntR1">
+            <div data-tour="sw10" className="pntR1">
               <div
                 className={device === "mobile" ? "exPhase0Mob" : "exPhase0"}
               >{`Phase: ${phase}`}</div>
@@ -363,11 +305,11 @@ export const UiComponent = (props) => {
       </div>
 
       {!startWorkout ? (
-        <div className="startButton">
+        <div className="startButton" data-tour="sw5">
           <Button
             variant="contained"
             color="secondary"
-            onClick={handleBeginWorkout}
+            onClick={handleBeginWorkoutPre}
             className={
               device === "mobile" && orientation === "landscape"
                 ? classes.btnMobLand
@@ -397,7 +339,7 @@ export const UiComponent = (props) => {
       )}
       <div>
         {startEx && (
-          <div className="finButton">
+          <div data-tour="sw12" className="finButton">
             <Button
               variant="contained"
               color="secondary"
@@ -412,7 +354,6 @@ export const UiComponent = (props) => {
             </Button>
           </div>
         )}
-
       </div>
       {device === "mobile" && (
         <div className="frameHeader">
@@ -441,10 +382,15 @@ const mapStateToProps = (store) => ({
   formattedWorkout: store.workouts.formattedWorkout,
   device: store.device.device,
   orientation: store.device.orientation,
+  tourSW1: store.tour.sW1,
+  tourSW2: store.tour.sW2,
 });
 
 const mapDispatchToProps = (dispatch) => ({
   onSetCurrExRef: (ref) => dispatch(setCurrExRef(ref)),
+  onActivateTour: (tourId) => dispatch(activateTour(tourId)),
+  onDeactivateTour: (tourId) => dispatch(deactivateTour(tourId)),
+  onEndTour: () => dispatch(endTour()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(UiComponent);

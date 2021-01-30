@@ -29,6 +29,11 @@ import AccountTreeIcon from "@material-ui/icons/AccountTree";
 
 // Action Imports
 import { clearFoldersState } from "../../Redux/Actions/FolderActions";
+import {
+  activateTour,
+  deactivateTour,
+  endTour,
+} from "../../Redux/Actions/TourActions";
 
 function NavBar(props) {
   const classes = useStyles();
@@ -43,6 +48,9 @@ function NavBar(props) {
     device,
     orientation,
     location,
+    tourOn,
+    onActivateTour,
+    onDeactivateTour,
   } = props;
 
   useEffect(() => {
@@ -111,6 +119,12 @@ function NavBar(props) {
 
   const toggleExDrawer = () => {
     onShowExDrawer();
+    tourOn && handleTourSwitch();
+  };
+
+  const handleTourSwitch = () => {
+    onDeactivateTour("sW2");
+    onActivateTour("sW2B");
   };
 
   return (
@@ -127,7 +141,7 @@ function NavBar(props) {
               aria-label="menu"
               onClick={toggleDrawer("left", true)}
             >
-              <MenuIcon />
+              <MenuIcon data-tour="hs5" />
             </IconButton>
           )}
           {/* {workoutPage && (
@@ -157,6 +171,7 @@ function NavBar(props) {
           {isLoggedIn ? (
             workoutPage ? (
               <IconButton
+                data-tour="sw16"
                 edge="start"
                 className={
                   device === "mobile" ? classes.menuBtnMob : classes.menuButton
@@ -178,7 +193,7 @@ function NavBar(props) {
                   onClick={onLogOut}
                   color="inherit"
                 >
-                  {device === "mobile" ? <ExitToAppIcon /> : "Sign Out"}
+                  <ExitToAppIcon />
                 </Link>
               </Typography>
             )
@@ -220,6 +235,7 @@ const mapStateToProps = (store) => {
     isLoggedIn: store.authorized.isLoggedIn,
     device: store.device.device,
     orientation: store.device.orientation,
+    tourOn: store.tour.sW2,
   };
 };
 
@@ -228,6 +244,8 @@ const mapDispatchToProps = (dispatch) => {
     onLogOut: () => dispatch(logOut()),
     onClearFoldersState: () => dispatch(clearFoldersState()),
     onShowExDrawer: () => dispatch(showExDrawer()),
+    onActivateTour: (tourId) => dispatch(activateTour(tourId)),
+    onDeactivateTour: (tourId) => dispatch(deactivateTour(tourId)),
   };
 };
 

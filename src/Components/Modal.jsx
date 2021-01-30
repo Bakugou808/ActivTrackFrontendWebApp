@@ -74,12 +74,12 @@ const useStyles = makeStyles((theme) => ({
   },
   paperModalMobPort: {
     position: "absolute",
-    // width: "88vw",
+    width: "85vw",
     backgroundColor: theme.palette.background.paper,
     borderRadius: "5px",
     boxShadow: theme.shadows[5],
     padding: theme.spacing(2, 2, 3),
     overflow: "auto",
-    // height: "80vh",
+    height: "85vh",
   },
 }));

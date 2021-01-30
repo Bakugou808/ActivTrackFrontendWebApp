@@ -1,8 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+
 // * Component Imports
 import CircuitFormPt1 from "./CircuitFormPt1";
 import CircuitFormPt2 from "./CircuitFormPt2";
 import CircFlowCont from "./CircFlowCont";
+// * ReactTour Imports
+// import Tour from "reactour";
 // * Material UI Imports
 import PropTypes from "prop-types";
 import SwipeableViews from "react-swipeable-views";
@@ -12,6 +15,11 @@ import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
 import Typography from "@material-ui/core/Typography";
 import Box from "@material-ui/core/Box";
+// import {
+//   activateTour,
+//   deactivateTour,
+//   endTour,
+// } from "../../Redux/Actions/TourActions";
 
 function TabPanel(props) {
   const { children, value, index, type, setType, ...other } = props;
@@ -46,12 +54,23 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function TabBar(props) {
-  const { showModal, setShowModal } = props;
+function TabBar(props) {
+  const {
+    showModal,
+    setShowModal,
+    tourOn,
+    // onActivateTour,
+    // onDeactivateTour,
+    // onEndTour,
+  } = props;
   const classes = useStyles();
   const theme = useTheme();
   const [value, setValue] = useState(0);
   const [nextPage, goToNextPage] = useState(false);
+
+  // useEffect(() => {
+  //   tourOn && setIsTourOpen(true);
+  // }, []);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -65,6 +84,7 @@ export default function TabBar(props) {
     <div className={classes.root}>
       <AppBar position="static" color="default">
         <Tabs
+          data-tour="es1"
           value={value}
           onChange={handleChange}
           indicatorColor="primary"
@@ -82,17 +102,26 @@ export default function TabBar(props) {
         onChangeIndex={handleChangeIndex}
       >
         <TabPanel value={value} index={0} dir={theme.direction}>
-          <CircFlowCont setShowModal={setShowModal} circuit_type="stack" />
-  
+          <CircFlowCont
+            goToNextPage={goToNextPage}
+            setShowModal={setShowModal}
+            circuit_type="stack"
+            nextPage={nextPage}
+          />
         </TabPanel>
         <TabPanel value={value} index={1} dir={theme.direction}>
-          <CircFlowCont setShowModal={setShowModal} circuit_type="circuit" />
-          
+          <CircFlowCont
+            goToNextPage={goToNextPage}
+            setShowModal={setShowModal}
+            circuit_type="circuit"
+          />
         </TabPanel>
       </SwipeableViews>
     </div>
   );
 }
+
+export default TabBar;
 
 const AntTab = withStyles((theme) => ({
   root: {

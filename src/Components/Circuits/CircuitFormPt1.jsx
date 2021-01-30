@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
-
+// * ReactTour Imports
+import Tour from "reactour";
 // * Action Imports
 import {
   postExercise,
@@ -8,7 +9,11 @@ import {
 } from "../../Redux/Actions/ExerciseActions";
 import { postCircEx } from "../../Redux/Actions/CircExActions";
 import { postCircuit } from "../../Redux/Actions/CircuitActions";
-
+import {
+  activateTour,
+  deactivateTour,
+  endTour,
+} from "../../Redux/Actions/TourActions";
 // * Component Imports
 import CheckBoxes from "./CheckBoxes";
 import CustAttForm from "./CustAttForm";
@@ -20,6 +25,7 @@ import TextField from "@material-ui/core/TextField";
 import Snackbar from "@material-ui/core/Snackbar";
 import MuiAlert from "@material-ui/lab/Alert";
 import Button from "@material-ui/core/Button";
+import { TrendingUpOutlined } from "@material-ui/icons";
 
 function Alert(props) {
   return <MuiAlert elevation={2} variant="filled" {...props} />;
@@ -38,15 +44,19 @@ export const CircuitFormPt1 = (props) => {
     positionCircEx,
     positionCircuit,
     onPostCircuit,
+    onActivateTour,
+    onDeactivateTour,
+    onEndTour,
+    tourOn,
   } = props;
 
   const classes = useStyles();
   //   *Exercise Field State
   const [exFields, setExFields] = useState({
-    exercise_name: "Add Exercise",
-    description: "Add Description",
+    exercise_name: null,
+    description: null,
   });
-  const [showExFormName, setShowExFormName] = useState(false);
+  const [showExFormName, setShowExFormName] = useState(true);
   const [showExFormDesc, setShowExFormDesc] = useState(false);
   // * Circuit_Exercise/Attributes Field State
   const [showCustomAttFields, setShowCustomAttFields] = useState(false);
@@ -112,8 +122,10 @@ export const CircuitFormPt1 = (props) => {
   };
 
   const closeExForms = () => {
-    showExFormName && setShowExFormName(false);
-    showExFormDesc && setShowExFormDesc(false);
+    // showExFormName
+    exFields.exercise_name && setShowExFormName(false);
+    // showExFormDesc
+    exFields.description && setShowExFormDesc(false);
   };
   const handleNext = (e) => {
     if (selectedExercise) {
@@ -126,6 +138,7 @@ export const CircuitFormPt1 = (props) => {
         },
       };
       onPostCircEx(circExData, goToNextPage);
+      handleTourSwitch();
     } else {
       setError(true);
     }
@@ -143,9 +156,24 @@ export const CircuitFormPt1 = (props) => {
     }
   };
 
+  const handleTourSwitch = () => {
+    onDeactivateTour("nWS2");
+    onActivateTour("nWS3");
+  };
+
   return (
     <>
       <div className={classes.root}>
+        <Tour
+          onRequestClose={() => onEndTour()}
+          steps={EX1STEPS}
+          isOpen={tourOn}
+          maskClassName="mask"
+          className="helper"
+          rounded={5}
+          disableFocusLock={true}
+          accentColor={accentColor}
+        />
         <Grid container spacing={1}>
           {circuit_type === "circuit" && (
             <Grid item xs={12}>
@@ -157,7 +185,7 @@ export const CircuitFormPt1 = (props) => {
           <Grid item xs={12}>
             <Paper className={classes.paper}>
               {showExFormName ? (
-                <div className="exFormInputBoxCont">
+                <div className="exFormInputBoxCont" data-tour="es2">
                   <form onSubmit={handleExSubmit}>
                     <TextField
                       id="outlined-basic"
@@ -177,7 +205,10 @@ export const CircuitFormPt1 = (props) => {
                   </Button>
                 </div>
               ) : (
-                <div onClick={() => setShowExFormName((prev) => !prev)}>
+                <div
+                  data-tour="es2"
+                  onClick={() => setShowExFormName((prev) => !prev)}
+                >
                   {exFields.exercise_name}
                 </div>
               )}
@@ -186,7 +217,7 @@ export const CircuitFormPt1 = (props) => {
           <Grid item xs={12}>
             <Paper className={classes.paper}>
               {showExFormDesc ? (
-                <div className="exFormInputBoxCont">
+                <div className="exFormInputBoxCont" data-tour="es3">
                   <form onSubmit={handleExSubmit}>
                     <TextField
                       label="Exercise Description"
@@ -199,20 +230,32 @@ export const CircuitFormPt1 = (props) => {
                   <Button
                     variant="outlined"
                     className={classes.btn}
+                    onClick={() => setShowExFormDesc(false)}
+                  >
+                    Cancel
+                  </Button>
+                  <Button
+                    variant="outlined"
+                    className={classes.btn}
                     onClick={handleExSubmit}
                   >
                     Save
                   </Button>
                 </div>
               ) : (
-                <div onClick={() => setShowExFormDesc((prev) => !prev)}>
-                  {exFields.description}
+                <div
+                  data-tour="es3"
+                  onClick={() => setShowExFormDesc((prev) => !prev)}
+                >
+                  {exFields.description
+                    ? exFields.description
+                    : "Add Description"}
                 </div>
               )}
             </Paper>
           </Grid>
           <Grid item xs={12}>
-            <Paper className={classes.paper}>
+            <Paper className={classes.paper} data-tour="es4">
               <CheckBoxes
                 checked={checked}
                 setChecked={setChecked}
@@ -222,7 +265,7 @@ export const CircuitFormPt1 = (props) => {
             </Paper>
           </Grid>
           <Grid item xs={12}>
-            <Paper className={classes.paper}>
+            <Paper className={classes.paper} data-tour="es5">
               <div>
                 {showCustomAttFields ? (
                   <CustAttForm
@@ -241,6 +284,7 @@ export const CircuitFormPt1 = (props) => {
           </Grid>
           <Grid item xs={12}>
             <Button
+              data-tour="es6"
               variant="outlined"
               className={classes.paper}
               onClick={handleNext}
@@ -297,6 +341,7 @@ const mapStateToProps = (store) => ({
     }
   },
   phase: store.circuits.phase,
+  tourOn: store.tour.nWS2,
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -305,8 +350,99 @@ const mapDispatchToProps = (dispatch) => ({
   onPostCircEx: (circExData, goToNextPage) =>
     dispatch(postCircEx(circExData, goToNextPage)),
   onPostCircuit: (circuitData) => dispatch(postCircuit(circuitData)),
+  onActivateTour: (tourId) => dispatch(activateTour(tourId)),
+  onDeactivateTour: (tourId) => dispatch(deactivateTour(tourId)),
+  onEndTour: () => dispatch(endTour()),
 });
 export default connect(mapStateToProps, mapDispatchToProps)(CircuitFormPt1);
+
+const accentColor = "#ff5722";
+
+const EX1STEPS = [
+  {
+    selector: '[data-tour = "es1"]',
+    content: () => (
+      <div>
+        This is the Tab bar. You can choose to add a single exercise or chain a
+        series of exercises in a circuit.
+        <br />
+        Click on the tab to change the form then come back to Exercise tab and
+        continue by pressing the next arrow.
+      </div>
+    ),
+    // position: "top",
+    style: {
+      margin: "45px",
+    },
+  },
+  {
+    selector: '[data-tour = "es2"]',
+    content: () => (
+      <div>
+        Go ahead and enter the name of the exercise. <br /> <br />
+        Make sure to hit 'Enter' or click 'Save' afterwards. If you want to
+        change it, just click on the text and the form will appear again!
+      </div>
+    ),
+    // position: "top",
+    style: {
+      margin: "45px",
+    },
+  },
+  {
+    selector: '[data-tour = "es3"]',
+    content: () => (
+      <div>
+        If you'd like, you can add or edit a description. <br /> <br />
+        Click the text, then hit 'Enter' or click 'Save'.
+      </div>
+    ),
+    // position: "top",
+    style: {
+      margin: "45px",
+    },
+  },
+  {
+    selector: '[data-tour = "es4"]',
+    content: () => (
+      <div>
+        Here are some pre-defined attributes you can add to this exercise. *
+        Reps will always have a minimum of 1 so it will always be checked!
+      </div>
+    ),
+    // position: "top",
+    style: {
+      margin: "45px",
+    },
+  },
+  {
+    selector: '[data-tour = "es5"]',
+    content: () => (
+      <div>
+        Click the text to add a custom attribute, <br />
+        <br />
+        ex. 'jumping height for box jumps' or 'strap length for gymnastic rings'{" "}
+      </div>
+    ),
+    position: "top",
+    style: {
+      margin: "45px",
+    },
+  },
+  {
+    selector: '[data-tour = "es6"]',
+    content: () => (
+      <div>
+        Now, if everything looks good go ahead and hit this button to get to the
+        next page.
+      </div>
+    ),
+    // position: "top",
+    style: {
+      margin: "45px",
+    },
+  },
+];
 
 const useStyles = makeStyles((theme) => ({
   root: {
