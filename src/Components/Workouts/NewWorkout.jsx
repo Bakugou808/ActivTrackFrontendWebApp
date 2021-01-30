@@ -417,7 +417,10 @@ const NEW_WORKOUT_STEPS1 = [
         (if available). Click on the title to rename it.
       </div>
     ),
-    position: "top",
+    // position: "top",
+    style: {
+      margin: "45px",
+    },
   },
   {
     selector: '[data-tour = "nws2"]',
@@ -430,7 +433,10 @@ const NEW_WORKOUT_STEPS1 = [
         it. But its here for you if you decide to use them.
       </div>
     ),
-    position: "top",
+    // position: "top",
+    style: {
+      margin: "45px",
+    },
   },
   {
     selector: '[data-tour = "nws3"]',
@@ -441,7 +447,10 @@ const NEW_WORKOUT_STEPS1 = [
         <br /> Give it a click.
       </div>
     ),
-    position: "right",
+    position: "top",
+    style: {
+      margin: "45px",
+    },
   },
 ];
 
@@ -451,7 +460,10 @@ const NEW_WORKOUT_STEPS2 = [
     content: () => (
       <div>Sweet! You just added your first exercise. Congrats!</div>
     ),
-    position: "top",
+    // position: "top",
+    style: {
+      margin: "45px",
+    },
   },
   {
     selector: '[data-tour = "nws5"]',
@@ -463,7 +475,10 @@ const NEW_WORKOUT_STEPS2 = [
         <br />
       </div>
     ),
-    position: "top",
+    // position: "top",
+    style: {
+      margin: "45px",
+    },
   },
   {
     selector: '[data-tour = "nws6"]',
@@ -473,6 +488,9 @@ const NEW_WORKOUT_STEPS2 = [
         button to save it! That's all for this one. Lets get active!
       </div>
     ),
-    position: "center",
+    // position: "center",
+    style: {
+      margin: "45px",
+    },
   },
 ];

@@ -193,7 +193,7 @@ function NavBar(props) {
                   onClick={onLogOut}
                   color="inherit"
                 >
-                  {device === "mobile" ? <ExitToAppIcon /> : "Sign Out"}
+                  <ExitToAppIcon />
                 </Link>
               </Typography>
             )

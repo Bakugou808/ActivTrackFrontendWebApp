@@ -105,7 +105,7 @@ export const Home = (props) => {
               >
                 <motion.h1
                   initial={{ y: "250vw" }}
-                  animate={orientation === "landscape" ? { y: -50 } : { y: 0 }}
+                  animate={orientation === "landscape" ? { y: -80 } : { y: 0 }}
                   transition={{
                     delay: 0.6,
                     type: "spring",
@@ -133,7 +133,7 @@ export const Home = (props) => {
                   animate={
                     device === "mobile" && orientation === "portrait"
                       ? { y: -180 }
-                      : { y: -200 }
+                      : { y: -233 }
                   }
                   transition={{
                     delay: 2.5,
@@ -154,8 +154,8 @@ export const Home = (props) => {
           animate={
             device === "mobile"
               ? orientation === "portrait"
-                ? { y: -400 }
-                : { y: -500 }
+                ? { y: 0 }
+                : { y: -100 }
               : { y: -20 }
           }
           transition={{
@@ -251,7 +251,10 @@ const HOMESTEPS = [
         Stats tab to view your progress as you complete more and more workouts.
       </div>
     ),
-    position: [200, 50],
+    style: {
+      margin: "45px",
+    },
+    // position: [200, 50],
   },
   {
     selector: '[data-tour = "hs1"]',
@@ -263,10 +266,10 @@ const HOMESTEPS = [
         getting started!
       </div>
     ),
-    position: "top",
-    action: (node) => {
-      console.log(node);
+    style: {
+      margin: "45px",
     },
+    // position: "top",
   },
   {
     selector: '[data-tour = "hs2"]',
@@ -278,7 +281,10 @@ const HOMESTEPS = [
         <br />
       </div>
     ),
-    position: "top",
+    style: {
+      margin: "45px",
+    },
+    // position: "top",
   },
   {
     selector: '[data-tour = "hs5"]',
@@ -288,6 +294,9 @@ const HOMESTEPS = [
         along!
       </div>
     ),
+    style: {
+      margin: "45px",
+    },
     position: "center",
   },
 ];

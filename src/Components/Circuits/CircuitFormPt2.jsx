@@ -267,6 +267,9 @@ const EX2STEPS = [
       </div>
     ),
     position: "right",
+    style: {
+      margin: "45px",
+    },
   },
   {
     selector: '[data-tour = "es8"]',
@@ -274,6 +277,9 @@ const EX2STEPS = [
       <div>Sweet. If it looks good, lets go ahead and save it!</div>
     ),
     position: "bottom",
+    style: {
+      margin: "45px",
+    },
   },
 ];
 const accentColor = "#ff5722";
