@@ -484,8 +484,8 @@ const NEW_WORKOUT_STEPS2 = [
     selector: '[data-tour = "nws6"]',
     content: () => (
       <div>
-        Once you've finished adding your exercises to the workouts click this
-        button to save it! That's all for this one. Lets get active!
+        Once you've finished adding your exercises to the workouts click the
+        "Save Workout" button.
       </div>
     ),
     // position: "center",

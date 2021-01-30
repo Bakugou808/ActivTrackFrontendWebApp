@@ -138,7 +138,7 @@ export const CircuitFormPt1 = (props) => {
         },
       };
       onPostCircEx(circExData, goToNextPage);
-      handleTourSwitch();
+      tourOn && handleTourSwitch();
     } else {
       setError(true);
     }

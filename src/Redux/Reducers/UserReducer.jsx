@@ -2,10 +2,16 @@ const initialState = {
   user: [],
   fetching: false,
   error: false,
+  greeting: true,
 };
 
 const userReducer = (state = initialState, action) => {
   switch (action.type) {
+    case "SET_HOME_GREETING":
+      return {
+        ...state,
+        greeting: false,
+      };
     // LOGIN
     case "LOGIN_USER_REQUEST":
       return {

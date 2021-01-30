@@ -9,6 +9,13 @@ export const headers = () => {
     Authorization: token(),
   };
 };
+// --------GREETING---------  **********
+export const setGreeting = (payload) => {
+  return {
+    type: "SET_HOME_GREETING",
+    setting: payload,
+  };
+};
 
 // --------LOGIN---------  **********
 

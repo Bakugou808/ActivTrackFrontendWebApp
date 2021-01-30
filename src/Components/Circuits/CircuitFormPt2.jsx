@@ -51,7 +51,9 @@ export const CircuitFormPt2 = (props) => {
     onDeactivateTour,
     onEndTour,
     tourOn,
+    orientation,
   } = props;
+
   const classes = useStyles();
   const [atts, setAtts] = useState({});
   const [addEx, setAddEx] = useState(false);
@@ -107,6 +109,7 @@ export const CircuitFormPt2 = (props) => {
     };
     onPatchCircEx(circExData, sideEffects);
   };
+
   function toTitleCase(str) {
     return str.replace(/\w\S*/g, function (txt) {
       return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
@@ -119,6 +122,7 @@ export const CircuitFormPt2 = (props) => {
         case "restPeriod":
           return (
             <TextField
+              className={orientation === "portrait" && "circFormAttField"}
               id="outlined-basic"
               label={"Rest Period"}
               name={att}
@@ -130,6 +134,7 @@ export const CircuitFormPt2 = (props) => {
         case "holdTime":
           return (
             <TextField
+              className={orientation === "portrait" && "circFormAttField"}
               id="outlined-basic"
               label={"Hold Time"}
               name={att}
@@ -141,6 +146,7 @@ export const CircuitFormPt2 = (props) => {
         case "reps":
           return (
             <TextField
+              className={orientation === "portrait" && "circFormAttField"}
               id="outlined-basic"
               type="number"
               defaultValue={1}
@@ -154,6 +160,7 @@ export const CircuitFormPt2 = (props) => {
         default:
           return (
             <TextField
+              className={orientation === "portrait" && "circFormAttField"}
               id="outlined-basic"
               label={toTitleCase(att)}
               name={att}
@@ -167,7 +174,7 @@ export const CircuitFormPt2 = (props) => {
   };
 
   return (
-    <div className={classes.root}>
+    <div className={orientation === "portrait" ? classes.root2 : classes.root}>
       <Tour
         onRequestClose={() => onEndTour()}
         steps={EX2STEPS}
@@ -179,7 +186,11 @@ export const CircuitFormPt2 = (props) => {
         accentColor={accentColor}
       />
       {!addEx ? (
-        <Grid container spacing={3}>
+        <Grid
+          className={orientation === "portrait" ? classes.root2 : classes.root}
+          container
+          spacing={3}
+        >
           {circuit_type === "circuit" && (
             <Grid item xs={12}>
               <Paper className={classes.paper}>
@@ -192,7 +203,9 @@ export const CircuitFormPt2 = (props) => {
           <Grid item xs={12}>
             <Paper className={classes.paper} data-tour="es7">
               <div className="container grid">
-                Set Default Values For Attributes
+                <p className={orientation === "portrait" && "circFormAttField"}>
+                  Set Default Values For Attributes
+                </p>
                 {atts && renderAttFields()}
               </div>
             </Paper>
@@ -232,6 +245,7 @@ const mapStateToProps = (store) => ({
   positionCircEx: store.circExs.position,
   phase: store.circuits.phase,
   tourOn: store.tour.nWS3,
+  orientation: store.device.orientation,
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -287,10 +301,21 @@ const accentColor = "#ff5722";
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
+    width: "100%",
+  },
+  root: {
+    flexGrow: 1,
+    width: "80vw",
   },
   paper: {
     padding: theme.spacing(2),
     textAlign: "left",
     color: theme.palette.text.secondary,
+  },
+  paper2: {
+    padding: theme.spacing(2),
+    textAlign: "left",
+    color: theme.palette.text.secondary,
+    width: "75vw",
   },
 }));

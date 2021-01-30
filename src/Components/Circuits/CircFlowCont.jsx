@@ -13,7 +13,7 @@ export const CircFlowCont = (props) => {
   // }, [nextPage]);
 
   return (
-    <div>
+    <div className="circFlowContPort">
       {!nextPage ? (
         <CircuitFormPt1
           circuit_type={circuit_type}

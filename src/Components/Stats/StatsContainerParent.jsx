@@ -138,7 +138,7 @@ export const StatsContainerParent = (props) => {
       )}
       <Tour
         onRequestClose={() => onEndTour()}
-        steps={STAT_STEPS}
+        steps={device === "mobile" ? STAT_STEPS2 : STAT_STEPS}
         isOpen={tourOn}
         maskClassName="mask"
         className="helper"
@@ -308,4 +308,39 @@ const STAT_STEPS = [
       margin: "45px",
     },
   },
+];
+const STAT_STEPS2 = [
+  {
+    selector: '[data-tour = "st1"]',
+    content: () => (
+      <div>
+        Click an exercise title to view its attributes. Click the attribute to
+        see the average values you logged.
+      </div>
+    ),
+    position: "right",
+    style: {
+      margin: "45px",
+    },
+  },
+  // {
+  //   selector: '[data-tour = "st2"]',
+  //   content: () => (
+  //     <div>{`This section shows you stats by Session Date.
+
+  //   Click on the Session Date and the total reps for each exercise will be displayed in the graph.  `}</div>
+  //   ),
+  //   position: "right",
+  //   style: {
+  //     margin: "45px",
+  //   },
+  // },
+  // {
+  //   selector: '[data-tour = "st3"]',
+  //   content: () => <div>{`Great. Thats it! Enjoy!`}</div>,
+  //   position: "center",
+  //   style: {
+  //     margin: "45px",
+  //   },
+  // },
 ];

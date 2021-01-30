@@ -9,13 +9,23 @@ import Tour from "reactour";
 import Button from "@material-ui/core/Button";
 // action imports
 import { logOut } from "../../Redux/Actions/AuthActions";
+import { setGreeting } from "../../Redux/Actions/UserActions";
 
 // component imports
 import { AuthHOC } from "../AuthHOC";
 import MyCarousel from "./MyCarousel";
 
 export const Home = (props) => {
-  const { user, onLogOut, match, history, device, orientation } = props;
+  const {
+    user,
+    onLogOut,
+    match,
+    history,
+    device,
+    orientation,
+    greetingSetting,
+    onSetGreeting,
+  } = props;
   const [recentFolders, setRecentFolders] = useState(null);
   const [recentWorkouts, setRecentWorkouts] = useState(null);
   const [recentStats, setRecentStats] = useState(null);
@@ -24,6 +34,7 @@ export const Home = (props) => {
   useEffect(() => {
     user.username && grabRecents();
     hideGreeting();
+    // greetingSetting && setGreeting(false);
   }, [orientation, device, user]);
 
   const grabRecents = () => {
@@ -37,7 +48,7 @@ export const Home = (props) => {
   };
 
   const hideGreeting = () => {
-    setTimeout(() => setGreeting(false), 5200);
+    setTimeout(() => setGreeting(false), 5100);
   };
 
   const formatTitles = (titleArr) => {
@@ -65,6 +76,10 @@ export const Home = (props) => {
     setIsTourOpen(true);
   };
 
+  const disableGreeting = () => {
+    onSetGreeting(false);
+  };
+
   return (
     <div className="homeFloatCont">
       <Tour
@@ -81,6 +96,12 @@ export const Home = (props) => {
         animate={{ opacity: 1 }}
         transition={{ delay: 4, duration: 3 }}
       >
+        {/* {greetingSetting && (
+          <div className="tourNotification">
+            <div>Disable Greeting?</div>
+            <Button onClick={disableGreeting}>Yes</Button>
+          </div>
+        )} */}
         {takeTour && (
           <div className="tourNotification">
             <div>Take a Tour?</div>
@@ -231,10 +252,12 @@ const mapStateToProps = (store) => ({
   user: store.user.user,
   device: store.device.device,
   orientation: store.device.orientation,
+  greetingSetting: store.user.greeting,
 });
 
 const mapDispatchToProps = (dispatch) => ({
   onLogOut: () => dispatch(logOut()),
+  onSetGreeting: (setting) => dispatch(setGreeting(setting)),
 });
 
 export default AuthHOC(connect(mapStateToProps, mapDispatchToProps)(Home));
@@ -254,20 +277,20 @@ const HOMESTEPS = [
     style: {
       margin: "45px",
     },
+    // width: '160px'
     // position: [200, 50],
   },
   {
     selector: '[data-tour = "hs1"]',
     content: () => (
       <div>
-        This is the beginning of your 'Recents' sections. As you build and
-        complete workouts the windows will fill with the most recent page you've
-        visited. If they're a little thin right now, its because we're just
-        getting started!
+        This is the beginning of your 'Recents' sections. If they're a little
+        thin right now, its because we're just getting started!
       </div>
     ),
     style: {
       margin: "45px",
+      // width: '160px'
     },
     // position: "top",
   },
@@ -283,6 +306,7 @@ const HOMESTEPS = [
     ),
     style: {
       margin: "45px",
+      // width: '160px'
     },
     // position: "top",
   },
@@ -296,6 +320,7 @@ const HOMESTEPS = [
     ),
     style: {
       margin: "45px",
+      // width: '160px'
     },
     position: "center",
   },

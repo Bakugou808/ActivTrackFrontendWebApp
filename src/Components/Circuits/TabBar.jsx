@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-
+import { connect } from "react-redux";
 // * Component Imports
 import CircuitFormPt1 from "./CircuitFormPt1";
 import CircuitFormPt2 from "./CircuitFormPt2";
@@ -15,11 +15,6 @@ import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
 import Typography from "@material-ui/core/Typography";
 import Box from "@material-ui/core/Box";
-// import {
-//   activateTour,
-//   deactivateTour,
-//   endTour,
-// } from "../../Redux/Actions/TourActions";
 
 function TabPanel(props) {
   const { children, value, index, type, setType, ...other } = props;
@@ -52,25 +47,19 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: theme.palette.background.paper,
     flex: "auto",
   },
+  root: {
+    backgroundColor: theme.palette.background.paper,
+    flex: "auto",
+    width: "85vw",
+  },
 }));
 
 function TabBar(props) {
-  const {
-    showModal,
-    setShowModal,
-    tourOn,
-    // onActivateTour,
-    // onDeactivateTour,
-    // onEndTour,
-  } = props;
+  const { showModal, setShowModal, tourOn, orientation } = props;
   const classes = useStyles();
   const theme = useTheme();
   const [value, setValue] = useState(0);
   const [nextPage, goToNextPage] = useState(false);
-
-  // useEffect(() => {
-  //   tourOn && setIsTourOpen(true);
-  // }, []);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -81,7 +70,7 @@ function TabBar(props) {
   };
 
   return (
-    <div className={classes.root}>
+    <div className={orientation === "portrait" ? "circ2Cont" : classes.root}>
       <AppBar position="static" color="default">
         <Tabs
           data-tour="es1"
@@ -114,6 +103,7 @@ function TabBar(props) {
             goToNextPage={goToNextPage}
             setShowModal={setShowModal}
             circuit_type="circuit"
+            nextPage={nextPage}
           />
         </TabPanel>
       </SwipeableViews>
@@ -121,7 +111,12 @@ function TabBar(props) {
   );
 }
 
-export default TabBar;
+const mapStateToProps = (store) => ({
+  orientation: store.device.orientation,
+});
+
+const mapDispatchToProps = (dispatch) => ({});
+export default connect(mapStateToProps, mapDispatchToProps)(TabBar);
 
 const AntTab = withStyles((theme) => ({
   root: {

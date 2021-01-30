@@ -730,7 +730,7 @@ const START_WORKOUT_STEPS2 = [
     
     But it be really nice to know what was next in the workout... 
     
-    If you feel the same way, click this button here!
+    Click this button here!
     `}</div>
     ),
     position: "right",
@@ -740,9 +740,7 @@ const START_WORKOUT_STEPS2B = [
   {
     selector: '[data-tour = "sw11"]',
     content: () => (
-      <div>{`This is your Exercise List.
-    
-    It displays all the exercises you have within the workout. Click on the Exercise Name in the Info Card and the list will jump to your current exercise. 
+      <div>{`All the exercises you have within the workout are here. Click on the Exercise Name in the Info Card and the list will jump to your current exercise. 
     
     * You can modify any exercise by clicking the Set Button or Card Number except the current exercise. `}</div>
     ),
@@ -773,7 +771,7 @@ const REST_STEPS = [
   {
     selector: '[data-tour = "sw14"]',
     content: () => (
-      <div>{`Now you get a short break. This card will keep you informed on how much time has gone by. If you set a Rest Period, you will get a notification when the timer has hit the given value of time (if "Sound" is "On" you will also be alerted with an alarm bell). If you didn't and would like to, simply add a time as you would in the Info Card.
+      <div>{`If you set a Rest Period, you will get a notification when it runs out. To add a time click the text.
         
     Note: If "AutoRoll" is set to "On" the next card will go directly to the next exercise in the workout. Otherwise, you will be prompted to start the next exercise.`}</div>
     ),
