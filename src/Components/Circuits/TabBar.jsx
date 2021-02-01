@@ -59,7 +59,7 @@ function TabBar(props) {
   const classes = useStyles();
   const theme = useTheme();
   const [value, setValue] = useState(0);
-  const [nextPage, goToNextPage] = useState(false);
+  // const [nextPage, goToNextPage] = useState(false);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
