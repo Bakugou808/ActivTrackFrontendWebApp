@@ -59,7 +59,7 @@ function TabBar(props) {
   const classes = useStyles();
   const theme = useTheme();
   const [value, setValue] = useState(0);
-  const [nextPage, goToNextPage] = useState(false);
+  // const [nextPage, goToNextPage] = useState(false);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -92,18 +92,18 @@ function TabBar(props) {
       >
         <TabPanel value={value} index={0} dir={theme.direction}>
           <CircFlowCont
-            goToNextPage={goToNextPage}
+            // // goToNextPage={goToNextPage}
             setShowModal={setShowModal}
             circuit_type="stack"
-            nextPage={nextPage}
+            // // nextPage={nextPage}
           />
         </TabPanel>
         <TabPanel value={value} index={1} dir={theme.direction}>
           <CircFlowCont
-            goToNextPage={goToNextPage}
+            // // goToNextPage={goToNextPage}
             setShowModal={setShowModal}
             circuit_type="circuit"
-            nextPage={nextPage}
+            // // nextPage={nextPage}
           />
         </TabPanel>
       </SwipeableViews>

@@ -5,8 +5,8 @@ import CircuitFormPt1 from "./CircuitFormPt1";
 import CircuitFormPt2 from "./CircuitFormPt2";
 
 export const CircFlowCont = (props) => {
-  const { setShowModal, circuit_type, nextPage, goToNextPage } = props;
-  // const [nextPage, goToNextPage] = useState(false);
+  const { setShowModal, circuit_type } = props;
+  const [nextPage, goToNextPage] = useState(false);
 
   // useEffect(() => {
   //   setGoNext(nextPage);
