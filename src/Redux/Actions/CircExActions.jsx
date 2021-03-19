@@ -81,7 +81,7 @@ export const postCircExSuccess = (circEx) => ({
 
 // ------- POST NEW CIRC_EX FUNCTION--------
 
-export const postCircEx = (circExData, goToNextPage) => {
+export const postCircEx = (circExData, sideEffects) => {
   return (dispatch) => {
     dispatch(postCircExRequest());
     fetch(`${API}/circuit_exercises`, {
@@ -95,7 +95,7 @@ export const postCircEx = (circExData, goToNextPage) => {
           dispatch(postCircExFailed(data.error));
         } else {
           dispatch(postCircExSuccess(data));
-          goToNextPage(true);
+          sideEffects(true);
         }
       });
   };

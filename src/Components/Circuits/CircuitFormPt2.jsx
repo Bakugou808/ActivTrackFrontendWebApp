@@ -46,7 +46,6 @@ export const CircuitFormPt2 = (props) => {
     onClearPosValCircEx,
     onFetchFormattedWorkout,
     setShowModal,
-    onClearPatchedCircExAndCircuitFromState,
     onActivateTour,
     onDeactivateTour,
     onEndTour,
@@ -260,12 +259,11 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch(clearPosValCircEx(data, sideEffects)),
   onFetchFormattedWorkout: (workoutId) =>
     dispatch(fetchFormattedWorkout(workoutId)),
-  onClearPatchedCircExAndCircuitFromState: () =>
-    dispatch(clearPatchedCircExAndCircuitFromState()),
   onActivateTour: (tourId) => dispatch(activateTour(tourId)),
   onDeactivateTour: (tourId) => dispatch(deactivateTour(tourId)),
   onEndTour: () => dispatch(endTour()),
 });
+
 export default connect(mapStateToProps, mapDispatchToProps)(CircuitFormPt2);
 
 const EX2STEPS = [
@@ -299,10 +297,6 @@ const EX2STEPS = [
 const accentColor = "#ff5722";
 
 const useStyles = makeStyles((theme) => ({
-  root: {
-    flexGrow: 1,
-    width: "100%",
-  },
   root: {
     flexGrow: 1,
     width: "80vw",

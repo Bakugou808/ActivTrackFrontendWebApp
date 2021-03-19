@@ -48,12 +48,12 @@ export const AttributeFields = (props) => {
   };
 
   const renderAtts = () => {
-    const x = [];
+    const attsToRender = [];
     for (const [key, val] of Object.entries(exAtts)) {
       let key1 = normalizeString(key);
       let att = normalizeString(exAtts[key]);
       key !== "restPeriod" &&
-        x.push(
+        attsToRender.push(
           <div key={key} className={"centerDiv"}>
             <TextField
               size="small"
@@ -69,7 +69,7 @@ export const AttributeFields = (props) => {
         );
     }
 
-    return x.map((div) => {
+    return attsToRender.map((div) => {
       return div;
     });
   };
