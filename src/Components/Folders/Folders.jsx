@@ -10,7 +10,6 @@ import FolderForm from "./FolderForm";
 import MenuPopper from "./MenuPopper";
 import MyModal from "../Modal";
 // Material UI Imports
-import Modal from "@material-ui/core/Modal";
 import { makeStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
 

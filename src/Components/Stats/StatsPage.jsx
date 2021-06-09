@@ -17,12 +17,10 @@ import Paper from "@material-ui/core/Paper";
 
 export const StatsPage = (props) => {
   const {
-    match,
     history,
     onFetchAllWorkoutsWithStats,
     workouts,
     user,
-    onSetWorkoutsStats,
     onFetchWorkoutsStatsByTotalReps,
     onFetchWorkoutsStatsByEx,
     device,
@@ -32,7 +30,6 @@ export const StatsPage = (props) => {
   useEffect(() => {
     user && onFetchAllWorkoutsWithStats(user.id);
   }, [user]);
-
 
   const redirectToWorkoutStats = (workInfo, workoutHash) => {
     history.push(`/displayStats/${workInfo.title}/${workInfo.id}`);
@@ -44,7 +41,7 @@ export const StatsPage = (props) => {
     return workouts.data.map((workoutHash) => {
       let title = Object.keys(workoutHash)[0];
       let subHash = workoutHash[`${title}`];
-      
+
       let id = subHash.workout_id;
       let workInfo = { title: title, id: id };
       return (
@@ -78,7 +75,6 @@ const mapStateToProps = (store) => ({
 const mapDispatchToProps = (dispatch) => ({
   onFetchAllWorkoutsWithStats: (workoutId, sideEffects) =>
     dispatch(fetchAllWorkoutsWithStats(workoutId, sideEffects)),
-  onSetWorkoutsStats: (stats) => dispatch(setWorkoutsStats(stats)),
   onFetchWorkoutsStatsByTotalReps: (workoutId, numOfSessions, sideEffects) =>
     dispatch(
       fetchWorkoutsStatsByTotalReps(workoutId, numOfSessions, sideEffects)

@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { v4 as uuidv4 } from "uuid";
-
 import { connect } from "react-redux";
 import { ResponsiveLine, Line } from "@nivo/line";
 // * Material UI Imports
@@ -8,16 +7,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import { Paper } from "@material-ui/core";
 
 export const LineChart = (props) => {
-  const {
-    data,
-    lineData,
-    session,
-    legendX,
-    legendY,
-    sessStats,
-    height,
-    width,
-  } = props;
+  const { data, sessStats, height, width } = props;
   const classes = useStyles();
   const [showDetails, setShowDetails] = useState(false);
   const [point, setPoint] = useState([]);
@@ -121,9 +111,6 @@ export const LineChart = (props) => {
     <>
       <Line
         data={data}
-        // onClick={(point, event) => handleClick(point, event)}
-        // tooltip={(point, event) => handleToolTip(point, event)}
-        // enableSlices="x"
         height={height}
         width={width}
         margin={{ top: 80, right: 60, bottom: 125, left: 90 }}
@@ -196,8 +183,7 @@ export const LineChart = (props) => {
   );
 };
 
-const mapStateToProps = (store) => ({
-});
+const mapStateToProps = (store) => ({});
 
 const mapDispatchToProps = {};
 

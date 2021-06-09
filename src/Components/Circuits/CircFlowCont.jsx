@@ -8,10 +8,6 @@ export const CircFlowCont = (props) => {
   const { setShowModal, circuit_type } = props;
   const [nextPage, goToNextPage] = useState(false);
 
-  // useEffect(() => {
-  //   setGoNext(nextPage);
-  // }, [nextPage]);
-
   return (
     <div className="circFlowContPort">
       {!nextPage ? (

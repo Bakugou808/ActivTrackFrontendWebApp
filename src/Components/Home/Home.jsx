@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
-
+import { HOMESTEPS, accentColor } from "../TourSteps";
 // * Framer Motion Imports
 import { motion } from "framer-motion";
 // * ReactTour Imports
@@ -34,7 +34,6 @@ export const Home = (props) => {
   useEffect(() => {
     user.username && grabRecents();
     hideGreeting();
-    // greetingSetting && setGreeting(false);
   }, [orientation, device, user]);
 
   const grabRecents = () => {
@@ -51,18 +50,6 @@ export const Home = (props) => {
     setTimeout(() => setGreeting(false), 5100);
   };
 
-  const formatTitles = (titleArr) => {
-    let titles = titleArr.map((title) => {
-      let split = title.split("/");
-      let ind = split.length - 2;
-      return split[ind];
-    });
-    return titles;
-  };
-
-  const handleRedirect = (params) => {
-    history.push("/folders");
-  };
   const [takeTour, setTakeTour] = useState(true);
 
   const [isTourOpen, setIsTourOpen] = useState(false);
@@ -74,10 +61,6 @@ export const Home = (props) => {
 
   const openTour = () => {
     setIsTourOpen(true);
-  };
-
-  const disableGreeting = () => {
-    onSetGreeting(false);
   };
 
   return (
@@ -96,12 +79,6 @@ export const Home = (props) => {
         animate={{ opacity: 1 }}
         transition={{ delay: 4, duration: 3 }}
       >
-        {/* {greetingSetting && (
-          <div className="tourNotification">
-            <div>Disable Greeting?</div>
-            <Button onClick={disableGreeting}>Yes</Button>
-          </div>
-        )} */}
         {takeTour && (
           <div className="tourNotification">
             <div>Take a Tour?</div>
@@ -261,67 +238,3 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export default AuthHOC(connect(mapStateToProps, mapDispatchToProps)(Home));
-
-const accentColor = "#ff5722";
-
-const HOMESTEPS = [
-  {
-    selector: '[data-tour = "hs5"]',
-    content: () => (
-      <div>
-        This is your navigation icon. Click here to get to the Folders page to
-        start building your folders and workouts. You can also click on the
-        Stats tab to view your progress as you complete more and more workouts.
-      </div>
-    ),
-    style: {
-      margin: "45px",
-    },
-    // width: '160px'
-    // position: [200, 50],
-  },
-  {
-    selector: '[data-tour = "hs1"]',
-    content: () => (
-      <div>
-        This is the beginning of your 'Recents' sections. If they're a little
-        thin right now, its because we're just getting started!
-      </div>
-    ),
-    style: {
-      margin: "45px",
-      // width: '160px'
-    },
-    // position: "top",
-  },
-  {
-    selector: '[data-tour = "hs2"]',
-    content: () => (
-      <div>
-        This is an example of a 'recent container'. <br></br> As you visit
-        different pages, the most recent ones will be available here for you.
-        Click on the page and it will take you there.
-        <br />
-      </div>
-    ),
-    style: {
-      margin: "45px",
-      // width: '160px'
-    },
-    // position: "top",
-  },
-  {
-    selector: '[data-tour = "hs5"]',
-    content: () => (
-      <div>
-        Alright. Lets get Activ. And keep an eye out for more tours as you go
-        along!
-      </div>
-    ),
-    style: {
-      margin: "45px",
-      // width: '160px'
-    },
-    position: "center",
-  },
-];

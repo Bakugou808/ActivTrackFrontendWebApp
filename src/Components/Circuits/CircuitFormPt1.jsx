@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
 // * ReactTour Imports
 import Tour from "reactour";
+import { EX1STEPS, accentColor } from "../TourSteps";
 // * Action Imports
 import {
   postExercise,
@@ -356,94 +357,6 @@ const mapDispatchToProps = (dispatch) => ({
 });
 export default connect(mapStateToProps, mapDispatchToProps)(CircuitFormPt1);
 
-const accentColor = "#ff5722";
-
-const EX1STEPS = [
-  {
-    selector: '[data-tour = "es1"]',
-    content: () => (
-      <div>
-        This is the Tab bar. You can choose to add a single exercise or chain a
-        series of exercises in a circuit.
-        <br />
-        Click on the tab to change the form then come back to Exercise tab and
-        continue by pressing the next arrow.
-      </div>
-    ),
-    // position: "top",
-    style: {
-      margin: "45px",
-    },
-  },
-  {
-    selector: '[data-tour = "es2"]',
-    content: () => (
-      <div>
-        Go ahead and enter the name of the exercise. <br /> <br />
-        Make sure to hit 'Enter' or click 'Save' afterwards. If you want to
-        change it, just click on the text and the form will appear again!
-      </div>
-    ),
-    // position: "top",
-    style: {
-      margin: "45px",
-    },
-  },
-  {
-    selector: '[data-tour = "es3"]',
-    content: () => (
-      <div>
-        If you'd like, you can add or edit a description. <br /> <br />
-        Click the text, then hit 'Enter' or click 'Save'.
-      </div>
-    ),
-    // position: "top",
-    style: {
-      margin: "45px",
-    },
-  },
-  {
-    selector: '[data-tour = "es4"]',
-    content: () => (
-      <div>
-        Here are some pre-defined attributes you can add to this exercise. *
-        Reps will always have a minimum of 1 so it will always be checked!
-      </div>
-    ),
-    // position: "top",
-    style: {
-      margin: "45px",
-    },
-  },
-  {
-    selector: '[data-tour = "es5"]',
-    content: () => (
-      <div>
-        Click the text to add a custom attribute, <br />
-        <br />
-        ex. 'jumping height for box jumps' or 'strap length for gymnastic rings'{" "}
-      </div>
-    ),
-    position: "top",
-    style: {
-      margin: "45px",
-    },
-  },
-  {
-    selector: '[data-tour = "es6"]',
-    content: () => (
-      <div>
-        Now, if everything looks good go ahead and hit this button to get to the
-        next page.
-      </div>
-    ),
-    // position: "top",
-    style: {
-      margin: "45px",
-    },
-  },
-];
-
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
@@ -455,7 +368,6 @@ const useStyles = makeStyles((theme) => ({
     color: theme.palette.text.secondary,
   },
   btn: {
-    // padding: theme.spacing(2),
     marginLeft: "20px",
     textAlign: "center",
     color: theme.palette.text.secondary,

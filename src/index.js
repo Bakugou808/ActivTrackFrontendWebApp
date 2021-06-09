@@ -9,18 +9,13 @@ import { store } from "./Redux/ReduxStore";
 
 import { createMuiTheme } from "@material-ui/core/styles";
 import { ThemeProvider } from "@material-ui/styles";
-import CssBaseline from "@material-ui/core/CssBaseline";
-import { deepOrange } from "@material-ui/core/colors";
-import Typography from "@material-ui/core/Typography";
 
 const theme = createMuiTheme({
   palette: {
     primary: {
-      // deep orange.
       main: "#ff5722",
     },
     secondary: {
-      // light -> light blue, main -> deep turquoise
       light: "#18ffff",
       main: "#26a69a",
       dark: "#00796b",

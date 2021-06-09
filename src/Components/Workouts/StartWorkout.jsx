@@ -9,13 +9,12 @@ import Tour from "reactour";
 // * Component Imports
 import { AuthHOC } from "../AuthHOC";
 import UiComponent from "./UiComponent";
-import AutoRollSwitch from "./AutoRollSwitch";
 import AttributeFields from "./AttributeFields";
 import ExListDrawer from "./ExListDrawer";
 import ExListDrawerMobPortrait from "./ExListDrawerMobPortrait";
 import RestPeriodCard from "./RestPeriodCard";
 // * Material UI Imports
-import { Tooltip, Fab, Button } from "@material-ui/core";
+import { Button } from "@material-ui/core";
 
 // * Action Imports
 import {
@@ -28,19 +27,19 @@ import {
   fetchSession,
   patchSession,
 } from "../../Redux/Actions/SessionsActions";
-import { FormatListNumberedOutlined } from "@material-ui/icons";
 import {
   activateTour,
   deactivateTour,
   endTour,
 } from "../../Redux/Actions/TourActions";
 
+import StartWorkoutTour from "./StartWorkoutTour";
+
 const StartWorkout = (props) => {
   const {
     history,
     match,
     formattedWorkout,
-    selectedWorkout,
     onFetchSession,
     onFetchWorkout,
     onFetchFormattedWorkout,
@@ -83,8 +82,6 @@ const StartWorkout = (props) => {
   const [startEx, setStartEx] = useState(false);
   const [endEx, setEndEx] = useState(false);
   const [startWorkout, setStartWorkout] = useState(false);
-  // *log total time for entire workout
-  const [totalTime, setTotalTime] = useState(0);
   // *store stats (att + active/rest times + note?)
   const [exStats, setExStats] = useState({ activeTime: 0 });
   const [submitClicked, setSubmitClicked] = useState(false);
@@ -239,9 +236,8 @@ const StartWorkout = (props) => {
     const numberPattern = /\d+/g;
 
     if (nxtObj.circuit_exercise_attributes.restPeriod) {
-      let num = nxtObj.circuit_exercise_attributes.restPeriod.match(
-        numberPattern
-      );
+      let num =
+        nxtObj.circuit_exercise_attributes.restPeriod.match(numberPattern);
       let unit = nxtObj.circuit_exercise_attributes.restPeriod
         .replace(/[^a-zA-Z]+/g, "")
         .toLowerCase();
@@ -281,7 +277,6 @@ const StartWorkout = (props) => {
     deliverNextExObj();
     handleStartWorkout();
     setStartWorkout(true);
-    // playBell()
   };
 
   // 1. user starts workout
@@ -306,7 +301,6 @@ const StartWorkout = (props) => {
     setExStats((prev) => ({ ...prev, activeTime: t }));
     setFocusAttFields(true);
     reset();
-    // playBell();
     fullRestTime.start();
     start();
     tourOn2B && handleTourSwitch();
@@ -371,12 +365,6 @@ const StartWorkout = (props) => {
     onPatchSession(sessionData, sideEffects);
   };
 
-  const pauseTimers = () => {
-    // fullRestTime.pause();
-    // fullActiveTime.pause();
-    // fullTime.pause();
-  };
-
   const deliverNextExObj = () => {
     setExObj(exObjs[0]);
     exObjs[1]
@@ -388,7 +376,6 @@ const StartWorkout = (props) => {
     if (exObjs.length > 0) {
       setExObjs((prev) => prev.slice(1));
     } else {
-      pauseTimers();
       handleFinishWorkout();
     }
   };
@@ -427,51 +414,8 @@ const StartWorkout = (props) => {
           <Button onClick={() => setTakeTour(false)}>No Thanks</Button>
         </div>
       )}
-      <Tour
-        onRequestClose={() => onEndTour()}
-        steps={START_WORKOUT_STEPS1}
-        isOpen={tourOn1}
-        maskClassName="mask"
-        className="helper"
-        rounded={5}
-        accentColor={accentColor}
-      />
-      <Tour
-        onRequestClose={() => onEndTour()}
-        steps={START_WORKOUT_STEPS2}
-        isOpen={tourOn2}
-        maskClassName="mask"
-        className="helper"
-        rounded={5}
-        accentColor={accentColor}
-      />
-      <Tour
-        onRequestClose={() => onEndTour()}
-        steps={START_WORKOUT_STEPS2B}
-        isOpen={tourOn2B}
-        maskClassName="mask"
-        className="helper"
-        rounded={5}
-        accentColor={accentColor}
-      />
-      <Tour
-        onRequestClose={() => onEndTour()}
-        steps={ATT_STEPS}
-        isOpen={tourOn3}
-        maskClassName="mask"
-        className="helper"
-        rounded={5}
-        accentColor={accentColor}
-      />
-      <Tour
-        onRequestClose={() => onEndTour()}
-        steps={REST_STEPS}
-        isOpen={tourOn4}
-        maskClassName="mask"
-        className="helper"
-        rounded={5}
-        accentColor={accentColor}
-      />
+
+      <StartWorkoutTour />
 
       <div
         data-tour="sw1"
@@ -534,7 +478,6 @@ const StartWorkout = (props) => {
               startWorkout={startWorkout}
               handleBeginWorkout={handleBeginWorkout}
               handleStartWorkout={handleStartWorkout}
-              // playBell={playBell}
               bell={bell}
               setBell={setBell}
               setExRef={setExRef}
@@ -564,7 +507,6 @@ const StartWorkout = (props) => {
               endEx={endEx}
               restPeriod={restPeriod}
               bell={bell}
-              // playBell={playBell}
               startEx={startEx}
               nextExObj={nextExObj}
               handleRestPeriod={handleRestPeriod}
@@ -586,11 +528,6 @@ const mapStateToProps = (store) => ({
   patchedExTitle: store.workouts.patchedExTitle,
   device: store.device.device,
   orientation: store.device.orientation,
-  tourOn1: store.tour.sW1,
-  tourOn2: store.tour.sW2,
-  tourOn2B: store.tour.sW2B,
-  tourOn3: store.tour.sW3,
-  tourOn4: store.tour.sW4,
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -611,180 +548,3 @@ const mapDispatchToProps = (dispatch) => ({
 export default AuthHOC(
   connect(mapStateToProps, mapDispatchToProps)(StartWorkout)
 );
-
-const accentColor = "#ff5722";
-
-const START_WORKOUT_STEPS1 = [
-  {
-    selector: '[data-tour = "sw1"]',
-    content: () => (
-      <div>
-        This is where you can run your workout and track your progress. Lets
-        take a look at whats available.
-      </div>
-    ),
-    position: "top",
-  },
-  {
-    selector: '[data-tour = "sw2"]',
-    content: () => (
-      <div>
-        This is the Sound Switch. It will turn off the bell sound you hear at
-        the beginning and end of an exercise. It is set to "On" by default.
-      </div>
-    ),
-    position: "top",
-  },
-  {
-    selector: '[data-tour = "sw3"]',
-    content: () => (
-      <div>
-        This is the AutoRoll Switch. It will skip a section at the end of an
-        exercise so you "roll" into the next exercise without a delay. It is set
-        to "Off" by default.
-      </div>
-    ),
-    position: "right",
-  },
-  {
-    selector: '[data-tour = "sw4"]',
-    content: () => (
-      <div>
-        This is your Info Card. It displays all the info you'll want during your
-        workout. It seems a bit empty at the moment. Lets move on.
-      </div>
-    ),
-    position: "top",
-  },
-  {
-    selector: '[data-tour = "sw5"]',
-    content: () => <div>Click the button, there's more to see!</div>,
-    position: "top",
-  },
-];
-
-const START_WORKOUT_STEPS2 = [
-  {
-    selector: '[data-tour = "sw4"]',
-    content: () => (
-      <div>Nice. Now that the card is filled. Lets do a quick breakdown.</div>
-    ),
-    position: "right",
-  },
-  {
-    selector: '[data-tour = "sw6"]',
-    content: () => (
-      <div>
-        This is your header. It has the name of the exercise and what Set Number
-        you are out of the Total Number of Sets.
-      </div>
-    ),
-    position: "top",
-  },
-  {
-    selector: '[data-tour = "sw7"]',
-    content: () => (
-      <div>
-        These are your Timers. The one on the left tracks the entire time since
-        the start of the workout. The one on the right tracks the time it takes
-        to finish the exercise you're on.
-      </div>
-    ),
-    position: "top",
-  },
-  {
-    selector: '[data-tour = "sw8"]',
-    content: () => (
-      <div>
-        {`This is the Rest Period section.
-        
-        Click on the text to add time. You can set the unit to 'sec' or 'min'. 
-
-        Press 'Enter' to save. 
-        `}
-      </div>
-    ),
-    position: "right",
-  },
-  {
-    selector: '[data-tour = "sw9"]',
-    content: () => (
-      <div>
-        This is your Attributes Section. It displays all the attributes and
-        their target values.
-      </div>
-    ),
-    position: "top",
-  },
-  {
-    selector: '[data-tour = "sw10"]',
-    content: () => (
-      <div>{`Here you can see what Phase you are in as well as the Type of exercise you're doing.`}</div>
-    ),
-    position: "top",
-  },
-  {
-    selector: '[data-tour = "sw16"]',
-    content: () => (
-      <div>{`Nice. Thats it for the Info Card.
-    
-    But it be really nice to know what was next in the workout... 
-    
-    Click this button here!
-    `}</div>
-    ),
-    position: "right",
-  },
-];
-const START_WORKOUT_STEPS2B = [
-  {
-    selector: '[data-tour = "sw11"]',
-    content: () => (
-      <div>{`All the exercises you have within the workout are here. Click on the Exercise Name in the Info Card and the list will jump to your current exercise. 
-    
-    * You can modify any exercise by clicking the Set Button or Card Number except the current exercise. `}</div>
-    ),
-    position: "right",
-  },
-  {
-    selector: '[data-tour = "sw12"]',
-    content: () => (
-      <div>{`Great. Now lets go on to the next section.
-    
-    Click "FINISHED".`}</div>
-    ),
-    position: "right",
-  },
-];
-
-const ATT_STEPS = [
-  {
-    selector: '[data-tour = "sw13"]',
-    content: () => (
-      <div>{`This is your Attributes Card. If you hit your target(s) for the attribute(s) you can simply click "SUBMIT". Or adjust the values and continue.`}</div>
-    ),
-    position: "right",
-  },
-];
-
-const REST_STEPS = [
-  {
-    selector: '[data-tour = "sw14"]',
-    content: () => (
-      <div>{`If you set a Rest Period, you will get a notification when it runs out. To add a time click the text.
-        
-    Note: If "AutoRoll" is set to "On" the next card will go directly to the next exercise in the workout. Otherwise, you will be prompted to start the next exercise.`}</div>
-    ),
-    position: "right",
-  },
-  {
-    selector: '[data-tour = "sw15"]',
-    content: () => (
-      <div>{`And thats the end of that folx.     
-    
-    When you're ready to move on to the next exercise click the button and get active!
-    `}</div>
-    ),
-    position: "right",
-  },
-];

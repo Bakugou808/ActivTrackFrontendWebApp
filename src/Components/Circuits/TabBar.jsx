@@ -16,44 +16,6 @@ import Tab from "@material-ui/core/Tab";
 import Typography from "@material-ui/core/Typography";
 import Box from "@material-ui/core/Box";
 
-function TabPanel(props) {
-  const { children, value, index, type, setType, ...other } = props;
-
-  return (
-    <div
-      role="tabpanel"
-      hidden={value !== index}
-      id={`full-width-tabpanel-${index}`}
-      aria-labelledby={`full-width-tab-${index}`}
-      {...other}
-    >
-      {value === index && (
-        <Box p={3}>
-          <Typography component={"span"}>{children}</Typography>
-        </Box>
-      )}
-    </div>
-  );
-}
-
-TabPanel.propTypes = {
-  children: PropTypes.node,
-  index: PropTypes.any.isRequired,
-  value: PropTypes.any.isRequired,
-};
-
-const useStyles = makeStyles((theme) => ({
-  root: {
-    backgroundColor: theme.palette.background.paper,
-    flex: "auto",
-  },
-  root: {
-    backgroundColor: theme.palette.background.paper,
-    flex: "auto",
-    width: "85vw",
-  },
-}));
-
 function TabBar(props) {
   const { showModal, setShowModal, tourOn, orientation } = props;
   const classes = useStyles();
@@ -117,6 +79,44 @@ const mapStateToProps = (store) => ({
 
 const mapDispatchToProps = (dispatch) => ({});
 export default connect(mapStateToProps, mapDispatchToProps)(TabBar);
+
+function TabPanel(props) {
+  const { children, value, index, type, setType, ...other } = props;
+
+  return (
+    <div
+      role="tabpanel"
+      hidden={value !== index}
+      id={`full-width-tabpanel-${index}`}
+      aria-labelledby={`full-width-tab-${index}`}
+      {...other}
+    >
+      {value === index && (
+        <Box p={3}>
+          <Typography component={"span"}>{children}</Typography>
+        </Box>
+      )}
+    </div>
+  );
+}
+
+TabPanel.propTypes = {
+  children: PropTypes.node,
+  index: PropTypes.any.isRequired,
+  value: PropTypes.any.isRequired,
+};
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+    backgroundColor: theme.palette.background.paper,
+    flex: "auto",
+  },
+  root: {
+    backgroundColor: theme.palette.background.paper,
+    flex: "auto",
+    width: "85vw",
+  },
+}));
 
 const AntTab = withStyles((theme) => ({
   root: {

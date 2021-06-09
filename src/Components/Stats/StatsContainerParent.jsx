@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
 import { AuthHOC } from "../AuthHOC";
+import { STAT_STEPS, STAT_STEPS2, accentColor } from "../TourSteps";
+
 // * ReactTour Imports
 import Tour from "reactour";
 // * Component Imports
@@ -272,75 +274,3 @@ const mapDispatchToProps = (dispatch) => ({
 export default AuthHOC(
   connect(mapStateToProps, mapDispatchToProps)(StatsContainerParent)
 );
-
-const accentColor = "#ff5722";
-
-const STAT_STEPS = [
-  {
-    selector: '[data-tour = "st1"]',
-    content: () => (
-      <div>{`This is your Exercise List.
-    
-    It displays all the exercises you have within the workout. Click on the Exercise Name and its attributes will appear beneath. Click on the attribute to see the average value you performed that day.  `}</div>
-    ),
-    position: "right",
-    style: {
-      margin: "45px",
-    },
-  },
-  {
-    selector: '[data-tour = "st2"]',
-    content: () => (
-      <div>{`This section shows you stats by Session Date.
-    
-    Click on the Session Date and the total reps for each exercise will be displayed in the graph.  `}</div>
-    ),
-    position: "right",
-    style: {
-      margin: "45px",
-    },
-  },
-  {
-    selector: '[data-tour = "st3"]',
-    content: () => <div>{`Great. Thats it! Enjoy!`}</div>,
-    position: "center",
-    style: {
-      margin: "45px",
-    },
-  },
-];
-const STAT_STEPS2 = [
-  {
-    selector: '[data-tour = "st1"]',
-    content: () => (
-      <div>
-        Click an exercise title to view its attributes. Click the attribute to
-        see the average values you logged.
-      </div>
-    ),
-    position: "right",
-    style: {
-      margin: "45px",
-    },
-  },
-  // {
-  //   selector: '[data-tour = "st2"]',
-  //   content: () => (
-  //     <div>{`This section shows you stats by Session Date.
-
-  //   Click on the Session Date and the total reps for each exercise will be displayed in the graph.  `}</div>
-  //   ),
-  //   position: "right",
-  //   style: {
-  //     margin: "45px",
-  //   },
-  // },
-  // {
-  //   selector: '[data-tour = "st3"]',
-  //   content: () => <div>{`Great. Thats it! Enjoy!`}</div>,
-  //   position: "center",
-  //   style: {
-  //     margin: "45px",
-  //   },
-  // },
-];

@@ -5,9 +5,6 @@ import { v4 as uuidv4 } from "uuid";
 // * Material UI Imports
 import { makeStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
-import folders from "../../SCSS/folders.jpg";
-import workouts from "../../SCSS/workouts.jpg";
-import stats from "../../SCSS/stats.jpg";
 
 export const MyCarousel = ({
   data,
@@ -17,8 +14,6 @@ export const MyCarousel = ({
   device,
   orientation,
 }) => {
-  const [backgroundImg, setBackgroundImg] = useState(null);
-
   const [data2, setData2] = useState(null);
   useEffect(() => {
     data && setData2(["", ...data, ""]);
@@ -49,21 +44,6 @@ export const MyCarousel = ({
       fontSize: "2.5vw",
     },
   }));
-  useEffect(() => {
-    // switch (category) {
-    //   case "folders":
-    //     setBackgroundImg(folders);
-    //     break;
-    //   case "workouts":
-    //     setBackgroundImg(workouts);
-    //     break;
-    //   case "stats":
-    //     setBackgroundImg(stats);
-    //     break;
-    //   default:
-    //     break;
-    // }
-  }, []);
 
   const handleRedirect = (path) => {
     history.push(path);

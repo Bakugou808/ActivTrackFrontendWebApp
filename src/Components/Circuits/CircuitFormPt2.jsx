@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
-import { v4 as uuidv4 } from "uuid";
+import { EX2STEPS, accentColor } from "../TourSteps";
 // * ReactTour Imports
 import Tour from "reactour";
 // *Component Imports
@@ -14,10 +14,7 @@ import {
 } from "../../Redux/Actions/CircExActions";
 import { postWorkCircuit } from "../../Redux/Actions/WorkCircuitsActions";
 import { clearSelectedExercise } from "../../Redux/Actions/ExerciseActions";
-import {
-  fetchFormattedWorkout,
-  clearPatchedCircExAndCircuitFromState,
-} from "../../Redux/Actions/WorkoutActions";
+import { fetchFormattedWorkout } from "../../Redux/Actions/WorkoutActions";
 import {
   activateTour,
   deactivateTour,
@@ -265,36 +262,6 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(CircuitFormPt2);
-
-const EX2STEPS = [
-  {
-    selector: '[data-tour = "es7"]',
-    content: () => (
-      <div>
-        Here you can set your target values for each of the attributes. They
-        will be saved for every session, and you can change them as you level
-        up.
-        <br></br>
-        ex. 'Reps: 12, Weight: 50 lbs, Hold Time: 20 sec, Rest Period: 2 min '
-      </div>
-    ),
-    position: "right",
-    style: {
-      margin: "45px",
-    },
-  },
-  {
-    selector: '[data-tour = "es8"]',
-    content: () => (
-      <div>Sweet. If it looks good, lets go ahead and save it!</div>
-    ),
-    position: "bottom",
-    style: {
-      margin: "45px",
-    },
-  },
-];
-const accentColor = "#ff5722";
 
 const useStyles = makeStyles((theme) => ({
   root: {

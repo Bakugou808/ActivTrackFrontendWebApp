@@ -12,16 +12,6 @@ import { v4 as uuidv4 } from "uuid";
 
 import { normalizeString } from "../Workouts/AttributeFields";
 
-const GreenCheckbox = withStyles({
-  root: {
-    color: orange[300],
-    "&$checked": {
-      color: orange[700],
-    },
-  },
-  checked: {},
-})((props) => <Checkbox color="default" {...props} />);
-
 export default function CheckBoxes2(props) {
   const { checked, setChecked, handleCustomAttAdd, customAtts } = props;
 
@@ -73,3 +63,13 @@ export default function CheckBoxes2(props) {
     </FormGroup>
   );
 }
+
+const GreenCheckbox = withStyles({
+  root: {
+    color: orange[300],
+    "&$checked": {
+      color: orange[700],
+    },
+  },
+  checked: {},
+})((props) => <Checkbox color="default" {...props} />);

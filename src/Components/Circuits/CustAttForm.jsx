@@ -52,7 +52,6 @@ export default connect(mapStateToProps, mapDispatchToProps)(CustAttForm);
 
 const useStyles = makeStyles((theme) => ({
   btn: {
-    // padding: theme.spacing(2),
     marginLeft: "20px",
     textAlign: "center",
     color: theme.palette.text.secondary,

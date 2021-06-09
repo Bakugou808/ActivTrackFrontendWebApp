@@ -1,6 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
 import { AuthHOC } from "../AuthHOC";
+import {
+  NEW_WORKOUT_STEPS2,
+  NEW_WORKOUT_STEPS1,
+  accentColor,
+} from "../TourSteps";
 // * Component Imports
 import MyModal from "../Modal";
 import TabBar from "../Circuits/TabBar";
@@ -405,92 +410,3 @@ const useStyles = makeStyles((theme) => ({
     right: theme.spacing(3),
   },
 }));
-
-const accentColor = "#ff5722";
-
-const NEW_WORKOUT_STEPS1 = [
-  {
-    selector: '[data-tour = "nws1"]',
-    content: () => (
-      <div>
-        This is your header. It displays your Workout's title and description
-        (if available). Click on the title to rename it.
-      </div>
-    ),
-    // position: "top",
-    style: {
-      margin: "45px",
-    },
-  },
-  {
-    selector: '[data-tour = "nws2"]',
-    content: () => (
-      <div>
-        All Workouts are divided into 3 phases: 'Warm up', 'Body', and 'Cool
-        Down'. <br />
-        <br />
-        You don't need to add exercises to each section if you don't feel like
-        it. But its here for you if you decide to use them.
-      </div>
-    ),
-    // position: "top",
-    style: {
-      margin: "45px",
-    },
-  },
-  {
-    selector: '[data-tour = "nws3"]',
-    content: () => (
-      <div>
-        This icon will let open a form to add an exercise to the respective
-        phase. <br />
-        <br /> Give it a click.
-      </div>
-    ),
-    position: "top",
-    style: {
-      margin: "45px",
-    },
-  },
-];
-
-const NEW_WORKOUT_STEPS2 = [
-  {
-    selector: '[data-tour = "nws4"]',
-    content: () => (
-      <div>Sweet! You just added your first exercise. Congrats!</div>
-    ),
-    // position: "top",
-    style: {
-      margin: "45px",
-    },
-  },
-  {
-    selector: '[data-tour = "nws5"]',
-    content: () => (
-      <div>
-        You can edit the Set number and exercise at any point throughout the
-        app. Simply click on the Exercise Card or the Set Button to change the
-        details. And make sure to save your changes!
-        <br />
-      </div>
-    ),
-    // position: "top",
-    style: {
-      margin: "45px",
-    },
-  },
-  {
-    selector: '[data-tour = "nws6"]',
-    content: () => (
-      <div>
-        Once you've finished adding your exercises to the workouts click the
-        "Save Workout" button.
-      </div>
-    ),
-    // position: "center",
-    style: {
-      margin: "45px",
-    },
-  },
-];

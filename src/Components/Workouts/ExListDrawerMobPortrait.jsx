@@ -151,16 +151,6 @@ export const ExListDrawerMobPortrait = ({
     setExs(exArr);
   };
 
-  const handlePhantomDivs = () => {
-    return [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1].map((num) => {
-      return (
-        <div key={uuidv4()} className="phantomDiv">
-          {" "}
-        </div>
-      );
-    });
-  };
-
   return (
     <div className="exSideDrawerParent">
       <div className="exSideDrawerHeader">
